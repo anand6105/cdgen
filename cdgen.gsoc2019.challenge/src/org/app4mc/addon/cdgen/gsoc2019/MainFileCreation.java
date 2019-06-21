@@ -307,7 +307,7 @@ public class MainFileCreation {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
 	}
-
+//TODO Read paper send by lukas
 	private static void mainTaskPriority(File f1, EList<Task> tasks) {
 		try {
 			File fn = f1;
@@ -326,8 +326,8 @@ public class MainFileCreation {
 			Map<Task, Long> periodMapSorted = fileUtil.sortByValue(periodMap);
 			for (int i=0;i<periodMapSorted.size();i++) {
 				Task task = (Task) periodMapSorted.keySet().toArray()[i];
-				fw.write("\t#define main" + task.getName() + "\t( tskIDLE_PRIORITY + 1 +"
-						+ i + " )\n");
+				fw.write("\t#define main" + task.getName() + "\t( tskIDLE_PRIORITY +"
+						+ (i+1) + " )\n");//TODO merge this constval with the value used in time period in FreeRTOS config File - Issue001
 			}
 			/*
 			for (Task task : tasks) {

@@ -115,7 +115,7 @@ public class checkFileCreateGUI {
 			public void actionPerformed(ActionEvent e) {
 
 				// Load File
-				final File inputFile = new File(Constants.DEMOCARMULTI);
+				final File inputFile = new File(Constants.DEMOCAR);
 				// final File inputFile = new File(Constants.WATERS2019_TEST);
 				// final File inputFile = new File(Constants.WATERS2019_TEST);
 				// final File inputFile = new File(Constants.WATERS2019_ANA);

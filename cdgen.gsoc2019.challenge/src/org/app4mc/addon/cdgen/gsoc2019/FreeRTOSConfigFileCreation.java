@@ -13,7 +13,7 @@ import org.eclipse.app4mc.amalthea.model.Amalthea;
  * @author Ram Prasath Govindarajan
  *
  */
-
+//TODO optimizied = Done 
 public class FreeRTOSConfigFileCreation {
 	final private Amalthea model;
 
@@ -68,7 +68,7 @@ public class FreeRTOSConfigFileCreation {
 		try {
 			File fn = f1;
 			FileWriter fw = new FileWriter(fn, true);
-			int constval = 1;
+			int constval = 1;//TODO merge this constval with the value used in time period in MAIN File - Issue001
 			int taskSize = model.getSwModel().getTasks().size();
 			fw.write("\t#ifndef FREERTOS_CONFIG_H\n");
 			fw.write("\t#define FREERTOS_CONFIG_H\n");

@@ -200,8 +200,9 @@ public class RunFileCreation {
 				runnablesOfTask = runnablesOfTask.stream().distinct().collect(Collectors.toList());
 				for (Runnable Run : runnablesOfTask) {
 					fw.write("void " + Run.getName() + "(void)\t{\n");
-					fw.write("\tvDisplayMessagePthread(\" " + t.getName() + "Runnable Execution " + "\t" + Run.getName()
-							+ "\\n\");\n");
+					fw.write("\tvDisplayMessagePthread(\" " + t.getName() + " \tRunnable Execution	" + "\t" + Run.getName()
+					+ "\\n\");\n");
+			
 					Process RunTaskName = SoftwareUtil.getProcesses(Run, null).get(0);
 					Set<ProcessingUnit> pu = DeploymentUtil.getAssignedCoreForProcess(RunTaskName, model);
 					if (pu != null) {
@@ -214,7 +215,7 @@ public class RunFileCreation {
 							break;
 						}
 					} else {
-						fw.write("\t//sleepTimerMs(1000);\n");
+						fw.write("\tusleep(10000);\n");
 					}
 					fw.write("}\n");
 				}
@@ -238,7 +239,7 @@ public class RunFileCreation {
 					fw.write("void " + Run.getName() + " (void)\t{\n");
 					fw.write("\tvDisplayMessage(\" " + t.getName() + " \tRunnable Execution	" + "\t" + Run.getName()
 							+ "\\n\");\n");
-					fw.write("\t//usleep(1000);\n");
+					fw.write("\tusleep(10000);\n");
 					fw.write("}\n");
 
 				}

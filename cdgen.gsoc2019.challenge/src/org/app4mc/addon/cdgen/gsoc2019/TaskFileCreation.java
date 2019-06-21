@@ -452,9 +452,9 @@ public class TaskFileCreation {
 				fw.write("\t\tconst char *pcTaskName = \"" + task.getName() + " is running\\r\\n\";\n");
 				fw.write("\t\tportTickType xLastWakeTime;\n\n");
 				fw.write("\t\tfor( ;; )\n\t\t{\n");
-				fw.write("\t\t\tvDisplayMessage( pcTaskName );\n");
 				fw.write("\t\t\t/*Cin - Create local variables and copy the actual variable to them */\n");
 				fw.write("\t\t\ttaskENTER_CRITICAL ();\n");
+				fw.write("\t\t\tvDisplayMessage( pcTaskName );\n");
 				fw.write("\t\t\tcIN_" + task.getName() + "();\n");
 				if (preemptionFlag == true) {
 					fw.write("\t\t\ttaskEXIT_CRITICAL ();\n");
