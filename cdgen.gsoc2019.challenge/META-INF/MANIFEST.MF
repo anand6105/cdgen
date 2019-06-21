@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: app4mc.sniplets
+Bundle-ManifestVersion: 2
+Bundle-Name: WATERS2019
+Bundle-SymbolicName: cdgen.gsoc2019.challenge
+Bundle-Version: 1.0.0.qualifier
+Export-Package: org.app4mc.addon.cdgen.gsoc2019,
+ org.app4mc.addon.cdgen.gsoc2019.utils_amalthea
+Require-Bundle: org.eclipse.app4mc.amalthea.model,
+ org.junit,
+ org.eclipse.jdt.annotation
+Bundle-RequiredExecutionEnvironment: JavaSE-10
+Bundle-Vendor: Krawczyk et al

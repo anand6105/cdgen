@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<am:Amalthea xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:am="http://app4mc.eclipse.org/amalthea/0.9.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <swModel>
+    <tasks name="SFM" stimuli="periodic_33ms?type=PeriodicStimulus" preemption="preemptive" multipleTaskActivationLimit="0">
+      <callGraph>
+        <graphEntries xsi:type="am:CallSequence" name="">
+          <calls xsi:type="am:TaskRunnableCall" runnable="SFM_Function?type=Runnable"/>
+        </graphEntries>
+      </callGraph>
+    </tasks>
+    <tasks name="Localization" stimuli="periodic_400ms?type=PeriodicStimulus" preemption="preemptive" multipleTaskActivationLimit="0">
+      <callGraph>
+        <graphEntries xsi:type="am:CallSequence" name="">
+          <calls xsi:type="am:TaskRunnableCall" runnable="Localization_Function?type=Runnable"/>
+        </graphEntries>
+      </callGraph>
+    </tasks>
+    <tasks name="Lane_detection" stimuli="periodic_66ms?type=PeriodicStimulus" preemption="preemptive" multipleTaskActivationLimit="0">
+      <callGraph>
+        <graphEntries xsi:type="am:CallSequence" name="">
+          <calls xsi:type="am:TaskRunnableCall" runnable="Lane_Detection_Function?type=Runnable"/>
+        </graphEntries>
+      </callGraph>
+    </tasks>
+    <runnables name="Localization_Function" callback="false" service="false">
+      <runnableItems xsi:type="am:LabelAccess" data="Cloud_map_host?type=Label" access="read"/>
+      <runnableItems xsi:type="am:LabelAccess" data="Vehicle_status_host?type=Label" access="read"/>
+      <runnableItems xsi:type="am:Ticks">
+        <extended key="Denver?type=ProcessingUnitDefinition">
+          <value xsi:type="am:DiscreteValueStatistics" lowerBound="553415742" upperBound="589615742" average="5.62615742E8"/>
+        </extended>
+        <extended key="A57?type=ProcessingUnitDefinition">
+          <value xsi:type="am:DiscreteValueStatistics" lowerBound="733039355" upperBound="774839355" average="7.54439355E8"/>
+        </extended>
+        <extended key="GPU_def?type=ProcessingUnitDefinition">
+          <value xsi:type="am:DiscreteValueStatistics" lowerBound="175500000" upperBound="186000000" average="1.8E8"/>
+        </extended>
+      </runnableItems>
+      <runnableItems xsi:type="am:LabelAccess" data="x_car_host?type=Label" access="write"/>
+      <runnableItems xsi:type="am:LabelAccess" data="y_car_host?type=Label" access="write"/>
+      <runnableItems xsi:type="am:LabelAccess" data="yaw_car_host?type=Label" access="write"/>
+    </runnables>
+    <runnables name="Lane_Detection_Function" callback="false" service="false">
+      <runnableItems xsi:type="am:LabelAccess" data="Image_lane_lines_host?type=Label" access="read"/>
+      <runnableItems xsi:type="am:Ticks">
+        <extended key="Denver?type=ProcessingUnitDefinition">
+          <value xsi:type="am:DiscreteValueStatistics" lowerBound="76875648" upperBound="84475648" average="8.0075648E7"/>
+        </extended>
+        <extended key="A57?type=ProcessingUnitDefinition">
+          <value xsi:type="am:DiscreteValueStatistics" lowerBound="95689120" upperBound="102089120" average="9.868912E7"/>
+        </extended>
+        <extended key="GPU_def?type=ProcessingUnitDefinition">
+          <value xsi:type="am:DiscreteValueStatistics" lowerBound="36750000" upperBound="41000000" average="3.975E7"/>
+        </extended>
+      </runnableItems>
+      <runnableItems xsi:type="am:LabelAccess" data="Lane_boundaries_host?type=Label" access="write"/>
+    </runnables>
+    <runnables name="SFM_Function" callback="false" service="false">
+      <runnableItems xsi:type="am:LabelAccess" data="Image_SFM_host?type=Label" access="read"/>
+      <runnableItems xsi:type="am:Ticks">
+        <extended key="A57?type=ProcessingUnitDefinition">
+          <value xsi:type="am:DiscreteValueStatistics" lowerBound="48274300" upperBound="59003000" average="5.377531E7"/>
+        </extended>
+        <extended key="Denver?type=ProcessingUnitDefinition">
+          <value xsi:type="am:DiscreteValueStatistics" lowerBound="44363022" upperBound="55623380" average="4.953413E7"/>
+        </extended>
+        <extended key="GPU_def?type=ProcessingUnitDefinition">
+          <value xsi:type="am:DiscreteValueStatistics" lowerBound="10575000" upperBound="11850000" average="1.08E7"/>
+        </extended>
+      </runnableItems>
+      <runnableItems xsi:type="am:LabelAccess" data="Matrix_SFM_host?type=Label" access="write"/>
+    </runnables>
+    <labels name="Cloud_map_host" constant="false" bVolatile="false">
+      <size value="1500" unit="kB"/>
+    </labels>
+    <labels name="Vehicle_status_host" constant="false" bVolatile="false">
+      <size value="1" unit="kB"/>
+    </labels>
+    <labels name="x_car_host" constant="false" bVolatile="false">
+      <size value="1" unit="kB"/>
+    </labels>
+    <labels name="y_car_host" constant="false" bVolatile="false">
+      <size value="1" unit="kB"/>
+    </labels>
+    <labels name="yaw_car_host" constant="false" bVolatile="false">
+      <size value="1" unit="kB"/>
+    </labels>
+    <labels name="Image_SFM_host" constant="false" bVolatile="false">
+      <size value="2" unit="MB"/>
+    </labels>
+    <labels name="Matrix_SFM_host" constant="false" bVolatile="false">
+      <size value="24" unit="kB"/>
+    </labels>
+    <labels name="Image_lane_lines_host" constant="false" bVolatile="false">
+      <size value="2" unit="MB"/>
+    </labels>
+    <labels name="Lane_boundaries_host" constant="false" bVolatile="false">
+      <size value="256" unit="B"/>
+    </labels>
+  </swModel>
+  <hwModel>
+    <definitions xsi:type="am:ProcessingUnitDefinition" name="A57" puType="CPU"/>
+    <definitions xsi:type="am:ProcessingUnitDefinition" name="Denver" puType="CPU"/>
+    <definitions xsi:type="am:ProcessingUnitDefinition" name="GPU_def" puType="GPU"/>
+  </hwModel>
+  <stimuliModel>
+    <stimuli xsi:type="am:PeriodicStimulus" name="periodic_33ms">
+      <recurrence value="33" unit="ms"/>
+    </stimuli>
+    <stimuli xsi:type="am:PeriodicStimulus" name="periodic_66ms">
+      <recurrence value="66" unit="ms"/>
+    </stimuli>
+    <stimuli xsi:type="am:PeriodicStimulus" name="periodic_400ms">
+      <recurrence value="400" unit="ms"/>
+    </stimuli>
+  </stimuliModel>
+  <constraintsModel>
+    <requirements xsi:type="am:ProcessRequirement" name="Deadline_Task_SFM" process="SFM?type=Task">
+      <limit xsi:type="am:TimeRequirementLimit" limitType="UpperLimit" metric="ResponseTime">
+        <limitValue value="33" unit="ms"/>
+      </limit>
+    </requirements>
+    <requirements xsi:type="am:ProcessRequirement" name="Deadline_Task_Lane_Detection" process="Lane_detection?type=Task">
+      <limit xsi:type="am:TimeRequirementLimit" limitType="UpperLimit" metric="ResponseTime">
+        <limitValue value="66" unit="ms"/>
+      </limit>
+    </requirements>
+    <requirements xsi:type="am:ProcessRequirement" name="Deadline_Task_Localization" process="Localization?type=Task">
+      <limit xsi:type="am:TimeRequirementLimit" limitType="UpperLimit" metric="ResponseTime">
+        <limitValue value="400" unit="ms"/>
+      </limit>
+    </requirements>
+  </constraintsModel>
+  <mappingModel addressMappingType="address">
+    <taskAllocation task="Lane_detection?type=Task"/>
+    <taskAllocation task="Localization?type=Task"/>
+    <taskAllocation task="SFM?type=Task"/>
+  </mappingModel>
+</am:Amalthea>

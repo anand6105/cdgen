@@ -1,0 +1,2252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<am:Amalthea xmlns:am="http://app4mc.eclipse.org/amalthea/0.9.3" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmi:version="2.0">
+  <swModel>
+    <tasks name="Task_10ms" stimuli="periodic_10ms?type=PeriodicStimulus" preemption="preemptive" multipleTaskActivationLimit="1">
+      <customProperties key="priority">
+        <value xsi:type="am:StringObject" value="11" />
+      </customProperties>
+      <callGraph>
+        <graphEntries xsi:type="am:CallSequence" name="CS_Task_10ms">
+          <calls xsi:type="am:TaskRunnableCall" runnable="Runnable_10ms_0?type=Runnable" />
+          <calls xsi:type="am:TaskRunnableCall" runnable="Runnable_10ms_1?type=Runnable" />
+          <calls xsi:type="am:TaskRunnableCall" runnable="Runnable_10ms_2?type=Runnable" />
+          <calls xsi:type="am:TaskRunnableCall" runnable="Runnable_10ms_3?type=Runnable" />
+          <calls xsi:type="am:TaskRunnableCall" runnable="Runnable_10ms_4?type=Runnable" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+        </graphEntries>
+      </callGraph>
+    </tasks>
+    <tasks name="Task_20ms" stimuli="periodic_20ms?type=PeriodicStimulus" preemption="cooperative" multipleTaskActivationLimit="1">
+      <customProperties key="priority">
+        <value xsi:type="am:StringObject" value="9" />
+      </customProperties>
+      <callGraph>
+        <graphEntries xsi:type="am:CallSequence" name="CS_Task_20ms">
+          <calls xsi:type="am:TaskRunnableCall" runnable="Runnable_20ms_0?type=Runnable" />
+          <calls xsi:type="am:TaskRunnableCall" runnable="Runnable_20ms_1?type=Runnable" />
+          <calls xsi:type="am:TaskRunnableCall" runnable="Runnable_20ms_2?type=Runnable" />
+          <calls xsi:type="am:TaskRunnableCall" runnable="Runnable_20ms_3?type=Runnable" />
+          <calls xsi:type="am:TaskRunnableCall" runnable="Runnable_20ms_4?type=Runnable" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+        </graphEntries>
+      </callGraph>
+    </tasks>
+    <tasks name="Task_5ms" stimuli="periodic_5ms?type=PeriodicStimulus" preemption="preemptive" multipleTaskActivationLimit="1">
+      <customProperties key="priority">
+        <value xsi:type="am:StringObject" value="12" />
+      </customProperties>
+      <callGraph>
+        <graphEntries xsi:type="am:CallSequence" name="CS_Task_5ms">
+          <calls xsi:type="am:TaskRunnableCall" runnable="Runnable_5ms_0?type=Runnable" />
+          <calls xsi:type="am:TaskRunnableCall" runnable="Runnable_5ms_1?type=Runnable" />
+          <calls xsi:type="am:TaskRunnableCall" runnable="Runnable_5ms_2?type=Runnable" />
+          <calls xsi:type="am:TaskRunnableCall" runnable="Runnable_5ms_3?type=Runnable" />
+          <calls xsi:type="am:TaskRunnableCall" runnable="Runnable_5ms_4?type=Runnable" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+          <calls xsi:type="am:TaskRunnableCall" />
+        </graphEntries>
+      </callGraph>
+    </tasks>
+    <runnables name="Runnable_10ms_0" activations="periodic_10ms?type=PeriodicActivation" callback="false" service="false">
+      <runnableItems xsi:type="am:LabelAccess" data="Label_4071?type=Label" access="read" implementation="timed">
+        <customProperties key="COMMUNINCATION_TYPE">
+          <value xsi:type="am:StringObject" value="TIMED" />
+        </customProperties>
+        <statistic>
+          <value xsi:type="am:SingleValueStatistic" value="2.0" />
+        </statistic>
+      </runnableItems>
+      <runnableItems xsi:type="am:LabelAccess" data="Label_1867?type=Label" access="read" implementation="timed">
+        <customProperties key="COMMUNINCATION_TYPE">
+          <value xsi:type="am:StringObject" value="TIMED" />
+        </customProperties>
+        <statistic>
+          <value xsi:type="am:SingleValueStatistic" value="5.0" />
+        </statistic>
+      </runnableItems>
+      <runnableItems xsi:type="am:Ticks">
+        <default lowerBound="427" upperBound="561" pRemainPromille="5.0E-4" average="442" xsi:type="am:DiscreteValueWeibullEstimatorsDistribution" />
+      </runnableItems>
+      <runnableItems xsi:type="am:LabelAccess" data="Label_1867?type=Label" access="write" implementation="timed">
+        <customProperties key="COMMUNINCATION_TYPE">
+          <value xsi:type="am:StringObject" value="TIMED" />
+        </customProperties>
+      </runnableItems>
+    </runnables>
+    <runnables name="Runnable_20ms_0" activations="periodic_20ms?type=PeriodicActivation" callback="false" service="false">
+      <runnableItems xsi:type="am:LabelAccess" data="Label_4881?type=Label" access="read" implementation="implicit">
+        <customProperties key="COMMUNINCATION_TYPE">
+          <value xsi:type="am:StringObject" value="IMPLICIT" />
+        </customProperties>
+        <statistic>
+          <value xsi:type="am:SingleValueStatistic" value="4.0" />
+        </statistic>
+      </runnableItems>
+      <runnableItems xsi:type="am:LabelAccess" data="Label_6829?type=Label" access="read" implementation="implicit">
+        <customProperties key="COMMUNINCATION_TYPE">
+          <value xsi:type="am:StringObject" value="IMPLICIT" />
+        </customProperties>
+        <statistic>
+          <value xsi:type="am:SingleValueStatistic" value="5.0" />
+        </statistic>
+      </runnableItems>
+      <runnableItems xsi:type="am:Ticks">
+        <default lowerBound="927" upperBound="12478" pRemainPromille="5.0E-4" average="7557" xsi:type="am:DiscreteValueWeibullEstimatorsDistribution" />
+      </runnableItems>
+    </runnables>
+    <runnables name="Runnable_10ms_1" activations="periodic_10ms?type=PeriodicActivation" callback="false" service="false">
+      <runnableItems xsi:type="am:LabelAccess" data="Label_2655?type=Label" access="read" implementation="timed">
+        <customProperties key="COMMUNINCATION_TYPE">
+          <value xsi:type="am:StringObject" value="TIMED" />
+        </customProperties>
+        <statistic>
+          <value xsi:type="am:SingleValueStatistic" value="3.0" />
+        </statistic>
+      </runnableItems>
+      <runnableItems xsi:type="am:Ticks">
+        <default lowerBound="1739" upperBound="3253" pRemainPromille="5.0E-4" average="2502" xsi:type="am:DiscreteValueWeibullEstimatorsDistribution" />
+      </runnableItems>
+      <runnableItems xsi:type="am:LabelAccess" data="Label_1198?type=Label" access="write" implementation="timed">
+        <customProperties key="COMMUNINCATION_TYPE">
+          <value xsi:type="am:StringObject" value="TIMED" />
+        </customProperties>
+      </runnableItems>
+      <runnableItems xsi:type="am:LabelAccess" data="Label_4071?type=Label" access="write" implementation="timed">
+        <customProperties key="COMMUNINCATION_TYPE">
+          <value xsi:type="am:StringObject" value="TIMED" />
+        </customProperties>
+      </runnableItems>
+    </runnables>
+    <runnables name="Runnable_10ms_2" activations="periodic_10ms?type=PeriodicActivation" callback="false" service="false">
+      <runnableItems xsi:type="am:LabelAccess" data="Label_448?type=Label" access="read" implementation="timed">
+        <customProperties key="COMMUNINCATION_TYPE">
+          <value xsi:type="am:StringObject" value="TIMED" />
+        </customProperties>
+        <statistic>
+          <value xsi:type="am:SingleValueStatistic" value="4.0" />
+        </statistic>
+      </runnableItems>
+      <runnableItems xsi:type="am:Ticks">
+        <default lowerBound="143" upperBound="1273" pRemainPromille="5.0E-4" average="670" xsi:type="am:DiscreteValueWeibullEstimatorsDistribution" />
+      </runnableItems>
+      <runnableItems xsi:type="am:LabelAccess" data="Label_3103?type=Label" access="write" implementation="timed">
+        <customProperties key="COMMUNINCATION_TYPE">
+          <value xsi:type="am:StringObject" value="TIMED" />
+        </customProperties>
+      </runnableItems>
+    </runnables>
+    <runnables name="Runnable_10ms_3" activations="periodic_10ms?type=PeriodicActivation" callback="false" service="false">
+      <runnableItems xsi:type="am:LabelAccess" data="Label_1098?type=Label" access="read" implementation="timed">
+        <customProperties key="COMMUNINCATION_TYPE">
+          <value xsi:type="am:StringObject" value="TIMED" />
+        </customProperties>
+        <statistic>
+          <value xsi:type="am:SingleValueStatistic" value="3.0" />
+        </statistic>
+      </runnableItems>
+      <runnableItems xsi:type="am:Ticks">
+        <default lowerBound="12545" upperBound="23334" pRemainPromille="5.0E-4" average="15488" xsi:type="am:DiscreteValueWeibullEstimatorsDistribution" />
+      </runnableItems>
+      <runnableItems xsi:type="am:LabelAccess" data="Label_87?type=Label" access="write" implementation="timed">
+        <customProperties key="COMMUNINCATION_TYPE">
+          <value xsi:type="am:StringObject" value="TIMED" />
+        </customProperties>
+      </runnableItems>
+    </runnables>
+    <runnables name="Runnable_20ms_1" activations="periodic_20ms?type=PeriodicActivation" callback="false" service="false">
+      <runnableItems xsi:type="am:LabelAccess" data="Label_2494?type=Label" access="read" implementation="implicit">
+        <customProperties key="COMMUNINCATION_TYPE">
+          <value xsi:type="am:StringObject" value="IMPLICIT" />
+        </customProperties>
+        <statistic>
+          <value xsi:type="am:SingleValueStatistic" value="4.0" />
+        </statistic>
+      </runnableItems>
+      <runnableItems xsi:type="am:LabelAccess" data="Label_3000?type=Label" access="read" implementation="implicit">
+        <customProperties key="COMMUNINCATION_TYPE">
+          <value xsi:type="am:StringObject" value="IMPLICIT" />
+        </customProperties>
+        <statistic>
+          <value xsi:type="am:SingleValueStatistic" value="3.0" />
+        </statistic>
+      </runnableItems>
+      <runnableItems xsi:type="am:Ticks">
+        <default lowerBound="15175" upperBound="22953" pRemainPromille="5.0E-4" average="20142" xsi:type="am:DiscreteValueWeibullEstimatorsDistribution" />
+      </runnableItems>
+      <runnableItems xsi:type="am:LabelAccess" access="write" implementation="implicit">
+        <customProperties key="COMMUNINCATION_TYPE">
+          <value xsi:type="am:StringObject" value="IMPLICIT" />
+        </customProperties>
+      </runnableItems>
+    </runnables>
+    <runnables name="Runnable_10ms_4" activations="periodic_10ms?type=PeriodicActivation" callback="false" service="false">
+      <runnableItems xsi:type="am:LabelAccess" data="Label_2557?type=Label" access="read" implementation="explicit">
+        <statistic>
+          <value xsi:type="am:SingleValueStatistic" value="4.0" />
+        </statistic>
+      </runnableItems>
+      <runnableItems xsi:type="am:Ticks">
+        <default lowerBound="1846" upperBound="9278" pRemainPromille="5.0E-4" average="6888" xsi:type="am:DiscreteValueWeibullEstimatorsDistribution" />
+      </runnableItems>
+      <runnableItems xsi:type="am:LabelAccess" data="Label_1565?type=Label" access="write" implementation="timed">
+        <customProperties key="COMMUNINCATION_TYPE">
+          <value xsi:type="am:StringObject" value="TIMED" />
+        </customProperties>
+      </runnableItems>
+      <runnableItems xsi:type="am:LabelAccess" data="Label_448?type=Label" access="write" implementation="timed">
+        <customProperties key="COMMUNINCATION_TYPE">
+          <value xsi:type="am:StringObject" value="TIMED" />
+        </customProperties>
+      </runnableItems>
+    </runnables>
+    <runnables name="Runnable_20ms_2" activations="periodic_20ms?type=PeriodicActivation" callback="false" service="false">
+      <runnableItems xsi:type="am:LabelAccess" data="Label_2377?type=Label" access="read" implementation="explicit">
+        <statistic>
+          <value xsi:type="am:SingleValueStatistic" value="5.0" />
+        </statistic>
+      </runnableItems>
+      <runnableItems xsi:type="am:Ticks">
+        <default lowerBound="4685" upperBound="8086" pRemainPromille="5.0E-4" average="5179" xsi:type="am:DiscreteValueWeibullEstimatorsDistribution" />
+      </runnableItems>
+      <runnableItems xsi:type="am:LabelAccess" data="Label_3000?type=Label" access="write" implementation="implicit">
+        <customProperties key="COMMUNINCATION_TYPE">
+          <value xsi:type="am:StringObject" value="IMPLICIT" />
+        </customProperties>
+      </runnableItems>
+    </runnables>
+    <runnables name="Runnable_20ms_3" activations="periodic_20ms?type=PeriodicActivation" callback="false" service="false">
+      <runnableItems xsi:type="am:LabelAccess" data="Label_2699?type=Label" access="read" implementation="implicit">
+        <customProperties key="COMMUNINCATION_TYPE">
+          <value xsi:type="am:StringObject" value="IMPLICIT" />
+        </customProperties>
+        <statistic>
+          <value xsi:type="am:SingleValueStatistic" value="5.0" />
+        </statistic>
+      </runnableItems>
+      <runnableItems xsi:type="am:Ticks">
+        <default lowerBound="86" upperBound="640" pRemainPromille="5.0E-4" average="431" xsi:type="am:DiscreteValueWeibullEstimatorsDistribution" />
+      </runnableItems>
+      <runnableItems xsi:type="am:LabelAccess" data="Label_2844?type=Label" access="write" implementation="implicit">
+        <customProperties key="COMMUNINCATION_TYPE">
+          <value xsi:type="am:StringObject" value="IMPLICIT" />
+        </customProperties>
+      </runnableItems>
+    </runnables>
+    <runnables name="Runnable_5ms_0" activations="periodic_5ms?type=PeriodicActivation" callback="false" service="false">
+      <runnableItems xsi:type="am:LabelAccess" data="Label_744?type=Label" access="read" implementation="explicit">
+        <statistic>
+          <value xsi:type="am:SingleValueStatistic" value="3.0" />
+        </statistic>
+      </runnableItems>
+      <runnableItems xsi:type="am:LabelAccess" data="Label_1394?type=Label" access="read" implementation="timed">
+        <customProperties key="COMMUNINCATION_TYPE">
+          <value xsi:type="am:StringObject" value="TIMED" />
+        </customProperties>
+        <statistic>
+          <value xsi:type="am:SingleValueStatistic" value="3.0" />
+        </statistic>
+      </runnableItems>
+      <runnableItems xsi:type="am:Ticks">
+        <default lowerBound="4702" upperBound="13442" pRemainPromille="5.0E-4" average="10900" xsi:type="am:DiscreteValueWeibullEstimatorsDistribution" />
+      </runnableItems>
+      <runnableItems xsi:type="am:LabelAccess" data="Label_2492?type=Label" access="write" implementation="timed">
+        <customProperties key="COMMUNINCATION_TYPE">
+          <value xsi:type="am:StringObject" value="TIMED" />
+        </customProperties>
+      </runnableItems>
+    </runnables>
+    <runnables name="Runnable_20ms_4" activations="periodic_20ms?type=PeriodicActivation" callback="false" service="false">
+      <runnableItems xsi:type="am:LabelAccess" data="Label_2832?type=Label" access="read" implementation="implicit">
+        <customProperties key="COMMUNINCATION_TYPE">
+          <value xsi:type="am:StringObject" value="IMPLICIT" />
+        </customProperties>
+        <statistic>
+          <value xsi:type="am:SingleValueStatistic" value="2.0" />
+        </statistic>
+      </runnableItems>
+      <runnableItems xsi:type="am:Ticks">
+        <default lowerBound="4236" upperBound="7538" pRemainPromille="5.0E-4" average="6600" xsi:type="am:DiscreteValueWeibullEstimatorsDistribution" />
+      </runnableItems>
+      <runnableItems xsi:type="am:LabelAccess" data="Label_1837?type=Label" access="write" implementation="implicit">
+        <customProperties key="COMMUNINCATION_TYPE">
+          <value xsi:type="am:StringObject" value="IMPLICIT" />
+        </customProperties>
+      </runnableItems>
+    </runnables>
+    <runnables name="Runnable_5ms_1" activations="periodic_5ms?type=PeriodicActivation" callback="false" service="false">
+      <runnableItems xsi:type="am:Ticks">
+        <default lowerBound="1766" upperBound="2572" pRemainPromille="5.0E-4" average="2097" xsi:type="am:DiscreteValueWeibullEstimatorsDistribution" />
+      </runnableItems>
+      <runnableItems xsi:type="am:LabelAccess" data="Label_9129?type=Label" access="write" implementation="timed">
+        <customProperties key="COMMUNINCATION_TYPE">
+          <value xsi:type="am:StringObject" value="TIMED" />
+        </customProperties>
+      </runnableItems>
+    </runnables>
+    <runnables name="Runnable_5ms_2" activations="periodic_5ms?type=PeriodicActivation" callback="false" service="false">
+      <runnableItems xsi:type="am:LabelAccess" data="Label_285?type=Label" access="read" implementation="timed">
+        <customProperties key="COMMUNINCATION_TYPE">
+          <value xsi:type="am:StringObject" value="TIMED" />
+        </customProperties>
+        <statistic>
+          <value xsi:type="am:SingleValueStatistic" value="2.0" />
+        </statistic>
+      </runnableItems>
+      <runnableItems xsi:type="am:Ticks">
+        <default lowerBound="1577" upperBound="4105" pRemainPromille="5.0E-4" average="2656" xsi:type="am:DiscreteValueWeibullEstimatorsDistribution" />
+      </runnableItems>
+      <runnableItems xsi:type="am:LabelAccess" data="Label_285?type=Label" access="write" implementation="timed">
+        <customProperties key="COMMUNINCATION_TYPE">
+          <value xsi:type="am:StringObject" value="TIMED" />
+        </customProperties>
+      </runnableItems>
+    </runnables>
+    <runnables name="Runnable_5ms_3" activations="periodic_5ms?type=PeriodicActivation" callback="false" service="false">
+      <runnableItems xsi:type="am:LabelAccess" data="Label_2145?type=Label" access="read" implementation="timed">
+        <customProperties key="COMMUNINCATION_TYPE">
+          <value xsi:type="am:StringObject" value="TIMED" />
+        </customProperties>
+        <statistic>
+          <value xsi:type="am:SingleValueStatistic" value="2.0" />
+        </statistic>
+      </runnableItems>
+      <runnableItems xsi:type="am:Ticks">
+        <default lowerBound="471" upperBound="2806" pRemainPromille="5.0E-4" average="2126" xsi:type="am:DiscreteValueWeibullEstimatorsDistribution" />
+      </runnableItems>
+      <runnableItems xsi:type="am:LabelAccess" data="Label_1394?type=Label" access="write" implementation="timed">
+        <customProperties key="COMMUNINCATION_TYPE">
+          <value xsi:type="am:StringObject" value="TIMED" />
+        </customProperties>
+      </runnableItems>
+    </runnables>
+    <runnables name="Runnable_5ms_4" activations="periodic_5ms?type=PeriodicActivation" callback="false" service="false">
+      <runnableItems xsi:type="am:LabelAccess" access="read" implementation="explicit">
+        <statistic>
+          <value xsi:type="am:SingleValueStatistic" value="2.0" />
+        </statistic>
+      </runnableItems>
+      <runnableItems xsi:type="am:Ticks">
+        <default lowerBound="2488" upperBound="3965" pRemainPromille="5.0E-4" average="2698" xsi:type="am:DiscreteValueWeibullEstimatorsDistribution" />
+      </runnableItems>
+      <runnableItems xsi:type="am:LabelAccess" data="Label_2070?type=Label" access="write" implementation="timed">
+        <customProperties key="COMMUNINCATION_TYPE">
+          <value xsi:type="am:StringObject" value="TIMED" />
+        </customProperties>
+      </runnableItems>
+    </runnables>
+    <labels name="Label_87" constant="false" bVolatile="false" stabilityLevel="process">
+      <customProperties key="COMMUNINCATION_TYPE">
+        <value xsi:type="am:StringObject" value="COMMUNICATION_BUFFERED" />
+      </customProperties>
+      <size value="16" unit="bit" />
+    </labels>
+    <labels name="Label_285" constant="false" bVolatile="false" stabilityLevel="process">
+      <customProperties key="COMMUNINCATION_TYPE">
+        <value xsi:type="am:StringObject" value="COMMUNICATION_BUFFERED" />
+      </customProperties>
+      <size value="8" unit="bit" />
+    </labels>
+    <labels name="Label_448" constant="false" bVolatile="false" stabilityLevel="process">
+      <customProperties key="COMMUNINCATION_TYPE">
+        <value xsi:type="am:StringObject" value="COMMUNICATION_BUFFERED" />
+      </customProperties>
+      <size value="8" unit="bit" />
+    </labels>
+    <labels name="Label_744" constant="false" bVolatile="false" stabilityLevel="runnable">
+      <customProperties key="COMMUNINCATION_TYPE">
+        <value xsi:type="am:StringObject" value="EXPLICIT" />
+      </customProperties>
+      <size value="16" unit="bit" />
+    </labels>
+    <labels name="Label_1098" constant="false" bVolatile="false" stabilityLevel="process">
+      <customProperties key="COMMUNINCATION_TYPE">
+        <value xsi:type="am:StringObject" value="COMMUNICATION_BUFFERED" />
+      </customProperties>
+      <size value="16" unit="bit" />
+    </labels>
+    <labels name="Label_1198" constant="false" bVolatile="false" stabilityLevel="process">
+      <customProperties key="COMMUNINCATION_TYPE">
+        <value xsi:type="am:StringObject" value="COMMUNICATION_BUFFERED" />
+      </customProperties>
+      <size value="8" unit="bit" />
+    </labels>
+    <labels name="Label_1394" constant="false" bVolatile="false" stabilityLevel="process">
+      <customProperties key="COMMUNINCATION_TYPE">
+        <value xsi:type="am:StringObject" value="COMMUNICATION_BUFFERED" />
+      </customProperties>
+      <size value="8" unit="bit" />
+    </labels>
+    <labels name="Label_1565" constant="false" bVolatile="false" stabilityLevel="process">
+      <customProperties key="COMMUNINCATION_TYPE">
+        <value xsi:type="am:StringObject" value="COMMUNICATION_BUFFERED" />
+      </customProperties>
+      <size value="8" unit="bit" />
+    </labels>
+    <labels name="Label_1837" constant="false" bVolatile="false" stabilityLevel="process">
+      <customProperties key="COMMUNINCATION_TYPE">
+        <value xsi:type="am:StringObject" value="COMMUNICATION_BUFFERED" />
+      </customProperties>
+      <size value="8" unit="bit" />
+    </labels>
+    <labels name="Label_1867" constant="false" bVolatile="false" stabilityLevel="process">
+      <customProperties key="COMMUNINCATION_TYPE">
+        <value xsi:type="am:StringObject" value="COMMUNICATION_BUFFERED" />
+      </customProperties>
+      <size value="8" unit="bit" />
+    </labels>
+    <labels name="Label_2070" constant="false" bVolatile="false" stabilityLevel="process">
+      <customProperties key="COMMUNINCATION_TYPE">
+        <value xsi:type="am:StringObject" value="COMMUNICATION_BUFFERED" />
+      </customProperties>
+      <size value="8" unit="bit" />
+    </labels>
+    <labels name="Label_2145" constant="false" bVolatile="false" stabilityLevel="process">
+      <customProperties key="COMMUNINCATION_TYPE">
+        <value xsi:type="am:StringObject" value="COMMUNICATION_BUFFERED" />
+      </customProperties>
+      <size value="8" unit="bit" />
+    </labels>
+    <labels name="Label_2377" constant="false" bVolatile="false" stabilityLevel="runnable">
+      <customProperties key="COMMUNINCATION_TYPE">
+        <value xsi:type="am:StringObject" value="EXPLICIT" />
+      </customProperties>
+      <size value="16" unit="bit" />
+    </labels>
+    <labels name="Label_2492" constant="false" bVolatile="false" stabilityLevel="process">
+      <customProperties key="COMMUNINCATION_TYPE">
+        <value xsi:type="am:StringObject" value="COMMUNICATION_BUFFERED" />
+      </customProperties>
+      <size value="16" unit="bit" />
+    </labels>
+    <labels name="Label_2494" constant="false" bVolatile="false" stabilityLevel="process">
+      <customProperties key="COMMUNINCATION_TYPE">
+        <value xsi:type="am:StringObject" value="COMMUNICATION_BUFFERED" />
+      </customProperties>
+      <size value="8" unit="bit" />
+    </labels>
+    <labels name="Label_2557" constant="false" bVolatile="false" stabilityLevel="runnable">
+      <customProperties key="COMMUNINCATION_TYPE">
+        <value xsi:type="am:StringObject" value="EXPLICIT" />
+      </customProperties>
+      <size value="8" unit="bit" />
+    </labels>
+    <labels name="Label_2655" constant="false" bVolatile="false" stabilityLevel="process">
+      <customProperties key="COMMUNINCATION_TYPE">
+        <value xsi:type="am:StringObject" value="COMMUNICATION_BUFFERED" />
+      </customProperties>
+      <size value="16" unit="bit" />
+    </labels>
+    <labels name="Label_2699" constant="false" bVolatile="false" stabilityLevel="process">
+      <customProperties key="COMMUNINCATION_TYPE">
+        <value xsi:type="am:StringObject" value="COMMUNICATION_BUFFERED" />
+      </customProperties>
+      <size value="1024" unit="bit" />
+    </labels>
+    <labels name="Label_2832" constant="false" bVolatile="false" stabilityLevel="process">
+      <customProperties key="COMMUNINCATION_TYPE">
+        <value xsi:type="am:StringObject" value="COMMUNICATION_BUFFERED" />
+      </customProperties>
+      <size value="8" unit="bit" />
+    </labels>
+    <labels name="Label_2844" constant="false" bVolatile="false" stabilityLevel="process">
+      <customProperties key="COMMUNINCATION_TYPE">
+        <value xsi:type="am:StringObject" value="COMMUNICATION_BUFFERED" />
+      </customProperties>
+      <size value="8" unit="bit" />
+    </labels>
+    <labels name="Label_3000" constant="false" bVolatile="false" stabilityLevel="process">
+      <customProperties key="COMMUNINCATION_TYPE">
+        <value xsi:type="am:StringObject" value="COMMUNICATION_BUFFERED" />
+      </customProperties>
+      <size value="16" unit="bit" />
+    </labels>
+    <labels name="Label_3103" constant="false" bVolatile="false" stabilityLevel="process">
+      <customProperties key="COMMUNINCATION_TYPE">
+        <value xsi:type="am:StringObject" value="COMMUNICATION_BUFFERED" />
+      </customProperties>
+      <size value="16" unit="bit" />
+    </labels>
+    <labels name="Label_4071" constant="false" bVolatile="false" stabilityLevel="process">
+      <customProperties key="COMMUNINCATION_TYPE">
+        <value xsi:type="am:StringObject" value="COMMUNICATION_BUFFERED" />
+      </customProperties>
+      <size value="16" unit="bit" />
+    </labels>
+    <labels name="Label_4881" constant="false" bVolatile="false" stabilityLevel="process">
+      <customProperties key="COMMUNINCATION_TYPE">
+        <value xsi:type="am:StringObject" value="COMMUNICATION_BUFFERED" />
+      </customProperties>
+      <size value="16" unit="bit" />
+    </labels>
+    <labels name="Label_6829" constant="true" bVolatile="false" stabilityLevel="process">
+      <customProperties key="COMMUNINCATION_TYPE">
+        <value xsi:type="am:StringObject" value="COMMUNICATION_BUFFERED" />
+      </customProperties>
+      <size value="32" unit="bit" />
+    </labels>
+    <labels name="Label_9129" constant="false" bVolatile="false" stabilityLevel="process">
+      <customProperties key="COMMUNINCATION_TYPE">
+        <value xsi:type="am:StringObject" value="COMMUNICATION_BUFFERED" />
+      </customProperties>
+      <size value="16" unit="bit" />
+    </labels>
+    <activations xsi:type="am:PeriodicActivation" name="periodic_10ms">
+      <min value="10" unit="ms" />
+      <max value="10" unit="ms" />
+    </activations>
+    <activations xsi:type="am:PeriodicActivation" name="periodic_20ms">
+      <min value="20" unit="ms" />
+      <max value="20" unit="ms" />
+    </activations>
+    <activations xsi:type="am:PeriodicActivation" name="periodic_5ms">
+      <min value="5" unit="ms" />
+      <max value="5" unit="ms" />
+    </activations>
+  </swModel>
+  <hwModel>
+    <definitions xsi:type="am:MemoryDefinition" name="EpiLocalRam_Type">
+      <size value="32" unit="kB" />
+      <accessLatency xsi:type="am:DiscreteValueConstant" value="1" />
+    </definitions>
+    <definitions xsi:type="am:MemoryDefinition" name="1GB_DDR3L_Type">
+      <size value="1" unit="GB" />
+      <accessLatency xsi:type="am:DiscreteValueConstant" value="1" />
+    </definitions>
+    <definitions xsi:type="am:ProcessingUnitDefinition" name="Epiphany-Type" />
+    <definitions xsi:type="am:ProcessingUnitDefinition" name="Zynq-Z-7010-Type" puType="Accelerator" />
+    <featureCategories name="featureCategoyEpi" featureType="performance">
+      <features name="IPC_1.0" value="1.0" />
+    </featureCategories>
+    <featureCategories name="featureCategoryZynq" featureType="performance">
+      <features name="IPC_1.0" value="1.0" />
+    </featureCategories>
+    <structures name="AdaptevaParallella" structureType="System">
+      <structures name="ParallellaBoard" structureType="ECU">
+        <structures name="Zyng Z-7010" structureType="SoC">
+          <modules xsi:type="am:ProcessingUnit" name="Zyng-A9-C1" frequencyDomain="700MHz?type=FrequencyDomain" definition="Zynq-Z-7010-Type?type=ProcessingUnitDefinition" />
+          <modules xsi:type="am:ProcessingUnit" name="Zyng-A9-C2" frequencyDomain="700MHz?type=FrequencyDomain" definition="Zynq-Z-7010-Type?type=ProcessingUnitDefinition" />
+        </structures>
+        <structures name="Epiphany" structureType="SoC">
+          <modules xsi:type="am:Memory" name="Epi_Mem_0x0" frequencyDomain="700MHz?type=FrequencyDomain" definition="EpiLocalRam_Type?type=MemoryDefinition" />
+          <modules xsi:type="am:Memory" name="Epi_Mem_1x0" frequencyDomain="700MHz?type=FrequencyDomain" definition="EpiLocalRam_Type?type=MemoryDefinition" />
+          <modules xsi:type="am:Memory" name="Epi_Mem_2x0" frequencyDomain="700MHz?type=FrequencyDomain" definition="EpiLocalRam_Type?type=MemoryDefinition" />
+          <modules xsi:type="am:Memory" name="Epi_Mem_3x0" frequencyDomain="700MHz?type=FrequencyDomain" definition="EpiLocalRam_Type?type=MemoryDefinition" />
+          <modules xsi:type="am:Memory" name="Epi_Mem_0x1" frequencyDomain="700MHz?type=FrequencyDomain" definition="EpiLocalRam_Type?type=MemoryDefinition" />
+          <modules xsi:type="am:Memory" name="Epi_Mem_1x1" frequencyDomain="700MHz?type=FrequencyDomain" definition="EpiLocalRam_Type?type=MemoryDefinition" />
+          <modules xsi:type="am:Memory" name="Epi_Mem_2x1" frequencyDomain="700MHz?type=FrequencyDomain" definition="EpiLocalRam_Type?type=MemoryDefinition" />
+          <modules xsi:type="am:Memory" name="Epi_Mem_3x1" frequencyDomain="700MHz?type=FrequencyDomain" definition="EpiLocalRam_Type?type=MemoryDefinition" />
+          <modules xsi:type="am:Memory" name="Epi_Mem_0x2" frequencyDomain="700MHz?type=FrequencyDomain" definition="EpiLocalRam_Type?type=MemoryDefinition" />
+          <modules xsi:type="am:Memory" name="Epi_Mem_1x2" frequencyDomain="700MHz?type=FrequencyDomain" definition="EpiLocalRam_Type?type=MemoryDefinition" />
+          <modules xsi:type="am:Memory" name="Epi_Mem_2x2" frequencyDomain="700MHz?type=FrequencyDomain" definition="EpiLocalRam_Type?type=MemoryDefinition" />
+          <modules xsi:type="am:Memory" name="Epi_Mem_3x2" frequencyDomain="700MHz?type=FrequencyDomain" definition="EpiLocalRam_Type?type=MemoryDefinition" />
+          <modules xsi:type="am:Memory" name="Epi_Mem_0x3" frequencyDomain="700MHz?type=FrequencyDomain" definition="EpiLocalRam_Type?type=MemoryDefinition" />
+          <modules xsi:type="am:Memory" name="Epi_Mem_1x3" frequencyDomain="700MHz?type=FrequencyDomain" definition="EpiLocalRam_Type?type=MemoryDefinition" />
+          <modules xsi:type="am:Memory" name="Epi_Mem_2x3" frequencyDomain="700MHz?type=FrequencyDomain" definition="EpiLocalRam_Type?type=MemoryDefinition" />
+          <modules xsi:type="am:Memory" name="Epi_Mem_3x3" frequencyDomain="700MHz?type=FrequencyDomain" definition="EpiLocalRam_Type?type=MemoryDefinition" />
+          <modules xsi:type="am:ProcessingUnit" name="Epi_Core_0x0" frequencyDomain="700MHz?type=FrequencyDomain" definition="Epiphany-Type?type=ProcessingUnitDefinition">
+            <accessElements name="Path_C0x0-M0x0" destination="Epi_Mem_0x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="8" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="1" />
+            </accessElements>
+            <accessElements name="Path_C0x0-M1x0" destination="Epi_Mem_1x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C0x0-M2x0" destination="Epi_Mem_2x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C0x0-M3x0" destination="Epi_Mem_3x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C0x0-M0x1" destination="Epi_Mem_0x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C0x0-M1x1" destination="Epi_Mem_1x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C0x0-M2x1" destination="Epi_Mem_2x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C0x0-M3x1" destination="Epi_Mem_3x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C0x0-M0x2" destination="Epi_Mem_0x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C0x0-M1x2" destination="Epi_Mem_1x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C0x0-M2x2" destination="Epi_Mem_2x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C0x0-M3x2" destination="Epi_Mem_3x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="16" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="9" />
+            </accessElements>
+            <accessElements name="Path_C0x0-M0x3" destination="Epi_Mem_0x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C0x0-M1x3" destination="Epi_Mem_1x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C0x0-M2x3" destination="Epi_Mem_2x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="16" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="9" />
+            </accessElements>
+            <accessElements name="Path_C0x0-M3x3" destination="Epi_Mem_3x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="17" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="10" />
+            </accessElements>
+          </modules>
+          <modules xsi:type="am:ProcessingUnit" name="Epi_Core_1x0" frequencyDomain="700MHz?type=FrequencyDomain" definition="Epiphany-Type?type=ProcessingUnitDefinition">
+            <accessElements name="Path_C1x0-M0x0" destination="Epi_Mem_0x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C1x0-M1x0" destination="Epi_Mem_1x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="8" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="1" />
+            </accessElements>
+            <accessElements name="Path_C1x0-M2x0" destination="Epi_Mem_2x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C1x0-M3x0" destination="Epi_Mem_3x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C1x0-M0x1" destination="Epi_Mem_0x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C1x0-M1x1" destination="Epi_Mem_1x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C1x0-M2x1" destination="Epi_Mem_2x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C1x0-M3x1" destination="Epi_Mem_3x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C1x0-M0x2" destination="Epi_Mem_0x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C1x0-M1x2" destination="Epi_Mem_1x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C1x0-M2x2" destination="Epi_Mem_2x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C1x0-M3x2" destination="Epi_Mem_3x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C1x0-M0x3" destination="Epi_Mem_0x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C1x0-M1x3" destination="Epi_Mem_1x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C1x0-M2x3" destination="Epi_Mem_2x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C1x0-M3x3" destination="Epi_Mem_3x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="16" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="9" />
+            </accessElements>
+          </modules>
+          <modules xsi:type="am:ProcessingUnit" name="Epi_Core_2x0" frequencyDomain="700MHz?type=FrequencyDomain" definition="Epiphany-Type?type=ProcessingUnitDefinition">
+            <accessElements name="Path_C2x0-M0x0" destination="Epi_Mem_0x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C2x0-M1x0" destination="Epi_Mem_1x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C2x0-M2x0" destination="Epi_Mem_2x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="8" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="1" />
+            </accessElements>
+            <accessElements name="Path_C2x0-M3x0" destination="Epi_Mem_3x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C2x0-M0x1" destination="Epi_Mem_0x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C2x0-M1x1" destination="Epi_Mem_1x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C2x0-M2x1" destination="Epi_Mem_2x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C2x0-M3x1" destination="Epi_Mem_3x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C2x0-M0x2" destination="Epi_Mem_0x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C2x0-M1x2" destination="Epi_Mem_1x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C2x0-M2x2" destination="Epi_Mem_2x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C2x0-M3x2" destination="Epi_Mem_3x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C2x0-M0x3" destination="Epi_Mem_0x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="16" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="9" />
+            </accessElements>
+            <accessElements name="Path_C2x0-M1x3" destination="Epi_Mem_1x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C2x0-M2x3" destination="Epi_Mem_2x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C2x0-M3x3" destination="Epi_Mem_3x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+          </modules>
+          <modules xsi:type="am:ProcessingUnit" name="Epi_Core_3x0" frequencyDomain="700MHz?type=FrequencyDomain" definition="Epiphany-Type?type=ProcessingUnitDefinition">
+            <accessElements name="Path_C3x0-M0x0" destination="Epi_Mem_0x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C3x0-M1x0" destination="Epi_Mem_1x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C3x0-M2x0" destination="Epi_Mem_2x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C3x0-M3x0" destination="Epi_Mem_3x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="8" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="1" />
+            </accessElements>
+            <accessElements name="Path_C3x0-M0x1" destination="Epi_Mem_0x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C3x0-M1x1" destination="Epi_Mem_1x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C3x0-M2x1" destination="Epi_Mem_2x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C3x0-M3x1" destination="Epi_Mem_3x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C3x0-M0x2" destination="Epi_Mem_0x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="16" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="9" />
+            </accessElements>
+            <accessElements name="Path_C3x0-M1x2" destination="Epi_Mem_1x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C3x0-M2x2" destination="Epi_Mem_2x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C3x0-M3x2" destination="Epi_Mem_3x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C3x0-M0x3" destination="Epi_Mem_0x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="17" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="10" />
+            </accessElements>
+            <accessElements name="Path_C3x0-M1x3" destination="Epi_Mem_1x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="16" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="9" />
+            </accessElements>
+            <accessElements name="Path_C3x0-M2x3" destination="Epi_Mem_2x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C3x0-M3x3" destination="Epi_Mem_3x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+          </modules>
+          <modules xsi:type="am:ProcessingUnit" name="Epi_Core_0x1" frequencyDomain="700MHz?type=FrequencyDomain" definition="Epiphany-Type?type=ProcessingUnitDefinition">
+            <accessElements name="Path_C0x1-M0x0" destination="Epi_Mem_0x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C0x1-M1x0" destination="Epi_Mem_1x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C0x1-M2x0" destination="Epi_Mem_2x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C0x1-M3x0" destination="Epi_Mem_3x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C0x1-M0x1" destination="Epi_Mem_0x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="8" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="1" />
+            </accessElements>
+            <accessElements name="Path_C0x1-M1x1" destination="Epi_Mem_1x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C0x1-M2x1" destination="Epi_Mem_2x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C0x1-M3x1" destination="Epi_Mem_3x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C0x1-M0x2" destination="Epi_Mem_0x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C0x1-M1x2" destination="Epi_Mem_1x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C0x1-M2x2" destination="Epi_Mem_2x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C0x1-M3x2" destination="Epi_Mem_3x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C0x1-M0x3" destination="Epi_Mem_0x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C0x1-M1x3" destination="Epi_Mem_1x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C0x1-M2x3" destination="Epi_Mem_2x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C0x1-M3x3" destination="Epi_Mem_3x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="16" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="9" />
+            </accessElements>
+          </modules>
+          <modules xsi:type="am:ProcessingUnit" name="Epi_Core_1x1" frequencyDomain="700MHz?type=FrequencyDomain" definition="Epiphany-Type?type=ProcessingUnitDefinition">
+            <accessElements name="Path_C1x1-M0x0" destination="Epi_Mem_0x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C1x1-M1x0" destination="Epi_Mem_1x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C1x1-M2x0" destination="Epi_Mem_2x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C1x1-M3x0" destination="Epi_Mem_3x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C1x1-M0x1" destination="Epi_Mem_0x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C1x1-M1x1" destination="Epi_Mem_1x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="8" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="1" />
+            </accessElements>
+            <accessElements name="Path_C1x1-M2x1" destination="Epi_Mem_2x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C1x1-M3x1" destination="Epi_Mem_3x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C1x1-M0x2" destination="Epi_Mem_0x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C1x1-M1x2" destination="Epi_Mem_1x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C1x1-M2x2" destination="Epi_Mem_2x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C1x1-M3x2" destination="Epi_Mem_3x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C1x1-M0x3" destination="Epi_Mem_0x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C1x1-M1x3" destination="Epi_Mem_1x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C1x1-M2x3" destination="Epi_Mem_2x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C1x1-M3x3" destination="Epi_Mem_3x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+          </modules>
+          <modules xsi:type="am:ProcessingUnit" name="Epi_Core_2x1" frequencyDomain="700MHz?type=FrequencyDomain" definition="Epiphany-Type?type=ProcessingUnitDefinition">
+            <accessElements name="Path_C2x1-M0x0" destination="Epi_Mem_0x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C2x1-M1x0" destination="Epi_Mem_1x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C2x1-M2x0" destination="Epi_Mem_2x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C2x1-M3x0" destination="Epi_Mem_3x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C2x1-M0x1" destination="Epi_Mem_0x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C2x1-M1x1" destination="Epi_Mem_1x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C2x1-M2x1" destination="Epi_Mem_2x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="8" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="1" />
+            </accessElements>
+            <accessElements name="Path_C2x1-M3x1" destination="Epi_Mem_3x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C2x1-M0x2" destination="Epi_Mem_0x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C2x1-M1x2" destination="Epi_Mem_1x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C2x1-M2x2" destination="Epi_Mem_2x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C2x1-M3x2" destination="Epi_Mem_3x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C2x1-M0x3" destination="Epi_Mem_0x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C2x1-M1x3" destination="Epi_Mem_1x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C2x1-M2x3" destination="Epi_Mem_2x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C2x1-M3x3" destination="Epi_Mem_3x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+          </modules>
+          <modules xsi:type="am:ProcessingUnit" name="Epi_Core_3x1" frequencyDomain="700MHz?type=FrequencyDomain" definition="Epiphany-Type?type=ProcessingUnitDefinition">
+            <accessElements name="Path_C3x1-M0x0" destination="Epi_Mem_0x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C3x1-M1x0" destination="Epi_Mem_1x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C3x1-M2x0" destination="Epi_Mem_2x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C3x1-M3x0" destination="Epi_Mem_3x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C3x1-M0x1" destination="Epi_Mem_0x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C3x1-M1x1" destination="Epi_Mem_1x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C3x1-M2x1" destination="Epi_Mem_2x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C3x1-M3x1" destination="Epi_Mem_3x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="8" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="1" />
+            </accessElements>
+            <accessElements name="Path_C3x1-M0x2" destination="Epi_Mem_0x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C3x1-M1x2" destination="Epi_Mem_1x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C3x1-M2x2" destination="Epi_Mem_2x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C3x1-M3x2" destination="Epi_Mem_3x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C3x1-M0x3" destination="Epi_Mem_0x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="16" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="9" />
+            </accessElements>
+            <accessElements name="Path_C3x1-M1x3" destination="Epi_Mem_1x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C3x1-M2x3" destination="Epi_Mem_2x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C3x1-M3x3" destination="Epi_Mem_3x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+          </modules>
+          <modules xsi:type="am:ProcessingUnit" name="Epi_Core_0x2" frequencyDomain="700MHz?type=FrequencyDomain" definition="Epiphany-Type?type=ProcessingUnitDefinition">
+            <accessElements name="Path_C0x2-M0x0" destination="Epi_Mem_0x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C0x2-M1x0" destination="Epi_Mem_1x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C0x2-M2x0" destination="Epi_Mem_2x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C0x2-M3x0" destination="Epi_Mem_3x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="16" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="9" />
+            </accessElements>
+            <accessElements name="Path_C0x2-M0x1" destination="Epi_Mem_0x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C0x2-M1x1" destination="Epi_Mem_1x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C0x2-M2x1" destination="Epi_Mem_2x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C0x2-M3x1" destination="Epi_Mem_3x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C0x2-M0x2" destination="Epi_Mem_0x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="8" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="1" />
+            </accessElements>
+            <accessElements name="Path_C0x2-M1x2" destination="Epi_Mem_1x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C0x2-M2x2" destination="Epi_Mem_2x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C0x2-M3x2" destination="Epi_Mem_3x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C0x2-M0x3" destination="Epi_Mem_0x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C0x2-M1x3" destination="Epi_Mem_1x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C0x2-M2x3" destination="Epi_Mem_2x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C0x2-M3x3" destination="Epi_Mem_3x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+          </modules>
+          <modules xsi:type="am:ProcessingUnit" name="Epi_Core_1x2" frequencyDomain="700MHz?type=FrequencyDomain" definition="Epiphany-Type?type=ProcessingUnitDefinition">
+            <accessElements name="Path_C1x2-M0x0" destination="Epi_Mem_0x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C1x2-M1x0" destination="Epi_Mem_1x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C1x2-M2x0" destination="Epi_Mem_2x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C1x2-M3x0" destination="Epi_Mem_3x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C1x2-M0x1" destination="Epi_Mem_0x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C1x2-M1x1" destination="Epi_Mem_1x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C1x2-M2x1" destination="Epi_Mem_2x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C1x2-M3x1" destination="Epi_Mem_3x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C1x2-M0x2" destination="Epi_Mem_0x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C1x2-M1x2" destination="Epi_Mem_1x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="8" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="1" />
+            </accessElements>
+            <accessElements name="Path_C1x2-M2x2" destination="Epi_Mem_2x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C1x2-M3x2" destination="Epi_Mem_3x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C1x2-M0x3" destination="Epi_Mem_0x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C1x2-M1x3" destination="Epi_Mem_1x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C1x2-M2x3" destination="Epi_Mem_2x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C1x2-M3x3" destination="Epi_Mem_3x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+          </modules>
+          <modules xsi:type="am:ProcessingUnit" name="Epi_Core_2x2" frequencyDomain="700MHz?type=FrequencyDomain" definition="Epiphany-Type?type=ProcessingUnitDefinition">
+            <accessElements name="Path_C2x2-M0x0" destination="Epi_Mem_0x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C2x2-M1x0" destination="Epi_Mem_1x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C2x2-M2x0" destination="Epi_Mem_2x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C2x2-M3x0" destination="Epi_Mem_3x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C2x2-M0x1" destination="Epi_Mem_0x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C2x2-M1x1" destination="Epi_Mem_1x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C2x2-M2x1" destination="Epi_Mem_2x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C2x2-M3x1" destination="Epi_Mem_3x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C2x2-M0x2" destination="Epi_Mem_0x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C2x2-M1x2" destination="Epi_Mem_1x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C2x2-M2x2" destination="Epi_Mem_2x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="8" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="1" />
+            </accessElements>
+            <accessElements name="Path_C2x2-M3x2" destination="Epi_Mem_3x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C2x2-M0x3" destination="Epi_Mem_0x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C2x2-M1x3" destination="Epi_Mem_1x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C2x2-M2x3" destination="Epi_Mem_2x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C2x2-M3x3" destination="Epi_Mem_3x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+          </modules>
+          <modules xsi:type="am:ProcessingUnit" name="Epi_Core_3x2" frequencyDomain="700MHz?type=FrequencyDomain" definition="Epiphany-Type?type=ProcessingUnitDefinition">
+            <accessElements name="Path_C3x2-M0x0" destination="Epi_Mem_0x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="16" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="9" />
+            </accessElements>
+            <accessElements name="Path_C3x2-M1x0" destination="Epi_Mem_1x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C3x2-M2x0" destination="Epi_Mem_2x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C3x2-M3x0" destination="Epi_Mem_3x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C3x2-M0x1" destination="Epi_Mem_0x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C3x2-M1x1" destination="Epi_Mem_1x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C3x2-M2x1" destination="Epi_Mem_2x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C3x2-M3x1" destination="Epi_Mem_3x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C3x2-M0x2" destination="Epi_Mem_0x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C3x2-M1x2" destination="Epi_Mem_1x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C3x2-M2x2" destination="Epi_Mem_2x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C3x2-M3x2" destination="Epi_Mem_3x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="8" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="1" />
+            </accessElements>
+            <accessElements name="Path_C3x2-M0x3" destination="Epi_Mem_0x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C3x2-M1x3" destination="Epi_Mem_1x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C3x2-M2x3" destination="Epi_Mem_2x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C3x2-M3x3" destination="Epi_Mem_3x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+          </modules>
+          <modules xsi:type="am:ProcessingUnit" name="Epi_Core_0x3" frequencyDomain="700MHz?type=FrequencyDomain" definition="Epiphany-Type?type=ProcessingUnitDefinition">
+            <accessElements name="Path_C0x3-M0x0" destination="Epi_Mem_0x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C0x3-M1x0" destination="Epi_Mem_1x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C0x3-M2x0" destination="Epi_Mem_2x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="16" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="9" />
+            </accessElements>
+            <accessElements name="Path_C0x3-M3x0" destination="Epi_Mem_3x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="17" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="10" />
+            </accessElements>
+            <accessElements name="Path_C0x3-M0x1" destination="Epi_Mem_0x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C0x3-M1x1" destination="Epi_Mem_1x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C0x3-M2x1" destination="Epi_Mem_2x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C0x3-M3x1" destination="Epi_Mem_3x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="16" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="9" />
+            </accessElements>
+            <accessElements name="Path_C0x3-M0x2" destination="Epi_Mem_0x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C0x3-M1x2" destination="Epi_Mem_1x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C0x3-M2x2" destination="Epi_Mem_2x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C0x3-M3x2" destination="Epi_Mem_3x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C0x3-M0x3" destination="Epi_Mem_0x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="8" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="1" />
+            </accessElements>
+            <accessElements name="Path_C0x3-M1x3" destination="Epi_Mem_1x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C0x3-M2x3" destination="Epi_Mem_2x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C0x3-M3x3" destination="Epi_Mem_3x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+          </modules>
+          <modules xsi:type="am:ProcessingUnit" name="Epi_Core_1x3" frequencyDomain="700MHz?type=FrequencyDomain" definition="Epiphany-Type?type=ProcessingUnitDefinition">
+            <accessElements name="Path_C1x3-M0x0" destination="Epi_Mem_0x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C1x3-M1x0" destination="Epi_Mem_1x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C1x3-M2x0" destination="Epi_Mem_2x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C1x3-M3x0" destination="Epi_Mem_3x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="16" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="9" />
+            </accessElements>
+            <accessElements name="Path_C1x3-M0x1" destination="Epi_Mem_0x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C1x3-M1x1" destination="Epi_Mem_1x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C1x3-M2x1" destination="Epi_Mem_2x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C1x3-M3x1" destination="Epi_Mem_3x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C1x3-M0x2" destination="Epi_Mem_0x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C1x3-M1x2" destination="Epi_Mem_1x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C1x3-M2x2" destination="Epi_Mem_2x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C1x3-M3x2" destination="Epi_Mem_3x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C1x3-M0x3" destination="Epi_Mem_0x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C1x3-M1x3" destination="Epi_Mem_1x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="8" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="1" />
+            </accessElements>
+            <accessElements name="Path_C1x3-M2x3" destination="Epi_Mem_2x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C1x3-M3x3" destination="Epi_Mem_3x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+          </modules>
+          <modules xsi:type="am:ProcessingUnit" name="Epi_Core_2x3" frequencyDomain="700MHz?type=FrequencyDomain" definition="Epiphany-Type?type=ProcessingUnitDefinition">
+            <accessElements name="Path_C2x3-M0x0" destination="Epi_Mem_0x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="16" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="9" />
+            </accessElements>
+            <accessElements name="Path_C2x3-M1x0" destination="Epi_Mem_1x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C2x3-M2x0" destination="Epi_Mem_2x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C2x3-M3x0" destination="Epi_Mem_3x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C2x3-M0x1" destination="Epi_Mem_0x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C2x3-M1x1" destination="Epi_Mem_1x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C2x3-M2x1" destination="Epi_Mem_2x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C2x3-M3x1" destination="Epi_Mem_3x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C2x3-M0x2" destination="Epi_Mem_0x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C2x3-M1x2" destination="Epi_Mem_1x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C2x3-M2x2" destination="Epi_Mem_2x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C2x3-M3x2" destination="Epi_Mem_3x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C2x3-M0x3" destination="Epi_Mem_0x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C2x3-M1x3" destination="Epi_Mem_1x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C2x3-M2x3" destination="Epi_Mem_2x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="8" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="1" />
+            </accessElements>
+            <accessElements name="Path_C2x3-M3x3" destination="Epi_Mem_3x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+          </modules>
+          <modules xsi:type="am:ProcessingUnit" name="Epi_Core_3x3" frequencyDomain="700MHz?type=FrequencyDomain" definition="Epiphany-Type?type=ProcessingUnitDefinition">
+            <accessElements name="Path_C3x3-M0x0" destination="Epi_Mem_0x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="17" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="10" />
+            </accessElements>
+            <accessElements name="Path_C3x3-M1x0" destination="Epi_Mem_1x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="16" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="9" />
+            </accessElements>
+            <accessElements name="Path_C3x3-M2x0" destination="Epi_Mem_2x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C3x3-M3x0" destination="Epi_Mem_3x0?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C3x3-M0x1" destination="Epi_Mem_0x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="16" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="9" />
+            </accessElements>
+            <accessElements name="Path_C3x3-M1x1" destination="Epi_Mem_1x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C3x3-M2x1" destination="Epi_Mem_2x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C3x3-M3x1" destination="Epi_Mem_3x1?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C3x3-M0x2" destination="Epi_Mem_0x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="14" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="7" />
+            </accessElements>
+            <accessElements name="Path_C3x3-M1x2" destination="Epi_Mem_1x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C3x3-M2x2" destination="Epi_Mem_2x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C3x3-M3x2" destination="Epi_Mem_3x2?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C3x3-M0x3" destination="Epi_Mem_0x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="13" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="6" />
+            </accessElements>
+            <accessElements name="Path_C3x3-M1x3" destination="Epi_Mem_1x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="11" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="4" />
+            </accessElements>
+            <accessElements name="Path_C3x3-M2x3" destination="Epi_Mem_2x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="10" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="3" />
+            </accessElements>
+            <accessElements name="Path_C3x3-M3x3" destination="Epi_Mem_3x3?type=Memory">
+              <readLatency xsi:type="am:DiscreteValueConstant" value="8" />
+              <writeLatency xsi:type="am:DiscreteValueConstant" value="1" />
+            </accessElements>
+          </modules>
+          <modules xsi:type="am:ConnectionHandler" name="" frequencyDomain="700MHz?type=FrequencyDomain">
+            <definition href="amlt:/#GenericCrossbarSwitch?type=ConnectionHandlerDefinition" />
+          </modules>
+        </structures>
+        <modules xsi:type="am:Memory" name="1GB_DDR3L" frequencyDomain="700MHz?type=FrequencyDomain" definition="1GB_DDR3L_Type?type=MemoryDefinition" />
+      </structures>
+    </structures>
+    <domains xsi:type="am:FrequencyDomain" name="700MHz" clockGating="false">
+      <defaultValue value="700.0" unit="MHz" />
+    </domains>
+  </hwModel>
+  <stimuliModel>
+    <stimuli xsi:type="am:PeriodicStimulus" name="periodic_10ms">
+      <offset value="0" unit="ms" />
+      <recurrence value="10" unit="ms" />
+    </stimuli>
+    <stimuli xsi:type="am:PeriodicStimulus" name="periodic_20ms">
+      <offset value="0" unit="ms" />
+      <recurrence value="20" unit="ms" />
+    </stimuli>
+    <stimuli xsi:type="am:PeriodicStimulus" name="periodic_5ms">
+      <offset value="0" unit="ms" />
+      <recurrence value="5" unit="ms" />
+    </stimuli>
+  </stimuliModel>
+  <eventModel>
+    <events xsi:type="am:RunnableEvent" name="task_5msA" description="" />
+  </eventModel>
+  <constraintsModel>
+    <eventChains name="">
+      <segments xsi:type="am:EventChainContainer">
+        <eventChain name="" />
+      </segments>
+    </eventChains>
+  </constraintsModel>
+</am:Amalthea>
