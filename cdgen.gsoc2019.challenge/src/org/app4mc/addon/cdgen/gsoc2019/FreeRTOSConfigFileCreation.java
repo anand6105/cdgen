@@ -28,14 +28,14 @@ public class FreeRTOSConfigFileCreation {
 	 * @throws IOException
 	 */
 
-	public FreeRTOSConfigFileCreation(final Amalthea Model, String path1, boolean preemptionFlag) throws IOException {
+	public FreeRTOSConfigFileCreation(final Amalthea Model, String path1, int configFlag) throws IOException {
 		this.model = Model;
 		System.out.println("FreeRTOSConfig File Creation Begins");
-		fileCreate(model, path1, preemptionFlag);
+		fileCreate(model, path1, configFlag);
 		System.out.println("FreeRTOSConfig File Creation Ends");
 	}
 
-	public static void fileCreate(Amalthea model, String path1, boolean preemptionFlag) throws IOException {
+	public static void fileCreate(Amalthea model, String path1, int configFlag) throws IOException {
 
 		String fname = path1 + File.separator + "FreeRTOSConfig.h";
 		File f2 = new File(path1);
@@ -52,7 +52,7 @@ public class FreeRTOSConfigFileCreation {
 		try {
 			fileUtil.fileMainHeader(f1);
 			fileUtil.FreeRTOSConfigFileHeader(f1);
-			headerIncludesFreeRTOS(model, f1, preemptionFlag);
+			headerIncludesFreeRTOS(model, f1, configFlag);
 
 			// fileUtil.TaskDefinition(f1,tasks);
 		} finally {
@@ -64,7 +64,7 @@ public class FreeRTOSConfigFileCreation {
 		}
 	}
 
-	public static void headerIncludesFreeRTOS(Amalthea model, File f1, boolean preemptionFlag) {
+	public static void headerIncludesFreeRTOS(Amalthea model, File f1, int configFlag) {
 		try {
 			File fn = f1;
 			FileWriter fw = new FileWriter(fn, true);
@@ -73,11 +73,11 @@ public class FreeRTOSConfigFileCreation {
 			fw.write("\t#ifndef FREERTOS_CONFIG_H\n");
 			fw.write("\t#define FREERTOS_CONFIG_H\n");
 			fw.write("//-----------------------------------------------------------\n");
-			if (preemptionFlag == true) {
+			if (0x0020 == (configFlag & 0x00F0)) {
 				fw.write("\t#define configUSE_PREEMPTION			1\n");
 				fw.write("\t#define configUSE_TICK_HOOK				1\n");
 
-			} else if (preemptionFlag == false) {
+			} else{
 				fw.write("\t#define configUSE_PREEMPTION			0\n");
 				fw.write("\t#define configUSE_TICK_HOOK				0\n");
 

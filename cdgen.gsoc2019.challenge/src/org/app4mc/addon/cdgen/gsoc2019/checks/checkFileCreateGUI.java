@@ -73,14 +73,14 @@ public class checkFileCreateGUI {
 		cdgenPosix.setBounds(50, 120, 145, 25);
 		frame.getContentPane().add(cdgenPosix);
 
-		JRadioButton cdgenCustomSystem = new JRadioButton("Custom");
-		cdgenCustomSystem.setBounds(50, 150, 145, 25);
-		frame.getContentPane().add(cdgenCustomSystem);
+		JRadioButton cdgenCustom = new JRadioButton("Custom");
+		cdgenCustom.setBounds(50, 150, 145, 25);
+		frame.getContentPane().add(cdgenCustom);
 
 		ButtonGroup group = new ButtonGroup();
 		group.add(cdgenFreeRTOS);
 		group.add(cdgenPosix);
-		group.add(cdgenCustomSystem);
+		group.add(cdgenCustom);
 
 		JRadioButton cdgenrms = new JRadioButton("RMS(Rate Monotonic)");
 		cdgenrms.setBounds(210, 90, 210, 25);
@@ -90,14 +90,14 @@ public class checkFileCreateGUI {
 		cdgenedf.setBounds(210, 120, 210, 25);
 		frame.getContentPane().add(cdgenedf);
 
-		JRadioButton cdgencustom = new JRadioButton("Non Custom");
-		cdgencustom.setBounds(210, 150, 145, 25);
-		frame.getContentPane().add(cdgencustom);
+		JRadioButton cdgennonCustom = new JRadioButton("Non Custom");
+		cdgennonCustom.setBounds(210, 150, 145, 25);
+		frame.getContentPane().add(cdgennonCustom);
 
 		ButtonGroup group2 = new ButtonGroup();
 		group2.add(cdgenrms);
 		group2.add(cdgenedf);
-		group2.add(cdgencustom);
+		group2.add(cdgennonCustom);
 
 		JRadioButton cdgenCooperative = new JRadioButton("Cooperative");
 		cdgenCooperative.setBounds(430, 90, 145, 25);
@@ -115,7 +115,7 @@ public class checkFileCreateGUI {
 		btnSelectTasks.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				
+
 				// Load File
 				final File inputFile = new File(Constants.DEMOCARMULTI);
 				// final File inputFile = new File(Constants.WATERS2019_TEST);
@@ -148,9 +148,40 @@ public class checkFileCreateGUI {
 				}
 				String path1 = path + "/" + timestamp;
 				String path2 = path1 + "/includes";
-				boolean pthreadFlag, preemptionFlag;
-
-			/*	try {
+				
+				int configFlag = 0xFFFF;
+				
+				/*
+				 * 
+				 * 0X1000 ==> FreeRTOS
+				 * 0X2000 ==> POSIX
+				 * 0x3000 ==> Custom
+				 * 
+				 * 0X0100 ==> RMS
+				 * 0X0200 ==> EDF
+				 * 0X0300 ==> Non Custom
+				 * 
+				 * 0X0010 ==> Cooperative
+				 * 0X0020 ==> Preemptive
+				 * 
+				 * 0X0001 ==> MultiCore
+				 * 0X0002 ==> SingleCore
+				 * 
+				 * 
+				 * FreeRTOS == 	NonCustom 	== Cooperative 	==	0x1310
+				 * FreeRTOS == 	NonCustom 	== Preemptive 	==	0x1320
+				 * POSIX  	== 	NonCustom 	== Cooperative 	==	0x2310
+				 * POSIX 	== 	NonCustom 	== Preemptive 	==	0x2320
+				 * Custom  	== 	RMS 		== Cooperative 	==	0x3110
+				 * Custom  	== 	RMS 		== Preemptive 	==	0x3120
+				 * Custom  	== 	EDF 		== Cooperative 	==	0x3210
+				 * Custom  	== 	EDF 		== Cooperative 	==	0x3220
+				 * 
+				 * 
+				 */
+	
+				
+				/*	try {
 					Path copied = Paths.get(path + "/ref/FreeRTOSConfig.h");
 					Path originalPath = Paths.get(path1);
 					Files.copy(originalPath, copied, StandardCopyOption.REPLACE_EXISTING);
@@ -158,92 +189,84 @@ public class checkFileCreateGUI {
 					e1.printStackTrace();
 				}*/
 				System.out.println("############################################################");
-				if (cdgenFreeRTOS.isSelected() & cdgencustom.isSelected() & cdgenPreemptive.isSelected() ) {
+				if (cdgenFreeRTOS.isSelected() & cdgennonCustom.isSelected() & cdgenPreemptive.isSelected() ) {
+					configFlag = 0x1320;
 					System.out.println("*******FreeRTOS*******Preemptive*******");
 					System.out.println("############################################################");
-					pthreadFlag = false;
-					preemptionFlag = true;
-					try {
-						new checkFreeRTOSConfiguration(model, path1, path2, pthreadFlag, preemptionFlag);
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-				}else if (cdgenFreeRTOS.isSelected() & cdgencustom.isSelected() & cdgenCooperative.isSelected()) {
+					new checkFreeRTOSConfiguration(model, path1, path2, configFlag);
+				}else if (cdgenFreeRTOS.isSelected() & cdgennonCustom.isSelected() & cdgenCooperative.isSelected()) {
+					configFlag = 0x1310;
 					System.out.println("*******FreeRTOS*******Cooperative*******");
 					System.out.println("############################################################");
-					pthreadFlag = false;
-					preemptionFlag = false;
-					try {
-						new checkFreeRTOSConfiguration(model, path1, path2, pthreadFlag, preemptionFlag);
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-				}else if (cdgenPosix.isSelected() & cdgencustom.isSelected() & cdgenPreemptive.isSelected() ) {
+					new checkFreeRTOSConfiguration(model, path1, path2, configFlag);
+				}else if (cdgenPosix.isSelected() & cdgennonCustom.isSelected() & cdgenPreemptive.isSelected() ) {
+					configFlag = 0x2320;
 					System.out.println("*******Posix*******Preemptive*******");
 					System.out.println("############################################################");
-					pthreadFlag = true;
-					preemptionFlag = true;
 					try {
-						new checkPOSIXConfiguration(model, path1, path2, pthreadFlag, preemptionFlag);
+						new checkPOSIXConfiguration(model, path1, path2, configFlag);
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
-				}else if (cdgenPosix.isSelected() & cdgencustom.isSelected() & cdgenCooperative.isSelected()) {
+				}else if (cdgenPosix.isSelected() & cdgennonCustom.isSelected() & cdgenCooperative.isSelected()) {
+					configFlag = 0x2310;
 					System.out.println("*******Posix*******Cooperative*******");
 					System.out.println("############################################################");
-					pthreadFlag = true;
-					preemptionFlag = false;
 					try {
-						new checkPOSIXConfiguration(model, path1, path2, pthreadFlag, preemptionFlag);
+						new checkPOSIXConfiguration(model, path1, path2, configFlag);
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
-				}else if (cdgencustom.isSelected() & cdgenrms.isSelected() & cdgenPreemptive.isSelected() ) {
-					pthreadFlag = false;
-					preemptionFlag = true;
+				}else if (cdgenCustom.isSelected() & cdgenrms.isSelected() & cdgenPreemptive.isSelected() ) {
+					configFlag = 0x3120;
+					System.out.println("*******RMS*******Preemptive*******");
+					System.out.println("############################################################");
 					try {
-						new checkRMSConfiguration(model, path1, path2, pthreadFlag, preemptionFlag);
+						new checkRMSConfiguration(model, path1, path2, configFlag);
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
-				}else if (cdgencustom.isSelected() & cdgenrms.isSelected() & cdgenCooperative.isSelected()) {
-					pthreadFlag = false;
-					preemptionFlag = false;
+				}else if (cdgenCustom.isSelected() & cdgenrms.isSelected() & cdgenCooperative.isSelected()) {
+					configFlag = 0x3110;
+					System.out.println("*******RMS*******Cooperative*******");
+					System.out.println("############################################################");
 					try {
-						new checkRMSConfiguration(model, path1, path2, pthreadFlag, preemptionFlag);
+						new checkRMSConfiguration(model, path1, path2, configFlag);
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
-				}else if (cdgencustom.isSelected() & cdgenedf.isSelected() & cdgenPreemptive.isSelected() ) {
-					pthreadFlag = false;
-					preemptionFlag = true;
+				}else if (cdgenCustom.isSelected() & cdgenedf.isSelected() & cdgenPreemptive.isSelected() ) {
+					configFlag = 0x3220;
+					System.out.println("*******EDF*******Preemptive*******");
+					System.out.println("############################################################");
 					try {
-						new checkEDFConfiguration(model, path1, path2, pthreadFlag, preemptionFlag);
+						new checkEDFConfiguration(model, path1, path2, configFlag);
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
-				}else if (cdgencustom.isSelected() & cdgenedf.isSelected() & cdgenCooperative.isSelected()) {
-					pthreadFlag = false;
-					preemptionFlag = false;
+				}else if (cdgenCustom.isSelected() & cdgenedf.isSelected() & cdgenCooperative.isSelected()) {
+					configFlag = 0x3210;
+					System.out.println("*******EDF*******Cooperative*******");
+					System.out.println("############################################################");
 					try {
-						new checkEDFConfiguration(model, path1, path2, pthreadFlag, preemptionFlag);
+						new checkEDFConfiguration(model, path1, path2, configFlag);
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
 				}
-				
 
-					
-					/*
-					 * Path sourceDirectory = Paths.get(pathref); Path targetDirectory =
-					 * Paths.get(path1); try {
-					 * Files.copy(sourceDirectory,targetDirectory,StandardCopyOption.
-					 * REPLACE_EXISTING); } catch (IOException e2) { block e2.printStackTrace(); }
-					 */
-					
-				
 
-					else {
+
+				/*
+				 * Path sourceDirectory = Paths.get(pathref); Path targetDirectory =
+				 * Paths.get(path1); try {
+				 * Files.copy(sourceDirectory,targetDirectory,StandardCopyOption.
+				 * REPLACE_EXISTING); } catch (IOException e2) { block e2.printStackTrace(); }
+				 */
+
+
+
+				else {
 					System.out.println("Configuration Not Defined!");
 				}
 			}
@@ -296,3 +319,42 @@ public class checkFileCreateGUI {
 
 	}
 }
+
+/*			
+boolean rtosFlag = false, pthreadFlag = false, customFlag = false;
+boolean rmsFlag = false, edfFlag = false, nonCustomFlag = false;
+boolean preemptionFlag = false;
+
+if(cdgenFreeRTOS.isSelected()) {
+	rtosFlag = true;
+	pthreadFlag = false;
+	customFlag = false;
+}else if(cdgenPosix.isSelected()) {
+	rtosFlag = false;
+	pthreadFlag = true;
+	customFlag = false;
+}else if(cdgenCustom.isSelected()) {
+	rtosFlag = false;
+	pthreadFlag = false;
+	customFlag = true;
+}
+
+if(cdgenrms.isSelected()) {
+	rmsFlag = true;
+	edfFlag = false;
+	nonCustomFlag = false;
+}else if(cdgenedf.isSelected()) {
+	rmsFlag = false;
+	edfFlag = true;
+	nonCustomFlag = false;;
+}else if(cdgennonCustom.isSelected()) {
+	rmsFlag = false;
+	edfFlag = false;
+	nonCustomFlag = true;
+}
+
+if(cdgenCooperative.isSelected()) {
+	preemptionFlag = false;
+}else if(cdgenPreemptive.isSelected()) {
+	preemptionFlag = true;
+}*/

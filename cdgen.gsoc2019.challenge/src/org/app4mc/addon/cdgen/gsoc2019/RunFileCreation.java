@@ -45,19 +45,19 @@ public class RunFileCreation {
 	 * @param pthreadFlag
 	 * @throws IOException
 	 */
-	public RunFileCreation(final Amalthea Model, String path1, String path2, boolean pthreadFlag) throws IOException {
+	public RunFileCreation(final Amalthea Model, String path1, String path2, int  configFlag) throws IOException {
 		this.model = Model;
 
 		EList<Task> tasks = model.getSwModel().getTasks();
 		EList<Runnable> runnables = model.getSwModel().getRunnables();
 
 		System.out.println("Runnable File Creation Begins");
-		fileCreate(model, path1, path2, pthreadFlag, tasks, runnables);
+		fileCreate(model, path1, path2, configFlag, tasks, runnables);
 		System.out.println("Runnable File Creation Ends");
 
 	}
 
-	private static void fileCreate(Amalthea model, String path1, String path2, boolean pthreadFlag, EList<Task> tasks,
+	private static void fileCreate(Amalthea model, String path1, String path2, int configFlag, EList<Task> tasks,
 			EList<Runnable> runnables) throws IOException {
 		String fname = path1 + File.separator + "runnable.c";
 		File f2 = new File(path1);
@@ -72,16 +72,16 @@ public class RunFileCreation {
 		File fn = f1;
 		FileWriter fw = new FileWriter(fn, true);
 		try {
-			if (pthreadFlag == false) {
-				fileUtil.fileMainHeader(f1);
-				runFileHeader(f1);
-				headerIncludesRun(f1);
-				runnableDefinition(f1, tasks, model);
-			} else {
+			if (0x2000 == (configFlag & 0xF000)) {
 				fileUtil.fileMainHeader(f1);
 				runFileHeader(f1);
 				headerIncludesRun(f1);
 				runnablePthreadDefinition(f1, tasks, model);
+			} else {
+				fileUtil.fileMainHeader(f1);
+				runFileHeader(f1);
+				headerIncludesRun(f1);
+				runnableDefinition(f1, tasks, model);
 			}
 
 		} finally {
@@ -104,15 +104,15 @@ public class RunFileCreation {
 		File fn1 = f3;
 		FileWriter fw1 = new FileWriter(fn1, true);
 		try {
-			if (pthreadFlag == false) {
+			if (0x2000 == (configFlag & 0xF000)) {
 				fileUtil.fileMainHeader(f3);
 				runFileHeader(f3);
-				headerIncludesRunHead(f3);
+				headerIncludesRunPthreadHead(f3);
 				runnableDeclaration(f3, runnables);
 			} else {
 				fileUtil.fileMainHeader(f3);
 				runFileHeader(f3);
-				headerIncludesRunPthreadHead(f3);
+				headerIncludesRunHead(f3);
 				runnableDeclaration(f3, runnables);
 			}
 
@@ -202,7 +202,7 @@ public class RunFileCreation {
 					fw.write("void " + Run.getName() + "(void)\t{\n");
 					fw.write("\tvDisplayMessagePthread(\" " + t.getName() + " \tRunnable Execution	" + "\t" + Run.getName()
 					+ "\\n\");\n");
-			
+
 					Process RunTaskName = SoftwareUtil.getProcesses(Run, null).get(0);
 					Set<ProcessingUnit> pu = DeploymentUtil.getAssignedCoreForProcess(RunTaskName, model);
 					if (pu != null) {
@@ -219,7 +219,7 @@ public class RunFileCreation {
 					}*/
 					fw.write("}\n");
 				}
-				
+
 			}
 			fw.close();
 		} catch (IOException ioe) {
@@ -238,24 +238,24 @@ public class RunFileCreation {
 				for (Runnable Run : runnablesOfTask) {
 					fw.write("void " + Run.getName() + " (void)\t{\n");
 					fw.write("\tvDisplayMessage(\" " + t.getName() + " \tRunnable Execution	" + "\t" + Run.getName()
-							+ "\\n\");\n");
+					+ "\\n\");\n");
 					Process RunTaskName = SoftwareUtil.getProcesses(Run, null).get(0);
-				/*	if (RunTaskName == null) {
+					/*	if (RunTaskName == null) {
 					//	System.out.println("RunTaskName is NULL!!!");
 					}
 				//	System.out.println(RunTaskName.getName());
-*/					Set<ProcessingUnit> pu = DeploymentUtil.getAssignedCoreForProcess(RunTaskName, model);
-				//	if (pu != null) {
-						for (ProcessingUnit p : pu) {
-							Time RunTime1 = RuntimeUtil.getExecutionTimeForRunnable(Run, p, null, TimeType.WCET);
-							RunTime1 = TimeUtil.convertToTimeUnit(RunTime1, TimeUnit.US);
-							double sleepTime = TimeUtil.getAsTimeUnit(RunTime1, null);
-							fw.write("\tusleep(" + sleepTime + ");\n");
+					 */					Set<ProcessingUnit> pu = DeploymentUtil.getAssignedCoreForProcess(RunTaskName, model);
+					 //	if (pu != null) {
+					 for (ProcessingUnit p : pu) {
+						 Time RunTime1 = RuntimeUtil.getExecutionTimeForRunnable(Run, p, null, TimeType.WCET);
+						 RunTime1 = TimeUtil.convertToTimeUnit(RunTime1, TimeUnit.US);
+						 double sleepTime = TimeUtil.getAsTimeUnit(RunTime1, null);
+						 fw.write("\tusleep(" + sleepTime + ");\n");
 
-							break;
-						}
-						//}
-					fw.write("}\n");
+						 break;
+					 }
+					 //}
+					 fw.write("}\n");
 
 				}
 

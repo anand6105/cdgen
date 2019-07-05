@@ -20,21 +20,23 @@ public class testTaskStructure
 
 	final private Amalthea model;
 
-	public testTaskStructure(final Amalthea Model, String path1, boolean pthreadFlag, boolean preemptionFlag) throws IOException {
+	public testTaskStructure(final Amalthea Model, String path1, int configFlag) throws IOException {
 		this.model = Model;
-		if (pthreadFlag == false) {
+		if (0x2000 != (configFlag & 0xF000)) {
+			boolean pthreadFlag = false;
 			System.out.println("############################################################");
 			System.out.println("Test Begins");
 			fileTestRunnable(model, path1);
-			fileTestTask(model, path1, preemptionFlag);
+			fileTestTask(model, path1, configFlag);
 			fileTestmainTask(model, path1);
 			System.out.println("Test Sucessful");
 			System.out.println("############################################################");
-		} else if (pthreadFlag != false) {
+		} else{
+			boolean pthreadFlag = true;
 			System.out.println("############################################################");
 			System.out.println("Test Begins");
 			fileTestRunnablePthread(model, path1);
-			fileTestTaskPthread(model, path1, preemptionFlag);
+			fileTestTaskPthread(model, path1, configFlag);
 			fileTestmainTaskPthread(model, path1);
 			System.out.println("Test Sucessful");
 			System.out.println("############################################################");
@@ -137,7 +139,7 @@ public class testTaskStructure
 		fr.close();
 	}
 
-	private void fileTestTask(Amalthea model2, String path1, boolean preemptionFlag) throws IOException {
+	private void fileTestTask(Amalthea model2, String path1, int configFlag) throws IOException {
 		String fname = path1 + File.separator + "taskDef.c";
 		EList<Task> taskmod = model2.getSwModel().getTasks();
 		File f1 = new File(fname);
@@ -174,26 +176,26 @@ public class testTaskStructure
 		} else {
 			System.out.println("Task : Cin count OK");
 		}
-		if(preemptionFlag == true) {
+		if(0x0020 == (configFlag & 0x00F0)) {
 			if (count2 != taskmod.size() * 2) {
 				System.out.println(taskmod.size() * 2 + "\tTask : ERROR: taskENTER_CRITICAL\t" + count2);
 			} else {
 				System.out.println("Task : taskENTER_CRITICAL OK");
 			}
-		}else if(preemptionFlag == false) {
+		}else {
 			if (count2 != taskmod.size()) {
 				System.out.println(taskmod.size() * 2 + "\tTask : ERROR: taskENTER_CRITICAL\t" + count2);
 			} else {
 				System.out.println("Task : taskENTER_CRITICAL OK");
 			}
 		}
-		if(preemptionFlag == true) {
+		if(0x0020 == (configFlag & 0x00F0)) {
 			if (count3 != taskmod.size() * 2) {
 				System.out.println(taskmod.size() * 2 + "\tTask : ERROR: taskEXIT_CRITICAL\t" + count2);
 			} else {
 				System.out.println("Task : taskEXIT_CRITICAL OK");
 			}
-		}else if(preemptionFlag == false) {
+		}else {
 			if (count3 != taskmod.size()) {
 				System.out.println(taskmod.size()+ "\tTask : ERROR: taskEXIT_CRITICAL\t" + count2);
 			} else {
@@ -214,7 +216,7 @@ public class testTaskStructure
 		fr.close();
 	}
 
-	private void fileTestTaskPthread(Amalthea model2, String path1, boolean preemptionFlag) throws IOException {
+	private void fileTestTaskPthread(Amalthea model2, String path1, int configFlag) throws IOException {
 		String fname = path1 + File.separator + "taskDef.c";
 		EList<Task> taskmod = model2.getSwModel().getTasks();
 		File f1 = new File(fname);
@@ -251,26 +253,26 @@ public class testTaskStructure
 			System.out.println("Task : Cin count OK");
 		}
 
-		if(preemptionFlag == true) {
+		if(0x0020 == (configFlag & 0x00F0)){
 			if (count3 != taskmod.size() * 2) {
 				System.out.println(taskmod.size() * 2 + "\tTask : ERROR: suspendMe\t" + count3);
 			} else {
 				System.out.println("Task : suspendMe OK");
 			}
-		}else if(preemptionFlag == false) {
+		}else {
 			if (count3 != taskmod.size()) {
 				System.out.println(taskmod.size()+ "\tTask : ERROR: suspendMe\t" + count3);
 			} else {
 				System.out.println("Task : suspendMe OK");
 			}
 		}
-		if(preemptionFlag == true) {
+		if(0x0020 == (configFlag & 0x00F0)) {
 			if (count4 != taskmod.size() * 2) {
 				System.out.println(taskmod.size() * 2 + "\tTask : ERROR: resumeMe\t" + count4);
 			} else {
 				System.out.println("Task : resumeMe OK");
 			}
-		}else if(preemptionFlag == false) {
+		}else {
 			if (count4 != taskmod.size()) {
 				System.out.println(taskmod.size()+ "\tTask : ERROR: resumeMe\t" + count4);
 			} else {

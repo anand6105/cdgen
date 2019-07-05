@@ -43,23 +43,25 @@ public class MainFileCreation {
 	 *            Amalthea Model
 	 * @param path1
 	 * @param pthreadFlag
+	 * @param rMSFlag 
+	 * @param nonCustom 
 	 * @param i
 	 * @throws IOException
 	 */
-	public MainFileCreation(final Amalthea Model, String path1, boolean pthreadFlag) throws IOException {
+	public MainFileCreation(final Amalthea Model, String path1, int configFlag) throws IOException {
 		this.model = Model;
-		if (pthreadFlag == false) {
-			System.out.println("Main File Creation Begins");
-			fileCreate(model, path1);
-			System.out.println("Main File Creation Ends");
-		} else if (pthreadFlag != false) {
+		if (0x2000 == (configFlag & 0xF000)) {
 			System.out.println("Main File Creation Begins");
 			fileCreatePthread(model, path1);
+			System.out.println("Main File Creation Ends");
+		} else {
+			System.out.println("Main File Creation Begins");
+			fileCreate(model, path1, configFlag);
 			System.out.println("Main File Creation Ends");
 		}
 	}
 
-	private static void fileCreate(Amalthea model, String path1) throws IOException {
+	private static void fileCreate(Amalthea model, String path1, int configFlag) throws IOException {
 		EList<Task> tasks = model.getSwModel().getTasks();
 
 		String fname = path1 + File.separator + "main.c";
@@ -78,10 +80,17 @@ public class MainFileCreation {
 			fileUtil.fileMainHeader(f1);
 			mainFileHeader(f1);
 			headerIncludesMain(f1);
-			sleepTimerMs(f1);
+			if((0x0100 == (0x0F00 & configFlag)) & (0x3000 == (0xF000 & configFlag)) ) {
+				sleepTimerUsRMS(f1);
+				traceTaskStatusRMS(f1);
+			}else {
+				sleepTimerMs(f1);
+			}
+
 			mainTaskPriority(f1, tasks);
 			//mainFucntion(f1, tasks);
 			mainFucntionMulticore(model, f1, tasks);
+
 		} finally {
 			try {
 				fw.close();
@@ -112,6 +121,140 @@ public class MainFileCreation {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
 	}
+
+	private static void sleepTimerUsRMS(File f1) {
+		try {
+			File fn = f1;
+			FileWriter fw = new FileWriter(fn, true);
+			fw.write("void sleepTimerMs(int ticks, int taskNum)\n");
+			fw.write("{\n");
+			fw.write("\tint var;\n");
+			fw.write("\tfor (var = 0; var < ticks; ++var)\n");
+			fw.write("\t{\n");
+			fw.write("\t\ttaskENTER_CRITICAL();\n");
+			fw.write("\t\t{\n");
+			fw.write("\t\t\tvTaskIncrementTick();\n");
+			fw.write("\t\t\ttraceTaskStatus(3,taskNum);\n");
+			fw.write("\t\t\tsleep (1);\n");
+			fw.write("\t\t}\n");
+			fw.write("\t\ttaskEXIT_CRITICAL();\n");
+			fw.write("\t}\n");
+			fw.write("}\n");
+			fw.close();
+		} catch (IOException ioe) {
+			System.err.println("IOException: " + ioe.getMessage());
+		}
+	}
+
+	private static void taskHandleRMS(File f1, EList<Task> tasks) {
+		try {
+			File fn = f1;
+			FileWriter fw = new FileWriter(fn, true);
+			List<Task> localTaskPriority = new ArrayList<Task>();
+			localTaskPriority.addAll(tasks);
+			fw.write("/* TaskHandler. */\n");
+			for (Task task: tasks) {
+				fw.write("\txTaskHandle\t\ttaskHandle"+task.getName()+";\n");//TODO merge this constval with the value used in time period in FreeRTOS config File - Issue001
+			}
+			fw.close();
+		} catch (IOException ioe) {
+			System.err.println("IOException: " + ioe.getMessage());
+		}
+	}
+	
+	private static void generalizedRTOSTaskRMS(File f1) {
+		try {
+			File fn = f1;
+			FileWriter fw = new FileWriter(fn, true);
+			fw.write("void generalizedRTOSTak(AmaltheaTask *task){\n");
+			fw.write("\tportTickType xLastWakeTime = xTaskGetTickCount();\n");
+			fw.write("\tfor (;;){\n");
+			fw.write("\t\ttraceTaskStatus(1,task->period);\n");
+			fw.write("\t\tsleepTimerMs(task->executionTime,task->period);\n");
+			fw.write("\t\ttraceTaskStatus(0,task->period);\n");
+			fw.write("\t};\n");
+			fw.write("}\n");
+			fw.close();
+		} catch (IOException ioe) {
+			System.err.println("IOException: " + ioe.getMessage());
+		}
+	}
+	
+	private static void createRTOSTaskRMS(File f1) {
+		try {
+			File fn = f1;
+			FileWriter fw = new FileWriter(fn, true);
+			fw.write("void createRTOSTask(AmaltheaTask task,int prio){\n");
+			fw.write("\txTaskCreate(generalizedRTOSTak,\"t5ms\",configMINIMAL_STACK_SIZE,&task,prio,task1);\n");
+			fw.write("}\n");
+			fw.close();
+		} catch (IOException ioe) {
+			System.err.println("IOException: " + ioe.getMessage());
+		}
+	}
+	
+	private static void AmaltheaTaskRMS(File f1, EList<Task> tasks) {
+		try {
+			File fn = f1;
+			FileWriter fw = new FileWriter(fn, true);
+			for (Task task: tasks) {
+				fw.write("\tAmaltheaTask t"+task.getName()+" = createTask("+task.getName()+", NULL,NULL,"+
+				task.getStimuli().get(0)+", "+task.getStimuli().get(0)+", "+task.getName()+");\n");
+			}
+			fw.close();
+		} catch (IOException ioe) {
+			System.err.println("IOException: " + ioe.getMessage());
+		}
+	}
+	
+
+	private static void taskStructureRMS(File f1) {
+		try {
+			File fn = f1;
+			FileWriter fw = new FileWriter(fn, true);
+			fw.write("typedef struct{\n");
+			fw.write("\tunsigned isDone;\n");
+			fw.write("\tunsigned isReady;\n");
+			fw.write("\tvoid(* taskHandler)();\n");
+			fw.write("\tunsigned executionTime;\n");
+			fw.write("\tunsigned deadline;\n");
+			fw.write("\tunsigned period;\n");
+			fw.write("\tvoid(* cInHandler)();\n");
+			fw.write("\tvoid(* cOutHandler)();\n");
+			fw.write("\txTaskHandle taskHandle;\n");
+			fw.write("}AmaltheaTask;\n");
+			fw.close();
+		} catch (IOException ioe) {
+			System.err.println("IOException: " + ioe.getMessage());
+		}
+	}
+
+	private static void traceTaskStatusRMS(File f1) {
+		try {
+			File fn = f1;
+			FileWriter fw = new FileWriter(fn, true);
+			fw.write("void traceTaskStatus(int taskStatus, int taskNum){\n");
+			fw.write("\tchar bufLocal[256];\n");
+			fw.write("\ttaskENTER_CRITICAL();\n");
+			fw.write("\tportTickType currentTickCount = xTaskGetTickCount();//*passes1;\n");
+			fw.write("\ttaskEXIT_CRITICAL();\n");
+			fw.write("\tif (taskStatus ==1){\n");
+			fw.write("\t\tsprintf(bufLocal,\"Task %d released at time %d \\n\",taskNum,currentTickCount);\n");
+			fw.write("\t}else if(taskStatus ==0) {\n");
+			fw.write("\t\tsprintf(bufLocal,\"\\tTask %d finished at time %d \\n\",taskNum,currentTickCount);\n");
+			fw.write("\t}else if(taskStatus ==3){\n");
+			fw.write("\t\tsprintf(bufLocal,\"\\t\\t\\t\\tTask %d holding at time %d \\n\",taskNum,currentTickCount);\n");
+			fw.write("\t}else {\n");
+			fw.write("\t\tsprintf(bufLocal,\"\\t\\t\\t\\t\\t\\tTask %d yielded at time %d \\n\",taskNum,currentTickCount);\n");
+			fw.write("\t}\n");
+			fw.write("\tvDisplayMessage(bufLocal);\n");
+			fw.write("\tif (currentTickCount==20){\n");
+			fw.write("\t\tvDisplayMessage(\"======================================\\n\");\n");
+			fw.write("}\n");
+			fw.close();
+		} catch (IOException ioe) {
+			System.err.println("IOException: " + ioe.getMessage());
+		}}
 
 	private static void sleepTimerMs(File f1) {
 		try {
@@ -255,7 +398,7 @@ public class MainFileCreation {
 					for (ProcessingUnit p: localPU) {
 						CoreMap.put(p, count);	
 						count++;
-						System.out.println("key  "+p +"==>   Value"+count);
+						//	System.out.println("key  "+p +"==>   Value"+count);
 					}
 
 					ProcessingUnit pu = DeploymentUtil.getAssignedCoreForProcess(task, model).iterator().next();
@@ -263,7 +406,6 @@ public class MainFileCreation {
 					Long coreID = CoreMap.get(pu);
 					fw.write("\txTaskCreate("+coreID+", v" + task.getName() + ", \"" + task.getName().toUpperCase()
 							+ "\", configMINIMAL_STACK_SIZE, NULL, main" + task.getName() + ", NULL );\n");
-
 
 				}
 				else {
