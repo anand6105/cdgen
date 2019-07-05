@@ -13,9 +13,11 @@ import org.eclipse.app4mc.amalthea.model.Process;
 import org.eclipse.app4mc.amalthea.model.ProcessingUnit;
 import org.eclipse.app4mc.amalthea.model.SchedulerAllocation;
 import org.app4mc.addon.cdgen.gsoc2019.utils.fileUtil;
+import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.HardwareUtil;
 import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.ModelUtil;
 import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.SoftwareUtil;
 import org.eclipse.app4mc.amalthea.model.Amalthea;
+import org.eclipse.app4mc.amalthea.model.HWModel;
 import org.eclipse.app4mc.amalthea.model.HwStructure;
 import org.eclipse.app4mc.amalthea.model.MappingModel;
 import org.eclipse.app4mc.amalthea.model.Task;
@@ -244,44 +246,40 @@ public class MainFileCreation {
 			for (Task task : tasks) {
 				MappingModel mappingModel = model.getMappingModel();
 				if (mappingModel != null) {
-					EList<SchedulerAllocation> PU = mappingModel.getSchedulerAllocation();
-					ArrayList<SchedulerAllocation> localPU = new ArrayList<SchedulerAllocation>();
-					localPU.addAll(PU);
+					List<ProcessingUnit> processingUnits = HardwareUtil.getModulesFromHwModel(ProcessingUnit.class, model);
+					ArrayList<ProcessingUnit> localPU = new ArrayList<ProcessingUnit>();
+					localPU.addAll(processingUnits);
 
-					HashMap<SchedulerAllocation,Long> CoreMap = new HashMap<SchedulerAllocation,Long>();
+					HashMap<ProcessingUnit,Long> CoreMap = new HashMap<ProcessingUnit,Long>();
 					long count = 0;
-					for (SchedulerAllocation p: PU) {
-							CoreMap.put(p, count);	
-							count++;
-							System.out.println("key  "+p +"==>   Value"+count);
-					}
-					ProcessingUnit pu = DeploymentUtil.getAssignedCoreForProcess(task, model).iterator().next();
-					
-					Long coreID = CoreMap.get(pu);
-						fw.write("\txTaskCreate("+coreID+", v" + task.getName() + ", \"" + task.getName().toUpperCase()
-								+ "\", configMINIMAL_STACK_SIZE, NULL, main" + task.getName() + ", NULL );\n");
-						
-						
+					for (ProcessingUnit p: localPU) {
+						CoreMap.put(p, count);	
+						count++;
+						System.out.println("key  "+p +"==>   Value"+count);
 					}
 
-					//Map<Task, Long> CoreMapSorted = fileUtil.sortByValue(CoreMap);
-					ProcessingUnit pu = DeploymentUtil.getTaskAllocations(task, model).get(0).getAffinity().get(0);
-					if(pu != null) {
-						fw.write("\txTaskCreate("+pu.getName()+", v" + task.getName() + ", \"" + task.getName().toUpperCase()
+					ProcessingUnit pu = DeploymentUtil.getAssignedCoreForProcess(task, model).iterator().next();
+
+					Long coreID = CoreMap.get(pu);
+					fw.write("\txTaskCreate("+coreID+", v" + task.getName() + ", \"" + task.getName().toUpperCase()
 							+ "\", configMINIMAL_STACK_SIZE, NULL, main" + task.getName() + ", NULL );\n");
-					}else {
-						fw.write("\txTaskCreate( v" + task.getName() + ", \"" + task.getName().toUpperCase()
-								+ "\", configMINIMAL_STACK_SIZE, NULL, main" + task.getName() + ", NULL );\n");
-					}
+
+
 				}
-			
-				fw.write("\tvTaskStartScheduler();\n");
-				fw.write("\t" + "return 0;\n");
-				fw.write("}\n");
-				fw.close();
-			}catch (IOException ioe) {
-				System.err.println("IOException: " + ioe.getMessage());
+				else {
+					fw.write("\txTaskCreate( v" + task.getName() + ", \"" + task.getName().toUpperCase()
+							+ "\", configMINIMAL_STACK_SIZE, NULL, main" + task.getName() + ", NULL );\n");
+				}
+				//Map<Task, Long> CoreMapSorted = fileUtil.sortByValue(CoreMap);
 			}
+
+			fw.write("\tvTaskStartScheduler();\n");
+			fw.write("\t" + "return 0;\n");
+			fw.write("}\n");
+			fw.close();
+		}catch (IOException ioe) {
+			System.err.println("IOException: " + ioe.getMessage());
+		}
 
 	}
 

@@ -82,7 +82,7 @@ public class HardwareUtil {
 			collectModulesFromHWStructure(hwStruct, targetClass, results);
 		}
 	}
-
+	
 	public static List<ProcessingUnit> getAllProcessingUnitsForProcessingUnitDefinition(final Amalthea model,
 			final ProcessingUnitDefinition puDef) {
 		if (puDef == null) { // null is the key for default values!
