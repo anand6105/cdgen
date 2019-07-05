@@ -31,11 +31,13 @@ public class testTaskStructure
 			System.out.println("Test Sucessful");
 			System.out.println("############################################################");
 		} else if (pthreadFlag != false) {
+			System.out.println("############################################################");
 			System.out.println("Test Begins");
 			fileTestRunnablePthread(model, path1);
 			fileTestTaskPthread(model, path1, preemptionFlag);
 			fileTestmainTaskPthread(model, path1);
 			System.out.println("Test Sucessful");
+			System.out.println("############################################################");
 		}
 	}
 
@@ -108,7 +110,7 @@ public class testTaskStructure
 		FileReader fr = new FileReader(f1);
 		BufferedReader br = new BufferedReader(fr);
 		String s;
-		String input = "Runnable", input1 = "void";
+		String input = "\tRunnable", input1 = "void";
 		int count = 0, count1 = 0;
 		while ((s = br.readLine()) != null) {
 			words = s.split(" ");
@@ -121,7 +123,7 @@ public class testTaskStructure
 				}
 			}
 		}
-		if (count != runmod.size() + 3) {
+		if (count != runmod.size()) {
 			System.out.println(runmod.size() + "\tRunnable : ERROR: Runnable size Not matching count\t" + count);
 		} else {
 			System.out.println("Runnable : Number of Runnables checked");
@@ -220,69 +222,68 @@ public class testTaskStructure
 		FileReader fr = new FileReader(f1);
 		BufferedReader br = new BufferedReader(fr);
 		String s;
-		String input = "Cout", input2 = "Cin", input3 = "\t\t\tsuspendMe", input4 = "\t\t\tresumeMe";
-		String input5 = "void";
-		int count = 0, count1 = 0, count2 = 0, count3 = 0, count4 = 0;
+		String input1 = "Cout", input2 = "Cin", input3 = "\t\t\tsuspendMe", input4 = "\t\t\tresumeMe", input5 = "void";
+		int count1 = 0, count2 = 0, count3 = 0, count4 = 0, count5 = 0;
 		while ((s = br.readLine()) != null) {
 			words = s.split(" ");
 			for (String word : words) {
-				if (word.equals(input)) {
-					count++;
-				} else if (word.equals(input2)) {
+				if (word.equals(input1)) {
 					count1++;
-				} else if (word.equals(input3)) {
+				} else if (word.equals(input2)) {
 					count2++;
-				} else if (word.equals(input4)) {
+				} else if (word.equals(input3)) {
 					count3++;
-				} else if (word.equals(input5)) {
+				} else if (word.equals(input4)) {
 					count4++;
+				} else if (word.equals(input5)) {
+					count5++;
 				}
 			}
 		}
-		if (count != taskmod.size()) {
-			System.out.println(taskmod.size() + "\tTask : ERROR: Cout count\t" + count);
+		if (count1 != taskmod.size()) {
+			System.out.println(taskmod.size() + "\tTask : ERROR: Cout count\t" + count1);
 		} else {
 			System.out.println("Task : Cout count OK");
 		}
-		if (count1 != taskmod.size()) {
-			System.out.println(taskmod.size() + "\tTask : ERROR: Cin count\t" + count1);
+		if (count2 != taskmod.size()) {
+			System.out.println(taskmod.size() + "\tTask : ERROR: Cin count\t" + count2);
 		} else {
 			System.out.println("Task : Cin count OK");
 		}
 
 		if(preemptionFlag == true) {
 			if (count3 != taskmod.size() * 2) {
-				System.out.println(taskmod.size() * 2 + "\tTask : ERROR: suspendMe\t" + count2);
+				System.out.println(taskmod.size() * 2 + "\tTask : ERROR: suspendMe\t" + count3);
 			} else {
 				System.out.println("Task : suspendMe OK");
 			}
 		}else if(preemptionFlag == false) {
 			if (count3 != taskmod.size()) {
-				System.out.println(taskmod.size()+ "\tTask : ERROR: suspendMe\t" + count2);
+				System.out.println(taskmod.size()+ "\tTask : ERROR: suspendMe\t" + count3);
 			} else {
 				System.out.println("Task : suspendMe OK");
 			}
 		}
 		if(preemptionFlag == true) {
-			if (count3 != taskmod.size() * 2) {
-				System.out.println(taskmod.size() * 2 + "\tTask : ERROR: resumeMe\t" + count2);
+			if (count4 != taskmod.size() * 2) {
+				System.out.println(taskmod.size() * 2 + "\tTask : ERROR: resumeMe\t" + count4);
 			} else {
 				System.out.println("Task : resumeMe OK");
 			}
 		}else if(preemptionFlag == false) {
-			if (count3 != taskmod.size()) {
-				System.out.println(taskmod.size()+ "\tTask : ERROR: resumeMe\t" + count2);
+			if (count4 != taskmod.size()) {
+				System.out.println(taskmod.size()+ "\tTask : ERROR: resumeMe\t" + count4);
 			} else {
 				System.out.println("Task : resumeMe OK");
 			}
 		}
-		if (count3 != count2) {
-			System.out.println(taskmod.size() + "\tTask : ERROR: suspendMe \t" + count2);
+		if (count4 != count3) {
+			System.out.println(count4 + "\tTask : ERROR: suspendMe \t" + count3);
 		} else {
 			System.out.println("Task : suspendMe and resumeMe OK");
 		}
-		if (count4 != taskmod.size()) {
-			System.out.println(taskmod.size() + "\tTask : ERROR: taskEXIT_CRITICAL\t" + count4);
+		if (count5 != taskmod.size()) {
+			System.out.println(taskmod.size() + "\tTask : ERROR: taskEXIT_CRITICAL\t" + count5);
 		} else {
 			System.out.println("Task : Task Count OK");
 		}

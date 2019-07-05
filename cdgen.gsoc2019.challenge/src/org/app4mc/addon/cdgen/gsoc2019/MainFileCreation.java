@@ -7,13 +7,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.eclipse.app4mc.amalthea.model.Process;
+import org.eclipse.app4mc.amalthea.model.ProcessingUnit;
+import org.eclipse.app4mc.amalthea.model.SchedulerAllocation;
 import org.app4mc.addon.cdgen.gsoc2019.utils.fileUtil;
 import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.ModelUtil;
 import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.SoftwareUtil;
 import org.eclipse.app4mc.amalthea.model.Amalthea;
+import org.eclipse.app4mc.amalthea.model.HwStructure;
 import org.eclipse.app4mc.amalthea.model.MappingModel;
 import org.eclipse.app4mc.amalthea.model.Task;
+import org.eclipse.app4mc.amalthea.model.TaskAllocation;
 import org.eclipse.app4mc.amalthea.model.Time;
 import org.eclipse.app4mc.amalthea.model.util.DeploymentUtil;
 import org.eclipse.emf.common.util.EList;
@@ -237,23 +243,48 @@ public class MainFileCreation {
 			fw.write("int main(void) \n{\n");
 			for (Task task : tasks) {
 				MappingModel mappingModel = model.getMappingModel();
-				/*if (mappingModel != null) {
-					fw.write("\txTaskCreate("+DeploymentUtil.getAssignedCoreForProcess(task, null)+" v" + task.getName() + ", \"" + task.getName().toUpperCase()
+				if (mappingModel != null) {
+					EList<SchedulerAllocation> PU = mappingModel.getSchedulerAllocation();
+					ArrayList<SchedulerAllocation> localPU = new ArrayList<SchedulerAllocation>();
+					localPU.addAll(PU);
+
+					HashMap<SchedulerAllocation,Long> CoreMap = new HashMap<SchedulerAllocation,Long>();
+					long count = 0;
+					for (SchedulerAllocation p: PU) {
+							CoreMap.put(p, count);	
+							count++;
+							System.out.println("key  "+p +"==>   Value"+count);
+					}
+					ProcessingUnit pu = DeploymentUtil.getAssignedCoreForProcess(task, model).iterator().next();
+					
+					Long coreID = CoreMap.get(pu);
+						fw.write("\txTaskCreate("+coreID+", v" + task.getName() + ", \"" + task.getName().toUpperCase()
+								+ "\", configMINIMAL_STACK_SIZE, NULL, main" + task.getName() + ", NULL );\n");
+						
+						
+					}
+
+					//Map<Task, Long> CoreMapSorted = fileUtil.sortByValue(CoreMap);
+					ProcessingUnit pu = DeploymentUtil.getTaskAllocations(task, model).get(0).getAffinity().get(0);
+					if(pu != null) {
+						fw.write("\txTaskCreate("+pu.getName()+", v" + task.getName() + ", \"" + task.getName().toUpperCase()
 							+ "\", configMINIMAL_STACK_SIZE, NULL, main" + task.getName() + ", NULL );\n");
-				}else {*/
-					fw.write("\txTaskCreate( v" + task.getName() + ", \"" + task.getName().toUpperCase()
-							+ "\", configMINIMAL_STACK_SIZE, NULL, main" + task.getName() + ", NULL );\n");
-			/*	}*/
-							}
-			fw.write("\tvTaskStartScheduler();\n");
-			fw.write("\t" + "return 0;\n");
-			fw.write("}\n");
-			fw.close();
-		} catch (IOException ioe) {
-			System.err.println("IOException: " + ioe.getMessage());
-		}
+					}else {
+						fw.write("\txTaskCreate( v" + task.getName() + ", \"" + task.getName().toUpperCase()
+								+ "\", configMINIMAL_STACK_SIZE, NULL, main" + task.getName() + ", NULL );\n");
+					}
+				}
+			
+				fw.write("\tvTaskStartScheduler();\n");
+				fw.write("\t" + "return 0;\n");
+				fw.write("}\n");
+				fw.close();
+			}catch (IOException ioe) {
+				System.err.println("IOException: " + ioe.getMessage());
+			}
 
 	}
+
 
 	private static void mainFileHeader(File f1) {
 		try {
@@ -307,22 +338,22 @@ public class MainFileCreation {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
 	}
-//TODO Read paper send by lukas
+	//TODO Read paper send by lukas
 	private static void mainTaskPriority(File f1, EList<Task> tasks) {
 		try {
 			File fn = f1;
 			List<Task> localTaskPriority = new ArrayList<Task>();
 			localTaskPriority.addAll(tasks);
-			
+
 			FileWriter fw = new FileWriter(fn, true);
 			fw.write("/* TaskPriorities. */\n");
-			
+
 			HashMap<Task,Long> periodMap = new HashMap<Task,Long>();
 			for (Task task: tasks) {
 				long period = fileUtil.getRecurrence(task).getValue().longValue();
 				periodMap.put(task, period);
 			}
-			
+
 			Map<Task, Long> periodMapSorted = fileUtil.sortByValue(periodMap);
 			for (int i=0;i<periodMapSorted.size();i++) {
 				Task task = (Task) periodMapSorted.keySet().toArray()[i];

@@ -76,7 +76,7 @@ public class RunFileCreation {
 				fileUtil.fileMainHeader(f1);
 				runFileHeader(f1);
 				headerIncludesRun(f1);
-				runnableDefinition(f1, tasks);
+				runnableDefinition(f1, tasks, model);
 			} else {
 				fileUtil.fileMainHeader(f1);
 				runFileHeader(f1);
@@ -210,13 +210,13 @@ public class RunFileCreation {
 							Time RunTime1 = RuntimeUtil.getExecutionTimeForRunnable(Run, p, null, TimeType.WCET);
 							RunTime1 = TimeUtil.convertToTimeUnit(RunTime1, TimeUnit.US);
 							double sleepTime = TimeUtil.getAsTimeUnit(RunTime1, null);
-							fw.write("\tsleepTimerMs(" + sleepTime + ");\n");
+							fw.write("\tusleep(" + sleepTime + ");\n");
 
 							break;
 						}
-					} else {
+					} /*else {
 						fw.write("\tusleep(10000);\n");
-					}
+					}*/
 					fw.write("}\n");
 				}
 				
@@ -228,7 +228,7 @@ public class RunFileCreation {
 
 	}
 
-	private static void runnableDefinition(File f1, EList<Task> tasks) {
+	private static void runnableDefinition(File f1, EList<Task> tasks, Amalthea model) {
 		try {
 			File fn = f1;
 			FileWriter fw = new FileWriter(fn, true);
@@ -239,7 +239,22 @@ public class RunFileCreation {
 					fw.write("void " + Run.getName() + " (void)\t{\n");
 					fw.write("\tvDisplayMessage(\" " + t.getName() + " \tRunnable Execution	" + "\t" + Run.getName()
 							+ "\\n\");\n");
-					fw.write("\tusleep(10000);\n");
+					Process RunTaskName = SoftwareUtil.getProcesses(Run, null).get(0);
+				/*	if (RunTaskName == null) {
+					//	System.out.println("RunTaskName is NULL!!!");
+					}
+				//	System.out.println(RunTaskName.getName());
+*/					Set<ProcessingUnit> pu = DeploymentUtil.getAssignedCoreForProcess(RunTaskName, model);
+				//	if (pu != null) {
+						for (ProcessingUnit p : pu) {
+							Time RunTime1 = RuntimeUtil.getExecutionTimeForRunnable(Run, p, null, TimeType.WCET);
+							RunTime1 = TimeUtil.convertToTimeUnit(RunTime1, TimeUnit.US);
+							double sleepTime = TimeUtil.getAsTimeUnit(RunTime1, null);
+							fw.write("\tusleep(" + sleepTime + ");\n");
+
+							break;
+						}
+						//}
 					fw.write("}\n");
 
 				}

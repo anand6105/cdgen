@@ -269,7 +269,7 @@ public class TaskFileCreation {
 					fw.write("\t\tsched_setaffinity(" + procUni + ", sizeof(cpuset), &cpuset);\n\n");
 				}
 				fw.write("\t\tfor( ;; )\n\t\t{\n");
-				fw.write("\t\tsuspendMe ();\n");
+				fw.write("\t\t\tsuspendMe ();\n");
 				fw.write("\t\tprint_affinity();\n");
 				fw.write("\t\t\tvDisplayMessagePthread( \"" + task.getName() + " is running\\r\\n\" );\n");
 				fw.write("\t\t\t/*Cin - Create local variables and copy the actual variable to them */\n");

@@ -7,6 +7,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
 import org.app4mc.addon.cdgen.gsoc2019.*;
+import org.app4mc.addon.cdgen.gsoc2019.checks.*;
 import org.app4mc.addon.cdgen.gsoc2019.identifiers.Constants;
 import org.app4mc.addon.cdgen.gsoc2019.test.testTaskStructure;
 import org.eclipse.app4mc.amalthea.model.Amalthea;
@@ -114,8 +115,9 @@ public class checkFileCreateGUI {
 		btnSelectTasks.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				
 				// Load File
-				final File inputFile = new File(Constants.DEMOCAR);
+				final File inputFile = new File(Constants.DEMOCARMULTI);
 				// final File inputFile = new File(Constants.WATERS2019_TEST);
 				// final File inputFile = new File(Constants.WATERS2019_TEST);
 				// final File inputFile = new File(Constants.WATERS2019_ANA);
@@ -148,141 +150,100 @@ public class checkFileCreateGUI {
 				String path2 = path1 + "/includes";
 				boolean pthreadFlag, preemptionFlag;
 
-				try {
+			/*	try {
 					Path copied = Paths.get(path + "/ref/FreeRTOSConfig.h");
 					Path originalPath = Paths.get(path1);
 					Files.copy(originalPath, copied, StandardCopyOption.REPLACE_EXISTING);
 				} catch (IOException e1) {
 					e1.printStackTrace();
-				}
-
-				if (cdgenFreeRTOS.isSelected() & cdgencustom.isSelected()) {
+				}*/
+				System.out.println("############################################################");
+				if (cdgenFreeRTOS.isSelected() & cdgencustom.isSelected() & cdgenPreemptive.isSelected() ) {
+					System.out.println("*******FreeRTOS*******Preemptive*******");
+					System.out.println("############################################################");
 					pthreadFlag = false;
+					preemptionFlag = true;
 					try {
-						new MainFileCreation(model, path1, pthreadFlag);
+						new checkFreeRTOSConfiguration(model, path1, path2, pthreadFlag, preemptionFlag);
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
+				}else if (cdgenFreeRTOS.isSelected() & cdgencustom.isSelected() & cdgenCooperative.isSelected()) {
+					System.out.println("*******FreeRTOS*******Cooperative*******");
+					System.out.println("############################################################");
+					pthreadFlag = false;
+					preemptionFlag = false;
 					try {
-						new RunFileCreation(model, path1, path2, pthreadFlag);
+						new checkFreeRTOSConfiguration(model, path1, path2, pthreadFlag, preemptionFlag);
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
+				}else if (cdgenPosix.isSelected() & cdgencustom.isSelected() & cdgenPreemptive.isSelected() ) {
+					System.out.println("*******Posix*******Preemptive*******");
+					System.out.println("############################################################");
+					pthreadFlag = true;
+					preemptionFlag = true;
+					try {
+						new checkPOSIXConfiguration(model, path1, path2, pthreadFlag, preemptionFlag);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}else if (cdgenPosix.isSelected() & cdgencustom.isSelected() & cdgenCooperative.isSelected()) {
+					System.out.println("*******Posix*******Cooperative*******");
+					System.out.println("############################################################");
+					pthreadFlag = true;
+					preemptionFlag = false;
+					try {
+						new checkPOSIXConfiguration(model, path1, path2, pthreadFlag, preemptionFlag);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}else if (cdgencustom.isSelected() & cdgenrms.isSelected() & cdgenPreemptive.isSelected() ) {
+					pthreadFlag = false;
+					preemptionFlag = true;
+					try {
+						new checkRMSConfiguration(model, path1, path2, pthreadFlag, preemptionFlag);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}else if (cdgencustom.isSelected() & cdgenrms.isSelected() & cdgenCooperative.isSelected()) {
+					pthreadFlag = false;
+					preemptionFlag = false;
+					try {
+						new checkRMSConfiguration(model, path1, path2, pthreadFlag, preemptionFlag);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}else if (cdgencustom.isSelected() & cdgenedf.isSelected() & cdgenPreemptive.isSelected() ) {
+					pthreadFlag = false;
+					preemptionFlag = true;
+					try {
+						new checkEDFConfiguration(model, path1, path2, pthreadFlag, preemptionFlag);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}else if (cdgencustom.isSelected() & cdgenedf.isSelected() & cdgenCooperative.isSelected()) {
+					pthreadFlag = false;
+					preemptionFlag = false;
+					try {
+						new checkEDFConfiguration(model, path1, path2, pthreadFlag, preemptionFlag);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}
+				
 
-					try {
-						new LabelFileCreation(model, path1);
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-					try {
-						new FreeRTOSConfigFileCreation(model, path1, pthreadFlag);
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-					if (cdgenCooperative.isSelected()) {
-						preemptionFlag = false;
-						try {
-							new FreeRTOSConfigFileCreation(model, path1, preemptionFlag);
-						} catch (IOException e1) {
-							e1.printStackTrace();
-						}
-						try {
-							new TaskFileCreation(model, path1, path2, pthreadFlag, preemptionFlag);
-						} catch (IOException e1) {
-							e1.printStackTrace();
-						}
-						try {
-							new testTaskStructure(model, path1, pthreadFlag, preemptionFlag);
-						} catch (IOException e1) {
-							e1.printStackTrace();
-						}
-					} else if (cdgenPreemptive.isSelected()) {
-						preemptionFlag = true;
-						try {
-							new FreeRTOSConfigFileCreation(model, path1, preemptionFlag);
-						} catch (IOException e1) {
-							e1.printStackTrace();
-						}
-						try {
-							new TaskFileCreation(model, path1, path2, pthreadFlag, preemptionFlag);
-						} catch (IOException e1) {
-							e1.printStackTrace();
-						}
-						try {
-							new testTaskStructure(model, path1, pthreadFlag, preemptionFlag);
-						} catch (IOException e1) {
-							e1.printStackTrace();
-						}
-					}
-
+					
 					/*
 					 * Path sourceDirectory = Paths.get(pathref); Path targetDirectory =
 					 * Paths.get(path1); try {
 					 * Files.copy(sourceDirectory,targetDirectory,StandardCopyOption.
 					 * REPLACE_EXISTING); } catch (IOException e2) { block e2.printStackTrace(); }
 					 */
-					System.out.println("Generation completed, Check path 	" + path1);
-					try {
-						Desktop.getDesktop().open(new File(path1));
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-					System.exit(0);
-				} else if (cdgenPosix.isSelected() & cdgencustom.isSelected()) {
-					pthreadFlag = true;
+					
+				
 
-					try {
-						new MainFileCreation(model, path1, pthreadFlag);
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-					try {
-						new RunFileCreation(model, path1, path2, pthreadFlag);
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-					try {
-						new LabelFileCreation(model, path1);
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-
-					if (cdgenCooperative.isSelected()) {
-						preemptionFlag = false;
-						try {
-							new TaskFileCreation(model, path1, path2, pthreadFlag, preemptionFlag);
-						} catch (IOException e1) {
-							e1.printStackTrace();
-						}
-						try {
-							new testTaskStructure(model, path1, pthreadFlag, preemptionFlag);
-						} catch (IOException e1) {
-							e1.printStackTrace();
-						}
-					} else if (cdgenPreemptive.isSelected()) {
-						preemptionFlag = true;
-						try {
-							new TaskFileCreation(model, path1, path2, pthreadFlag, preemptionFlag);
-						} catch (IOException e1) {
-							e1.printStackTrace();
-						}
-						try {
-							new testTaskStructure(model, path1, pthreadFlag, preemptionFlag);
-						} catch (IOException e1) {
-							e1.printStackTrace();
-						}
-					}
-
-					System.out.println("Generation completed, Check path 	" + path1);
-					try {
-						Desktop.getDesktop().open(new File(path1));
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-
-					System.exit(0);
-
-				} else {
+					else {
 					System.out.println("Configuration Not Defined!");
 				}
 			}

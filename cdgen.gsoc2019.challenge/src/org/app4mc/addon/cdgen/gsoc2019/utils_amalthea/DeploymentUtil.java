@@ -197,6 +197,7 @@ public class DeploymentUtil {
 		final Set<TaskAllocation> taskAllocations = new HashSet<>();
 		final Set<ProcessingUnit> processingUnits = new HashSet<>();
 		if (process instanceof Task) {
+			
 			for (final TaskAllocation taskAlloc : mappingModel.getTaskAllocation()) {
 				if (taskAlloc.getTask().equals(process)) {
 					taskAllocations.add(taskAlloc);
