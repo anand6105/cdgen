@@ -13,7 +13,9 @@ public class Constants {
 	
 	public final static String DEMOCARMULTI = "../cdgen.gsoc2019.challenge/models/democarMulticore/AMALTHEA_Democar_MappingExample.amxmi";
 	
-	public final static String DEMOCARMULTIRASPBERRYPI = "../cdgen/cdgen.gsoc2019.challenge/models/democarMulticoreRaspberryPi/AMALTHEA_Democar_Multi_RASPBERRYPI.amxmi";
+	public final static String DEMOCARMULTIRASPBERRYPI = "../cdgen.gsoc2019.challenge/models/democarMulticoreRaspberryPi/AMALTHEA_Democar_Multi_RASPBERRYPI.amxmi";
+	
+	//public final static String DEMOCARMULTIRASPBERRYPI = "../cdgen/cdgen.gsoc2019.challenge/models/democarMulticoreRaspberryPi/AMALTHEA_Democar_Multi_RASPBERRYPI.amxmi";
 	
 	public final static String Challenge2017 = "../cdgen.gsoc2019.challenge/models/_modified/modified.amxmi";
 	

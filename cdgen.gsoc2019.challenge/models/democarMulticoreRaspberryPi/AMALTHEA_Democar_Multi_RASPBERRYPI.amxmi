@@ -1008,15 +1008,15 @@
     <schedulerAllocation scheduler="SCHED_RPI_1+%232?type=TaskScheduler" responsibility="RPI_1?type=ProcessingUnit"/>
     <schedulerAllocation scheduler="SCHED_RPI_2+%233?type=TaskScheduler" responsibility="RPI_2?type=ProcessingUnit"/>
     <schedulerAllocation scheduler="SCHED_RPI_3+%234?type=TaskScheduler" responsibility="RPI_3?type=ProcessingUnit"/>
-    <taskAllocation task="Task_ESSP0?type=Task" scheduler="SCHED_RPI_1+%232?type=TaskScheduler"/>
-    <taskAllocation task="Task_ESSP1?type=Task" scheduler="SCHED_RPI_1+%232?type=TaskScheduler"/>
-    <taskAllocation task="Task_ESSP2?type=Task" scheduler="SCHED_RPI_0+%231?type=TaskScheduler"/>
-    <taskAllocation task="Task_ESSP3?type=Task" scheduler="SCHED_RPI_0+%231?type=TaskScheduler"/>
-    <taskAllocation task="Task_ESSP4?type=Task" scheduler="SCHED_RPI_1+%232?type=TaskScheduler"/>
-    <taskAllocation task="Task_ESSP5?type=Task" scheduler="SCHED_RPI_0+%231?type=TaskScheduler"/>
-    <taskAllocation task="Task_ESSP6?type=Task" scheduler="SCHED_RPI_1+%232?type=TaskScheduler"/>
-    <taskAllocation task="Task_ESSP7?type=Task" scheduler="SCHED_RPI_1+%232?type=TaskScheduler"/>
-    <taskAllocation task="Task_ESSP8?type=Task" scheduler="SCHED_RPI_0+%231?type=TaskScheduler"/>
-    <taskAllocation task="Task_ESSP9?type=Task" scheduler="SCHED_RPI_0+%231?type=TaskScheduler"/>
+    <taskAllocation task="Task_ESSP0?type=Task" scheduler="SCHED_RPI_1+%232?type=TaskScheduler" affinity="RPI_1?type=ProcessingUnit"/>
+    <taskAllocation task="Task_ESSP1?type=Task" scheduler="SCHED_RPI_1+%232?type=TaskScheduler" affinity="RPI_1?type=ProcessingUnit"/>
+    <taskAllocation task="Task_ESSP2?type=Task" scheduler="SCHED_RPI_0+%231?type=TaskScheduler" affinity="RPI_0?type=ProcessingUnit"/>
+    <taskAllocation task="Task_ESSP3?type=Task" scheduler="SCHED_RPI_0+%231?type=TaskScheduler" affinity="RPI_0?type=ProcessingUnit"/>
+    <taskAllocation task="Task_ESSP4?type=Task" scheduler="SCHED_RPI_1+%232?type=TaskScheduler" affinity="RPI_1?type=ProcessingUnit"/>
+    <taskAllocation task="Task_ESSP5?type=Task" scheduler="SCHED_RPI_0+%231?type=TaskScheduler" affinity="RPI_0?type=ProcessingUnit"/>
+    <taskAllocation task="Task_ESSP6?type=Task" scheduler="SCHED_RPI_1+%232?type=TaskScheduler" affinity="RPI_1?type=ProcessingUnit"/>
+    <taskAllocation task="Task_ESSP7?type=Task" scheduler="SCHED_RPI_1+%232?type=TaskScheduler" affinity="RPI_1?type=ProcessingUnit"/>
+    <taskAllocation task="Task_ESSP8?type=Task" scheduler="SCHED_RPI_0+%231?type=TaskScheduler" affinity="RPI_0?type=ProcessingUnit"/>
+    <taskAllocation task="Task_ESSP9?type=Task" scheduler="SCHED_RPI_0+%231?type=TaskScheduler" affinity="RPI_0?type=ProcessingUnit"/>
   </mappingModel>
 </am:Amalthea>
