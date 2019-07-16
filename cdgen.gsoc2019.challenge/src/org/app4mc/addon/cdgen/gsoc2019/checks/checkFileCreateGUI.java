@@ -6,12 +6,18 @@ import javax.swing.JFrame;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
+
+import org.apache.xml.resolver.helpers.FileURL;
 import org.app4mc.addon.cdgen.gsoc2019.*;
 import org.app4mc.addon.cdgen.gsoc2019.checks.*;
 import org.app4mc.addon.cdgen.gsoc2019.identifiers.Constants;
 import org.app4mc.addon.cdgen.gsoc2019.test.testTaskStructure;
+import org.app4mc.addon.cdgen.gsoc2019.utils.fileUtil;
 import org.eclipse.app4mc.amalthea.model.Amalthea;
+import org.eclipse.app4mc.amalthea.model.HWModel;
 import org.eclipse.app4mc.amalthea.model.io.AmaltheaLoader;
+import org.eclipse.core.internal.utils.FileUtil;
+
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -25,6 +31,8 @@ import java.awt.event.ActionEvent;
 import java.awt.Desktop;
 import javax.swing.JSeparator;
 import java.awt.Font;
+import java.lang.Object;
+
 import java.awt.Color;
 
 /**
@@ -118,15 +126,13 @@ public class checkFileCreateGUI {
 
 				// Load File
 				final File inputFile = new File(Constants.DEMOCARMULTIRASPBERRYPI);
-				// final File inputFile = new File(Constants.WATERS2019_TEST);
-				// final File inputFile = new File(Constants.WATERS2019_TEST);
-				// final File inputFile = new File(Constants.WATERS2019_ANA);
-				// final File inputFile = new File(Constants.WATERS2019_ANAMOD);
 				final Amalthea model = AmaltheaLoader.loadFromFile(inputFile);
 				if (model == null) {
 					System.out.println("Error: No model loaded!");
 					return;
 				}
+				/*HWModel HWModel1;
+				model.setHwModel(HWModel1);*/
 				String path = System.getProperty("user.dir");
 				String timestamp = new Timestamp(System.currentTimeMillis()).toString();
 				timestamp = timestamp.substring(0, timestamp.length() - 6).replaceAll(":", "");
@@ -150,19 +156,22 @@ public class checkFileCreateGUI {
 				String path2 = path1 + "/includes";
 				
 				int configFlag = 0xFFFF;
-				
-				/*
+				 /*
+				 * 
 				 * 
 				 * 0X1000 ==> FreeRTOS
 				 * 0X2000 ==> POSIX
 				 * 0x3000 ==> Custom
 				 * 
+				 * 
 				 * 0X0100 ==> RMS
 				 * 0X0200 ==> EDF
 				 * 0X0300 ==> Non Custom
 				 * 
+				 * 
 				 * 0X0010 ==> Cooperative
 				 * 0X0020 ==> Preemptive
+				 * 
 				 * 
 				 * 0X0001 ==> MultiCore
 				 * 0X0002 ==> SingleCore
@@ -181,27 +190,50 @@ public class checkFileCreateGUI {
 				 */
 	
 				
-				/*	try {
-					Path copied = Paths.get(path + "/ref/FreeRTOSConfig.h");
-					Path originalPath = Paths.get(path1);
-					Files.copy(originalPath, copied, StandardCopyOption.REPLACE_EXISTING);
+					try {
+						
+/*						Path SourcePath = Paths.get(path + "/ref/FreeRTOSConfig.h");
+						Path DestinationPath = Paths.get(path1);
+					
+	
+
+						com.google.common.io.Files.copy(SourceFile, DestinationFile);*/
+						
+						  // create new file
+				         File l_SourceDirectory = new File(path + "/ref");
+				                                 
+				         // array of files and directory
+				         String[] filesName = l_SourceDirectory.list();
+				            
+				         // for each name in the path array
+				         for(String pathi:filesName) {
+				        	 
+				        	 File SourceFile = new File(l_SourceDirectory.toString() +"/" + pathi);
+							 File DestinationFile = new File(Paths.get(path1).toString() + "/" + pathi );
+				            
+							 com.google.common.io.Files.copy(SourceFile , DestinationFile );
+				            
+				         }
+
+
+					
 				} catch (IOException e1) {
 					e1.printStackTrace();
-				}*/
+				}
 				System.out.println("############################################################");
 				if (cdgenFreeRTOS.isSelected() & cdgennonCustom.isSelected() & cdgenPreemptive.isSelected() ) {
 					configFlag = 0x1320;
-					System.out.println("*******FreeRTOS*******Preemptive*******");
+					System.out.println("\t\tFreeRTOS\tPreemptive");
 					System.out.println("############################################################");
 					new checkFreeRTOSConfiguration(model, path1, path2, configFlag);
 				}else if (cdgenFreeRTOS.isSelected() & cdgennonCustom.isSelected() & cdgenCooperative.isSelected()) {
 					configFlag = 0x1310;
-					System.out.println("*******FreeRTOS*******Cooperative*******");
+					System.out.println("\t\tFreeRTOS\tCooperative");
 					System.out.println("############################################################");
 					new checkFreeRTOSConfiguration(model, path1, path2, configFlag);
 				}else if (cdgenPosix.isSelected() & cdgennonCustom.isSelected() & cdgenPreemptive.isSelected() ) {
 					configFlag = 0x2320;
-					System.out.println("*******Posix*******Preemptive*******");
+					System.out.println("\t\tPosix\tPreemptive");
 					System.out.println("############################################################");
 					try {
 						new checkPOSIXConfiguration(model, path1, path2, configFlag);
@@ -210,7 +242,7 @@ public class checkFileCreateGUI {
 					}
 				}else if (cdgenPosix.isSelected() & cdgennonCustom.isSelected() & cdgenCooperative.isSelected()) {
 					configFlag = 0x2310;
-					System.out.println("*******Posix*******Cooperative*******");
+					System.out.println("\t\tPosix\tCooperative");
 					System.out.println("############################################################");
 					try {
 						new checkPOSIXConfiguration(model, path1, path2, configFlag);
@@ -219,7 +251,7 @@ public class checkFileCreateGUI {
 					}
 				}else if (cdgenCustom.isSelected() & cdgenrms.isSelected() & cdgenPreemptive.isSelected() ) {
 					configFlag = 0x3120;
-					System.out.println("*******RMS*******Preemptive*******");
+					System.out.println("\t\tRMS\tPreemptive");
 					System.out.println("############################################################");
 					try {
 						new checkRMSConfiguration(model, path1, path2, configFlag);
@@ -228,7 +260,7 @@ public class checkFileCreateGUI {
 					}
 				}else if (cdgenCustom.isSelected() & cdgenrms.isSelected() & cdgenCooperative.isSelected()) {
 					configFlag = 0x3110;
-					System.out.println("*******RMS*******Cooperative*******");
+					System.out.println("\t\tRMS\tCooperative");
 					System.out.println("############################################################");
 					try {
 						new checkRMSConfiguration(model, path1, path2, configFlag);
@@ -237,7 +269,7 @@ public class checkFileCreateGUI {
 					}
 				}else if (cdgenCustom.isSelected() & cdgenedf.isSelected() & cdgenPreemptive.isSelected() ) {
 					configFlag = 0x3220;
-					System.out.println("*******EDF*******Preemptive*******");
+					System.out.println("\t\tEDF\tPreemptive");
 					System.out.println("############################################################");
 					try {
 						new checkEDFConfiguration(model, path1, path2, configFlag);
@@ -246,7 +278,7 @@ public class checkFileCreateGUI {
 					}
 				}else if (cdgenCustom.isSelected() & cdgenedf.isSelected() & cdgenCooperative.isSelected()) {
 					configFlag = 0x3210;
-					System.out.println("*******EDF*******Cooperative*******");
+					System.out.println("\t\tEDF\tCooperative");
 					System.out.println("############################################################");
 					try {
 						new checkEDFConfiguration(model, path1, path2, configFlag);

@@ -37,11 +37,11 @@ public class checkFreeRTOSConfiguration{
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		try {
+	/*	try {
 			new FreeRTOSConfigFileCreation(model, srcPath, configFlag);
 		} catch (IOException e1) {
 			e1.printStackTrace();
-		}
+		}*/
 		try {
 			new TaskFileCreation(model, srcPath, headerPath, configFlag);
 		} catch (IOException e1) {

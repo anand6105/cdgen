@@ -12,11 +12,13 @@ import org.app4mc.addon.cdgen.gsoc2019.utils.fileUtil;
 import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.HardwareUtil;
 import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.RuntimeUtil;
 import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.RuntimeUtil.TimeType;
+import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.TimeUtil;
 import org.eclipse.app4mc.amalthea.model.Amalthea;
 import org.eclipse.app4mc.amalthea.model.MappingModel;
 import org.eclipse.app4mc.amalthea.model.ProcessingUnit;
 import org.eclipse.app4mc.amalthea.model.Task;
 import org.eclipse.app4mc.amalthea.model.Time;
+import org.eclipse.app4mc.amalthea.model.TimeUnit;
 import org.eclipse.app4mc.amalthea.model.util.DeploymentUtil;
 import org.eclipse.emf.common.util.EList;
 
@@ -290,10 +292,13 @@ public class MainFileCreation {
 					pu = DeploymentUtil.getAssignedCoreForProcess(task, model).iterator().next();
 				
 				Time taskTime = RuntimeUtil.getExecutionTimeForProcess(task, pu, null, TimeType.WCET);
-				//taskTime = TimeUtil.convertToTimeUnit(taskTime, TimeUnit.US);
-						// double sleepTime = TimeUtil.getAsTimeUnit(taskTime, null);
+				//System.out.println("time obj = " +taskTime);
+				taskTime = TimeUtil.convertToTimeUnit(taskTime, TimeUnit.MS);
+				//System.out.println("raw2 = " +taskTime.getValue());
+				
+						 double sleepTime = TimeUtil.getAsTimeUnit(taskTime, null);
 				fw.write("\tAmaltheaTask AmalTk_"+task.getName()+" = createTask("+task.getName()+", NULL,NULL,"+
-				task.getStimuli().get(0).getName()+", "+task.getStimuli().get(0).getName()+", "+taskTime
+				task.getStimuli().get(0).getName()+", "+task.getStimuli().get(0).getName()+", "+sleepTime
 				+", "+"taskHandle"+task.getName()+");\n");
 				
 				}
@@ -496,13 +501,12 @@ public class MainFileCreation {
 					for (ProcessingUnit p: localPU) {
 						CoreMap.put(p, count);	
 						count++;
-						//	System.out.println("key  "+p +"==>   Value"+count);
 					}
 
 					ProcessingUnit pu = DeploymentUtil.getAssignedCoreForProcess(task, model).iterator().next();
 
 					Long coreID = CoreMap.get(pu);
-					fw.write("\txTaskCreate("+coreID+", v" + task.getName() + ", \"" + task.getName().toUpperCase()
+					fw.write("\txTaskCreate( "+coreID+", v" + task.getName() + ", \"" + task.getName().toUpperCase()
 							+ "\", configMINIMAL_STACK_SIZE, NULL, main" + task.getName() + ", NULL );\n");
 
 				}
@@ -510,7 +514,6 @@ public class MainFileCreation {
 					fw.write("\txTaskCreate( v" + task.getName() + ", \"" + task.getName().toUpperCase()
 							+ "\", configMINIMAL_STACK_SIZE, NULL, main" + task.getName() + ", NULL );\n");
 				}
-				//Map<Task, Long> CoreMapSorted = fileUtil.sortByValue(CoreMap);
 			}
 
 			fw.write("\tvTaskStartScheduler();\n");

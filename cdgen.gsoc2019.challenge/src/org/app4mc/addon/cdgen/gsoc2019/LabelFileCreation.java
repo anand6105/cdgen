@@ -111,7 +111,7 @@ public class LabelFileCreation {
 			for (Label label : labellist) {
 				String type = fileUtil.datatype(label.getSize().toString());
 				long init = fileUtil.intialisation(label.getSize().toString());
-				fw.write("\t" + type + "	" + label.getName() + "\t=\t" + init + ";\n");
+				fw.write("\t" + type + "	" + label.getName() + " \t=\t " + init + ";\n");
 			}
 
 			fw.write("\n\n\n\n");
