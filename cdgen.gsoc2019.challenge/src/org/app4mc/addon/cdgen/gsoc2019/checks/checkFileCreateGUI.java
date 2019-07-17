@@ -142,7 +142,6 @@ public class checkFileCreateGUI {
 				if (!theDir.exists()) {
 					System.out.println("creating directory: " + theDir.getName());
 					boolean result = false;
-
 					try {
 						theDir.mkdir();
 						result = true;
@@ -154,28 +153,23 @@ public class checkFileCreateGUI {
 				}
 				String path1 = path + "/" + timestamp;
 				String path2 = path1 + "/includes";
-				
+
 				int configFlag = 0xFFFF;
-				 /*
-				 * 
+				/*
 				 * 
 				 * 0X1000 ==> FreeRTOS
 				 * 0X2000 ==> POSIX
 				 * 0x3000 ==> Custom
 				 * 
-				 * 
 				 * 0X0100 ==> RMS
 				 * 0X0200 ==> EDF
 				 * 0X0300 ==> Non Custom
 				 * 
-				 * 
 				 * 0X0010 ==> Cooperative
 				 * 0X0020 ==> Preemptive
 				 * 
-				 * 
 				 * 0X0001 ==> MultiCore
 				 * 0X0002 ==> SingleCore
-				 * 
 				 * 
 				 * FreeRTOS == 	NonCustom 	== Cooperative 	==	0x1310
 				 * FreeRTOS == 	NonCustom 	== Preemptive 	==	0x1320
@@ -186,40 +180,8 @@ public class checkFileCreateGUI {
 				 * Custom  	== 	EDF 		== Cooperative 	==	0x3210
 				 * Custom  	== 	EDF 		== Cooperative 	==	0x3220
 				 * 
-				 * 
 				 */
-	
-				
-					try {
-						
-/*						Path SourcePath = Paths.get(path + "/ref/FreeRTOSConfig.h");
-						Path DestinationPath = Paths.get(path1);
-					
-	
 
-						com.google.common.io.Files.copy(SourceFile, DestinationFile);*/
-						
-						  // create new file
-				         File l_SourceDirectory = new File(path + "/ref");
-				                                 
-				         // array of files and directory
-				         String[] filesName = l_SourceDirectory.list();
-				            
-				         // for each name in the path array
-				         for(String pathi:filesName) {
-				        	 
-				        	 File SourceFile = new File(l_SourceDirectory.toString() +"/" + pathi);
-							 File DestinationFile = new File(Paths.get(path1).toString() + "/" + pathi );
-				            
-							 com.google.common.io.Files.copy(SourceFile , DestinationFile );
-				            
-				         }
-
-
-					
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
 				System.out.println("############################################################");
 				if (cdgenFreeRTOS.isSelected() & cdgennonCustom.isSelected() & cdgenPreemptive.isSelected() ) {
 					configFlag = 0x1320;
@@ -286,18 +248,6 @@ public class checkFileCreateGUI {
 						e1.printStackTrace();
 					}
 				}
-
-
-
-				/*
-				 * Path sourceDirectory = Paths.get(pathref); Path targetDirectory =
-				 * Paths.get(path1); try {
-				 * Files.copy(sourceDirectory,targetDirectory,StandardCopyOption.
-				 * REPLACE_EXISTING); } catch (IOException e2) { block e2.printStackTrace(); }
-				 */
-
-
-
 				else {
 					System.out.println("Configuration Not Defined!");
 				}
@@ -351,42 +301,3 @@ public class checkFileCreateGUI {
 
 	}
 }
-
-/*			
-boolean rtosFlag = false, pthreadFlag = false, customFlag = false;
-boolean rmsFlag = false, edfFlag = false, nonCustomFlag = false;
-boolean preemptionFlag = false;
-
-if(cdgenFreeRTOS.isSelected()) {
-	rtosFlag = true;
-	pthreadFlag = false;
-	customFlag = false;
-}else if(cdgenPosix.isSelected()) {
-	rtosFlag = false;
-	pthreadFlag = true;
-	customFlag = false;
-}else if(cdgenCustom.isSelected()) {
-	rtosFlag = false;
-	pthreadFlag = false;
-	customFlag = true;
-}
-
-if(cdgenrms.isSelected()) {
-	rmsFlag = true;
-	edfFlag = false;
-	nonCustomFlag = false;
-}else if(cdgenedf.isSelected()) {
-	rmsFlag = false;
-	edfFlag = true;
-	nonCustomFlag = false;;
-}else if(cdgennonCustom.isSelected()) {
-	rmsFlag = false;
-	edfFlag = false;
-	nonCustomFlag = true;
-}
-
-if(cdgenCooperative.isSelected()) {
-	preemptionFlag = false;
-}else if(cdgenPreemptive.isSelected()) {
-	preemptionFlag = true;
-}*/

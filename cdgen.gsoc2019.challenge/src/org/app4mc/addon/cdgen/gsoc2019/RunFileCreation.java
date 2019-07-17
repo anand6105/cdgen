@@ -55,7 +55,7 @@ public class RunFileCreation {
 
 	
 	private static void fileCreate(Amalthea model, String path1, String path2, int configFlag, EList<Task> tasks,
-			EList<Runnable> runnables) throws IOException {
+		EList<Runnable> runnables) throws IOException {
 		String fname = path1 + File.separator + "runnable.c";
 		File f2 = new File(path1);
 		File f1 = new File(fname);
@@ -88,8 +88,8 @@ public class RunFileCreation {
 				e.printStackTrace();
 			}
 		}
-		String fname2 = path2 + File.separator + "runnable.h";
-		File f4 = new File(path2);
+		String fname2 = path1 + File.separator + "runnable.h";
+		File f4 = new File(path1);
 		File f3 = new File(fname2);
 		f4.mkdirs();
 		try {
@@ -192,26 +192,33 @@ public class RunFileCreation {
 		try {
 			File fn = f1;
 			FileWriter fw = new FileWriter(fn, true);
+		//	int taskCounter =1;
 			for (Task t : tasks) {
 				List<Runnable> runnablesOfTask = SoftwareUtil.getRunnableList(t, null);
 				runnablesOfTask = runnablesOfTask.stream().distinct().collect(Collectors.toList());
+			//	int runnableCounter =1;
 				for (Runnable Run : runnablesOfTask) {
+					
 					fw.write("void " + Run.getName() + " (void)\t{\n");
-					fw.write("\tvDisplayMessagePthread(\" " + t.getName() + " \tRunnable Execution	" + "\t" + Run.getName()
-					+ "\\n\");\n");
+				/*	fw.write("\tvDisplayMessagePthread(\" " + t.getName() + " \tRunnable Execution	" + "\t" + Run.getName()
+					+ "\\n\");\n");*/
 					Process RunTaskName = SoftwareUtil.getProcesses(Run, null).get(0);
 					Set<ProcessingUnit> pu = DeploymentUtil.getAssignedCoreForProcess(RunTaskName, model);
 					if (pu != null) {
 						for (ProcessingUnit p : pu) {
 							Time RunTime1 = RuntimeUtil.getExecutionTimeForRunnable(Run, p, null, TimeType.WCET);
 							RunTime1 = TimeUtil.convertToTimeUnit(RunTime1, TimeUnit.US);
+							
 							double sleepTime = TimeUtil.getAsTimeUnit(RunTime1, null);
+
 							fw.write("\tusleep(" + sleepTime + ");\n");
 							break;
 						}
 					}
 					fw.write("}\n");
+					//runnableCounter++;
 				}
+				//taskCounter++;
 			}
 			fw.close();
 		} catch (IOException ioe) {
@@ -223,25 +230,32 @@ public class RunFileCreation {
 		try {
 			File fn = f1;
 			FileWriter fw = new FileWriter(fn, true);
+			int taskCounter =1;
 			for (Task t : tasks) {
 				List<Runnable> runnablesOfTask = SoftwareUtil.getRunnableList(t, null);
 				runnablesOfTask = runnablesOfTask.stream().distinct().collect(Collectors.toList());
+				int runnableCounter =1;
 				for (Runnable Run : runnablesOfTask) {
 					fw.write("void " + Run.getName() + " \t(void)\t{\n");
-					fw.write("\tvDisplayMessage(\" " + t.getName() + " \tRunnable Execution	" + "\t" + Run.getName()
-					+ "\\n\");\n");
+					/*fw.write("\tvDisplayMessage(\" " + t.getName() + " \tRunnable Execution	" + "\t" + Run.getName()
+					+ "\\n\");\n");*/
 					Process RunTaskName = SoftwareUtil.getProcesses(Run, null).get(0);
 					Set<ProcessingUnit> pu = DeploymentUtil.getAssignedCoreForProcess(RunTaskName, model);
 					for (ProcessingUnit p : pu) {
 						Time RunTime1 = RuntimeUtil.getExecutionTimeForRunnable(Run, p, null, TimeType.WCET);
 						RunTime1 = TimeUtil.convertToTimeUnit(RunTime1, TimeUnit.US);
-						double sleepTime = TimeUtil.getAsTimeUnit(RunTime1, null);
-						fw.write("\tusleep(" + sleepTime + ");\n");
-
+						//double sleepTime = TimeUtil.getAsTimeUnit(RunTime1, null);
+						long sleepTime = RunTime1.getValue().longValue();
+			//			System.out.println("Time w/ unit: "+RunTime1 + ",time after: "+sleepTime);
+						//	fw.write("\tusleep(" + sleepTime + ");\n");
+						fw.write("\tsleepTimerUs(" + sleepTime + ", "+taskCounter+runnableCounter+");\n");
+						
 						break;
 					}
 					fw.write("}\n");
+					runnableCounter++;
 				}
+				taskCounter++;
 			}
 			fw.close();
 		} catch (IOException ioe) {

@@ -1006,8 +1006,6 @@
   <mappingModel>
     <schedulerAllocation scheduler="SCHED_RPI_0+%231?type=TaskScheduler" responsibility="RPI_0?type=ProcessingUnit"/>
     <schedulerAllocation scheduler="SCHED_RPI_1+%232?type=TaskScheduler" responsibility="RPI_1?type=ProcessingUnit"/>
-    <schedulerAllocation scheduler="SCHED_RPI_2+%233?type=TaskScheduler" responsibility="RPI_2?type=ProcessingUnit"/>
-    <schedulerAllocation scheduler="SCHED_RPI_3+%234?type=TaskScheduler" responsibility="RPI_3?type=ProcessingUnit"/>
     <taskAllocation task="Task_ESSP0?type=Task" scheduler="SCHED_RPI_1+%232?type=TaskScheduler" affinity="RPI_1?type=ProcessingUnit"/>
     <taskAllocation task="Task_ESSP1?type=Task" scheduler="SCHED_RPI_1+%232?type=TaskScheduler" affinity="RPI_1?type=ProcessingUnit"/>
     <taskAllocation task="Task_ESSP2?type=Task" scheduler="SCHED_RPI_0+%231?type=TaskScheduler" affinity="RPI_0?type=ProcessingUnit"/>

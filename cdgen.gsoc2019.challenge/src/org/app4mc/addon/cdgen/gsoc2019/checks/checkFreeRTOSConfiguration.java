@@ -6,6 +6,7 @@ import org.app4mc.addon.cdgen.gsoc2019.test.testTaskStructure;
 import org.eclipse.app4mc.amalthea.model.Amalthea;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.awt.Desktop;
 
 
@@ -23,6 +24,27 @@ public class checkFreeRTOSConfiguration{
 
 	public void FreeRTOSConfiguration(Amalthea model, String srcPath, String headerPath, int configFlag) {
 		try {
+			String path = System.getProperty("user.dir");
+			// create new file
+			File l_SourceDirectory = null;
+			if(0x1310 == (configFlag & 0xFFF0)) {
+				l_SourceDirectory = new File(path + "/ref/freertos_coop/");
+			}else if(0x1320 == (configFlag & 0xFFF0)){
+				l_SourceDirectory = new File(path + "/ref/freertos_preem/");
+			}
+			
+			// array of files and directory
+			String[] filesName = l_SourceDirectory.list();
+			// for each name in the path array
+			for(String pathi:filesName) {
+				File SourceFile = new File(l_SourceDirectory.toString() +"/" + pathi);
+				File DestinationFile = new File(Paths.get(srcPath).toString() + "/" + pathi );
+				com.google.common.io.Files.copy(SourceFile , DestinationFile );
+			}
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		try {
 			new MainFileCreation(model, srcPath, configFlag);
 		} catch (IOException e1) {
 			e1.printStackTrace();
@@ -37,11 +59,6 @@ public class checkFreeRTOSConfiguration{
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-	/*	try {
-			new FreeRTOSConfigFileCreation(model, srcPath, configFlag);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}*/
 		try {
 			new TaskFileCreation(model, srcPath, headerPath, configFlag);
 		} catch (IOException e1) {

@@ -103,8 +103,8 @@ public class TaskFileCreation {
 				e.printStackTrace();
 			}
 		}
-		String fname2 = path2 + File.separator + "taskDef.h";
-		File f4 = new File(path2);
+		String fname2 = path1 + File.separator + "taskDef.h";
+		File f4 = new File(path1);
 		File f3 = new File(fname2);
 		f4.mkdirs();
 		try {
@@ -163,8 +163,8 @@ public class TaskFileCreation {
 				e.printStackTrace();
 			}
 		}
-		String fname2 = path2 + File.separator + "taskDef.h";
-		File f4 = new File(path2);
+		String fname2 = path1 + File.separator + "taskDef.h";
+		File f4 = new File(path1);
 		File f3 = new File(fname2);
 		f4.mkdirs();
 		try {
@@ -395,7 +395,7 @@ public class TaskFileCreation {
 			fw.write("#include \"taskDef.h\"\n");
 			fw.write("#include \"task.h\"\n");
 
-			fw.write("#define DELAY_MULT 100\n\n");
+			//fw.write("#define DELAY_MULT 100\n\n");
 
 			fw.close();
 		} catch (IOException ioe) {
@@ -420,7 +420,7 @@ public class TaskFileCreation {
 			fw.write("#include \"partest.h\"\n");
 			fw.write("#include \"task.h\"\n");
 			fw.write("#include \"runnable.h\"\n\n");
-			fw.write("#define DELAY_MULT 100\n\n");
+			//fw.write("#define DELAY_MULT 100\n\n");
 			fw.close();
 		} catch (IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
@@ -432,6 +432,7 @@ public class TaskFileCreation {
 		try {
 			File fn = f1;
 			FileWriter fw = new FileWriter(fn, true);
+			int taskCount = 0;
 			for (Task task : tasks) {
 				List<Runnable> runnablesOfTask = SoftwareUtil.getRunnableList(task, null);
 				ArrayList<Label> labellist1 = new ArrayList<Label>();
@@ -455,7 +456,7 @@ public class TaskFileCreation {
 				fw.write("\n\n\n");
 
 				fw.write("\n\tvoid cIN_" + task.getName() + "()\n\t{\n");
-				fw.write("\t\tvDisplayMessage( \" Cin Execution\t" + task.getName() + "\\n\" );\n");
+			//	fw.write("\t\tvDisplayMessage( \" Cin Execution\t" + task.getName() + "\\n\" );\n");
 
 				for (Label lab : listWithoutDuplicates2) {
 					// String type = fileUtil.datatype(lab.getSize().toString());
@@ -464,7 +465,7 @@ public class TaskFileCreation {
 				fw.write("\t}\n");
 
 				fw.write("\n\tvoid cOUT_" + task.getName() + "()\n\t{\n");
-				fw.write("\t\tvDisplayMessage(\" Cout Execution\t" + task.getName() + "\\n\\n\" );\n");
+			//	fw.write("\t\tvDisplayMessage(\" Cout Execution\t" + task.getName() + "\\n\\n\" );\n");
 				ArrayList<Label> labellist2 = new ArrayList<Label>();
 				runnablesOfTask = runnablesOfTask.stream().distinct().collect(Collectors.toList());
 				for (Runnable run : runnablesOfTask) {
@@ -479,37 +480,42 @@ public class TaskFileCreation {
 				fw.write("\t}\n");
 
 				fw.write("\n\tvoid v" + task.getName() + "( void *pvParameters )" + "\n\t{\n");
-				fw.write("\t\tconst char *pcTaskName = \"" + task.getName() + " is running\\r\\n\";\n");
-				fw.write("\t\tportTickType xLastWakeTime;\n\n");
-				fw.write("\t\tfor( ;; )\n\t\t{\n");
-				fw.write("\t\t\t/*Cin - Create local variables and copy the actual variable to them */\n");
-				fw.write("\t\t\ttaskENTER_CRITICAL ();\n");
-				fw.write("\t\t\tvDisplayMessage( pcTaskName );\n");
-				fw.write("\t\t\tcIN_" + task.getName() + "();\n");
-				if (preemptionFlag == true) {
-					fw.write("\t\t\ttaskEXIT_CRITICAL ();\n");
-				}
-				fw.write("\n\t\t\t/*Runnable calls */\n");
-				for (Runnable run : runnablesOfTask) {
-					fw.write("\t\t\t" + run.getName() + "();\n");
-				}
-				fw.write("\n\t\t\t/*Cout - Write back the local variables back to the actual variables */\n");
-				if (preemptionFlag == true) {
-					fw.write("\t\t\ttaskENTER_CRITICAL ();\n");
-				}
-				fw.write("\t\t\tcOUT_" + task.getName() + "();\n");
-				fw.write("\t\t\ttaskEXIT_CRITICAL ();\n");
-				fw.write("\t\t\ttaskYIELD();\n");
+			//	fw.write("\t\tconst char *pcTaskName = \"" + task.getName() + " is running\\r\\n\";\n");
+			//	fw.write("\t\tportTickType xLastWakeTime;\n\n");
+			//	fw.write("\t\tfor( ;; )\n\t\t{\n");
+			//	fw.write("\t\t\t/*Cin - Create local variables and copy the actual variable to them */\n");
+			//	fw.write("\t\t\ttaskENTER_CRITICAL ();\n");
+			//	fw.write("\t\t\tvDisplayMessage( pcTaskName );\n");
+			//	fw.write("\t\t\tcIN_" + task.getName() + "();\n");
+			//	if (preemptionFlag == true) {
+			//		fw.write("\t\t\ttaskEXIT_CRITICAL ();\n");
+			//	}
+			fw.write("\n\tupdateDebugFlag(700);");
+			fw.write("\n\t/*Runnable calls */\n");
+			for (Runnable run : runnablesOfTask) {
+				fw.write("\t\t" + run.getName() + "();\n");
+			}
+			fw.write("\n\ttaskCount"+task.getName()+"++;");
+			fw.write("\n\ttraceTaskPasses("+taskCount+", taskCount"+task.getName()+");");
+			fw.write("\n\ttraceRunningTask(0);\n");
+			
+			//	fw.write("\n\t\t\t/*Cout - Write back the local variables back to the actual variables */\n");
+			//	if (preemptionFlag == true) {
+			//		fw.write("\t\t\ttaskENTER_CRITICAL ();\n");
+			//	}
+			//	fw.write("\t\t\tcOUT_" + task.getName() + "();\n");
+			//	fw.write("\t\t\ttaskEXIT_CRITICAL ();\n");
+			//	fw.write("\t\t\ttaskYIELD();\n");
 				Time tasktime = fileUtil.getRecurrence(task);
 				double sleepTime = 0;
 				if (tasktime != null) {
 					sleepTime = TimeUtil.getAsTimeUnit(fileUtil.getRecurrence(task), null);
 
 				}
-				fw.write("\t\t\tvTaskDelayUntil(&xLastWakeTime, " + sleepTime + "*DELAY_MULT);\n");
-				fw.write("\t\t}\n");
+			//	fw.write("\t\t\tvTaskDelayUntil(&xLastWakeTime, " + sleepTime + "*DELAY_MULT);\n");
+			//	fw.write("\t\t}\n");
 				fw.write("\t}\n\n");
-
+				taskCount++;
 			}
 			fw.close();
 		} catch (IOException ioe) {
@@ -524,6 +530,14 @@ public class TaskFileCreation {
 			fw.write("/* Static definition of the tasks. */\n");
 			for (Task task : tasks) {
 				fw.write("void v" + task.getName() + "( void *pvParameters );\n");
+			}
+			fw.write("\n");
+			for (Task task : tasks) {
+				fw.write("void cOUT_" + task.getName() + "();\n");
+			}
+			fw.write("\n");
+			for (Task task : tasks) {
+				fw.write("void cIN_" + task.getName() + "();\n");
 			}
 			fw.write("\n");
 			fw.close();
