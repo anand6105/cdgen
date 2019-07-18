@@ -76,7 +76,7 @@ public class MainFileCreation {
 		try {
 			fileUtil.fileMainHeader(f1);
 			mainFileHeader(f1);
-			headerIncludesMain(f1);
+			
 			if((0x0100 == (0x0F00 & configFlag)) & (0x3000 == (0xF000 & configFlag)) ) {
 				//sleepTimerUsRMS(f1);
 				//taskStructureRMS(f1);
@@ -85,12 +85,14 @@ public class MainFileCreation {
 				//generalizedRTOSTaskRMS(f1);
 				//taskHandlerDisplayRMS(f1, tasks);
 				//traceTaskStatusRMS(f1);
+				headerIncludesMainRMS(f1);
 				mainTaskStimuli(model, f1, tasks);
 				mainTaskPriority(f1, tasks);
 				mainFucntionRMS(model, f1, tasks);
 				//createRTOSTaskRMS(f1);
 
 			}else {
+				headerIncludesMain(f1);
 				sleepTimerMs(f1);
 				mainTaskPriority(f1, tasks);
 				mainFucntionMulticore(model, f1, tasks);
@@ -567,6 +569,30 @@ public class MainFileCreation {
 			fw.write("/* Scheduler includes. */\n");
 			fw.write("#include \"taskDef.h\"\n");
 			fw.write("#include \"FreeRTOS.h\"\n\n");
+			fw.close();
+		} catch (IOException ioe) {
+			System.err.println("IOException: " + ioe.getMessage());
+		}
+
+	}
+	
+	private static void headerIncludesMainRMS(File f1) {
+		try {
+			File fn = f1;
+			FileWriter fw = new FileWriter(fn, true);
+			fw.write("/* Standard includes. */\n");
+			fw.write("#include <stdio.h>\n");
+			fw.write("#include <stdlib.h>\n");
+			fw.write("#include <string.h>\n");
+			fw.write("#include <e_lib.h>\n\n");
+			fw.write("/* Scheduler includes. */\n");
+			fw.write("#include \"FreeRTOS.h\"\n");
+			fw.write("#include \"task.h\"\n");
+			fw.write("#include \"queue.h\"\n");
+			fw.write("#include \"AmaltheaConverter.h\"\n");
+			fw.write("#include \"debugFlags.h\"\n");
+			fw.write("#include \"taskDef.h\"\n\n");
+			fw.write("#define READ_PRECISION_US 1000\n\n\n");
 			fw.close();
 		} catch (IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());

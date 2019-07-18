@@ -206,27 +206,35 @@ public class ArmCodeFileCreation {
 
 
 				fw.write("\te_reset_group(&dev);\n");
-				int count3 = 0;
-				String resultCheck = null;
-				for(SchedulerAllocation proc:localPU) {
+				int k=0;
+				String resultCheck[] = null;
+				
+				//for(SchedulerAllocation proc:localPU) {
 					//fw.write("\te_return_stat_t result"+count3+";\n");
 					//System.out.println(" processingUnits.size()==>"+p.size());
-					int i=0;int j;
-					while(i<2) {
-						for(j=0; j<2;j++) {
-							break;
+					for(int i=0; i<localPU.size();i++) {
+						for(int j=0; j<localPU.size();j++) {
+							if(k<localPU.size()) {
+								fw.write("\tresult"+k+"=  e_load(\"main"+k+".elf\",&dev,"+i+","+j+",E_FALSE);\n");
+								resultCheck[k] = (String)("result"+k);
+								k++;
+							}
 						}
-						fw.write("\tresult"+count3+"=  e_load(\"main"+count3+".elf\",&dev,"+i+","+j+",E_FALSE);\n");
-						i++;
-						//break;
 					}
-					resultCheck = resultCheck+ "result"+count3+" != E_OK ||";
+					String conditionstatement = null;
+					for(int m=0; m<k;m++) {
+						conditionstatement = conditionstatement + resultCheck[m];
+						if((m+1)<k) {
+							conditionstatement = conditionstatement + "||";
+						}
+					}
+				/*	resultCheck = resultCheck+ "result"+count3+" != E_OK ||";
 					count3++;
-				}
+				*/
 
 
 				fw.write("\tif ("+resultCheck+"){\n");
-				fw.write("\tif (result1 != E_OK || result2 != E_OK){\n");
+			//	fw.write("\tif (result1 != E_OK || result2 != E_OK){\n");
 				fw.write("\t\tfprintf(stderr,\"Error Loading the Epiphany Application 1 %i\\n\", result);");
 				fw.write("\t}\n");
 				fw.write("\te_start_group(&dev);\n");
@@ -264,11 +272,11 @@ public class ArmCodeFileCreation {
 			fw.write("#include <string.h>\n");
 			fw.write("#include <unistd.h>\n");
 			fw.write("#include <e-hal.h>\n");
-			fw.write("#include <time.h>\n");
+			fw.write("#include <time.h>\n\n");
 			fw.write("/* Scheduler includes. */\n");
 			fw.write("#include \"runnable.h\"\n");
 			fw.write("#include \"debugFlags.h\"\n");
-			fw.write("#include \"debugFlags.h\"\n");
+	//		fw.write("#include \"debugFlags.h\"\n");
 			fw.write("#define READ_PRECISION_US 1000\n\n\n");
 			fw.close();
 		} catch (IOException ioe) {

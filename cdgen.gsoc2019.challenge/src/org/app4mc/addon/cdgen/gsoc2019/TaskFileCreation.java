@@ -90,10 +90,12 @@ public class TaskFileCreation {
 		try {
 			fileUtil.fileMainHeader(f1);
 			taskFileHeader(f1);
-			headerIncludesTaskHead(f1);
+			//TODO Message read and write is pending 
 			if((0x3000 == (0xF000 & configFlag))&(0x0100 != (0x0F00 & configFlag))) {
+				headerIncludesTaskHeadRMS(f1);
 				TaskDefinitionRMS(f1, tasks, preemptionFlag);
 			}else {
+				headerIncludesTaskHead(f1);
 				TaskDefinition(f1, tasks, preemptionFlag);
 			}
 		} finally {
@@ -118,8 +120,13 @@ public class TaskFileCreation {
 		try {
 			fileUtil.fileMainHeader(f3);
 			taskFileHeader(f3);
-			headerIncludesTask(f3);
+			if((0x3000 == (0xF000 & configFlag))&(0x0100 != (0x0F00 & configFlag))) {
+				headerIncludesTaskRMSHead(f3);
+			}else {
+				headerIncludesTask(f3);
+			}
 			mainStaticTaskDef(f3, tasks);
+			
 		} finally {
 			try {
 				fw1.close();
@@ -376,6 +383,34 @@ public class TaskFileCreation {
 		}
 
 	}
+	
+	private static void headerIncludesTaskRMSHead(File f1) {
+		try {
+			File fn = f1;
+			FileWriter fw = new FileWriter(fn, true);
+			fw.write("#ifndef DEMO_PARALLELLA_TASKCODE_H_\n");
+			fw.write("#define DEMO_PARALLELLA_TASKCODE_H_\n\n");
+			fw.write("/* Standard includes. */\n");
+			fw.write("#include <stdio.h>\n");
+			fw.write("#include <stdlib.h>\n");
+			fw.write("#include <string.h>\n");
+			fw.write("#include <pthread.h>\n");
+			fw.write("#include <sched.h>\n");
+			fw.write("#include <stdint.h>\n\n");
+			fw.write("/* Scheduler includes. */\n");
+			fw.write("#include \"FreeRTOS.h\"\n");
+			fw.write("#include \"queue.h\"\n");
+			fw.write("#include \"ParallellaUtils.h\"\n");
+			fw.write("#include \"debugFlags.h\"\n");
+			fw.write("#include \"task.h\"\n");
+			fw.write("#include \"taskDef.h\"\n");
+			fw.write("#include \"runnable.h\"\n\n");
+			fw.close();
+		} catch (IOException ioe) {
+			System.err.println("IOException: " + ioe.getMessage());
+		}
+
+	}
 
 	private static void headerIncludesTask(File f1) {
 		try {
@@ -427,6 +462,21 @@ public class TaskFileCreation {
 		}
 
 	}
+	
+	private static void headerIncludesTaskHeadRMS(File f1) {
+		try {
+			File fn = f1;
+			FileWriter fw = new FileWriter(fn, true);
+			fw.write("#include \"taskDef.h\"\n\n");
+			//fw.write("#define DELAY_MULT 100\n\n");
+			fw.close();
+		} catch (IOException ioe) {
+			System.err.println("IOException: " + ioe.getMessage());
+		}
+
+	}
+	
+	
 
 	private static void TaskDefinition(File f1, EList<Task> tasks, boolean preemptionFlag) {
 		try {
