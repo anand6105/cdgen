@@ -95,34 +95,6 @@ public class ArmCodeFileCreation {
 				e.printStackTrace();
 			}
 		}
-		String fname2 = path1 + File.separator + "armcode.h";
-		File f4 = new File(path1);
-		File f3 = new File(fname2);
-		f4.mkdirs();
-		try {
-			f1.createNewFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		File fn1 = f3;
-		FileWriter fw1 = new FileWriter(fn1, true);
-		try {
-			if (0x311 == (configFlag & 0xFFF0)) {
-				fileUtil.fileMainHeader(f3);
-				runFileHeader(f3);
-			} else {
-				fileUtil.fileMainHeader(f3);
-				runFileHeader(f3);
-			}
-
-		} finally {
-			try {
-				fw1.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 
 	private static void runFileHeader(File f1) {
@@ -216,18 +188,18 @@ public class ArmCodeFileCreation {
 						for(int j=0; j<localPU.size();j++) {
 							if(k<localPU.size()) {
 								fw.write("\tresult"+k+"=  e_load(\"main"+k+".elf\",&dev,"+i+","+j+",E_FALSE);\n");
-								resultCheck[k] = (String)("result"+k);
+								//resultCheck[k] = (String)("result"+k);
 								k++;
 							}
 						}
 					}
-					String conditionstatement = null;
+					/*String conditionstatement = null;
 					for(int m=0; m<k;m++) {
 						conditionstatement = conditionstatement + resultCheck[m];
 						if((m+1)<k) {
 							conditionstatement = conditionstatement + "||";
 						}
-					}
+					}*/
 				/*	resultCheck = resultCheck+ "result"+count3+" != E_OK ||";
 					count3++;
 				*/
