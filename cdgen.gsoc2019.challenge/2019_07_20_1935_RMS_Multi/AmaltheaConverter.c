@@ -22,7 +22,7 @@ AmaltheaTask createAmaltheaTask(void *taskHandler,void *cInHandler,void *cOutHan
 	}
 }
 
-void generalizedRTOSTak(AmaltheaTask task){
+void generalizedRTOSTask(AmaltheaTask task){
 	TickType_t xLastWakeTime = xTaskGetTickCount();
 	for (;;){
 		//execute cIn

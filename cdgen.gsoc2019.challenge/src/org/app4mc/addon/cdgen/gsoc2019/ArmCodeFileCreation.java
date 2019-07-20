@@ -176,37 +176,38 @@ public class ArmCodeFileCreation {
 					fw.write("\te_open(&dev,0,0,4,4);\n");
 				}
 
-
 				fw.write("\te_reset_group(&dev);\n");
 				int k=0;
-				String resultCheck[] = null;
-				
-				//for(SchedulerAllocation proc:localPU) {
-					//fw.write("\te_return_stat_t result"+count3+";\n");
-					//System.out.println(" processingUnits.size()==>"+p.size());
-					for(int i=0; i<localPU.size();i++) {
-						for(int j=0; j<localPU.size();j++) {
-							if(k<localPU.size()) {
-								fw.write("\tresult"+k+"=  e_load(\"main"+k+".elf\",&dev,"+i+","+j+",E_FALSE);\n");
-								//resultCheck[k] = (String)("result"+k);
-								k++;
-							}
+				ArrayList<String> result = new ArrayList<String>();
+				for(int i=0; i<localPU.size();i++) {
+					for(int j=0; j<localPU.size();j++) {
+						if(k<localPU.size()) {
+							fw.write("\te_return_stat_t\tresult"+k+";\n");
+							k++;
 						}
 					}
-					/*String conditionstatement = null;
-					for(int m=0; m<k;m++) {
-						conditionstatement = conditionstatement + resultCheck[m];
-						if((m+1)<k) {
-							conditionstatement = conditionstatement + "||";
+				}
+				int k1=0;
+				for(int i=0; i<localPU.size();i++) {
+					for(int j=0; j<localPU.size();j++) {
+						if(k1<localPU.size()) {
+							fw.write("\tresult"+k1+"=  e_load(\"main"+k1+".elf\",&dev,"+i+","+j+",E_FALSE);\n");
+							result.add("result"+k1+"!=E_OK");
+							k1++;
 						}
-					}*/
-				/*	resultCheck = resultCheck+ "result"+count3+" != E_OK ||";
-					count3++;
-				*/
-
-
-				fw.write("\tif ("+resultCheck+"){\n");
-			//	fw.write("\tif (result1 != E_OK || result2 != E_OK){\n");
+					}
+				}
+				String resultFinal = "";
+				for(int k2=0; k2<result.size();k2++) {
+					System.out.println("Size ==> "+result.size());
+					resultFinal = resultFinal + (result.get(k2) + "||");
+					if(k2==(result.size()-2)) {
+						k2++;
+						resultFinal = resultFinal+result.get(k2);
+						break;
+					}
+				}
+				fw.write("\tif ("+resultFinal+"){\n");
 				fw.write("\t\tfprintf(stderr,\"Error Loading the Epiphany Application 1 %i\\n\", result);");
 				fw.write("\t}\n");
 				fw.write("\te_start_group(&dev);\n");
@@ -248,7 +249,7 @@ public class ArmCodeFileCreation {
 			fw.write("/* Scheduler includes. */\n");
 			fw.write("#include \"runnable.h\"\n");
 			fw.write("#include \"debugFlags.h\"\n");
-	//		fw.write("#include \"debugFlags.h\"\n");
+			//		fw.write("#include \"debugFlags.h\"\n");
 			fw.write("#define READ_PRECISION_US 1000\n\n\n");
 			fw.close();
 		} catch (IOException ioe) {

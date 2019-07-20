@@ -57,9 +57,11 @@ int main(){
 	e_get_platform_info(&epiphany);
 	e_open(&dev,0,0,2,2);
 	e_reset_group(&dev);
+	e_return_stat_t	result0;
+	e_return_stat_t	result1;
 	result0=  e_load("main0.elf",&dev,0,0,E_FALSE);
 	result1=  e_load("main1.elf",&dev,0,1,E_FALSE);
-	if (null){
+	if (result0!=E_OK||result1!=E_OK){
 		fprintf(stderr,"Error Loading the Epiphany Application 1 %i\n", result);	}
 	e_start_group(&dev);
 	fprintf(stderr,"FreeRTOS started \n");

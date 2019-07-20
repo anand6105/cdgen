@@ -27,22 +27,34 @@
 #include "FreeRTOS.h"
 #include "queue.h"
 #include "croutine.h"
-#include "partest.h"
 #include "task.h"
 #include "runnable.h"
 
+/* Task Counter Declaration. */
+int taskCountTask_ESSP0	=	0;
+int taskCountTask_ESSP1	=	0;
+int taskCountTask_ESSP2	=	0;
+int taskCountTask_ESSP3	=	0;
+int taskCountTask_ESSP4	=	0;
+int taskCountTask_ESSP5	=	0;
+int taskCountTask_ESSP6	=	0;
+int taskCountTask_ESSP7	=	0;
+int taskCountTask_ESSP8	=	0;
+int taskCountTask_ESSP9	=	0;
+
+
 		extern	uint16_t	VehicleSpeedVoltage2;
 		extern	uint16_t	VehicleSpeedVoltage1;
-		extern	uint8_t	VehicleSpeed1;
 		extern	uint8_t	VehicleSpeed2;
+		extern	uint8_t	VehicleSpeed1;
 		extern	uint8_t	VotedVehicleSpeed;
 
 
 
 		extern	uint16_t	VehicleSpeedVoltage2_Task_ESSP0;
 		extern	uint16_t	VehicleSpeedVoltage1_Task_ESSP0;
-		extern	uint8_t	VehicleSpeed1_Task_ESSP0;
 		extern	uint8_t	VehicleSpeed2_Task_ESSP0;
+		extern	uint8_t	VehicleSpeed1_Task_ESSP0;
 		extern	uint8_t	VotedVehicleSpeed_Task_ESSP0;
 
 
@@ -52,8 +64,8 @@
 	{
 		VehicleSpeedVoltage2_Task_ESSP0	=	VehicleSpeedVoltage2;
 		VehicleSpeedVoltage1_Task_ESSP0	=	VehicleSpeedVoltage1;
-		VehicleSpeed1_Task_ESSP0	=	VehicleSpeed1;
 		VehicleSpeed2_Task_ESSP0	=	VehicleSpeed2;
+		VehicleSpeed1_Task_ESSP0	=	VehicleSpeed1;
 		VotedVehicleSpeed_Task_ESSP0	=	VotedVehicleSpeed;
 	}
 
@@ -61,8 +73,8 @@
 	{
 		VehicleSpeedVoltage2	=	VehicleSpeedVoltage2_Task_ESSP0;
 		VehicleSpeedVoltage1	=	VehicleSpeedVoltage1_Task_ESSP0;
-		VehicleSpeed1	=	VehicleSpeed1_Task_ESSP0;
 		VehicleSpeed2	=	VehicleSpeed2_Task_ESSP0;
+		VehicleSpeed1	=	VehicleSpeed1_Task_ESSP0;
 		VotedVehicleSpeed	=	VotedVehicleSpeed_Task_ESSP0;
 	}
 
@@ -82,15 +94,15 @@
 
 		extern	uint8_t	CylinderNumber;
 		extern	uint8_t	TriggeredCylinderNumber;
-		extern	uint16_t	DecelerationVoltage1;
 		extern	uint16_t	DecelerationVoltage2;
+		extern	uint16_t	DecelerationVoltage1;
 
 
 
 		extern	uint8_t	CylinderNumber_Task_ESSP1;
 		extern	uint8_t	TriggeredCylinderNumber_Task_ESSP1;
-		extern	uint16_t	DecelerationVoltage1_Task_ESSP1;
 		extern	uint16_t	DecelerationVoltage2_Task_ESSP1;
+		extern	uint16_t	DecelerationVoltage1_Task_ESSP1;
 
 
 
@@ -99,8 +111,8 @@
 	{
 		CylinderNumber_Task_ESSP1	=	CylinderNumber;
 		TriggeredCylinderNumber_Task_ESSP1	=	TriggeredCylinderNumber;
-		DecelerationVoltage1_Task_ESSP1	=	DecelerationVoltage1;
 		DecelerationVoltage2_Task_ESSP1	=	DecelerationVoltage2;
+		DecelerationVoltage1_Task_ESSP1	=	DecelerationVoltage1;
 	}
 
 	void cOUT_Task_ESSP1()
@@ -123,15 +135,15 @@
 
 		extern	uint16_t	WheelSpeedVoltage1;
 		extern	uint16_t	WheelSpeedVoltage2;
-		extern	uint16_t	BrakePedalPositionVoltage2;
 		extern	uint16_t	BrakePedalPositionVoltage1;
+		extern	uint16_t	BrakePedalPositionVoltage2;
 
 
 
 		extern	uint16_t	WheelSpeedVoltage1_Task_ESSP2;
 		extern	uint16_t	WheelSpeedVoltage2_Task_ESSP2;
-		extern	uint16_t	BrakePedalPositionVoltage2_Task_ESSP2;
 		extern	uint16_t	BrakePedalPositionVoltage1_Task_ESSP2;
+		extern	uint16_t	BrakePedalPositionVoltage2_Task_ESSP2;
 
 
 
@@ -140,8 +152,8 @@
 	{
 		WheelSpeedVoltage1_Task_ESSP2	=	WheelSpeedVoltage1;
 		WheelSpeedVoltage2_Task_ESSP2	=	WheelSpeedVoltage2;
-		BrakePedalPositionVoltage2_Task_ESSP2	=	BrakePedalPositionVoltage2;
 		BrakePedalPositionVoltage1_Task_ESSP2	=	BrakePedalPositionVoltage1;
+		BrakePedalPositionVoltage2_Task_ESSP2	=	BrakePedalPositionVoltage2;
 	}
 
 	void cOUT_Task_ESSP2()
@@ -161,67 +173,67 @@
 	traceRunningTask(0);
 	}
 
-		extern	uint16_t	MAFSensorVoltage;
 		extern	uint8_t	MassAirFlow;
-		extern	uint16_t	BaseFuelMassPerStroke;
+		extern	uint16_t	MAFSensorVoltage;
 		extern	uint16_t	MAFRate;
+		extern	uint16_t	BaseFuelMassPerStroke;
 		extern	uint8_t	TransientFuelMassPerStroke;
 		extern	uint8_t	TotalFuelMassPerStroke;
-		extern	uint16_t	InjectionTime1;
+		extern	uint16_t	InjectionTime8;
 		extern	uint16_t	InjectionTime3;
-		extern	uint16_t	InjectionTime6;
-		extern	uint8_t	TriggeredCylinderNumber;
 		extern	uint16_t	InjectionTime7;
 		extern	uint16_t	InjectionTime2;
 		extern	uint16_t	InjectionTime5;
+		extern	uint16_t	InjectionTime6;
+		extern	uint8_t	TriggeredCylinderNumber;
 		extern	uint16_t	InjectionTime4;
-		extern	uint16_t	InjectionTime8;
+		extern	uint16_t	InjectionTime1;
 
 
 
-		extern	uint16_t	MAFSensorVoltage_Task_ESSP3;
 		extern	uint8_t	MassAirFlow_Task_ESSP3;
-		extern	uint16_t	BaseFuelMassPerStroke_Task_ESSP3;
+		extern	uint16_t	MAFSensorVoltage_Task_ESSP3;
 		extern	uint16_t	MAFRate_Task_ESSP3;
+		extern	uint16_t	BaseFuelMassPerStroke_Task_ESSP3;
 		extern	uint8_t	TransientFuelMassPerStroke_Task_ESSP3;
 		extern	uint8_t	TotalFuelMassPerStroke_Task_ESSP3;
-		extern	uint16_t	InjectionTime1_Task_ESSP3;
+		extern	uint16_t	InjectionTime8_Task_ESSP3;
 		extern	uint16_t	InjectionTime3_Task_ESSP3;
-		extern	uint16_t	InjectionTime6_Task_ESSP3;
-		extern	uint8_t	TriggeredCylinderNumber_Task_ESSP3;
 		extern	uint16_t	InjectionTime7_Task_ESSP3;
 		extern	uint16_t	InjectionTime2_Task_ESSP3;
 		extern	uint16_t	InjectionTime5_Task_ESSP3;
+		extern	uint16_t	InjectionTime6_Task_ESSP3;
+		extern	uint8_t	TriggeredCylinderNumber_Task_ESSP3;
 		extern	uint16_t	InjectionTime4_Task_ESSP3;
-		extern	uint16_t	InjectionTime8_Task_ESSP3;
+		extern	uint16_t	InjectionTime1_Task_ESSP3;
 
 
 
 
 	void cIN_Task_ESSP3()
 	{
-		MAFSensorVoltage_Task_ESSP3	=	MAFSensorVoltage;
 		MassAirFlow_Task_ESSP3	=	MassAirFlow;
-		BaseFuelMassPerStroke_Task_ESSP3	=	BaseFuelMassPerStroke;
+		MAFSensorVoltage_Task_ESSP3	=	MAFSensorVoltage;
 		MAFRate_Task_ESSP3	=	MAFRate;
+		BaseFuelMassPerStroke_Task_ESSP3	=	BaseFuelMassPerStroke;
 		TransientFuelMassPerStroke_Task_ESSP3	=	TransientFuelMassPerStroke;
 		TotalFuelMassPerStroke_Task_ESSP3	=	TotalFuelMassPerStroke;
-		InjectionTime1_Task_ESSP3	=	InjectionTime1;
+		InjectionTime8_Task_ESSP3	=	InjectionTime8;
 		InjectionTime3_Task_ESSP3	=	InjectionTime3;
-		InjectionTime6_Task_ESSP3	=	InjectionTime6;
-		TriggeredCylinderNumber_Task_ESSP3	=	TriggeredCylinderNumber;
 		InjectionTime7_Task_ESSP3	=	InjectionTime7;
 		InjectionTime2_Task_ESSP3	=	InjectionTime2;
 		InjectionTime5_Task_ESSP3	=	InjectionTime5;
+		InjectionTime6_Task_ESSP3	=	InjectionTime6;
+		TriggeredCylinderNumber_Task_ESSP3	=	TriggeredCylinderNumber;
 		InjectionTime4_Task_ESSP3	=	InjectionTime4;
-		InjectionTime8_Task_ESSP3	=	InjectionTime8;
+		InjectionTime1_Task_ESSP3	=	InjectionTime1;
 	}
 
 	void cOUT_Task_ESSP3()
 	{
 		MassAirFlow	=	MassAirFlow_Task_ESSP3;
-		BaseFuelMassPerStroke	=	BaseFuelMassPerStroke_Task_ESSP3;
 		MAFRate	=	MAFRate_Task_ESSP3;
+		BaseFuelMassPerStroke	=	BaseFuelMassPerStroke_Task_ESSP3;
 		TransientFuelMassPerStroke	=	TransientFuelMassPerStroke_Task_ESSP3;
 		TotalFuelMassPerStroke	=	TotalFuelMassPerStroke_Task_ESSP3;
 	}
@@ -242,24 +254,24 @@
 	traceRunningTask(0);
 	}
 
+		extern	uint16_t	APedSensor1Voltage;
 		extern	uint16_t	APedSensor2Voltage;
 		extern	uint8_t	APedPosition2;
-		extern	uint16_t	APedSensor1Voltage;
 		extern	uint8_t	APedPosition1;
 		extern	uint8_t	VotedAPedPosition;
-		extern	uint16_t	DesiredThrottlePosition;
 		extern	uint16_t	ThrottlePosition;
+		extern	uint16_t	DesiredThrottlePosition;
 		extern	uint8_t	DesiredThrottlePositionVoltage;
 
 
 
+		extern	uint16_t	APedSensor1Voltage_Task_ESSP4;
 		extern	uint16_t	APedSensor2Voltage_Task_ESSP4;
 		extern	uint8_t	APedPosition2_Task_ESSP4;
-		extern	uint16_t	APedSensor1Voltage_Task_ESSP4;
 		extern	uint8_t	APedPosition1_Task_ESSP4;
 		extern	uint8_t	VotedAPedPosition_Task_ESSP4;
-		extern	uint16_t	DesiredThrottlePosition_Task_ESSP4;
 		extern	uint16_t	ThrottlePosition_Task_ESSP4;
+		extern	uint16_t	DesiredThrottlePosition_Task_ESSP4;
 		extern	uint8_t	DesiredThrottlePositionVoltage_Task_ESSP4;
 
 
@@ -267,13 +279,13 @@
 
 	void cIN_Task_ESSP4()
 	{
+		APedSensor1Voltage_Task_ESSP4	=	APedSensor1Voltage;
 		APedSensor2Voltage_Task_ESSP4	=	APedSensor2Voltage;
 		APedPosition2_Task_ESSP4	=	APedPosition2;
-		APedSensor1Voltage_Task_ESSP4	=	APedSensor1Voltage;
 		APedPosition1_Task_ESSP4	=	APedPosition1;
 		VotedAPedPosition_Task_ESSP4	=	VotedAPedPosition;
-		DesiredThrottlePosition_Task_ESSP4	=	DesiredThrottlePosition;
 		ThrottlePosition_Task_ESSP4	=	ThrottlePosition;
+		DesiredThrottlePosition_Task_ESSP4	=	DesiredThrottlePosition;
 		DesiredThrottlePositionVoltage_Task_ESSP4	=	DesiredThrottlePositionVoltage;
 	}
 
@@ -301,42 +313,42 @@
 	traceRunningTask(0);
 	}
 
-		extern	uint8_t	ThrottleSensor2Voltage;
 		extern	uint8_t	ThrottleSensor1Voltage;
 		extern	uint16_t	ThrottlePosition;
-		extern	uint16_t	BrakePedalPositionVoltage2;
+		extern	uint8_t	ThrottleSensor2Voltage;
 		extern	uint16_t	BrakePedalPositionVoltage1;
+		extern	uint16_t	BrakePedalPositionVoltage2;
 		extern	uint8_t	BrakePedalPosition1;
 		extern	uint8_t	BrakePedalPosition2;
 		extern	uint8_t	VotedBrakePedalPosition;
 		extern	uint8_t	BrakePedalPosition;
 		extern	uint8_t	BrakeMonitorLevel;
 		extern	uint8_t	ArbitratedDiagnosisRequest;
-		extern	uint8_t	BrakeSafetyState;
 		extern	uint8_t	BrakeSafetyLevel;
-		extern	uint8_t	BrakeForceFeedback;
 		extern	uint8_t	MonitoredVehicleState;
+		extern	uint8_t	BrakeForceFeedback;
+		extern	uint8_t	BrakeSafetyState;
 		extern	uint8_t	CalculatedBrakeForce;
 		extern	uint8_t	ArbitratedBrakeForce;
 		extern	uint8_t	BrakeApplication;
 
 
 
-		extern	uint8_t	ThrottleSensor2Voltage_Task_ESSP5;
 		extern	uint8_t	ThrottleSensor1Voltage_Task_ESSP5;
 		extern	uint16_t	ThrottlePosition_Task_ESSP5;
-		extern	uint16_t	BrakePedalPositionVoltage2_Task_ESSP5;
+		extern	uint8_t	ThrottleSensor2Voltage_Task_ESSP5;
 		extern	uint16_t	BrakePedalPositionVoltage1_Task_ESSP5;
+		extern	uint16_t	BrakePedalPositionVoltage2_Task_ESSP5;
 		extern	uint8_t	BrakePedalPosition1_Task_ESSP5;
 		extern	uint8_t	BrakePedalPosition2_Task_ESSP5;
 		extern	uint8_t	VotedBrakePedalPosition_Task_ESSP5;
 		extern	uint8_t	BrakePedalPosition_Task_ESSP5;
 		extern	uint8_t	BrakeMonitorLevel_Task_ESSP5;
 		extern	uint8_t	ArbitratedDiagnosisRequest_Task_ESSP5;
-		extern	uint8_t	BrakeSafetyState_Task_ESSP5;
 		extern	uint8_t	BrakeSafetyLevel_Task_ESSP5;
-		extern	uint8_t	BrakeForceFeedback_Task_ESSP5;
 		extern	uint8_t	MonitoredVehicleState_Task_ESSP5;
+		extern	uint8_t	BrakeForceFeedback_Task_ESSP5;
+		extern	uint8_t	BrakeSafetyState_Task_ESSP5;
 		extern	uint8_t	CalculatedBrakeForce_Task_ESSP5;
 		extern	uint8_t	ArbitratedBrakeForce_Task_ESSP5;
 		extern	uint8_t	BrakeApplication_Task_ESSP5;
@@ -346,21 +358,21 @@
 
 	void cIN_Task_ESSP5()
 	{
-		ThrottleSensor2Voltage_Task_ESSP5	=	ThrottleSensor2Voltage;
 		ThrottleSensor1Voltage_Task_ESSP5	=	ThrottleSensor1Voltage;
 		ThrottlePosition_Task_ESSP5	=	ThrottlePosition;
-		BrakePedalPositionVoltage2_Task_ESSP5	=	BrakePedalPositionVoltage2;
+		ThrottleSensor2Voltage_Task_ESSP5	=	ThrottleSensor2Voltage;
 		BrakePedalPositionVoltage1_Task_ESSP5	=	BrakePedalPositionVoltage1;
+		BrakePedalPositionVoltage2_Task_ESSP5	=	BrakePedalPositionVoltage2;
 		BrakePedalPosition1_Task_ESSP5	=	BrakePedalPosition1;
 		BrakePedalPosition2_Task_ESSP5	=	BrakePedalPosition2;
 		VotedBrakePedalPosition_Task_ESSP5	=	VotedBrakePedalPosition;
 		BrakePedalPosition_Task_ESSP5	=	BrakePedalPosition;
 		BrakeMonitorLevel_Task_ESSP5	=	BrakeMonitorLevel;
 		ArbitratedDiagnosisRequest_Task_ESSP5	=	ArbitratedDiagnosisRequest;
-		BrakeSafetyState_Task_ESSP5	=	BrakeSafetyState;
 		BrakeSafetyLevel_Task_ESSP5	=	BrakeSafetyLevel;
-		BrakeForceFeedback_Task_ESSP5	=	BrakeForceFeedback;
 		MonitoredVehicleState_Task_ESSP5	=	MonitoredVehicleState;
+		BrakeForceFeedback_Task_ESSP5	=	BrakeForceFeedback;
+		BrakeSafetyState_Task_ESSP5	=	BrakeSafetyState;
 		CalculatedBrakeForce_Task_ESSP5	=	CalculatedBrakeForce;
 		ArbitratedBrakeForce_Task_ESSP5	=	ArbitratedBrakeForce;
 		BrakeApplication_Task_ESSP5	=	BrakeApplication;
@@ -369,14 +381,14 @@
 	void cOUT_Task_ESSP5()
 	{
 		ThrottlePosition	=	ThrottlePosition_Task_ESSP5;
-		BrakePedalPositionVoltage2	=	BrakePedalPositionVoltage2_Task_ESSP5;
 		BrakePedalPositionVoltage1	=	BrakePedalPositionVoltage1_Task_ESSP5;
+		BrakePedalPositionVoltage2	=	BrakePedalPositionVoltage2_Task_ESSP5;
 		BrakePedalPosition1	=	BrakePedalPosition1_Task_ESSP5;
 		BrakePedalPosition2	=	BrakePedalPosition2_Task_ESSP5;
 		VotedBrakePedalPosition	=	VotedBrakePedalPosition_Task_ESSP5;
 		BrakePedalPosition	=	BrakePedalPosition_Task_ESSP5;
-		BrakeSafetyState	=	BrakeSafetyState_Task_ESSP5;
 		BrakeSafetyLevel	=	BrakeSafetyLevel_Task_ESSP5;
+		BrakeSafetyState	=	BrakeSafetyState_Task_ESSP5;
 		BrakeMonitorLevel	=	BrakeMonitorLevel_Task_ESSP5;
 		CalculatedBrakeForce	=	CalculatedBrakeForce_Task_ESSP5;
 		ArbitratedBrakeForce	=	ArbitratedBrakeForce_Task_ESSP5;
@@ -405,36 +417,36 @@
 	}
 
 		extern	uint8_t	MonitoredVehicleState;
-		extern	uint16_t	DecelerationVoltage1;
 		extern	uint16_t	DecelerationVoltage2;
-		extern	uint8_t	DecelerationRate1;
+		extern	uint16_t	DecelerationVoltage1;
 		extern	uint8_t	DecelerationRate2;
+		extern	uint8_t	DecelerationRate1;
 		extern	uint8_t	VotedDecelerationRate;
 		extern	uint8_t	VotedVehicleSpeed;
-		extern	uint8_t	VotedWheelSpeed;
-		extern	uint8_t	ABSMode;
 		extern	uint8_t	ABSActivation;
+		extern	uint8_t	ABSMode;
+		extern	uint8_t	VotedWheelSpeed;
 		extern	uint8_t	ArbitratedBrakeForce;
-		extern	uint8_t	BrakeForce;
 		extern	uint8_t	BrakeForceCurrent;
+		extern	uint8_t	BrakeForce;
 		extern	uint8_t	CaliperPosition;
 		extern	uint16_t	BrakeForceVoltage;
 
 
 
 		extern	uint8_t	MonitoredVehicleState_Task_ESSP6;
-		extern	uint16_t	DecelerationVoltage1_Task_ESSP6;
 		extern	uint16_t	DecelerationVoltage2_Task_ESSP6;
-		extern	uint8_t	DecelerationRate1_Task_ESSP6;
+		extern	uint16_t	DecelerationVoltage1_Task_ESSP6;
 		extern	uint8_t	DecelerationRate2_Task_ESSP6;
+		extern	uint8_t	DecelerationRate1_Task_ESSP6;
 		extern	uint8_t	VotedDecelerationRate_Task_ESSP6;
 		extern	uint8_t	VotedVehicleSpeed_Task_ESSP6;
-		extern	uint8_t	VotedWheelSpeed_Task_ESSP6;
-		extern	uint8_t	ABSMode_Task_ESSP6;
 		extern	uint8_t	ABSActivation_Task_ESSP6;
+		extern	uint8_t	ABSMode_Task_ESSP6;
+		extern	uint8_t	VotedWheelSpeed_Task_ESSP6;
 		extern	uint8_t	ArbitratedBrakeForce_Task_ESSP6;
-		extern	uint8_t	BrakeForce_Task_ESSP6;
 		extern	uint8_t	BrakeForceCurrent_Task_ESSP6;
+		extern	uint8_t	BrakeForce_Task_ESSP6;
 		extern	uint8_t	CaliperPosition_Task_ESSP6;
 		extern	uint16_t	BrakeForceVoltage_Task_ESSP6;
 
@@ -444,18 +456,18 @@
 	void cIN_Task_ESSP6()
 	{
 		MonitoredVehicleState_Task_ESSP6	=	MonitoredVehicleState;
-		DecelerationVoltage1_Task_ESSP6	=	DecelerationVoltage1;
 		DecelerationVoltage2_Task_ESSP6	=	DecelerationVoltage2;
-		DecelerationRate1_Task_ESSP6	=	DecelerationRate1;
+		DecelerationVoltage1_Task_ESSP6	=	DecelerationVoltage1;
 		DecelerationRate2_Task_ESSP6	=	DecelerationRate2;
+		DecelerationRate1_Task_ESSP6	=	DecelerationRate1;
 		VotedDecelerationRate_Task_ESSP6	=	VotedDecelerationRate;
 		VotedVehicleSpeed_Task_ESSP6	=	VotedVehicleSpeed;
-		VotedWheelSpeed_Task_ESSP6	=	VotedWheelSpeed;
-		ABSMode_Task_ESSP6	=	ABSMode;
 		ABSActivation_Task_ESSP6	=	ABSActivation;
+		ABSMode_Task_ESSP6	=	ABSMode;
+		VotedWheelSpeed_Task_ESSP6	=	VotedWheelSpeed;
 		ArbitratedBrakeForce_Task_ESSP6	=	ArbitratedBrakeForce;
-		BrakeForce_Task_ESSP6	=	BrakeForce;
 		BrakeForceCurrent_Task_ESSP6	=	BrakeForceCurrent;
+		BrakeForce_Task_ESSP6	=	BrakeForce;
 		CaliperPosition_Task_ESSP6	=	CaliperPosition;
 		BrakeForceVoltage_Task_ESSP6	=	BrakeForceVoltage;
 	}
@@ -463,15 +475,15 @@
 	void cOUT_Task_ESSP6()
 	{
 		MonitoredVehicleState	=	MonitoredVehicleState_Task_ESSP6;
-		DecelerationVoltage1	=	DecelerationVoltage1_Task_ESSP6;
 		DecelerationVoltage2	=	DecelerationVoltage2_Task_ESSP6;
-		DecelerationRate1	=	DecelerationRate1_Task_ESSP6;
+		DecelerationVoltage1	=	DecelerationVoltage1_Task_ESSP6;
 		DecelerationRate2	=	DecelerationRate2_Task_ESSP6;
+		DecelerationRate1	=	DecelerationRate1_Task_ESSP6;
 		VotedDecelerationRate	=	VotedDecelerationRate_Task_ESSP6;
-		ABSMode	=	ABSMode_Task_ESSP6;
 		ABSActivation	=	ABSActivation_Task_ESSP6;
-		BrakeForce	=	BrakeForce_Task_ESSP6;
+		ABSMode	=	ABSMode_Task_ESSP6;
 		BrakeForceCurrent	=	BrakeForceCurrent_Task_ESSP6;
+		BrakeForce	=	BrakeForce_Task_ESSP6;
 		CaliperPosition	=	CaliperPosition_Task_ESSP6;
 		BrakeForceVoltage	=	BrakeForceVoltage_Task_ESSP6;
 	}
@@ -498,15 +510,15 @@
 
 		extern	uint16_t	VehicleSpeedVoltage2;
 		extern	uint16_t	VehicleSpeedVoltage1;
-		extern	uint8_t	BrakeForce;
 		extern	uint8_t	BrakeForceFeedback;
+		extern	uint8_t	BrakeForce;
 
 
 
 		extern	uint16_t	VehicleSpeedVoltage2_Task_ESSP7;
 		extern	uint16_t	VehicleSpeedVoltage1_Task_ESSP7;
-		extern	uint8_t	BrakeForce_Task_ESSP7;
 		extern	uint8_t	BrakeForceFeedback_Task_ESSP7;
+		extern	uint8_t	BrakeForce_Task_ESSP7;
 
 
 
@@ -515,8 +527,8 @@
 	{
 		VehicleSpeedVoltage2_Task_ESSP7	=	VehicleSpeedVoltage2;
 		VehicleSpeedVoltage1_Task_ESSP7	=	VehicleSpeedVoltage1;
-		BrakeForce_Task_ESSP7	=	BrakeForce;
 		BrakeForceFeedback_Task_ESSP7	=	BrakeForceFeedback;
+		BrakeForce_Task_ESSP7	=	BrakeForce;
 	}
 
 	void cOUT_Task_ESSP7()
@@ -539,30 +551,30 @@
 		extern	uint8_t	ArbitratedDiagnosisRequest;
 		extern	uint8_t	IgnitionTime;
 		extern	uint16_t	MAFRate;
-		extern	uint16_t	IgnitionTime2;
+		extern	uint16_t	IgnitionTime8;
 		extern	uint16_t	IgnitionTime1;
-		extern	uint8_t	TriggeredCylinderNumber;
 		extern	uint16_t	IgnitionTime6;
-		extern	uint16_t	IgnitionTime7;
 		extern	uint16_t	IgnitionTime5;
 		extern	uint16_t	IgnitionTime4;
 		extern	uint16_t	IgnitionTime3;
-		extern	uint16_t	IgnitionTime8;
+		extern	uint8_t	TriggeredCylinderNumber;
+		extern	uint16_t	IgnitionTime2;
+		extern	uint16_t	IgnitionTime7;
 
 
 
 		extern	uint8_t	ArbitratedDiagnosisRequest_Task_ESSP8;
 		extern	uint8_t	IgnitionTime_Task_ESSP8;
 		extern	uint16_t	MAFRate_Task_ESSP8;
-		extern	uint16_t	IgnitionTime2_Task_ESSP8;
+		extern	uint16_t	IgnitionTime8_Task_ESSP8;
 		extern	uint16_t	IgnitionTime1_Task_ESSP8;
-		extern	uint8_t	TriggeredCylinderNumber_Task_ESSP8;
 		extern	uint16_t	IgnitionTime6_Task_ESSP8;
-		extern	uint16_t	IgnitionTime7_Task_ESSP8;
 		extern	uint16_t	IgnitionTime5_Task_ESSP8;
 		extern	uint16_t	IgnitionTime4_Task_ESSP8;
 		extern	uint16_t	IgnitionTime3_Task_ESSP8;
-		extern	uint16_t	IgnitionTime8_Task_ESSP8;
+		extern	uint8_t	TriggeredCylinderNumber_Task_ESSP8;
+		extern	uint16_t	IgnitionTime2_Task_ESSP8;
+		extern	uint16_t	IgnitionTime7_Task_ESSP8;
 
 
 
@@ -572,22 +584,22 @@
 		ArbitratedDiagnosisRequest_Task_ESSP8	=	ArbitratedDiagnosisRequest;
 		IgnitionTime_Task_ESSP8	=	IgnitionTime;
 		MAFRate_Task_ESSP8	=	MAFRate;
-		IgnitionTime2_Task_ESSP8	=	IgnitionTime2;
+		IgnitionTime8_Task_ESSP8	=	IgnitionTime8;
 		IgnitionTime1_Task_ESSP8	=	IgnitionTime1;
-		TriggeredCylinderNumber_Task_ESSP8	=	TriggeredCylinderNumber;
 		IgnitionTime6_Task_ESSP8	=	IgnitionTime6;
-		IgnitionTime7_Task_ESSP8	=	IgnitionTime7;
 		IgnitionTime5_Task_ESSP8	=	IgnitionTime5;
 		IgnitionTime4_Task_ESSP8	=	IgnitionTime4;
 		IgnitionTime3_Task_ESSP8	=	IgnitionTime3;
-		IgnitionTime8_Task_ESSP8	=	IgnitionTime8;
+		TriggeredCylinderNumber_Task_ESSP8	=	TriggeredCylinderNumber;
+		IgnitionTime2_Task_ESSP8	=	IgnitionTime2;
+		IgnitionTime7_Task_ESSP8	=	IgnitionTime7;
 	}
 
 	void cOUT_Task_ESSP8()
 	{
 		IgnitionTime	=	IgnitionTime_Task_ESSP8;
-		IgnitionTime7	=	IgnitionTime7_Task_ESSP8;
 		IgnitionTime8	=	IgnitionTime8_Task_ESSP8;
+		IgnitionTime7	=	IgnitionTime7_Task_ESSP8;
 	}
 
 	void vTask_ESSP8( void *pvParameters )

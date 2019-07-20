@@ -64,6 +64,7 @@ public class TaskFileCreation {
 		}
 
 	}
+	
 
 	private static void fileCreate(Amalthea model, String path1, String path2, int  configFlag)
 			throws IOException {
@@ -93,9 +94,11 @@ public class TaskFileCreation {
 			//TODO Message read and write is pending 
 			if((0x3000 == (0xF000 & configFlag))&(0x0100 != (0x0F00 & configFlag))) {
 				headerIncludesTaskHeadRMS(f1);
+		//		TaskCounter(f1, tasks);
 				TaskDefinitionRMS(f1, tasks, preemptionFlag);
 			}else {
 				headerIncludesTaskHead(f1);
+				TaskCounter(f1, tasks);
 				TaskDefinition(f1, tasks, preemptionFlag);
 			}
 		} finally {
@@ -135,6 +138,21 @@ public class TaskFileCreation {
 			}
 		}
 	}
+
+	private static void TaskCounter(File f3, EList<Task> tasks) {
+		try {
+			File fn = f3;
+			FileWriter fw = new FileWriter(fn, true); // the true will append the new data
+			fw.write("/* Task Counter Declaration. */\n");
+			for(Task ta:tasks) {
+				fw.write("int taskCount"+ta.getName()+"\t=\t0;\n");
+			}
+			fw.write("\n\n");
+			fw.close();
+		} catch (IOException ioe) {
+			System.err.println("IOException: " + ioe.getMessage());		
+	}}
+
 
 	private static void fileCreatePthread(Amalthea model, String path1, String path2, int  configFlag)
 			throws IOException {
@@ -213,6 +231,23 @@ public class TaskFileCreation {
 	}
 
 	private static void mainStaticTaskPthreadDef(File f3, EList<Task> tasks) {
+		try {
+			File fn = f3;
+			FileWriter fw = new FileWriter(fn, true);
+			fw.write("/* Static definition of the tasks. */\n");
+			for (Task task : tasks) {
+				fw.write("void v" + task.getName() + "( void *t );\n");
+			}
+			fw.write("\n");
+			fw.close();
+		} catch (IOException ioe) {
+			System.err.println("IOException: " + ioe.getMessage());
+		}
+
+	}
+	
+	
+	private static void taskCounterRMS(File f3, EList<Task> tasks) {
 		try {
 			File fn = f3;
 			FileWriter fw = new FileWriter(fn, true);
@@ -403,7 +438,7 @@ public class TaskFileCreation {
 			fw.write("#include \"ParallellaUtils.h\"\n");
 			fw.write("#include \"debugFlags.h\"\n");
 			fw.write("#include \"task.h\"\n");
-			fw.write("#include \"taskDef.h\"\n");
+		//	fw.write("#include \"taskDef.h\"\n");
 			fw.write("#include \"runnable.h\"\n\n");
 			fw.close();
 		} catch (IOException ioe) {
@@ -425,7 +460,7 @@ public class TaskFileCreation {
 			fw.write("#include \"FreeRTOS.h\"\n\n");
 			fw.write("#include \"queue.h\"\n");
 			fw.write("#include \"croutine.h\"\n");
-			fw.write("#include \"partest.h\"\n");
+			//fw.write("#include \"partest.h\"\n");
 			fw.write("#include \"runnable.h\"\n");
 			fw.write("#include \"taskDef.h\"\n");
 			fw.write("#include \"task.h\"\n");
@@ -452,7 +487,7 @@ public class TaskFileCreation {
 			fw.write("#include \"FreeRTOS.h\"\n");
 			fw.write("#include \"queue.h\"\n");
 			fw.write("#include \"croutine.h\"\n");
-			fw.write("#include \"partest.h\"\n");
+		//	fw.write("#include \"partest.h\"\n");
 			fw.write("#include \"task.h\"\n");
 			fw.write("#include \"runnable.h\"\n\n");
 			//fw.write("#define DELAY_MULT 100\n\n");

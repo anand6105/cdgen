@@ -32,10 +32,10 @@ import org.eclipse.emf.common.util.EList;
  *
  */
 
-public class MainRMSFileCreation {
+public class MakeFileCreation {
 	final private Amalthea model;
 
-	public MainRMSFileCreation(final Amalthea Model, String path1, int configFlag) throws IOException {
+	public MakeFileCreation(final Amalthea Model, String path1, int configFlag) throws IOException {
 		this.model = Model;
 		System.out.println("Main File Creation Begins");
 		fileCreate(model, path1, configFlag);
