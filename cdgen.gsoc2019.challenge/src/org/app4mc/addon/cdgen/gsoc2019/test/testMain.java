@@ -19,9 +19,9 @@ public class testMain
 {
 
 	public testMain(Amalthea model, String path1, int configFlag) throws IOException {
-		if (0x2000 != (configFlag & 0xF000)) {
+		if ((0x1000 == (configFlag & 0xF000))) {
 			fileTestmainTask(model, path1);
-		} else{
+		} else if(0x2000 == (configFlag & 0xF000)){
 			fileTestmainTaskPthread(model, path1);
 		}
 	}
@@ -71,7 +71,6 @@ public class testMain
 				} else if (word.equals(input2)) {
 					count1++;
 				}
-
 			}
 		}
 		if (count != taskmod.size()) {
