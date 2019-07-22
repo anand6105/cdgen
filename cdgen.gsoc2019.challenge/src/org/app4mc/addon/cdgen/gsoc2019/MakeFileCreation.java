@@ -3,6 +3,7 @@ package org.app4mc.addon.cdgen.gsoc2019;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -99,7 +100,7 @@ public class MakeFileCreation {
 					pu = DeploymentUtil.getAssignedCoreForProcess(task, model).iterator().next();
 					Time taskTime = RuntimeUtil.getExecutionTimeForProcess(task, pu, null, TimeType.WCET);
 					taskTime = TimeUtil.convertToTimeUnit(taskTime, TimeUnit.US);
-					double sleepTime = TimeUtil.getAsTimeUnit(taskTime, null);
+					BigInteger sleepTime = taskTime.getValue();
 					fw.write("\tAmaltheaTask AmalTk_"+task.getName()+" = createAmaltheaTask( v"+task.getName()+", cIN_" + task.getName() +", cOUT_" + task.getName()+", "+task.getStimuli().get(0).getName()+", "+task.getStimuli().get(0).getName()+", "+sleepTime+");\n");
 				}
 			}

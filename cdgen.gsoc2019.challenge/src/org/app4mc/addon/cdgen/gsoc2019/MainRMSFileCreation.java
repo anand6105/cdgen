@@ -53,7 +53,7 @@ public class MainRMSFileCreation {
 		int k=0;
 		for(SchedulerAllocation c:CoreNo) {
 			ProcessingUnit pu = c.getResponsibility().get(0);
-			System.out.println("Core ==> "+pu);
+		//	System.out.println("Core ==> "+pu);
 			Set<Task> tasks = DeploymentUtil.getTasksMappedToCore(pu, model);
 			String fname = path1 + File.separator + "main"+k+".c";
 			File f2 = new File(path1);
@@ -99,6 +99,7 @@ public class MainRMSFileCreation {
 					pu = DeploymentUtil.getAssignedCoreForProcess(task, model).iterator().next();
 					Time taskTime = RuntimeUtil.getExecutionTimeForProcess(task, pu, null, TimeType.WCET);
 					taskTime = TimeUtil.convertToTimeUnit(taskTime, TimeUnit.US);
+					//System.out.println("\ntaskTime == "+task.getName()+" ==> "+taskTime + "==>"+fileUtil.getRecurrence(task));
 					double sleepTime = TimeUtil.getAsTimeUnit(taskTime, null);
 					fw.write("\tAmaltheaTask AmalTk_"+task.getName()+" = createAmaltheaTask( v"+task.getName()+", cIN_" + task.getName() +", cOUT_" + task.getName()+", "+task.getStimuli().get(0).getName()+", "+task.getStimuli().get(0).getName()+", "+sleepTime+");\n");
 				}

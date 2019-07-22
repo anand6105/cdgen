@@ -9,12 +9,15 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.lang.System;
+import java.math.BigInteger;
 
 import org.app4mc.addon.cdgen.gsoc2019.utils.fileUtil;
 import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.DeploymentUtil;
 import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.HardwareUtil;
+import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.RuntimeUtil;
 import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.SoftwareUtil;
 import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.TimeUtil;
+import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.RuntimeUtil.TimeType;
 import org.eclipse.app4mc.amalthea.model.Amalthea;
 import org.eclipse.app4mc.amalthea.model.Label;
 import org.eclipse.app4mc.amalthea.model.MappingModel;
@@ -22,6 +25,7 @@ import org.eclipse.app4mc.amalthea.model.ProcessingUnit;
 import org.eclipse.app4mc.amalthea.model.Runnable;
 import org.eclipse.app4mc.amalthea.model.Task;
 import org.eclipse.app4mc.amalthea.model.Time;
+import org.eclipse.app4mc.amalthea.model.TimeUnit;
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -99,7 +103,7 @@ public class TaskFileCreation {
 			}else {
 				headerIncludesTaskHead(f1);
 				TaskCounter(f1, tasks);
-				TaskDefinition(f1, tasks, preemptionFlag);
+				TaskDefinition(model, f1, tasks, preemptionFlag);
 			}
 		} finally {
 			try {
@@ -513,7 +517,7 @@ public class TaskFileCreation {
 	
 	
 
-	private static void TaskDefinition(File f1, EList<Task> tasks, boolean preemptionFlag) {
+	private static void TaskDefinition(Amalthea model, File f1, EList<Task> tasks, boolean preemptionFlag) {
 		try {
 			File fn = f1;
 			FileWriter fw = new FileWriter(fn, true);
@@ -576,11 +580,22 @@ public class TaskFileCreation {
 			//		fw.write("\t\t\ttaskEXIT_CRITICAL ();\n");
 			//	}
 			fw.write("\n\tupdateDebugFlag(700);");
-			fw.write("\n\t/*Runnable calls */\n");
+			MappingModel mappingModel = model.getMappingModel();
+			ProcessingUnit pu = null;
+			if (mappingModel != null) {
+				pu = DeploymentUtil.getAssignedCoreForProcess(task, model).iterator().next();
+				Time taskTime = RuntimeUtil.getExecutionTimeForProcess(task, pu, null, TimeType.WCET);
+				taskTime = TimeUtil.convertToTimeUnit(taskTime, TimeUnit.US);
+				System.out.println("\ntaskTime == "+task.getName()+" ==> "+taskTime + "==>"+fileUtil.getRecurrence(task));
+				BigInteger sleepTime = taskTime.getValue();
+				fw.write("\n\tusleep(" + sleepTime + ");\n");
+				
+			}
+		/*	fw.write("\n\t//Runnable calls \n");
 			for (Runnable run : runnablesOfTask) {
 				fw.write("\t\t" + run.getName() + "();\n");
 			}
-			fw.write("\n\ttaskCount"+task.getName()+"++;");
+		*/	fw.write("\n\ttaskCount"+task.getName()+"++;");
 			fw.write("\n\ttraceTaskPasses("+taskCount+", taskCount"+task.getName()+");");
 			fw.write("\n\ttraceRunningTask(0);\n");
 			
