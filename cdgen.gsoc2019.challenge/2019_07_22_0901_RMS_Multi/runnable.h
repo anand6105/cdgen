@@ -22,8 +22,6 @@
 #include <string.h>
 
 /* Scheduler includes. */
-#include "FreeRTOS.h"
-
 void ABSCalculation (void);
 void APedSensor (void);
 void APedVoter (void);

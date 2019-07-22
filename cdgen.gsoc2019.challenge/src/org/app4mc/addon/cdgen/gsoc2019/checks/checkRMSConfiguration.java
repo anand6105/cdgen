@@ -88,11 +88,11 @@ public class checkRMSConfiguration{
 		System.out.println("Generation completed, Check path 	" + srcPath);
 		//TODO: Set hyperlink for path
 		//System.out.println("<a href=\"http://www.google.com\">whatever</a>");
-		try {
+		/*try {
 			Desktop.getDesktop().open(new File(srcPath));
 		} catch (IOException e1) {
 			e1.printStackTrace();
-		}
+		}*/
 		System.exit(0);
 	}
 

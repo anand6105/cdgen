@@ -384,23 +384,7 @@ public class MainRMSFileCreation {
 		}
 	}
 
-	private static void headerIncludesMain(File f1) {
-		try {
-			File fn = f1;
-			FileWriter fw = new FileWriter(fn, true);
-			fw.write("/* Standard includes. */\n");
-			fw.write("#include <stdio.h>\n");
-			fw.write("#include <stdlib.h>\n");
-			fw.write("#include <string.h>\n\n");
-			fw.write("/* Scheduler includes. */\n");
-			fw.write("#include \"taskDef.h\"\n");
-			fw.write("#include \"FreeRTOS.h\"\n\n");
-			fw.close();
-		} catch (IOException ioe) {
-			System.err.println("IOException: " + ioe.getMessage());
-		}
-	}
-
+	
 	private static void headerIncludesMainRMS(File f1) {
 		try {
 			File fn = f1;
@@ -416,6 +400,7 @@ public class MainRMSFileCreation {
 			fw.write("#include \"queue.h\"\n");
 			fw.write("#include \"AmaltheaConverter.h\"\n");
 			fw.write("#include \"debugFlags.h\"\n");
+			fw.write("#include \"ParallellaUtils.h\"\n");
 			fw.write("#include \"taskDef.h\"\n\n");
 			fw.write("#define READ_PRECISION_US 1000\n\n\n");
 			fw.close();
@@ -476,7 +461,7 @@ public class MainRMSFileCreation {
 			EList<Stimulus> Stimuli = model.getStimuliModel().getStimuli();
 			for (Stimulus s : Stimuli)  {
 				if (s instanceof PeriodicStimulus) {
-					fw.write("\t#define " + s.getName() + "\t"+((PeriodicStimulus) s).getRecurrence().getValue() +" \n");
+					fw.write("\t#define " + s.getName() + "\t"+((PeriodicStimulus) s).getRecurrence().getValue() +"*1000 // To account for MS to US conversion \n");
 				}
 			}
 			fw.write("\n");

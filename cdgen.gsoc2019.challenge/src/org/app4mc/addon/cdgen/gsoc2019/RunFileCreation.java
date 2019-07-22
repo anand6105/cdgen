@@ -147,7 +147,7 @@ public class RunFileCreation {
 			fw.write("#include <stdlib.h>\n");
 			fw.write("#include <string.h>\n\n");
 			fw.write("/* Scheduler includes. */\n");
-		//	fw.write("#include \"runnable.h\"\n");
+			fw.write("#include \"runnable.h\"\n");
 
 			fw.close();
 		} catch (IOException ioe) {
@@ -165,7 +165,7 @@ public class RunFileCreation {
 			fw.write("#include <stdlib.h>\n");
 			fw.write("#include <string.h>\n\n");
 			fw.write("/* Scheduler includes. */\n");
-			fw.write("#include \"FreeRTOS.h\"\n\n");
+		//	fw.write("#include \"runnable.h\"\n\n");
 			fw.close();
 		} catch (IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());

@@ -20,17 +20,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include <stdint.h>
 
 /* Scheduler includes. */
 #include "FreeRTOS.h"
-
 #include "queue.h"
 #include "croutine.h"
-#include "runnable.h"
-#include "taskDef.h"
+#include "debugFlags.h"
 #include "task.h"
+#include "runnable.h"
+
 /* Static definition of the tasks. */
 void vTask_ESSP0( void *pvParameters );
 void vTask_ESSP1( void *pvParameters );

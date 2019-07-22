@@ -19,7 +19,7 @@ void sleepTimerMs(int ticks, int taskNum){
 	}
 }
 
-void sleepTimerMs(int ticks, int taskNum){
+void sleepTimerUs(int ticks, int taskNum){
 	updateDebugFlag(ticks*10);
 	int i;
 	for (i=0;i<ticks;i++){

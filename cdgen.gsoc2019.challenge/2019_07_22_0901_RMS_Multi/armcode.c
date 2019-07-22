@@ -46,9 +46,6 @@ int main(){
 	unsigned   row_loop,col_loop;
 	e_platform_t epiphany;
 	e_epiphany_t dev;
-	e_return_stat_t result;
-	unsigned int message[9];
-	unsigned int message2[9];
 	int loop;
 	int addr;
 	e_mem_t emem;
@@ -59,10 +56,16 @@ int main(){
 	e_reset_group(&dev);
 	e_return_stat_t	result0;
 	e_return_stat_t	result1;
+	unsigned int message0[9];
+	unsigned int message1[9];
 	result0=  e_load("main0.elf",&dev,0,0,E_FALSE);
 	result1=  e_load("main1.elf",&dev,0,1,E_FALSE);
-	if (result0!=E_OK||result1!=E_OK){
-		fprintf(stderr,"Error Loading the Epiphany Application 1 %i\n", result);	}
+	if (result0!=E_OK){
+		fprintf(stderr,"Error Loading the Epiphany Application 0 %i\n", result0);
+	}
+	else if (result1!=E_OK){
+		fprintf(stderr,"Error Loading the Epiphany Application 1 %i\n", result1);
+	}
 	e_start_group(&dev);
 	fprintf(stderr,"FreeRTOS started \n");
 	addr = cnt_address;
@@ -71,6 +74,14 @@ int main(){
 	int prevtaskMessage;
 	int prevpollLoopCounter = 0;
 	for (pollLoopCounter=0;pollLoopCounter<=40;pollLoopCounter++){
+		message[3] = 0;
+		e_read(&dev,0,0,addr, &message0, sizeof(message0));
+		e_read(&dev,0,1,addr, &message1, sizeof(message1));
+		taskMessage = message[6];
+		fprintf(stderr, "tick1 %3d||",message[8]+1);
+		fprintf(stderr,"task holding core1 %2u||", message[6]);
+		fprintf(stderr, "tick2 %3d||",message2[8]+1);
+		fprintf(stderr,"task holding core2 %2u||", message2[6]);
 		fprintf(stderr,"\n");
 		usleep(READ_PRECISION_US);
 	}

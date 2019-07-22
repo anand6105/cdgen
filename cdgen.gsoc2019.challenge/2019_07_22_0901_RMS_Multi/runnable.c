@@ -22,6 +22,7 @@
 #include <string.h>
 
 /* Scheduler includes. */
+#include "runnable.h"
 void EcuVehicleSpeedSensor 	(void)	{
 	sleepTimerUs(73, 11);
 }

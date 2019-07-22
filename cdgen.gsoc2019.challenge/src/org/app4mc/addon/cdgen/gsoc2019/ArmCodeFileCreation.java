@@ -156,9 +156,9 @@ public class ArmCodeFileCreation {
 				fw.write("\tunsigned   row_loop,col_loop;\n");
 				fw.write("\te_platform_t epiphany;\n");
 				fw.write("\te_epiphany_t dev;\n");
-				fw.write("\te_return_stat_t result;\n");
-				fw.write("\tunsigned int message[9];\n");
-				fw.write("\tunsigned int message2[9];\n");
+				//fw.write("\te_return_stat_t result;\n");
+			/*	fw.write("\tunsigned int message[9];\n");
+				fw.write("\tunsigned int message2[9];\n");*/
 				fw.write("\tint loop;\n");
 				fw.write("\tint addr;\n");
 				fw.write("\te_mem_t emem;\n");
@@ -187,6 +187,16 @@ public class ArmCodeFileCreation {
 						}
 					}
 				}
+				int k3=0;
+			//	ArrayList<String> result = new ArrayList<String>();
+				for(int i=0; i<localPU.size();i++) {
+					for(int j=0; j<localPU.size();j++) {
+						if(k3<localPU.size()) {
+							fw.write("\tunsigned int message"+k3+"[9];\n");
+							k3++;
+						}
+					}
+				}
 				int k1=0;
 				for(int i=0; i<localPU.size();i++) {
 					for(int j=0; j<localPU.size();j++) {
@@ -207,9 +217,23 @@ public class ArmCodeFileCreation {
 						break;
 					}
 				}
-				fw.write("\tif ("+resultFinal+"){\n");
+				int k4=0;
+				for(int i=0; i<localPU.size();i++) {
+					for(int j=0; j<localPU.size();j++) {
+						if(k4<localPU.size()) {
+							if(k4==0)
+							fw.write("\tif (result"+k4+"!=E_OK){\n");
+							else
+							fw.write("\telse if (result"+k4+"!=E_OK){\n");
+							fw.write("\t\tfprintf(stderr,\"Error Loading the Epiphany Application "+k4+" %i\\n\", result"+k4+");");
+							fw.write("\n\t}\n");
+							k4++;
+						}
+					}
+				}
+				/*fw.write("\tif ("+resultFinal+"){\n");
 				fw.write("\t\tfprintf(stderr,\"Error Loading the Epiphany Application 1 %i\\n\", result);");
-				fw.write("\t}\n");
+				fw.write("\t}\n");*/
 				fw.write("\te_start_group(&dev);\n");
 				fw.write("\tfprintf(stderr,\"FreeRTOS started \\n\");\n");
 				fw.write("\taddr = cnt_address;\n");
@@ -218,9 +242,40 @@ public class ArmCodeFileCreation {
 				fw.write("\tint prevtaskMessage;\n");
 				fw.write("\tint prevpollLoopCounter = 0;\n");
 				fw.write("\tfor (pollLoopCounter=0;pollLoopCounter<=40;pollLoopCounter++){\n");
-				fw.write("\t\tfprintf(stderr,\"\\n\");\n");
+			//	fw.write("\t\tfprintf(stderr,\"\\n\");\n");
+				fw.write("\t\tmessage[3] = 0;\n");
+				
+				int k2=0;
+				for(int i=0; i<localPU.size();i++) {
+					for(int j=0; j<localPU.size();j++) {
+						if(k2<localPU.size()) {
+							fw.write("\t\te_read(&dev,"+i+","+j+",addr, &message"+k2+", sizeof(message"+k2+"));\n");
+							//fw.write("\tresult"+k1+"=  e_load(\"main"+k1+".elf\",&dev,"+i+","+j+",E_FALSE);\n");
+							//result.add("result"+k2+"!=E_OK");
+							k2++;
+						}
+					}
+				}
+			//	fw.write("\t\te_read(&dev,0,0,addr, &message, sizeof(message));\n");
+			//	fw.write("\t\te_read(&dev,1,0,addr, &message2, sizeof(message2));\n");
+			//	fw.write("\t\te_read(&emem,0,0,0x00, &shared_label_to_read, sizeof(shared_label_to_read));\n");
+				fw.write("\t\ttaskMessage = message[6];\n");
+				fw.write("\t\tfprintf(stderr, \"tick1 %3d||\",message[8]+1);\n");
+				fw.write("\t\tfprintf(stderr,\"task holding core1 %2u||\", message[6]);\n");
+				fw.write("\t\tfprintf(stderr, \"tick2 %3d||\",message2[8]+1);\n");
+				fw.write("\t\tfprintf(stderr,\"task holding core2 %2u||\", message2[6]);\n");
+			/*	fw.write("\t\tfprintf(stderr,\"shared label %2c||\", shared_label_to_read[0]);\n");
+				fw.write("\t\tfprintf(stderr,\"shared label1 %2c||\", shared_label_to_read[1]);\n");
+				fw.write("\t\tif fw.write(\"\t\t(shared_label_to_read[0] != chainLatencyStartIndicator){\n");
+				fw.write("\t\tchainLatencyStartIndicator = shared_label_to_read[0];\n");
+				fw.write("\t\tfprintf(stderr,\"<== chain start\");\n");
+				fw.write("\t\t}\n");
+				fw.write("\t\tif fw.write(\"\t\t(shared_label_to_read[1] != chainLatencyEndIndicator && shared_label_to_read[1]>1){\n");
+				fw.write("\t\tchainLatencyEndIndicator = shared_label_to_read[1];\n");
+				fw.write("\t\tfprintf(stderr,\"<== chain end\");\n");
+				fw.write("\t\t}\n");
+			*/	fw.write("\t\tfprintf(stderr,\"\\n\");\n");				
 				fw.write("\t\tusleep(READ_PRECISION_US);\n");
-
 				fw.write("\t}\n");
 				fw.write("\tfprintf(stderr,\"----------------------------------------------\\n\");\n");
 				fw.write("\te_close(&dev);\n");
