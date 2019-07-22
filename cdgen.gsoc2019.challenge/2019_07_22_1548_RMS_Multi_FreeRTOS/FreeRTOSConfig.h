@@ -67,7 +67,7 @@
 #define FREERTOS_CONFIG_H
 
 
-#define configCALL_STACK_SIZE	0x50
+#define configCALL_STACK_SIZE	0xA0
 
 /*-----------------------------------------------------------
  * Application specific definitions.
