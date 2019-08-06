@@ -23,6 +23,10 @@ import org.eclipse.emf.common.util.EList;
  *
  */
 
+/**
+ * @author rpras
+ *
+ */
 public class LabelFileCreation {
 	final private Amalthea model;
 
@@ -30,22 +34,29 @@ public class LabelFileCreation {
 	 * Constructor LabelFileCreation
 	 *
 	 * @param Model
-	 *            Amalthea Model
-	 * @param path1
+	 * Amalthea Model
+	 * @param srcPath
 	 * @throws IOException
 	 */
-	public LabelFileCreation(final Amalthea Model, String path1) throws IOException {
+	public LabelFileCreation(final Amalthea Model, String srcPath) throws IOException {
 		this.model = Model;
 		System.out.println("Label File Creation Begins");
-		fileCreate(model, path1);
+		fileCreate(model, srcPath);
 		System.out.println("Label File Creation Ends");
 	}
 
-	private static void fileCreate(Amalthea model, String path1) throws IOException {
+	/**
+	 * FileCreation LabelFileCreation
+	 * 
+	 * @param model
+	 * @param srcPath
+	 * @throws IOException
+	 */
+	private static void fileCreate(Amalthea model, String srcPath) throws IOException {
 		EList<Task> tasks = model.getSwModel().getTasks();
 		EList<Label> labellist = model.getSwModel().getLabels();
-		String fname = path1 + File.separator + "label.c";
-		File f2 = new File(path1);
+		String fname = srcPath + File.separator + "label.c";
+		File f2 = new File(srcPath);
 		File f1 = new File(fname);
 		f2.mkdirs();
 		try {
@@ -71,9 +82,14 @@ public class LabelFileCreation {
 		}
 	}
 
-	private static void labelFileHeader(File f1) {
+	/**
+	 * Title card - LabelFileCreation
+	 * 
+	 * @param file
+	 */
+	private static void labelFileHeader(File file) {
 		try {
-			File fn = f1;
+			File fn = file;
 			FileWriter fw = new FileWriter(fn, true);
 			fw.write("*Title 		:   Label Declaration\n");
 			fw.write("*Description	:	Declaration and Initialisation of Label\n");
@@ -87,9 +103,14 @@ public class LabelFileCreation {
 
 	}
 
-	private static void headerIncludesLabel(File f1) {
+	/**
+	 * Header inclusion - LabelFileCreation
+	 * 
+	 * @param file
+	 */
+	private static void headerIncludesLabel(File file) {
 		try {
-			File fn = f1;
+			File fn = file;
 			FileWriter fw = new FileWriter(fn, true);
 			fw.write("/* Standard includes. */\n");
 			fw.write("#include <stdio.h>\n");
@@ -103,9 +124,17 @@ public class LabelFileCreation {
 
 	}
 
-	private static void LabelDeclaration(File f1, EList<Label> labellist) {
+	
+	
+	/**
+	 * Label definition and initialization structure.
+	 * 
+	 * @param file
+	 * @param labellist
+	 */
+	private static void LabelDeclaration(File file, EList<Label> labellist) {
 		try {
-			File fn = f1;
+			File fn = file;
 			FileWriter fw = new FileWriter(fn, true);
 			labellist.stream().distinct().collect(Collectors.toList());
 			for (Label label : labellist) {
@@ -122,9 +151,15 @@ public class LabelFileCreation {
 
 	}
 
-	private static void LabelDeclarationLocal(File f1, EList<Task> tasks) {
+	/**
+	 * Local label definition and initialization structure. Task specific local labels are defined to perform Cin and Cout operation.
+	 * 
+	 * @param file
+	 * @param tasks
+	 */
+	private static void LabelDeclarationLocal(File file, EList<Task> tasks) {
 		try {
-			File fn = f1;
+			File fn = file;
 			FileWriter fw = new FileWriter(fn, true);
 			for (Task task : tasks) {
 				List<Runnable> runnablesOfTask = SoftwareUtil.getRunnableList(task, null);

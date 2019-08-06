@@ -5,26 +5,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.app4mc.addon.cdgen.gsoc2019.utils.fileUtil;
-import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.DeploymentUtil;
-import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.HardwareUtil;
-import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.RuntimeUtil;
-import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.RuntimeUtil.TimeType;
-import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.SoftwareUtil;
-import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.TimeUtil;
 import org.eclipse.app4mc.amalthea.model.Amalthea;
 import org.eclipse.app4mc.amalthea.model.MappingModel;
-import org.eclipse.app4mc.amalthea.model.Process;
-import org.eclipse.app4mc.amalthea.model.ProcessingUnit;
 import org.eclipse.app4mc.amalthea.model.Runnable;
 import org.eclipse.app4mc.amalthea.model.SchedulerAllocation;
 import org.eclipse.app4mc.amalthea.model.Task;
-import org.eclipse.app4mc.amalthea.model.Time;
-import org.eclipse.app4mc.amalthea.model.TimeUnit;
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -34,35 +21,43 @@ import org.eclipse.emf.common.util.EList;
  *
  */
 
-// TODO Merger of Runnable Definition
-
 public class ArmCodeFileCreation {
 	final private Amalthea model;
 
 	/**
-	 * Constructor RunFileCreation
-	 *
+	 * Constructor ArmCodeFileCreation.
+	 * 
 	 * @param Model
-	 * Amalthea Model
-	 * @param path1
-	 * @param pthreadFlag
+	 * @param srcPath
+	 * @param hdrPath
+	 * @param configFlag
 	 * @throws IOException
 	 */
-	public ArmCodeFileCreation(final Amalthea Model, String path1, String path2, int  configFlag) throws IOException {
+	public ArmCodeFileCreation(final Amalthea Model, String srcPath, String hdrPath, int  configFlag) throws IOException {
 		this.model = Model;
 		EList<Task> tasks = model.getSwModel().getTasks();
 		EList<Runnable> runnables = model.getSwModel().getRunnables();
 		System.out.println("Runnable File Creation Begins");
-		fileCreate(model, path1, path2, configFlag, tasks, runnables);
+		fileCreate(model, srcPath, hdrPath, configFlag, tasks, runnables);
 		System.out.println("Runnable File Creation Ends");
 
 	}
 
-
-	private static void fileCreate(Amalthea model, String path1, String path2, int configFlag, EList<Task> tasks,
+	/**
+	 * file creation and specification for armcode file 
+	 * 
+	 * @param model
+	 * @param srcPath
+	 * @param hdrPath
+	 * @param configFlag
+	 * @param tasks
+	 * @param runnables
+	 * @throws IOException
+	 */
+	private static void fileCreate(Amalthea model, String srcPath, String hdrPath, int configFlag, EList<Task> tasks,
 			EList<Runnable> runnables) throws IOException {
-		String fname = path1 + File.separator + "armcode.c";
-		File f2 = new File(path1);
+		String fname = srcPath + File.separator + "armcode.c";
+		File f2 = new File(srcPath);
 		File f1 = new File(fname);
 		f2.mkdirs();
 		try {
@@ -97,9 +92,14 @@ public class ArmCodeFileCreation {
 		}
 	}
 
-	private static void runFileHeader(File f1) {
+	/**
+	 * ArmCode Header Title note.
+	 * 
+	 * @param file
+	 */
+	private static void runFileHeader(File file) {
 		try {
-			File fn = f1;
+			File fn = file;
 			FileWriter fw = new FileWriter(fn, true);
 			fw.write("*Title 		:   ArmCode Header\n");
 			fw.write("*Description	:	Header file for Deploy/Offloading of the task to EPI\n");
@@ -112,9 +112,14 @@ public class ArmCodeFileCreation {
 		}
 	}
 
-	private static void nsleep(File f1) {
+	/**
+	 * nsleep - function call structure. 
+	 * 
+	 * @param file
+	 */
+	private static void nsleep(File file) {
 		try {
-			File fn = f1;
+			File fn = file;
 			FileWriter fw = new FileWriter(fn, true);
 			fw.write("int nsleep(long miliseconds){\n");
 			fw.write("\tstruct timespec req, rem;\n");
@@ -133,9 +138,15 @@ public class ArmCodeFileCreation {
 		}
 	}
 
-	private static void zynqmain(Amalthea model, File f1) {
+	/**
+	 * main function for the zynq in which we deploy the 
+	 * 
+	 * @param model
+	 * @param file
+	 */
+	private static void zynqmain(Amalthea model, File file) {
 		try {
-			File fn = f1;
+			File fn = file;
 			FileWriter fw = new FileWriter(fn, true);
 			MappingModel mappingModel = model.getMappingModel();
 			if (mappingModel != null) {
@@ -215,9 +226,9 @@ public class ArmCodeFileCreation {
 					for(int j=0; j<localPU.size();j++) {
 						if(k4<localPU.size()) {
 							if(k4==0)
-							fw.write("\tif (result"+k4+"!=E_OK){\n");
+								fw.write("\tif (result"+k4+"!=E_OK){\n");
 							else
-							fw.write("\telse if (result"+k4+"!=E_OK){\n");
+								fw.write("\telse if (result"+k4+"!=E_OK){\n");
 							fw.write("\t\tfprintf(stderr,\"Error Loading the Epiphany Application "+k4+" %i\\n\", result"+k4+");");
 							fw.write("\n\t}\n");
 							k4++;
@@ -259,9 +270,14 @@ public class ArmCodeFileCreation {
 	}
 
 
-	private static void headerIncludesArmCode(File f1) {
+	/**
+	 * header inclusion for armCode file
+	 * 
+	 * @param file
+	 */
+	private static void headerIncludesArmCode(File file) {
 		try {
-			File fn = f1;
+			File fn = file;
 			FileWriter fw = new FileWriter(fn, true);
 			fw.write("/* Standard includes. */\n");
 			fw.write("#include <stdio.h>\n");

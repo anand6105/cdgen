@@ -21,21 +21,27 @@ public class FreeRTOSConfigPreeFileCreation {
 	 * Constructor FreeRTOSConfigPreeFileCreation
 	 *
 	 * @param Model
-	 *            Amalthea Model
-	 * @param path1
+	 * @param srcPath
 	 * @throws IOException
 	 */
-	public FreeRTOSConfigPreeFileCreation(final Amalthea Model, String path1) throws IOException {
+	public FreeRTOSConfigPreeFileCreation(final Amalthea Model, String srcPath) throws IOException {
 		this.model = Model;
 		System.out.println("FreeRTOSConfig File Creation Begins");
-		fileCreate(model, path1);
+		fileCreate(model, srcPath);
 		System.out.println("FreeRTOSConfig File Creation Ends");
 	}
 
-	private static void fileCreate(Amalthea model, String path1) throws IOException {
+	/**
+	 * FileCreate - FreeRTOSConfigPreeFileCreation
+	 * 
+	 * @param model
+	 * @param srcPath
+	 * @throws IOException
+	 */
+	private static void fileCreate(Amalthea model, String srcPath) throws IOException {
 
-		String fname = path1 + File.separator + "FreeRTOSConfig.h";
-		File f2 = new File(path1);
+		String fname = srcPath + File.separator + "FreeRTOSConfig.h";
+		File f2 = new File(srcPath);
 		File f1 = new File(fname);
 		f2.mkdirs();
 		try {
@@ -61,9 +67,14 @@ public class FreeRTOSConfigPreeFileCreation {
 		}
 	}
 
- private static void headerIncludesFreeRTOSPree(File f1) {
+	/**
+	 * Macro definition and framework for FreeRTOS
+	 * 
+	 * @param file
+	 */
+	private static void headerIncludesFreeRTOSPree(File file) {
 		try {
-			File fn = f1;
+			File fn = file;
 			FileWriter fw = new FileWriter(fn, true);
 			fw.write("#ifndef FREERTOS_CONFIG_H\n");
 			fw.write("#define FREERTOS_CONFIG_H\n");

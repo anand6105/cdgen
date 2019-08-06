@@ -13,32 +13,38 @@ import org.eclipse.app4mc.amalthea.model.Amalthea;
  * @author Ram Prasath Govindarajan
  *
  */
-//TODO optimizied = Done 
 public class FreeRTOSConfigFileCreation {
 	final private Amalthea model;
 
+
+
 	/**
 	 * Constructor FreeRTOSConfigFileCreation
-	 *
+	 * 
 	 * @param Model
-	 *            Amalthea Model
-	 * @param path1
-	 * @param pthreadFlag
-	 * @param preemptionFlag
+	 * @param srcPath
+	 * @param configFlag
 	 * @throws IOException
 	 */
-
-	public FreeRTOSConfigFileCreation(final Amalthea Model, String path1, int configFlag) throws IOException {
+	public FreeRTOSConfigFileCreation(final Amalthea Model, String srcPath, int configFlag) throws IOException {
 		this.model = Model;
 		System.out.println("FreeRTOSConfig File Creation Begins");
-		fileCreate(model, path1, configFlag);
+		fileCreate(model, srcPath, configFlag);
 		System.out.println("FreeRTOSConfig File Creation Ends");
 	}
 
-	public static void fileCreate(Amalthea model, String path1, int configFlag) throws IOException {
+	/**
+	 * FileCreation FreeRTOSConfigFileCreation
+	 * 
+	 * @param model
+	 * @param srcPath
+	 * @param configFlag
+	 * @throws IOException
+	 */
+	public static void fileCreate(Amalthea model, String srcpath, int configFlag) throws IOException {
 
-		String fname = path1 + File.separator + "FreeRTOSConfig.h";
-		File f2 = new File(path1);
+		String fname = srcpath + File.separator + "FreeRTOSConfig.h";
+		File f2 = new File(srcpath);
 		File f1 = new File(fname);
 		f2.mkdirs();
 		try {
@@ -53,8 +59,6 @@ public class FreeRTOSConfigFileCreation {
 			fileUtil.fileMainHeader(f1);
 			fileUtil.FreeRTOSConfigFileHeader(f1);
 			headerIncludesFreeRTOS(model, f1, configFlag);
-
-			// fileUtil.TaskDefinition(f1,tasks);
 		} finally {
 			try {
 				fw.close();
@@ -64,9 +68,16 @@ public class FreeRTOSConfigFileCreation {
 		}
 	}
 
-	public static void headerIncludesFreeRTOS(Amalthea model, File f1, int configFlag) {
+	/**
+	 * Macro framework and definition.
+	 * 
+	 * @param model
+	 * @param file
+	 * @param configFlag
+	 */
+	public static void headerIncludesFreeRTOS(Amalthea model, File file, int configFlag) {
 		try {
-			File fn = f1;
+			File fn = file;
 			FileWriter fw = new FileWriter(fn, true);
 			int constval = 1;//TODO merge this constval with the value used in time period in MAIN File - Issue001
 			int taskSize = model.getSwModel().getTasks().size();

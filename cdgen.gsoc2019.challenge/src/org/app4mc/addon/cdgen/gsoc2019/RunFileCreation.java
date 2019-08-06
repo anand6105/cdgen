@@ -185,7 +185,6 @@ public class RunFileCreation {
 		} catch (IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
-
 	}
 
 	private static void runnablePthreadDefinition(File f1, EList<Task> tasks, Amalthea model) {
@@ -198,7 +197,6 @@ public class RunFileCreation {
 				runnablesOfTask = runnablesOfTask.stream().distinct().collect(Collectors.toList());
 			//	int runnableCounter =1;
 				for (Runnable Run : runnablesOfTask) {
-					
 					fw.write("void " + Run.getName() + " (void)\t{\n");
 				/*	fw.write("\tvDisplayMessagePthread(\" " + t.getName() + " \tRunnable Execution	" + "\t" + Run.getName()
 					+ "\\n\");\n");*/

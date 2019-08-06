@@ -142,6 +142,7 @@ public class testTaskDef
 				}
 			}
 		}
+		if(0x3110 == (configFlag & 0xFFF0)) {
 		if (count1 != taskmod.size()) {
 			System.out.println(taskmod.size() + "\tTask : ERROR: Cout count\t" + count1);
 		} else {
@@ -166,6 +167,7 @@ public class testTaskDef
 				System.out.println("Task : suspendMe OK");
 			}
 		}
+		
 		if(0x0020 == (configFlag & 0x00F0)) {
 			if (count4 != taskmod.size() * 2) {
 				System.out.println(taskmod.size() * 2 + "\tTask : ERROR: resumeMe\t" + count4);
@@ -179,6 +181,7 @@ public class testTaskDef
 				System.out.println("Task : resumeMe OK");
 			}
 		}
+		
 		if (count4 != count3) {
 			System.out.println(count4 + "\tTask : ERROR: suspendMe \t" + count3);
 		} else {
@@ -189,7 +192,7 @@ public class testTaskDef
 		} else {
 			System.out.println("Task : Task Count OK");
 		}
-
+		}
 		fr.close();
 	}
 
