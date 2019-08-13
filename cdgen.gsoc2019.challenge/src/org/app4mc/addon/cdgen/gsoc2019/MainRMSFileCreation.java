@@ -273,11 +273,12 @@ public class MainRMSFileCreation {
 				periodMap.put(task, period);
 			}
 			Map<Task, Long> periodMapSorted = fileUtil.sortByValue(periodMap);
-			//System.out.println("periodMapSorted Size "+ periodMapSorted.size());
-			for (int i=periodMapSorted.size()-1;i>=0;i--) {
-				Task task = (Task) periodMapSorted.keySet().toArray()[i];
+			System.out.println("periodMapSorted Size "+ periodMapSorted.size());
+	//	for (int i=0;i<(periodMapSorted.size());i++) {
+				for (int i=(periodMapSorted.size()), k=0;i>0;i--,k++) {
+				Task task = (Task) periodMapSorted.keySet().toArray()[k];
 				fw.write("\t#define main" + task.getName() + "\t( tskIDLE_PRIORITY +"
-						+ (i+1) + " )\n");//TODO merge this constval with the value used in time period in FreeRTOS config File - Issue001
+						+ (i) + " )\n");//TODO merge this constval with the value used in time period in FreeRTOS config File - Issue001
 			}
 			fw.write("\n");
 			fw.close();

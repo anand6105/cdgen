@@ -236,11 +236,9 @@ public class LabelFileCreation {
 				List<Label> listWithoutDuplicates2 = labellist1.stream().distinct().collect(Collectors.toList());
 				fw.write("\n //local variable for " + task.getName() + "\n");
 				for (Label lab : listWithoutDuplicates2) {
-					if(labelList.contains(lab)) {
 						String type = fileUtil.datatype(lab.getSize().toString());
 						long init = fileUtil.intialisation(lab.getSize().toString());
 						fw.write("\t\t" + type + "\t" + lab.getName() + "_" + task.getName() + "\t=\t" + init + ";\n");	
-					}
 				}
 				
 				fw.write("\n\tvoid cIN_" + task.getName() + "()\n\t{\n");
@@ -287,7 +285,6 @@ public class LabelFileCreation {
 					labellist1.addAll(labellist);
 				}
 				List<Label> listWithoutDuplicates2 = labellist1.stream().distinct().collect(Collectors.toList());
-				
 				fw.write("\n\tvoid cIN_" + task.getName() + "();");
 				fw.write("\n\tvoid cOUT_" + task.getName() + "();");
 			}
@@ -326,7 +323,6 @@ public class LabelFileCreation {
 			}	
 			LabelTypeMap.put(itr.next(), labelTypeList);
 		}
-		
 		//Shared labels list
 				Set<Label> uniques = new HashSet<>();
 				for(Label t : labelCombined) {
@@ -351,11 +347,7 @@ public class LabelFileCreation {
 					}	
 					LabelTypeMap1.put(itr.next(), labelTypeList);
 				}
-		/*for(int k=0; k<LabelType.size();k++) {
-			
-		}*/
-		
-	}
+		}
 	
 	
 	public static List<Label> SharedLabelFinder(Amalthea model) {

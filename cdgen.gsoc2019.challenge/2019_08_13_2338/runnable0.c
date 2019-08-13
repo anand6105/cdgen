@@ -22,7 +22,7 @@
 #include <string.h>
 
 /* Scheduler includes. */
-#include "runnable.0"
+#include "runnable0.h"
 void DiagnosisArbiter 	(void)	{
 }
 void IgnitionTiming 	(void)	{

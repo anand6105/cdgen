@@ -10,26 +10,56 @@
 *Author		:	Ram Prasath Govindarajan
 *Tool 		:	CDGen_GSoC
 *Version 	:	V1.0.0
-*Title 		:   Label Declaration
-*Description	:	Declaration and Initialisation of Label
+*Title 		:   Runnable Header
+*Description	:	Runnable Definition with Runnable delay
 ******************************************************************
 ******************************************************************/
 
 
 /* Standard includes. */
 #include <stdio.h>
-#include <stdint.h>
+#include <stdlib.h>
 #include <string.h>
 
 /* Scheduler includes. */
-
-	void cIN_Task_ESSP0();
-	void cOUT_Task_ESSP0();
-	void cIN_Task_ESSP1();
-	void cOUT_Task_ESSP1();
-	void cIN_Task_ESSP4();
-	void cOUT_Task_ESSP4();
-	void cIN_Task_ESSP6();
-	void cOUT_Task_ESSP6();
-	void cIN_Task_ESSP7();
-	void cOUT_Task_ESSP7();
+#include "runnable1.h"
+void VehicleSpeedSensorDiagnosis 	(void)	{
+}
+void BrakeActuatorMonitor 	(void)	{
+}
+void EcuVehicleSpeedSensor 	(void)	{
+}
+void VehicleSpeedSensorTranslation 	(void)	{
+}
+void VehicleSpeedSensorVoter 	(void)	{
+}
+void CylNumObserver 	(void)	{
+}
+void DecelerationSensorDiagnosis 	(void)	{
+}
+void APedSensor 	(void)	{
+}
+void APedVoter 	(void)	{
+}
+void ThrottleController 	(void)	{
+}
+void ThrottleActuator 	(void)	{
+}
+void VehicleStateMonitor 	(void)	{
+}
+void EcuDecelerationSensor 	(void)	{
+}
+void DecelerationSensorTranslation 	(void)	{
+}
+void DecelerationSensorVoter 	(void)	{
+}
+void ABSCalculation 	(void)	{
+}
+void BrakeForceActuation 	(void)	{
+}
+void CaliperPositionCalculation 	(void)	{
+}
+void BrakeActuator 	(void)	{
+}
+void EcuBrakeActuator 	(void)	{
+}

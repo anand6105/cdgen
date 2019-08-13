@@ -29,16 +29,21 @@ int taskCountTask_ESSP9	=	0;
 
 	void vTask_ESSP8()
 	{
-	portTickType xLastWakeTime=xTaskGetTickCount();
 
-		for( ;; )
-		{
+
+		uint16_t	IgnitionTime1_Task_ESSP8	=	65535;
+		uint16_t	IgnitionTime8_Task_ESSP8	=	65535;
+		uint16_t	IgnitionTime5_Task_ESSP8	=	65535;
+		uint16_t	IgnitionTime4_Task_ESSP8	=	65535;
+		uint16_t	IgnitionTime6_Task_ESSP8	=	65535;
+		uint16_t	IgnitionTime2_Task_ESSP8	=	65535;
+		uint8_t	IgnitionTime_Task_ESSP8	=	255;
+		uint16_t	IgnitionTime7_Task_ESSP8	=	65535;
+		uint16_t	IgnitionTime3_Task_ESSP8	=	65535;
+
+
 		updateDebugFlag(700);
 		traceTaskPasses(1,1);
-			/*Cin - Create local variables and copy the actual variable to them */
-			taskENTER_CRITICAL ();
-			cIN_Task_ESSP8();
-			taskEXIT_CRITICAL ();
 
 			/*Runnable calls */
 			DiagnosisArbiter();
@@ -47,31 +52,33 @@ int taskCountTask_ESSP9	=	0;
 
 			sleepTimerMs(1 , 11);
 
-			/*Cout - Write back the local variables back to the actual variables */
-			taskENTER_CRITICAL ();
-			cOUT_Task_ESSP8();
-			taskEXIT_CRITICAL ();
-
 			taskCountTask_ESSP8++;
 			traceTaskPasses(1, taskCountTask_ESSP8);
 			traceRunningTask(0);
-			vTaskDelayUntil(&xLastWakeTime, 10);
-		}
 	}
 
 
 	void vTask_ESSP3()
 	{
-	portTickType xLastWakeTime=xTaskGetTickCount();
 
-		for( ;; )
-		{
+
+		uint16_t	InjectionTime6_Task_ESSP3	=	65535;
+		uint16_t	InjectionTime3_Task_ESSP3	=	65535;
+		uint8_t	TransientFuelMassPerStroke_Task_ESSP3	=	255;
+		uint8_t	MassAirFlow_Task_ESSP3	=	255;
+		uint16_t	InjectionTime5_Task_ESSP3	=	65535;
+		uint8_t	TotalFuelMassPerStroke_Task_ESSP3	=	255;
+		uint16_t	InjectionTime8_Task_ESSP3	=	65535;
+		uint16_t	InjectionTime1_Task_ESSP3	=	65535;
+		uint16_t	InjectionTime4_Task_ESSP3	=	65535;
+		uint16_t	MAFSensorVoltage_Task_ESSP3	=	65535;
+		uint16_t	InjectionTime7_Task_ESSP3	=	65535;
+		uint16_t	BaseFuelMassPerStroke_Task_ESSP3	=	65535;
+		uint16_t	InjectionTime2_Task_ESSP3	=	65535;
+
+
 		updateDebugFlag(700);
 		traceTaskPasses(1,1);
-			/*Cin - Create local variables and copy the actual variable to them */
-			taskENTER_CRITICAL ();
-			cIN_Task_ESSP3();
-			taskEXIT_CRITICAL ();
 
 			/*Runnable calls */
 			MassAirFlowSensor();
@@ -82,31 +89,20 @@ int taskCountTask_ESSP9	=	0;
 
 			sleepTimerMs(1 , 12);
 
-			/*Cout - Write back the local variables back to the actual variables */
-			taskENTER_CRITICAL ();
-			cOUT_Task_ESSP3();
-			taskEXIT_CRITICAL ();
-
 			taskCountTask_ESSP3++;
 			traceTaskPasses(2, taskCountTask_ESSP3);
 			traceRunningTask(0);
-			vTaskDelayUntil(&xLastWakeTime, 5);
-		}
 	}
 
 
 	void vTask_ESSP2()
 	{
-	portTickType xLastWakeTime=xTaskGetTickCount();
 
-		for( ;; )
-		{
+
+
+
 		updateDebugFlag(700);
 		traceTaskPasses(1,1);
-			/*Cin - Create local variables and copy the actual variable to them */
-			taskENTER_CRITICAL ();
-			cIN_Task_ESSP2();
-			taskEXIT_CRITICAL ();
 
 			/*Runnable calls */
 			WheelSpeedSensorDiagnosis();
@@ -114,31 +110,31 @@ int taskCountTask_ESSP9	=	0;
 
 			sleepTimerMs(1 , 13);
 
-			/*Cout - Write back the local variables back to the actual variables */
-			taskENTER_CRITICAL ();
-			cOUT_Task_ESSP2();
-			taskEXIT_CRITICAL ();
-
 			taskCountTask_ESSP2++;
 			traceTaskPasses(3, taskCountTask_ESSP2);
 			traceRunningTask(0);
-			vTaskDelayUntil(&xLastWakeTime, 10);
-		}
 	}
 
 
 	void vTask_ESSP5()
 	{
-	portTickType xLastWakeTime=xTaskGetTickCount();
 
-		for( ;; )
-		{
+
+		uint8_t	BrakeSafetyLevel_Task_ESSP5	=	255;
+		uint8_t	CalculatedBrakeForce_Task_ESSP5	=	255;
+		uint8_t	BrakeApplication_Task_ESSP5	=	255;
+		uint8_t	ThrottleSensor2Voltage_Task_ESSP5	=	255;
+		uint8_t	BrakeMonitorLevel_Task_ESSP5	=	255;
+		uint8_t	BrakePedalPosition1_Task_ESSP5	=	255;
+		uint8_t	BrakeSafetyState_Task_ESSP5	=	255;
+		uint8_t	VotedBrakePedalPosition_Task_ESSP5	=	255;
+		uint8_t	BrakePedalPosition2_Task_ESSP5	=	255;
+		uint8_t	BrakePedalPosition_Task_ESSP5	=	255;
+		uint8_t	ThrottleSensor1Voltage_Task_ESSP5	=	255;
+
+
 		updateDebugFlag(700);
 		traceTaskPasses(1,1);
-			/*Cin - Create local variables and copy the actual variable to them */
-			taskENTER_CRITICAL ();
-			cIN_Task_ESSP5();
-			taskEXIT_CRITICAL ();
 
 			/*Runnable calls */
 			ThrottleSensor();
@@ -154,31 +150,22 @@ int taskCountTask_ESSP9	=	0;
 
 			sleepTimerMs(1 , 14);
 
-			/*Cout - Write back the local variables back to the actual variables */
-			taskENTER_CRITICAL ();
-			cOUT_Task_ESSP5();
-			taskEXIT_CRITICAL ();
-
 			taskCountTask_ESSP5++;
 			traceTaskPasses(4, taskCountTask_ESSP5);
 			traceRunningTask(0);
-			vTaskDelayUntil(&xLastWakeTime, 5);
-		}
 	}
 
 
 	void vTask_ESSP9()
 	{
-	portTickType xLastWakeTime=xTaskGetTickCount();
 
-		for( ;; )
-		{
+
+		uint8_t	WheelSpeed1_Task_ESSP9	=	255;
+		uint8_t	WheelSpeed2_Task_ESSP9	=	255;
+
+
 		updateDebugFlag(700);
 		traceTaskPasses(1,1);
-			/*Cin - Create local variables and copy the actual variable to them */
-			taskENTER_CRITICAL ();
-			cIN_Task_ESSP9();
-			taskEXIT_CRITICAL ();
 
 			/*Runnable calls */
 			EcuWheelSpeedSensor();
@@ -187,15 +174,8 @@ int taskCountTask_ESSP9	=	0;
 
 			sleepTimerMs(1 , 15);
 
-			/*Cout - Write back the local variables back to the actual variables */
-			taskENTER_CRITICAL ();
-			cOUT_Task_ESSP9();
-			taskEXIT_CRITICAL ();
-
 			taskCountTask_ESSP9++;
 			traceTaskPasses(5, taskCountTask_ESSP9);
 			traceRunningTask(0);
-			vTaskDelayUntil(&xLastWakeTime, 5);
-		}
 	}
 
