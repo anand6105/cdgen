@@ -55,12 +55,17 @@ public class checkFreeRTOSConfiguration{
 			e1.printStackTrace();
 		}
 		try {
-			new LabelFileCreation(model, srcPath);
+			new TaskFileCreation(model, srcPath, headerPath, configFlag);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 		try {
-			new TaskFileCreation(model, srcPath, headerPath, configFlag);
+			new SharedLabelsFileCreation(model, srcPath);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		try {
+			new LabelFileCreation(model, srcPath);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}

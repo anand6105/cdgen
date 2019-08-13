@@ -4,9 +4,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.app4mc.addon.cdgen.gsoc2019.utils.fileUtil;
 import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.HardwareUtil;
@@ -14,6 +17,7 @@ import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.RuntimeUtil;
 import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.RuntimeUtil.TimeType;
 import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.TimeUtil;
 import org.eclipse.app4mc.amalthea.model.Amalthea;
+import org.eclipse.app4mc.amalthea.model.Label;
 import org.eclipse.app4mc.amalthea.model.MappingModel;
 import org.eclipse.app4mc.amalthea.model.PeriodicStimulus;
 import org.eclipse.app4mc.amalthea.model.ProcessingUnit;
@@ -33,36 +37,36 @@ import org.eclipse.emf.common.util.EList;
 
 public class MainFileCreation {
 	final private Amalthea model;
-
 	/**
-	 * Constructor MainFileCreation
-	 *
+	 * MainFileCreation Constructor
+	 * 
 	 * @param Model
-	 *            Amalthea Model
-	 * @param path1
-	 * @param pthreadFlag
-	 * @param rMSFlag 
-	 * @param nonCustom 
-	 * @param i
+	 * @param srcPath
+	 * @param configFlag
 	 * @throws IOException
 	 */
-	public MainFileCreation(final Amalthea Model, String path1, int configFlag) throws IOException {
-		this.model = Model;
-		System.out.println("Main File Creation Begins");
-
-		if (0x2000 == (configFlag & 0xF000)) {
-			fileCreatePthread(model, path1);
-		}else {
-			fileCreate(model, path1, configFlag);
-		}
-		System.out.println("Main File Creation Ends");
+	public MainFileCreation(final Amalthea Model, String srcPath, int configFlag) throws IOException { this.model = Model;
+	System.out.println("Main File Creation Begins");
+	if (0x2000 == (configFlag & 0xF000)) {
+		fileCreatePthread(model, srcPath);
+	}else {
+		fileCreate(model, srcPath, configFlag);
+	}
+	System.out.println("Main File Creation Ends");
 	}
 
-	private static void fileCreate(Amalthea model, String path1, int configFlag) throws IOException {
-		EList<Task> tasks = model.getSwModel().getTasks();
-
-		String fname = path1 + File.separator + "main.c";
-		File f2 = new File(path1);
+	/**
+	 * MainFileCreation File Creation
+	 * 
+	 * @param model
+	 * @param srcPath
+	 * @param configFlag
+	 * @throws IOException
+	 */
+	private static void fileCreate(Amalthea model, String srcPath, int configFlag) throws IOException {
+		EList<Task> tasks = model.getSwModel().getTasks(); 
+		String fname = srcPath + File.separator + "main.c";
+		File f2 = new File(srcPath);
 		File f1 = new File(fname);
 		f2.mkdirs();
 		try {
@@ -89,9 +93,6 @@ public class MainFileCreation {
 				mainTaskPriority(f1, tasks);
 				mainFucntionMulticore(model, f1, tasks);
 			}
-
-
-
 		} finally {
 			try {
 				fw.close();
@@ -100,10 +101,53 @@ public class MainFileCreation {
 			}
 		}
 	}
+	
+	/**
+	 * Shared Label definition and initialization structure.
+	 * 
+	 * @param file
+	 * @param labellist
+	 */
+	public static List<Label> SharedLabelCoreDefinition(Amalthea model, String srcPath) {
+			EList<Label> labellist = model.getSwModel().getLabels();
+			//List<Label> SharedLabelCoreList = LabelFileCreation.SharedLabelFinder(model);
+			List<Label> SharedLabelListSortCore = new ArrayList<Label>();
+			if(labellist.size()==0) {
+				System.out.println("Shared Label size 0");
+			}else {
+			//	System.out.println("Shared Label size "+SharedLabelList.size());
+				HashMap<Label, HashMap<Task, ProcessingUnit>> sharedLabelTaskMap = LabelFileCreation.LabelTaskMap(model, labellist);
+				int i=0, k=0, j=0;
+				for(Label share:labellist) {
+					HashMap<Task, ProcessingUnit> TaskMap = sharedLabelTaskMap.get(share);
+					Collection<ProcessingUnit> puList = TaskMap.values();
+					List<ProcessingUnit> puListUnique = puList.stream().distinct().collect(Collectors.toList());
+					Set<Task> TaskList = TaskMap.keySet();
+					if(puListUnique.size()==1 && TaskList.size()>1) {
+						SharedLabelListSortCore.add(share);
+						i++;
+					}
+					else if(puListUnique.size()>1){
+						j++;
+					}else if(TaskList.size()==1){
+						k++;
+					}
+				}
+				System.out.println("Total Labels :"+sharedLabelTaskMap.keySet().size()+"="+i+"+"+j+"+"+k+"="+(i+j+k)); 
+			}
+			return SharedLabelListSortCore;
+	}
 
-	private static void mainFucntionRMS(Amalthea model, File f1, EList<Task> tasks) {
+	/**
+	 * Main function for RMS Scheduler
+	 * 
+	 * @param model
+	 * @param file
+	 * @param tasks
+	 */
+	private static void mainFucntionRMS(Amalthea model, File file, EList<Task> tasks) {
 		try {
-			File fn = f1;
+			File fn = file;
 			FileWriter fw = new FileWriter(fn, true);
 			fw.write("int main(void) \n{\n");
 			fw.write("\toutbuf_init();\n");
@@ -464,9 +508,6 @@ public class MainFileCreation {
 				}
 			//	fw.write("\t#define " + task.getName() + "\t"+fileUtil.getRecurrence(task).getValue() +" \n");
 			}*/
-
-
-
 			fw.write("\n");
 			fw.close();
 		} catch (IOException ioe) {

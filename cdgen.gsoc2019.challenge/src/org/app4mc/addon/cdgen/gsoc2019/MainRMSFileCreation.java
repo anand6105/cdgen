@@ -4,16 +4,19 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.app4mc.addon.cdgen.gsoc2019.utils.fileUtil;
 import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.RuntimeUtil;
 import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.RuntimeUtil.TimeType;
 import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.TimeUtil;
 import org.eclipse.app4mc.amalthea.model.Amalthea;
+import org.eclipse.app4mc.amalthea.model.Label;
 import org.eclipse.app4mc.amalthea.model.MappingModel;
 import org.eclipse.app4mc.amalthea.model.PeriodicStimulus;
 import org.eclipse.app4mc.amalthea.model.ProcessingUnit;
@@ -27,6 +30,7 @@ import org.eclipse.emf.common.util.EList;
 
 /**
  * Implementation of Main function in which scheduling is done.
+ * Specific to RMS Scheduler
  * 
  * @author Ram Prasath Govindarajan
  *
@@ -35,22 +39,37 @@ import org.eclipse.emf.common.util.EList;
 public class MainRMSFileCreation {
 	final private Amalthea model;
 
-	public MainRMSFileCreation(final Amalthea Model, String path1, int configFlag) throws IOException {
+	/**
+	 * MainRMSFileCreation  Constructor
+	 * 
+	 * @param Model
+	 * @param srcPath
+	 * @param configFlag
+	 * @throws IOException
+	 */
+	public MainRMSFileCreation(final Amalthea Model, String srcPath, int configFlag) throws IOException {
 		this.model = Model;
 		System.out.println("Main File Creation Begins");
-		fileCreate(model, path1, configFlag);
+		fileCreate(model, srcPath, configFlag);
 		System.out.println("Main File Creation Ends");
 	}
 
-	private static void fileCreate(Amalthea model, String path1, int configFlag) throws IOException {
-		model.getMappingModel().getTaskAllocation();
+	/**
+	 * MainRMSFileCreation - File Creation
+	 * 
+	 * @param model
+	 * @param srcPath
+	 * @param configFlag
+	 * @throws IOException
+	 */
+	private static void fileCreate(Amalthea model, String srcPath, int configFlag) throws IOException {
 		EList<SchedulerAllocation> CoreNo = model.getMappingModel().getSchedulerAllocation();
 		int k=0;
 		for(SchedulerAllocation c:CoreNo) {
 			ProcessingUnit pu = c.getResponsibility().get(0);
 			Set<Task> tasks = DeploymentUtil.getTasksMappedToCore(pu, model);
-			String fname = path1 + File.separator + "main"+k+".c";
-			File f2 = new File(path1);
+			String fname = srcPath + File.separator + "main"+k+".c";
+			File f2 = new File(srcPath);
 			File f1 = new File(fname);
 			f2.mkdirs();
 			try {
@@ -64,10 +83,11 @@ public class MainRMSFileCreation {
 				fileUtil.fileMainHeader(f1);
 				mainFileHeader(f1);
 				if((0x0100 == (0x0F00 & configFlag)) & (0x3000 == (0xF000 & configFlag)) ) {
-					headerIncludesMainRMS(f1);
+					headerIncludesMainRMS(f1, k);
 					mainTaskStimuli(model, f1, tasks);
 					mainTaskPriority(f1, tasks);
 					mainFucntionRMS(model, f1, tasks);
+				//	SharedLabelDeclarationHead(f1, model);
 				}
 			} finally {
 				try {
@@ -80,12 +100,62 @@ public class MainRMSFileCreation {
 		}
 	}
 
-	private static void mainFucntionRMS(Amalthea model, File f1, Set<Task> tasks) {
+	/**
+	 * Main function in Main file of RMS specific scheduler
+	 * 
+	 * @param model
+	 * @param file
+	 * @param tasks
+	 */
+	private static void mainFucntionRMS(Amalthea model, File file, Set<Task> tasks) {
 		try {
-			File fn = f1;
+			File fn = file;
 			FileWriter fw = new FileWriter(fn, true);
 			fw.write("int main(void) \n{\n");
 			fw.write("\toutbuf_init();\n");
+			
+			EList<Label> labellist = model.getSwModel().getLabels();
+			List<Label> SharedLabelList = LabelFileCreation.SharedLabelFinder(model);
+			List<Label> SharedLabelListSortCore = new ArrayList<Label>();
+			if(SharedLabelList.size()==0) {
+				System.out.println("Shared Label size 0");
+			}else {
+			//	System.out.println("Shared Label size "+SharedLabelList.size());
+				HashMap<Label, HashMap<Task, ProcessingUnit>> sharedLabelTaskMap = LabelFileCreation.LabelTaskMap(model, SharedLabelList);
+				for(Label share:SharedLabelList) {
+					HashMap<Task, ProcessingUnit> TaskMap = sharedLabelTaskMap.get(share);
+					Collection<ProcessingUnit> puList = TaskMap.values();
+					List<ProcessingUnit> puListUnique = puList.stream().distinct().collect(Collectors.toList());
+					if(puListUnique.size()>1) {
+						SharedLabelListSortCore.add(share);
+					}
+				}
+			}
+
+			HashMap<Label, String> SharedLabelTypeMap = new HashMap<Label, String>();
+			for(Label share:SharedLabelListSortCore) {
+				SharedLabelTypeMap.put(share, share.getSize().toString());
+			}
+			List<String> SharedTypeMapList = new ArrayList<>(SharedLabelTypeMap.values().stream().distinct().collect(Collectors.toList()));
+			List<Label> SharedLabelMapList =  new ArrayList<Label>(SharedLabelTypeMap.keySet());
+			for(int k=0;k<SharedTypeMapList.size();k++) {
+				List<Label> SharedLabel=new ArrayList<Label>();
+				String sh = SharedTypeMapList.get(k);
+				for(Label s:SharedLabelMapList) {
+					String ShTy = SharedLabelTypeMap.get(s);
+					if(sh.equals(ShTy)) {
+						SharedLabel.add(s);
+					}
+				}
+				int SharedLabelCounter = SharedLabel.size();
+				if(SharedLabelCounter!=0) {
+					fw.write("\tvoid shared_label_"+sh.toString().replace(" ", "")+"_init();\n");
+			//		fw.write("void shared_label_"+sh.toString().replace(" ", "")+"_init_core();\n");
+					
+				}
+				SharedLabelCounter=0;
+			}
+			
 			for (Task task: tasks) {
 				MappingModel mappingModel = model.getMappingModel();
 				ProcessingUnit pu = null;
@@ -111,6 +181,8 @@ public class MainRMSFileCreation {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
 	}
+	
+	
 
 	private static void taskHandleRMS(File f1, EList<Task> tasks) {
 		try {
@@ -130,9 +202,14 @@ public class MainRMSFileCreation {
 		}
 	}
 
-	private static void mainFileHeader(File f1) {
+	/**
+	 * Title Card of MainRMSFileCreation
+	 * 
+	 * @param file
+	 */
+	private static void mainFileHeader(File file) {
 		try {
-			File fn = f1;
+			File fn = file;
 			FileWriter fw = new FileWriter(fn, true);
 			fw.write("*Title 		:   C File for Tasks Call\n");
 			fw.write("*Description	:	Main file in which scheduling is done \n");
@@ -146,9 +223,14 @@ public class MainRMSFileCreation {
 	}
 
 	
-	private static void headerIncludesMainRMS(File f1) {
+	/**
+	 * MainRMSFileCreation Header inclusion
+	 * 
+	 * @param file
+	 */
+	private static void headerIncludesMainRMS(File file, int k) {
 		try {
-			File fn = f1;
+			File fn = file;
 			FileWriter fw = new FileWriter(fn, true);
 			fw.write("/* Standard includes. */\n");
 			fw.write("#include <stdio.h>\n");
@@ -162,7 +244,9 @@ public class MainRMSFileCreation {
 			fw.write("#include \"AmaltheaConverter.h\"\n");
 			fw.write("#include \"debugFlags.h\"\n");
 			fw.write("#include \"ParallellaUtils.h\"\n");
-			fw.write("#include \"taskDef.h\"\n\n");
+			fw.write("#include \"taskDef"+k+".h\"\n");
+			fw.write("#include \"shared_comms.h\"\n\n");
+		//	fw.write("#include \"c2c.h\"\n\n");
 			//fw.write("#define READ_PRECISION_US 1000\n\n\n");
 			fw.close();
 		} catch (IOException ioe) {
@@ -170,9 +254,15 @@ public class MainRMSFileCreation {
 		}
 	}
 
-	private static void mainTaskPriority(File f1, Set<Task> tasks) {
+	/**
+	 * Assign Priority to task in RMS
+	 * 
+	 * @param file
+	 * @param tasks
+	 */
+	private static void mainTaskPriority(File file, Set<Task> tasks) {
 		try {
-			File fn = f1;
+			File fn = file;
 			List<Task> localTaskPriority = new ArrayList<Task>();
 			localTaskPriority.addAll(tasks);
 			FileWriter fw = new FileWriter(fn, true);
@@ -196,6 +286,13 @@ public class MainRMSFileCreation {
 		}
 	}
 
+	/**
+	 * Macro for Stimuli in the model
+	 * 
+	 * @param model
+	 * @param file
+	 * @param tasks
+	 */
 	private static void mainTaskStimuli(Amalthea model, File f1, Set<Task> tasks) {
 		try {
 			File fn = f1;

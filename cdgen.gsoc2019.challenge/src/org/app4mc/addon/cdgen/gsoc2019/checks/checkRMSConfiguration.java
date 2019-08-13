@@ -56,6 +56,16 @@ public class checkRMSConfiguration{
 			e1.printStackTrace();
 		}
 		try {
+			new TaskFileCreation(model, srcPath, headerPath, configFlag);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		try {
+			new SharedLabelsFileCreation(model, srcPath);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		try {
 			new LabelFileCreation(model, srcPath);
 		} catch (IOException e1) {
 			e1.printStackTrace();
@@ -70,11 +80,7 @@ public class checkRMSConfiguration{
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}*/
-		try {
-			new TaskFileCreation(model, srcPath, headerPath, configFlag);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
+		
 		try {
 			new ArmCodeFileCreation(model, srcPath, headerPath, configFlag);
 		} catch (IOException e1) {

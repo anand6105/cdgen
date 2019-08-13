@@ -4,15 +4,25 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import org.app4mc.addon.cdgen.gsoc2019.LabelFileCreation;
+import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.SoftwareUtil;
+import org.eclipse.app4mc.amalthea.model.Amalthea;
+import org.eclipse.app4mc.amalthea.model.Label;
 import org.eclipse.app4mc.amalthea.model.PeriodicStimulus;
+import org.eclipse.app4mc.amalthea.model.ProcessingUnit;
 import org.eclipse.app4mc.amalthea.model.Stimulus;
 import org.eclipse.app4mc.amalthea.model.Task;
 import org.eclipse.app4mc.amalthea.model.Time;
+import org.eclipse.emf.common.util.EList;
 
 
 /**
@@ -83,6 +93,40 @@ public class fileUtil {
 			break;
 		}
 		return type;
+	}
+	
+
+	/**
+	 * Shared Label definition and initialization structure.
+	 * @param tasks 
+	 * 
+	 * @param file
+	 * @param labellist
+	 * @return 
+	 */
+	public static List<Label> SharedLabelDeclarationHead(Amalthea model, List<Task> tasks) {
+			List<Label> SharedLabelList = new ArrayList<Label>();
+			for(Task ta:tasks) {
+				SharedLabelList.addAll(SoftwareUtil.getReadLabelSet(ta, null));
+			}
+			SharedLabelList =SharedLabelList.stream().distinct().collect(Collectors.toList());
+			List<Label> SharedLabelListSortCore = new ArrayList<Label>();
+			if(SharedLabelList.size()==0) {
+				System.out.println("Shared Label size 0");
+			}else {
+			//	System.out.println("Shared Label size "+SharedLabelList.size());
+				HashMap<Label, HashMap<Task, ProcessingUnit>> sharedLabelTaskMap = LabelFileCreation.LabelTaskMap(model, SharedLabelList);
+				for(Label share:SharedLabelList) {
+					HashMap<Task, ProcessingUnit> TaskMap = sharedLabelTaskMap.get(share);
+					Set<Task> taskList = TaskMap.keySet();
+					Collection<ProcessingUnit> puList = TaskMap.values();
+					List<ProcessingUnit> puListUnique = puList.stream().distinct().collect(Collectors.toList());
+					if(puListUnique.size()==1 && taskList.size()>1) {
+						SharedLabelListSortCore.add(share);
+					}
+				}
+			}
+			return SharedLabelListSortCore;
 	}
 
 	public static long intialisation(String string) {
