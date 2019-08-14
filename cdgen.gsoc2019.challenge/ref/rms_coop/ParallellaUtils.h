@@ -21,7 +21,6 @@
 
 
 void sleepTimerMs(int ticks,int taskNum);
-void sleepTimerUs(int ticks,int taskNum);
 
 
 #endif /* DEMO_PARALLELLA_PARALLELLAUTILS_H_ */

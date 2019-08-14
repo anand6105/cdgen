@@ -3,6 +3,7 @@ package org.app4mc.addon.cdgen.gsoc2019;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -14,12 +15,14 @@ import java.util.stream.Collectors;
 import org.app4mc.addon.cdgen.gsoc2019.utils.fileUtil;
 import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.RuntimeUtil;
 import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.RuntimeUtil.TimeType;
+import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.SoftwareUtil;
 import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.TimeUtil;
 import org.eclipse.app4mc.amalthea.model.Amalthea;
 import org.eclipse.app4mc.amalthea.model.Label;
 import org.eclipse.app4mc.amalthea.model.MappingModel;
 import org.eclipse.app4mc.amalthea.model.PeriodicStimulus;
 import org.eclipse.app4mc.amalthea.model.ProcessingUnit;
+import org.eclipse.app4mc.amalthea.model.Runnable;
 import org.eclipse.app4mc.amalthea.model.SchedulerAllocation;
 import org.eclipse.app4mc.amalthea.model.Stimulus;
 import org.eclipse.app4mc.amalthea.model.Task;
@@ -87,7 +90,7 @@ public class MainRMSFileCreation {
 					mainTaskStimuli(model, f1, tasks);
 					mainTaskPriority(f1, tasks);
 					mainFucntionRMS(model, f1, tasks);
-				//	SharedLabelDeclarationHead(f1, model);
+					//	SharedLabelDeclarationHead(f1, model);
 				}
 			} finally {
 				try {
@@ -113,14 +116,14 @@ public class MainRMSFileCreation {
 			FileWriter fw = new FileWriter(fn, true);
 			fw.write("int main(void) \n{\n");
 			fw.write("\toutbuf_init();\n");
-			
+
 			EList<Label> labellist = model.getSwModel().getLabels();
 			List<Label> SharedLabelList = LabelFileCreation.SharedLabelFinder(model);
 			List<Label> SharedLabelListSortCore = new ArrayList<Label>();
 			if(SharedLabelList.size()==0) {
 				System.out.println("Shared Label size 0");
 			}else {
-			//	System.out.println("Shared Label size "+SharedLabelList.size());
+				//	System.out.println("Shared Label size "+SharedLabelList.size());
 				HashMap<Label, HashMap<Task, ProcessingUnit>> sharedLabelTaskMap = LabelFileCreation.LabelTaskMap(model, SharedLabelList);
 				for(Label share:SharedLabelList) {
 					HashMap<Task, ProcessingUnit> TaskMap = sharedLabelTaskMap.get(share);
@@ -150,27 +153,60 @@ public class MainRMSFileCreation {
 				int SharedLabelCounter = SharedLabel.size();
 				if(SharedLabelCounter!=0) {
 					fw.write("\tvoid shared_label_"+sh.toString().replace(" ", "")+"_init();\n");
-			//		fw.write("void shared_label_"+sh.toString().replace(" ", "")+"_init_core();\n");
-					
+					//		fw.write("void shared_label_"+sh.toString().replace(" ", "")+"_init_core();\n");
+
 				}
 				SharedLabelCounter=0;
 			}
-			
+
 			for (Task task: tasks) {
 				MappingModel mappingModel = model.getMappingModel();
 				ProcessingUnit pu = null;
 				if (mappingModel != null) {
 					pu = DeploymentUtil.getAssignedCoreForProcess(task, model).iterator().next();
 					Time taskTime = RuntimeUtil.getExecutionTimeForProcess(task, pu, null, TimeType.WCET);
-					taskTime = TimeUtil.convertToTimeUnit(taskTime, TimeUnit.US);
-					int sleepTime = 0;
-					fw.write("\tAmaltheaTask AmalTk_"+task.getName()+" = createAmaltheaTask( v"+task.getName()+", cIN_" + task.getName() +", cOUT_" + task.getName()+", "+task.getStimuli().get(0).getName()+", "+task.getStimuli().get(0).getName()+", "+sleepTime+");\n");
+					taskTime = TimeUtil.convertToTimeUnit(taskTime, TimeUnit.MS);
+					//System.out.println("\ntaskTime == "+task.getName()+" ==> "+taskTime + "==>"+fileUtil.getRecurrence(task));
+					BigInteger sleepTime = taskTime.getValue();
+					BigInteger b2 = new BigInteger("1000"); 
+					int comparevalue = sleepTime.compareTo(b2); 
+					//System.out.println("Sleep time ==>"+comparevalue);
+					if(comparevalue < 0) {
+						fw.write("\tAmaltheaTask AmalTk_"+task.getName()+" = createAmaltheaTask( v"+task.getName()+", cIN_" + task.getName() +", cOUT_" + task.getName()+", "+task.getStimuli().get(0).getName()+", "+task.getStimuli().get(0).getName()+", 1);\n");
+					}else {
+						fw.write("\tAmaltheaTask AmalTk_"+task.getName()+" = createAmaltheaTask( v"+task.getName()+", cIN_" + task.getName() +", cOUT_" + task.getName()+", "+task.getStimuli().get(0).getName()+", "+task.getStimuli().get(0).getName()+", "+sleepTime+");\n");
+					}
+					//fw.write("\tAmaltheaTask AmalTk_"+task.getName()+" = createAmaltheaTask( v"+task.getName()+", cIN_" + task.getName() +", cOUT_" + task.getName()+", "+task.getStimuli().get(0).getName()+", "+task.getStimuli().get(0).getName()+", "+sleepTime+");\n");
 				}
 			}
 			int count =0;
 			for (Task task : tasks) {
-				fw.write("\txTaskCreate(generalizedRTOSTask , \"AmalTk_"+task.getName()+"\", configMINIMAL_STACK_SIZE, &AmalTk_"+task.getName()
-				+", main"+task.getName()+", NULL);\n");
+				Set<Label> taskLabel = SoftwareUtil.getAccessedLabelSet(task, null);
+				List<Label> taskLabelList = new ArrayList<>(taskLabel);
+				HashMap<Label, String> LabelTypeMap = new HashMap<Label, String>();
+				for(Label tl:taskLabelList) {
+					LabelTypeMap.put(tl, tl.getSize().toString());
+				}
+				List<String> TypeList = new ArrayList<>(LabelTypeMap.values().stream().distinct().collect(Collectors.toList()));
+				List<Label> LabelList = new ArrayList<>(LabelTypeMap.keySet().stream().distinct().collect(Collectors.toList()));
+				fw.write("\tcreateRTOSTask( &AmalTk_"+task.getName()+", main"+task.getName()+", " +TypeList.size()+ ",");
+				List<Label> dataTypeList=new ArrayList<Label>();
+				int k=0;
+				for(String tl:TypeList) {
+					fw.write(fileUtil.datatype(tl)+", ");
+					for (Label La:LabelList) {
+						if(LabelTypeMap.get(La).contains(tl)) {
+							dataTypeList.add(La);
+						}
+					}
+					fw.write(""+dataTypeList.size()+"");
+					k++;
+					if(k < TypeList.size()) {
+						fw.write(", ");
+							
+					}
+				}
+				fw.write(");\n");
 				count++;
 			}
 			fw.write("\tvTaskStartScheduler();\n");
@@ -181,8 +217,81 @@ public class MainRMSFileCreation {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
 	}
-	
-	
+
+
+	/**
+	 * Main function in Main file of RMS specific scheduler
+	 * 
+	 * @param model
+	 * @param file
+	 * @param tasks
+	 */
+	private static void mainFucntionFreeRTOS(Amalthea model, File file, Set<Task> tasks) {
+		try {
+			File fn = file;
+			FileWriter fw = new FileWriter(fn, true);
+			fw.write("int main(void) \n{\n");
+			fw.write("\toutbuf_init();\n");
+
+			EList<Label> labellist = model.getSwModel().getLabels();
+			List<Label> SharedLabelList = LabelFileCreation.SharedLabelFinder(model);
+			List<Label> SharedLabelListSortCore = new ArrayList<Label>();
+			if(SharedLabelList.size()==0) {
+				System.out.println("Shared Label size 0");
+			}else {
+				//	System.out.println("Shared Label size "+SharedLabelList.size());
+				HashMap<Label, HashMap<Task, ProcessingUnit>> sharedLabelTaskMap = LabelFileCreation.LabelTaskMap(model, SharedLabelList);
+				for(Label share:SharedLabelList) {
+					HashMap<Task, ProcessingUnit> TaskMap = sharedLabelTaskMap.get(share);
+					Collection<ProcessingUnit> puList = TaskMap.values();
+					List<ProcessingUnit> puListUnique = puList.stream().distinct().collect(Collectors.toList());
+					if(puListUnique.size()>1) {
+						SharedLabelListSortCore.add(share);
+					}
+				}
+			}
+
+			HashMap<Label, String> SharedLabelTypeMap = new HashMap<Label, String>();
+			for(Label share:SharedLabelListSortCore) {
+				SharedLabelTypeMap.put(share, share.getSize().toString());
+			}
+			List<String> SharedTypeMapList = new ArrayList<>(SharedLabelTypeMap.values().stream().distinct().collect(Collectors.toList()));
+			List<Label> SharedLabelMapList =  new ArrayList<Label>(SharedLabelTypeMap.keySet());
+			for(int k=0;k<SharedTypeMapList.size();k++) {
+				List<Label> SharedLabel=new ArrayList<Label>();
+				String sh = SharedTypeMapList.get(k);
+				for(Label s:SharedLabelMapList) {
+					String ShTy = SharedLabelTypeMap.get(s);
+					if(sh.equals(ShTy)) {
+						SharedLabel.add(s);
+					}
+				}
+				int SharedLabelCounter = SharedLabel.size();
+				if(SharedLabelCounter!=0) {
+					fw.write("\tvoid shared_label_"+sh.toString().replace(" ", "")+"_init();\n");
+					//		fw.write("void shared_label_"+sh.toString().replace(" ", "")+"_init_core();\n");
+
+				}
+				SharedLabelCounter=0;
+			}
+
+			int count =0;
+			for (Task task : tasks) {
+				fw.write("\txTaskCreate(v"+task.getName()+" , "+task.getName()+"\", configMINIMAL_STACK_SIZE, &"
+						+task.getName()
+						+", main"+task.getName()+", NULL);\n");
+				count++;
+			}
+			fw.write("\tvTaskStartScheduler();\n");
+			fw.write("\t" + "return EXIT_SUCCESS;\n");
+			fw.write("}\n\n");
+			fw.close();
+		}catch (IOException ioe) {
+			System.err.println("IOException: " + ioe.getMessage());
+		}
+	}
+
+
 
 	private static void taskHandleRMS(File f1, EList<Task> tasks) {
 		try {
@@ -222,7 +331,7 @@ public class MainRMSFileCreation {
 		}
 	}
 
-	
+
 	/**
 	 * MainRMSFileCreation Header inclusion
 	 * 
@@ -246,7 +355,7 @@ public class MainRMSFileCreation {
 			fw.write("#include \"ParallellaUtils.h\"\n");
 			fw.write("#include \"taskDef"+k+".h\"\n");
 			fw.write("#include \"shared_comms.h\"\n\n");
-		//	fw.write("#include \"c2c.h\"\n\n");
+			//	fw.write("#include \"c2c.h\"\n\n");
 			//fw.write("#define READ_PRECISION_US 1000\n\n\n");
 			fw.close();
 		} catch (IOException ioe) {
@@ -274,8 +383,8 @@ public class MainRMSFileCreation {
 			}
 			Map<Task, Long> periodMapSorted = fileUtil.sortByValue(periodMap);
 			System.out.println("periodMapSorted Size "+ periodMapSorted.size());
-	//	for (int i=0;i<(periodMapSorted.size());i++) {
-				for (int i=(periodMapSorted.size()), k=0;i>0;i--,k++) {
+			//	for (int i=0;i<(periodMapSorted.size());i++) {
+			for (int i=(periodMapSorted.size()), k=0;i>0;i--,k++) {
 				Task task = (Task) periodMapSorted.keySet().toArray()[k];
 				fw.write("\t#define main" + task.getName() + "\t( tskIDLE_PRIORITY +"
 						+ (i) + " )\n");//TODO merge this constval with the value used in time period in FreeRTOS config File - Issue001

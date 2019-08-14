@@ -620,7 +620,7 @@ public class TaskFileCreation {
 				for(Label lab:taskLabelList) {
 					String type = fileUtil.datatype(lab.getSize().toString());
 					long init = fileUtil.intialisation(lab.getSize().toString());
-					fw.write("\t\t" + type + "\t" + lab.getName() + "_" + task.getName() + "\t=\t" + init + ";\n");	
+					fw.write("\t\t" + type + "\t" + lab.getName() + ";\n");	
 				}
 				fw.write("\n\n");
 				//	fw.write("\n\t\tfor( ;; )\n\t\t{\n");

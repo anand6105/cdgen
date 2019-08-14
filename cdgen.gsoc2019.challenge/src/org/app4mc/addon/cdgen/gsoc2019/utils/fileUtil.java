@@ -104,7 +104,7 @@ public class fileUtil {
 	 * @param labellist
 	 * @return 
 	 */
-	public static List<Label> SharedLabelDeclarationHead(Amalthea model, List<Task> tasks) {
+	public static List<Label> CoreSpecificLabel(Amalthea model, List<Task> tasks) {
 			List<Label> SharedLabelList = new ArrayList<Label>();
 			for(Task ta:tasks) {
 				SharedLabelList.addAll(SoftwareUtil.getReadLabelSet(ta, null));
@@ -128,6 +128,53 @@ public class fileUtil {
 			}
 			return SharedLabelListSortCore;
 	}
+	
+	/**
+	 * Shared Label definition and initialization structure.
+	 * @param tasks 
+	 * 
+	 * @param file
+	 * @param labellist
+	 * @return 
+	 */
+	//public static List<Label> SharedLabelDeclarationHead(Amalthea model, List<Task> tasks) {
+		public static List<Label> SharedLabelDeclarationHead(Amalthea model, List<Task> tasks) {
+				List<Label> SharedLabelList = LabelFileCreation.SharedLabelFinder(model);
+				List<Label> SharedLabelListSortCore = new ArrayList<Label>();
+				List<Label> SharedLabel=new ArrayList<Label>();
+				if(SharedLabelList.size()==0) {
+					System.out.println("Shared Label size 0");
+				}else {
+					System.out.println("Shared Label size "+SharedLabelList.size());
+					HashMap<Label, HashMap<Task, ProcessingUnit>> sharedLabelTaskMap = LabelFileCreation.LabelTaskMap(model, SharedLabelList);
+					for(Label share:SharedLabelList) {
+						HashMap<Task, ProcessingUnit> TaskMap = sharedLabelTaskMap.get(share);
+						Collection<ProcessingUnit> puList = TaskMap.values();
+						List<ProcessingUnit> puListUnique = puList.stream().distinct().collect(Collectors.toList());
+						if(puListUnique.size()>1) {
+							SharedLabelListSortCore.add(share);
+						}
+					}
+				}
+
+				HashMap<Label, String> SharedLabelTypeMap = new HashMap<Label, String>();
+				for(Label share:SharedLabelListSortCore) {
+					SharedLabelTypeMap.put(share, share.getSize().toString());
+				}
+				List<String> SharedTypeMapList = new ArrayList<>(SharedLabelTypeMap.values().stream().distinct().collect(Collectors.toList()));
+				List<Label> SharedLabelMapList =  new ArrayList<Label>(SharedLabelTypeMap.keySet());
+				for(int k=0;k<SharedTypeMapList.size();k++) {
+					String sh = SharedTypeMapList.get(k);
+					for(Label s:SharedLabelMapList) {
+						String ShTy = SharedLabelTypeMap.get(s);
+						if(sh.equals(ShTy)) {
+							SharedLabel.add(s);
+						}
+					}
+				}
+				return SharedLabel;
+		}
+
 
 	public static long intialisation(String string) {
 		long init = 0;
