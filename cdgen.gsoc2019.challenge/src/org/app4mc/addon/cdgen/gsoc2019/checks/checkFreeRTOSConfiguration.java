@@ -45,7 +45,7 @@ public class checkFreeRTOSConfiguration{
 			e1.printStackTrace();
 		}
 		try {
-			new MainFileCreation(model, srcPath, configFlag);
+			new MainRMSFileCreation(model, srcPath, configFlag);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}

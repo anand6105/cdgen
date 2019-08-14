@@ -91,6 +91,11 @@ public class MainRMSFileCreation {
 					mainTaskPriority(f1, tasks);
 					mainFucntionRMS(model, f1, tasks);
 					//	SharedLabelDeclarationHead(f1, model);
+				}else {
+					headerIncludesMainRMS(f1, k);
+					mainTaskStimuli(model, f1, tasks);
+					mainTaskPriority(f1, tasks);
+					mainFucntionFreeRTOS(model, f1, tasks);
 				}
 			} finally {
 				try {
@@ -277,7 +282,7 @@ public class MainRMSFileCreation {
 
 			int count =0;
 			for (Task task : tasks) {
-				fw.write("\txTaskCreate(v"+task.getName()+" , "+task.getName()+"\", configMINIMAL_STACK_SIZE, &"
+				fw.write("\txTaskCreate(v"+task.getName()+" , \""+task.getName()+"\", configMINIMAL_STACK_SIZE, &"
 						+task.getName()
 						+", main"+task.getName()+", NULL);\n");
 				count++;
