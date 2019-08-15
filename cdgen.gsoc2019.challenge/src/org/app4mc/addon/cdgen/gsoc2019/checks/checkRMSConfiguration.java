@@ -27,16 +27,13 @@ public class checkRMSConfiguration{
 	public void RMSConfiguration(Amalthea model, String srcPath, String headerPath, int configFlag) {
 		try {
 			String path = System.getProperty("user.dir");
-			// create new file
 			File l_SourceDirectory = null;
 			if(0x3110 == (configFlag & 0xFFF0)) {
 				l_SourceDirectory = new File(path + "/ref/rms_coop/");
 			}else if(0x3120 == (configFlag & 0xFFF0)){
 				l_SourceDirectory = new File(path + "/ref/freertos_preem/");
 			}
-			// array of files and directory
 			String[] filesName = l_SourceDirectory.list();
-			// for each name in the path array
 			for(String pathi:filesName) {
 				File SourceFile = new File(l_SourceDirectory.toString() +"/" + pathi);
 				File DestinationFile = new File(Paths.get(srcPath).toString() + "/" + pathi );
@@ -70,31 +67,14 @@ public class checkRMSConfiguration{
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		/*try {
-			new FreeRTOSConfigFileCreation(model, srcPath, configFlag);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		try {
-			new FreeRTOSConfigFileCreation(model, srcPath, configFlag);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}*/
-		
 		try {
 			new ArmCodeFileCreation(model, srcPath, headerPath, configFlag);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		/*try {
-			new testTaskStructure(model, srcPath, configFlag);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}*/
 		System.out.println("Generation completed, Check path 	" + srcPath);
 		//TODO: Set hyperlink for path
-		//System.out.println("<a href=\"http://www.google.com\">whatever</a>");
-	try {
+		try {
 			Desktop.getDesktop().open(new File(srcPath));
 		} catch (IOException e1) {
 			e1.printStackTrace();

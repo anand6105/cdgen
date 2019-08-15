@@ -164,10 +164,7 @@ public class MainFileCreation {
 					//System.out.println("raw2 = " +taskTime.getValue());
 					double sleepTime = TimeUtil.getAsTimeUnit(taskTime, null);
 					fw.write("\tAmaltheaTask AmalTk_"+task.getName()+" = createAmaltheaTask("+task.getName()+", cIN_" + task.getName() +", cOUT_" + task.getName()+", "+task.getStimuli().get(0).getName()+", "+task.getStimuli().get(0).getName()+", "+sleepTime+");\n");
-
 				}
-
-
 			}
 			//	int c=0;
 			/*for (Task task : tasks) {

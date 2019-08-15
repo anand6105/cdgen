@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 
 import org.apache.xml.resolver.helpers.FileURL;
@@ -81,8 +82,8 @@ public class checkFileCreateGUI {
 		cdgenPosix.setBounds(50, 120, 145, 25);
 		frame.getContentPane().add(cdgenPosix);
 
-		JRadioButton cdgenCustom = new JRadioButton("Custom");
-		cdgenCustom.setBounds(50, 150, 145, 25);
+		JRadioButton cdgenCustom = new JRadioButton("RMS(Rate Monotonic)");
+		cdgenCustom.setBounds(50, 150, 210, 25);
 		frame.getContentPane().add(cdgenCustom);
 
 		ButtonGroup group = new ButtonGroup();
@@ -90,7 +91,7 @@ public class checkFileCreateGUI {
 		group.add(cdgenPosix);
 		group.add(cdgenCustom);
 
-		JRadioButton cdgenrms = new JRadioButton("RMS(Rate Monotonic)");
+/*		JRadioButton cdgenrms = new JRadioButton("RMS(Rate Monotonic)");
 		cdgenrms.setBounds(210, 90, 210, 25);
 		frame.getContentPane().add(cdgenrms);
 
@@ -105,14 +106,18 @@ public class checkFileCreateGUI {
 		ButtonGroup group2 = new ButtonGroup();
 		group2.add(cdgenrms);
 		group2.add(cdgenedf);
-		group2.add(cdgennonCustom);
+		group2.add(cdgennonCustom);*/
+		
+//		JComboBox platformSelection = new JComboBox("Platform Selection");
+//		platformSelection.setSelectedIndex(4);
+//		platformSelection.addActionListener(this);
 
 		JRadioButton cdgenCooperative = new JRadioButton("Cooperative");
-		cdgenCooperative.setBounds(430, 90, 145, 25);
+		cdgenCooperative.setBounds(210, 90, 145, 25);
 		frame.getContentPane().add(cdgenCooperative);
 
 		JRadioButton cdgenPreemptive = new JRadioButton("Preemptive");
-		cdgenPreemptive.setBounds(430, 120, 145, 25);
+		cdgenPreemptive.setBounds(210, 120, 145, 25);
 		frame.getContentPane().add(cdgenPreemptive);
 
 		ButtonGroup group3 = new ButtonGroup();
@@ -177,23 +182,21 @@ public class checkFileCreateGUI {
 				 * POSIX 	== 	NonCustom 	== Preemptive 	==	0x2320
 				 * Custom  	== 	RMS 		== Cooperative 	==	0x3110
 				 * Custom  	== 	RMS 		== Preemptive 	==	0x3120
-				 * Custom  	== 	EDF 		== Cooperative 	==	0x3210
-				 * Custom  	== 	EDF 		== Cooperative 	==	0x3220
 				 * 
 				 */
 
 				System.out.println("############################################################");
-				if (cdgenFreeRTOS.isSelected() & cdgennonCustom.isSelected() & cdgenPreemptive.isSelected() ) {
+				if (cdgenFreeRTOS.isSelected() & cdgenPreemptive.isSelected() ) {
 					configFlag = 0x1320;
 					System.out.println("\t\tFreeRTOS\tPreemptive");
 					System.out.println("############################################################");
 					new checkFreeRTOSConfiguration(model, path1, path2, configFlag);
-				}else if (cdgenFreeRTOS.isSelected() & cdgennonCustom.isSelected() & cdgenCooperative.isSelected()) {
+				}else if (cdgenFreeRTOS.isSelected() & cdgenCooperative.isSelected()) {
 					configFlag = 0x1310;
 					System.out.println("\t\tFreeRTOS\tCooperative");
 					System.out.println("############################################################");
 					new checkFreeRTOSConfiguration(model, path1, path2, configFlag);
-				}else if (cdgenPosix.isSelected() & cdgennonCustom.isSelected() & cdgenPreemptive.isSelected() ) {
+				}else if (cdgenPosix.isSelected()  & cdgenPreemptive.isSelected() ) {
 					configFlag = 0x2320;
 					System.out.println("\t\tPosix\tPreemptive");
 					System.out.println("############################################################");
@@ -202,7 +205,7 @@ public class checkFileCreateGUI {
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
-				}else if (cdgenPosix.isSelected() & cdgennonCustom.isSelected() & cdgenCooperative.isSelected()) {
+				}else if (cdgenPosix.isSelected() & cdgenCooperative.isSelected()) {
 					configFlag = 0x2310;
 					System.out.println("\t\tPosix\tCooperative");
 					System.out.println("############################################################");
@@ -211,7 +214,7 @@ public class checkFileCreateGUI {
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
-				}else if (cdgenCustom.isSelected() & cdgenrms.isSelected() & cdgenPreemptive.isSelected() ) {
+				}else if (cdgenCustom.isSelected() & cdgenPreemptive.isSelected() ) {
 					configFlag = 0x3120;
 					System.out.println("\t\tRMS\tPreemptive");
 					System.out.println("############################################################");
@@ -220,7 +223,7 @@ public class checkFileCreateGUI {
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
-				}else if (cdgenCustom.isSelected() & cdgenrms.isSelected() & cdgenCooperative.isSelected()) {
+				}else if (cdgenCustom.isSelected() & cdgenCooperative.isSelected()) {
 					configFlag = 0x3110;
 					System.out.println("\t\tRMS\tCooperative");
 					System.out.println("############################################################");
@@ -229,26 +232,7 @@ public class checkFileCreateGUI {
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
-				}else if (cdgenCustom.isSelected() & cdgenedf.isSelected() & cdgenPreemptive.isSelected() ) {
-					configFlag = 0x3220;
-					System.out.println("\t\tEDF\tPreemptive");
-					System.out.println("############################################################");
-					try {
-						new checkEDFConfiguration(model, path1, path2, configFlag);
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-				}else if (cdgenCustom.isSelected() & cdgenedf.isSelected() & cdgenCooperative.isSelected()) {
-					configFlag = 0x3210;
-					System.out.println("\t\tEDF\tCooperative");
-					System.out.println("############################################################");
-					try {
-						new checkEDFConfiguration(model, path1, path2, configFlag);
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-				}
-				else {
+				}else {
 					System.out.println("Configuration Not Defined!");
 				}
 			}
@@ -279,14 +263,14 @@ public class checkFileCreateGUI {
 		lblAllTasks.setBounds(50, 69, 110, 16);
 		frame.getContentPane().add(lblAllTasks);
 
-		JLabel lblSortedTasks = new JLabel("Scheduling Options");
+		/*JLabel lblSortedTasks = new JLabel("Scheduling Options");
 		lblSortedTasks.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblSortedTasks.setBounds(210, 69, 180, 16);
-		frame.getContentPane().add(lblSortedTasks);
+		frame.getContentPane().add(lblSortedTasks);*/
 
 		JLabel lblResponsetime = new JLabel("Task Preemption");
 		lblResponsetime.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblResponsetime.setBounds(430, 69, 150, 16);
+		lblResponsetime.setBounds(210, 69, 150, 16);
 		frame.getContentPane().add(lblResponsetime);
 
 		JLabel lblPerformanceMetric = new JLabel("CDGen - Code Generator for APP4MC");

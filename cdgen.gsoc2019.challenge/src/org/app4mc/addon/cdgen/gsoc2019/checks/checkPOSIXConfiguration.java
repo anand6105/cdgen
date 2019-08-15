@@ -56,7 +56,6 @@ public class checkPOSIXConfiguration{
 
 		System.out.println("Generation completed, Check path 	" + srcPath);
 		//TODO: Set hyperlink for path
-		//System.out.println("<a href=\"http://www.google.com\">whatever</a>");
 		try {
 			Desktop.getDesktop().open(new File(srcPath));
 		} catch (IOException e1) {

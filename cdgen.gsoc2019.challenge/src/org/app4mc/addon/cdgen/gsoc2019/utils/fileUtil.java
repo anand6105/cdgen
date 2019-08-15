@@ -143,9 +143,9 @@ public class fileUtil {
 				List<Label> SharedLabelListSortCore = new ArrayList<Label>();
 				List<Label> SharedLabel=new ArrayList<Label>();
 				if(SharedLabelList.size()==0) {
-					System.out.println("Shared Label size 0");
+				//	System.out.println("Shared Label size 0");
 				}else {
-					System.out.println("Shared Label size "+SharedLabelList.size());
+				//	System.out.println("Shared Label size "+SharedLabelList.size());
 					HashMap<Label, HashMap<Task, ProcessingUnit>> sharedLabelTaskMap = LabelFileCreation.LabelTaskMap(model, SharedLabelList);
 					for(Label share:SharedLabelList) {
 						HashMap<Task, ProcessingUnit> TaskMap = sharedLabelTaskMap.get(share);

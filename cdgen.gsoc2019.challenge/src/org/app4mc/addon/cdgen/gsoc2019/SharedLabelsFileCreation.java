@@ -47,9 +47,9 @@ public class SharedLabelsFileCreation {
 	 */
 	public SharedLabelsFileCreation(final Amalthea Model, String srcPath) throws IOException {
 		this.model = Model;
-		System.out.println("Label File Creation Begins");
+		System.out.println("Shared Label File Creation Begins");
 		fileCreate(model, srcPath);
-		System.out.println("Label File Creation Ends");
+		System.out.println("Shared Label File Creation Ends");
 	}
 
 	/**
@@ -198,9 +198,9 @@ public class SharedLabelsFileCreation {
 			List<Label> SharedLabelList = LabelFileCreation.SharedLabelFinder(model);
 			List<Label> SharedLabelListSortCore = new ArrayList<Label>();
 			if(SharedLabelList.size()==0) {
-				System.out.println("Shared Label size 0");
+				//System.out.println("Shared Label size 0");
 			}else {
-				System.out.println("Shared Label size "+SharedLabelList.size());
+				//System.out.println("Shared Label size "+SharedLabelList.size());
 				HashMap<Label, HashMap<Task, ProcessingUnit>> sharedLabelTaskMap = LabelFileCreation.LabelTaskMap(model, SharedLabelList);
 				for(Label share:SharedLabelList) {
 					HashMap<Task, ProcessingUnit> TaskMap = sharedLabelTaskMap.get(share);

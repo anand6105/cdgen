@@ -92,7 +92,7 @@ public class MainRMSFileCreation {
 					mainFucntionRMS(model, f1, tasks);
 					//	SharedLabelDeclarationHead(f1, model);
 				}else {
-					headerIncludesMainRMS(f1, k);
+					headerIncludesMainFreeRTOS(f1, k);
 					mainTaskStimuli(model, f1, tasks);
 					mainTaskPriority(f1, tasks);
 					mainFucntionFreeRTOS(model, f1, tasks);
@@ -387,7 +387,7 @@ public class MainRMSFileCreation {
 				periodMap.put(task, period);
 			}
 			Map<Task, Long> periodMapSorted = fileUtil.sortByValue(periodMap);
-			System.out.println("periodMapSorted Size "+ periodMapSorted.size());
+		//	System.out.println("periodMapSorted Size "+ periodMapSorted.size());
 			//	for (int i=0;i<(periodMapSorted.size());i++) {
 			for (int i=(periodMapSorted.size()), k=0;i>0;i--,k++) {
 				Task task = (Task) periodMapSorted.keySet().toArray()[k];
@@ -395,6 +395,31 @@ public class MainRMSFileCreation {
 						+ (i) + " )\n");//TODO merge this constval with the value used in time period in FreeRTOS config File - Issue001
 			}
 			fw.write("\n");
+			fw.close();
+		} catch (IOException ioe) {
+			System.err.println("IOException: " + ioe.getMessage());
+		}
+	}
+	
+	/**
+	 * MainRMSFileCreation Header inclusion
+	 * 
+	 * @param file
+	 */
+	private static void headerIncludesMainFreeRTOS(File file, int k) {
+		try {
+			File fn = file;
+			FileWriter fw = new FileWriter(fn, true);
+			fw.write("/* Standard includes. */\n");
+			fw.write("#include <stdio.h>\n");
+			fw.write("#include <stdlib.h>\n");
+			fw.write("#include <string.h>\n");
+			fw.write("#include <e_lib.h>\n\n");
+			fw.write("/* Scheduler includes. */\n");
+			fw.write("#include \"FreeRTOS.h\"\n");
+			fw.write("#include \"task.h\"\n");
+			fw.write("#include \"queue.h\"\n");
+			fw.write("#include \"taskDef"+k+".h\"\n\n");
 			fw.close();
 		} catch (IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());

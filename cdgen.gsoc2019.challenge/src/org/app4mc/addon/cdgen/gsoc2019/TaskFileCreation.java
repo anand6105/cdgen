@@ -54,11 +54,7 @@ public class TaskFileCreation {
 	public TaskFileCreation(final Amalthea Model, String srcPath, String path2, int  configFlag) throws IOException {
 		this.model = Model;
 
-		if(0x2000 != (0xF000 & configFlag)) {
-			System.out.println("Task File Creation Begins");
-			fileCreate(model, srcPath, path2, configFlag);
-			System.out.println("Task File Creation Ends");
-		} else if((0x3000 == (0xF000 & configFlag))&(0x0100 == (0x0F00 & configFlag))) {
+		if((0x3100 == (0xFF00 & configFlag))||(0x1300 == (0xFF00 & configFlag))) {
 			System.out.println("Task File Creation Begins");
 			fileCreate(model, srcPath, path2, configFlag);
 			System.out.println("Task File Creation Ends");
@@ -86,7 +82,6 @@ public class TaskFileCreation {
 			ProcessingUnit pu = c.getResponsibility().get(0);
 			Set<Task> task = DeploymentUtil.getTasksMappedToCore(pu, model);
 			List<Task> tasks = new ArrayList<Task>(task);
-			//Set<Task> tasks = DeploymentUtil.getTasksMappedToCore(pu, model);
 			String fname = srcPath + File.separator + "taskDef"+k+".c";
 			File f2 = new File(srcPath);
 			File f1 = new File(fname);
@@ -106,10 +101,10 @@ public class TaskFileCreation {
 					headerIncludesTaskHeadRMS(f1, k);
 					TaskCounter(f1, tasks);
 					TaskDefinitionRMS(f1, model, tasks, preemptionFlag);
-				}else {
+				}else if((0x1000 == (0xF000 & configFlag))&(0x0300 == (0x0F00 & configFlag))){
 					headerIncludesTaskHead(f1);
 					TaskCounter(f1, tasks);
-					TaskDefinitionRMS(f1, model, tasks, preemptionFlag);
+					TaskDefinitionFreeRTOS(f1, model, tasks, preemptionFlag);
 				}
 			} finally {
 				try {
@@ -135,7 +130,6 @@ public class TaskFileCreation {
 				taskFileHeader(f3);
 				headerIncludesTaskRMSHead(f3, k);
 				if((0x3000 == (0xF000 & configFlag))&(0x0100 == (0x0F00 & configFlag))) {
-					//	headerIncludesTaskRMSHead(f3);
 				}else {
 					headerIncludesTask(f3);
 				}
@@ -165,7 +159,8 @@ public class TaskFileCreation {
 			fw.close();
 		} catch (IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());		
-		}}
+		}
+	}
 
 
 	private static void fileCreatePthread(Amalthea model, String path1, String path2, int  configFlag)
@@ -177,7 +172,6 @@ public class TaskFileCreation {
 			preemptionFlag=false; 
 		}
 		EList<Task> tasks = model.getSwModel().getTasks();
-
 		String fname = path1 + File.separator + "taskDef.c";
 		File f2 = new File(path1);
 		File f1 = new File(fname);
@@ -187,7 +181,6 @@ public class TaskFileCreation {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		File fn = f1;
 		FileWriter fw = new FileWriter(fn, true);
 		try {
@@ -211,7 +204,6 @@ public class TaskFileCreation {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		File fn1 = f3;
 		FileWriter fw1 = new FileWriter(fn1, true);
 		try {
@@ -303,15 +295,11 @@ public class TaskFileCreation {
 				fw.write("\n\n\n");
 
 				fw.write("\n\tvoid cIN_" + task.getName() + "()\n\t{\n");
-				//		fw.write("\t\tvDisplayMessagePthread( \" Cin Execution\t" + task.getName() + "\\n\" );\n");
-
 				for (Label lab : listWithoutDuplicates2) {
 					fw.write("\t\t" + lab.getName() + "_" + task.getName() + "\t=\t" + lab.getName() + ";\n");
 				}
 				fw.write("\t}\n");
-
 				fw.write("\n\tvoid cOUT_" + task.getName() + "()\n\t{\n");
-				//	fw.write("\t\tvDisplayMessagePthread(\" Cout Execution\t" + task.getName() + "\\n\\n\" );\n");
 				ArrayList<Label> labellist2 = new ArrayList<Label>();
 				for (Runnable run : runnablesOfTask) {
 					Set<Label> labellist = SoftwareUtil.getWriteLabelSet(run, null);
@@ -323,7 +311,6 @@ public class TaskFileCreation {
 					fw.write("\t\t" + lab.getName() + "\t=\t" + lab.getName() + "_" + task.getName() + ";\n");
 				}
 				fw.write("\t}\n");
-
 				fw.write("\n\tvoid v" + task.getName() + "( void *t )" + "\n\t{\n");
 				MappingModel mappingModel = model.getMappingModel();
 				if (mappingModel != null) {
@@ -336,11 +323,8 @@ public class TaskFileCreation {
 					for (ProcessingUnit p: localPU) {
 						CoreMap.put(p, count);	
 						count++;
-						//	System.out.println("key  "+p +"==>   Value"+count);
 					}
-
 					ProcessingUnit pu = DeploymentUtil.getAssignedCoreForProcess(task, model).iterator().next();
-
 					Long coreID = CoreMap.get(pu);
 					fw.write("\t\tcpu_set_t cpuset;\n");
 					fw.write("\t\tint cpu = " + coreID + ";\n");
@@ -348,7 +332,6 @@ public class TaskFileCreation {
 					fw.write("\t\tCPU_SET( cpu , &cpuset);\n");
 					Set<ProcessingUnit> procUniSet = DeploymentUtil.getAssignedCoreForProcess(task, model);
 					List<ProcessingUnit> procUniList = null;
-					//ProcessingUnit procUni = null;
 					if (procUniSet != null) {
 						procUniList = new ArrayList<ProcessingUnit>(procUniSet);
 					}
@@ -439,24 +422,20 @@ public class TaskFileCreation {
 		try {
 			File fn = f1;
 			FileWriter fw = new FileWriter(fn, true);
-			/*fw.write("#ifndef DEMO_PARALLELLA_TASKCODE_H_\n");
-			fw.write("#define DEMO_PARALLELLA_TASKCODE_H_\n\n");
-			 */fw.write("/* Standard includes. */\n");
-			 fw.write("#include <stdio.h>\n");
-			 fw.write("#include <stdlib.h>\n");
-			 fw.write("#include <string.h>\n");
-			 /*fw.write("#include <pthread.h>\n");
-			fw.write("#include <sched.h>\n");
-			  */fw.write("#include <stdint.h>\n\n");
-			  fw.write("/* Scheduler includes. */\n");
-			  fw.write("#include \"FreeRTOS.h\"\n");
-			  fw.write("#include \"queue.h\"\n");
-			  fw.write("#include \"croutine.h\"\n");
-			  fw.write("#include \"debugFlags.h\"\n");
-			  fw.write("#include \"task.h\"\n");
-			  fw.write("#include \"label"+k+".h\"\n");
-			  fw.write("#include \"runnable"+k+".h\"\n\n");
-			  fw.close();
+			fw.write("/* Standard includes. */\n");
+			fw.write("#include <stdio.h>\n");
+			fw.write("#include <stdlib.h>\n");
+			fw.write("#include <string.h>\n");
+			fw.write("#include <stdint.h>\n\n");
+			fw.write("/* Scheduler includes. */\n");
+			fw.write("#include \"FreeRTOS.h\"\n");
+			fw.write("#include \"queue.h\"\n");
+			fw.write("#include \"croutine.h\"\n");
+			fw.write("#include \"debugFlags.h\"\n");
+			fw.write("#include \"task.h\"\n");
+			fw.write("#include \"label"+k+".h\"\n");
+			fw.write("#include \"runnable"+k+".h\"\n\n");
+			fw.close();
 		} catch (IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
@@ -476,13 +455,8 @@ public class TaskFileCreation {
 			fw.write("#include \"FreeRTOS.h\"\n\n");
 			fw.write("#include \"queue.h\"\n");
 			fw.write("#include \"croutine.h\"\n");
-			//fw.write("#include \"partest.h\"\n");
 			fw.write("#include \"runnable.h\"\n");
-			//fw.write("#include \"taskDef.h\"\n");
 			fw.write("#include \"task.h\"\n");
-
-			//fw.write("#define DELAY_MULT 100\n\n");
-
 			fw.close();
 		} catch (IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
@@ -506,8 +480,6 @@ public class TaskFileCreation {
 			fw.write("#include \"ParallellaUtils.h\"\n");
 			fw.write("#include \"label.c\"\n");
 			fw.write("#include \"task.h\"\n");
-			//fw.write("#include \"runnable.h\"\n\n");
-			//fw.write("#define DELAY_MULT 100\n\n");
 			fw.close();
 		} catch (IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
@@ -520,7 +492,6 @@ public class TaskFileCreation {
 			File fn = f1;
 			FileWriter fw = new FileWriter(fn, true);
 			fw.write("#include \"taskDef"+k+".h\"\n\n");
-			//fw.write("#define DELAY_MULT 100\n\n");
 			fw.close();
 		} catch (IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
@@ -547,11 +518,9 @@ public class TaskFileCreation {
 					pu = DeploymentUtil.getAssignedCoreForProcess(task, model).iterator().next();
 					Time taskTime = RuntimeUtil.getExecutionTimeForProcess(task, pu, null, TimeType.WCET);
 					taskTime = TimeUtil.convertToTimeUnit(taskTime, TimeUnit.MS);
-					//System.out.println("\ntaskTime == "+task.getName()+" ==> "+taskTime + "==>"+fileUtil.getRecurrence(task));
 					BigInteger sleepTime = taskTime.getValue();
 					BigInteger b2 = new BigInteger("1000"); 
 					int comparevalue = sleepTime.compareTo(b2); 
-					//System.out.println("Sleep time ==>"+comparevalue);
 					if(comparevalue < 0) {
 						fw.write("\n\tsleepTimerMs(1 , 1"+(taskCount+1)+");\n");	
 					}else {
@@ -583,15 +552,6 @@ public class TaskFileCreation {
 			for (Task task : tasks) {
 				fw.write("void v" + task.getName() + "( );\n");
 			}
-			/*fw.write("\n");
-			for (Task task : tasks) {
-				fw.write("void cOUT_" + task.getName() + "();\n");
-			}
-			fw.write("\n");
-			for (Task task : tasks) {
-				fw.write("void cIN_" + task.getName() + "();\n");
-			}
-			fw.write("\n");*/
 			fw.close();
 		} catch (IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
@@ -605,25 +565,24 @@ public class TaskFileCreation {
 			int taskCount = 0;
 			for (Task task : tasks) {
 				List<Runnable> runnablesOfTask = SoftwareUtil.getRunnableList(task, null);
-				//ArrayList<Label> labellist1 = new ArrayList<Label>();
 				runnablesOfTask = runnablesOfTask.stream().distinct().collect(Collectors.toList());
 				EList<Label> labellist1;
 				for (Runnable run : runnablesOfTask) {
 					Set<Label> labellist = SoftwareUtil.getAccessedLabelSet(run, null);
-				//	labellist1.addAll(labellist);
 				}
-				Set<Label> labellist = SoftwareUtil.getAccessedLabelSet(task, null);
-				fw.write("\n\tvoid v" + task.getName() + "()" + "\n\t{\n");
-				//	fw.write("\tportTickType xLastWakeTime=xTaskGetTickCount();\n");
+				
+				fw.write("\n");
 				List<Label> taskLabelList = TaskSpecificLabel(model, task);
-				fw.write("\n\n");
 				for(Label lab:taskLabelList) {
 					String type = fileUtil.datatype(lab.getSize().toString());
 					long init = fileUtil.intialisation(lab.getSize().toString());
-					fw.write("\t\t" + type + "\t" + lab.getName() + ";\n");	
-				}
+					fw.write("\t" + type + "\t" + lab.getName() + ";\n");	
+				}fw.write("\n");
 				fw.write("\n\n");
-				//	fw.write("\n\t\tfor( ;; )\n\t\t{\n");
+				Set<Label> labellist = SoftwareUtil.getAccessedLabelSet(task, null);
+				fw.write("\n\tvoid v" + task.getName() + "()" + "\n\t{\n");
+				
+				//fw.write("\n\n");
 				fw.write("\t\tupdateDebugFlag(700);\n");;
 				fw.write("\t\ttraceTaskPasses(1,1);\n");
 
@@ -637,11 +596,9 @@ public class TaskFileCreation {
 					pu = DeploymentUtil.getAssignedCoreForProcess(task, model).iterator().next();
 					Time taskTime = RuntimeUtil.getExecutionTimeForProcess(task, pu, null, TimeType.WCET);
 					taskTime = TimeUtil.convertToTimeUnit(taskTime, TimeUnit.MS);
-					//System.out.println("\ntaskTime == "+task.getName()+" ==> "+taskTime + "==>"+fileUtil.getRecurrence(task));
 					BigInteger sleepTime = taskTime.getValue();
 					BigInteger b2 = new BigInteger("1000"); 
 					int comparevalue = sleepTime.compareTo(b2); 
-					//System.out.println("Sleep time ==>"+comparevalue);
 					if(comparevalue < 0) {
 						fw.write("\n\t\t\tsleepTimerMs(1 , 1"+(taskCount+1)+");\n");
 
@@ -667,7 +624,6 @@ public class TaskFileCreation {
 
 						}
 					}}
-				//	fw.write("\t\t}\n");
 				fw.write("\t}\n\n");
 			}
 			fw.close();
@@ -677,33 +633,116 @@ public class TaskFileCreation {
 	}
 
 
+
+	private static void TaskDefinitionFreeRTOS(File f1, Amalthea model, List<Task> tasks, boolean preemptionFlag) {
+		try {
+			File fn = f1;
+			FileWriter fw = new FileWriter(fn, true);
+			int taskCount = 0;
+			for (Task task : tasks) {
+				List<Runnable> runnablesOfTask = SoftwareUtil.getRunnableList(task, null);
+				runnablesOfTask = runnablesOfTask.stream().distinct().collect(Collectors.toList());
+				EList<Label> labellist1;
+				for (Runnable run : runnablesOfTask) {
+					Set<Label> labellist = SoftwareUtil.getAccessedLabelSet(run, null);
+				}
+				
+				List<Label> taskLabelList = TaskSpecificLabel(model, task);
+				fw.write("\n");
+				for(Label lab:taskLabelList) {
+					String type = fileUtil.datatype(lab.getSize().toString());
+					long init = fileUtil.intialisation(lab.getSize().toString());
+					fw.write("\t\t" + type + "\t" + lab.getName() + ";\n");	
+				}fw.write("\n");
+				Set<Label> labellist = SoftwareUtil.getAccessedLabelSet(task, null);
+				fw.write("\n\tvoid v" + task.getName() + "()" + "\n\t{\n");
+				fw.write("\tportTickType xLastWakeTime=xTaskGetTickCount();\n");
+				
+				//fw.write("\n\n");
+				fw.write("\n\t\tfor( ;; )\n\t\t{\n");
+				fw.write("\t\tupdateDebugFlag(700);\n");;
+				fw.write("\t\ttraceTaskPasses(1,1);\n");
+				fw.write("\t\t\t/*Cin - Create local variables and copy the actual variable to them */\n");
+				fw.write("\t\t\ttaskENTER_CRITICAL ();\n");
+				fw.write("\t\t\tcIN_" + task.getName() + "();\n");
+				fw.write("\t\t\ttaskEXIT_CRITICAL ();\n");
+				fw.write("\n\t\t\t/*Runnable calls */\n");
+				for (Runnable run : runnablesOfTask) {
+					fw.write("\t\t\t" + run.getName() + "();\n");
+				}
+				fw.write("\n\t\t\t/*Cout - Write back the local variables back to the actual variables */\n");
+				fw.write("\t\t\ttaskENTER_CRITICAL ();\n");
+				fw.write("\t\t\tcOUT_" + task.getName() + "();\n");
+				fw.write("\t\t\ttaskEXIT_CRITICAL ();\n");
+				MappingModel mappingModel = model.getMappingModel();
+				ProcessingUnit pu = null;
+				if (mappingModel != null) {
+					pu = DeploymentUtil.getAssignedCoreForProcess(task, model).iterator().next();
+					Time taskTime = RuntimeUtil.getExecutionTimeForProcess(task, pu, null, TimeType.WCET);
+					taskTime = TimeUtil.convertToTimeUnit(taskTime, TimeUnit.MS);
+					BigInteger sleepTime = taskTime.getValue();
+					BigInteger b2 = new BigInteger("1000"); 
+					int comparevalue = sleepTime.compareTo(b2); 
+					if(comparevalue < 0) {
+						fw.write("\n\t\t\tsleepTimerMs(1 , 1"+(taskCount+1)+");\n");
+
+					}else {
+						fw.write("\n\t\t\tsleepTimerMs(" + sleepTime + ", "+taskCount+1+");\n");
+					}
+					taskCount++;
+				}
+				fw.write("\n\t\t\ttaskCount"+task.getName()+"++;");
+				fw.write("\n\t\t\ttraceTaskPasses("+taskCount+", taskCount"+task.getName()+");");
+				fw.write("\n\t\t\ttraceRunningTask(0);\n");
+				Time tasktime = fileUtil.getRecurrence(task);
+				double sleepTime = 0;
+				if (tasktime != null) {
+					sleepTime = TimeUtil.getAsTimeUnit(fileUtil.getRecurrence(task), null);
+				}
+				EList<Stimulus> Stimuli = model.getStimuliModel().getStimuli();
+
+				for (Stimulus s : Stimuli)  {
+					if (s instanceof PeriodicStimulus) {
+						if(task.getStimuli().get(0)==s) {
+							fw.write("\t\t\tvTaskDelayUntil(&xLastWakeTime, " + ((PeriodicStimulus) s).getRecurrence().getValue()  +");\n");
+
+						}
+					}}
+				fw.write("\t\t}\n");
+				fw.write("\t}\n\n");
+			}
+			fw.close();
+		} catch (IOException ioe) {
+			System.err.println("IOException: " + ioe.getMessage());
+		}
+	}
+
 	/**
 	 * Shared Label definition and initialization structure.
 	 * 
 	 * @param file
 	 * @param labellist
 	 */
-		public static List<Label> TaskSpecificLabel(Amalthea model, Task tasks) {
-			List<Label> SharedLabelList = new ArrayList<Label>(SoftwareUtil.getAccessedLabelSet(tasks, null));
+	public static List<Label> TaskSpecificLabel(Amalthea model, Task tasks) {
+		List<Label> SharedLabelList = new ArrayList<Label>(SoftwareUtil.getAccessedLabelSet(tasks, null));
 
-			SharedLabelList =SharedLabelList.stream().distinct().collect(Collectors.toList());
-			List<Label> SharedLabelListSortCore = new ArrayList<Label>();
-			if(SharedLabelList.size()==0) {
-				System.out.println("Shared Label size 0");
-			}else {
-			//	System.out.println("Shared Label size "+SharedLabelList.size());
-				HashMap<Label, HashMap<Task, ProcessingUnit>> sharedLabelTaskMap = LabelFileCreation.LabelTaskMap(model, SharedLabelList);
-				for(Label share:SharedLabelList) {
-					HashMap<Task, ProcessingUnit> TaskMap = sharedLabelTaskMap.get(share);
-					Set<Task> taskList = TaskMap.keySet();
-					Collection<ProcessingUnit> puList = TaskMap.values();
-					List<ProcessingUnit> puListUnique = puList.stream().distinct().collect(Collectors.toList());
-					if(!((puListUnique.size()==1 && taskList.size()>1) || (puListUnique.size()>1))){
-						SharedLabelListSortCore.add(share);
-					}
+		SharedLabelList =SharedLabelList.stream().distinct().collect(Collectors.toList());
+		List<Label> SharedLabelListSortCore = new ArrayList<Label>();
+		if(SharedLabelList.size()==0) {
+			System.out.println("Shared Label size 0");
+		}else {
+			HashMap<Label, HashMap<Task, ProcessingUnit>> sharedLabelTaskMap = LabelFileCreation.LabelTaskMap(model, SharedLabelList);
+			for(Label share:SharedLabelList) {
+				HashMap<Task, ProcessingUnit> TaskMap = sharedLabelTaskMap.get(share);
+				Set<Task> taskList = TaskMap.keySet();
+				Collection<ProcessingUnit> puList = TaskMap.values();
+				List<ProcessingUnit> puListUnique = puList.stream().distinct().collect(Collectors.toList());
+				if(!((puListUnique.size()==1 && taskList.size()>1) || (puListUnique.size()>1))){
+					SharedLabelListSortCore.add(share);
 				}
 			}
-			return SharedLabelListSortCore;
+		}
+		return SharedLabelListSortCore;
 	}
 
 	/**
