@@ -21,6 +21,7 @@ import org.eclipse.app4mc.amalthea.model.Label;
 import org.eclipse.app4mc.amalthea.model.MappingModel;
 import org.eclipse.app4mc.amalthea.model.PeriodicStimulus;
 import org.eclipse.app4mc.amalthea.model.ProcessingUnit;
+import org.eclipse.app4mc.amalthea.model.SchedulerAllocation;
 import org.eclipse.app4mc.amalthea.model.Stimulus;
 import org.eclipse.app4mc.amalthea.model.Task;
 import org.eclipse.app4mc.amalthea.model.Time;
@@ -80,13 +81,11 @@ public class MainFileCreation {
 		try {
 			fileUtil.fileMainHeader(f1);
 			mainFileHeader(f1);
-
 			if((0x0100 == (0x0F00 & configFlag)) & (0x3000 == (0xF000 & configFlag)) ) {
 				headerIncludesMainRMS(f1);
 				mainTaskStimuli(model, f1, tasks);
 				mainTaskPriority(f1, tasks);
-				mainFucntionRMS(model, f1, tasks);
-
+				//mainFucntionRMS(model, f1, tasks);
 			}else {
 				headerIncludesMain(f1);
 				sleepTimerMs(f1);
@@ -145,7 +144,7 @@ public class MainFileCreation {
 	 * @param file
 	 * @param tasks
 	 */
-	private static void mainFucntionRMS(Amalthea model, File file, EList<Task> tasks) {
+	private static void mainFucntionRMS(Amalthea model, File file, Set<Task> tasks) {
 		try {
 			File fn = file;
 			FileWriter fw = new FileWriter(fn, true);
@@ -235,8 +234,11 @@ public class MainFileCreation {
 	}
 
 	private static void fileCreatePthread(Amalthea model, String path1) throws IOException {
-		EList<Task> tasks = model.getSwModel().getTasks();
-
+		EList<SchedulerAllocation> CoreNo = model.getMappingModel().getSchedulerAllocation();
+		int k=0;
+		for(SchedulerAllocation c:CoreNo) {
+			ProcessingUnit pu = c.getResponsibility().get(0);
+			Set<Task> tasks = DeploymentUtil.getTasksMappedToCore(pu, model);
 		String fname = path1 + File.separator + "main.c";
 		File f2 = new File(path1);
 		File f1 = new File(fname);
@@ -262,9 +264,11 @@ public class MainFileCreation {
 				e.printStackTrace();
 			}
 		}
+		k++;
+		}
 	}
 
-	private static void mainFucntionPthread(File f1, EList<Task> tasks) {
+	private static void mainFucntionPthread(File f1, Set<Task> tasks) {
 		try {
 			File fn = f1;
 			FileWriter fw = new FileWriter(fn, true);
@@ -285,7 +289,7 @@ public class MainFileCreation {
 			fw.write("\t\tpthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);\n\n");
 			int init1 = 0;
 			while (init1 < tasksize) {
-				fw.write("\t\tpthread_create (&thread[" + init1 + "], &attr, v" + tasks.get(init1).getName()
+				fw.write("\t\tpthread_create (&thread[" + init1 + "], &attr, v" + tasks.iterator().next().getName()
 						+ ", (void *)rtr" + init1 + ");\n");
 				init1++;
 			}

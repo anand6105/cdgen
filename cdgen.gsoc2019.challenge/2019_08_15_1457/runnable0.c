@@ -22,44 +22,50 @@
 #include <string.h>
 
 /* Scheduler includes. */
-#include "runnable1.h"
-void VehicleSpeedSensorDiagnosis 	(void)	{
+#include "runnable0.h"
+void WheelSpeedSensorDiagnosis 	(void)	{
 }
-void BrakeActuatorMonitor 	(void)	{
+void BrakePedalSensorDiagnosis 	(void)	{
 }
-void EcuVehicleSpeedSensor 	(void)	{
+void MassAirFlowSensor 	(void)	{
 }
-void VehicleSpeedSensorTranslation 	(void)	{
+void BaseFuelMass 	(void)	{
 }
-void VehicleSpeedSensorVoter 	(void)	{
+void TransientFuelMass 	(void)	{
 }
-void CylNumObserver 	(void)	{
+void TotalFuelMass 	(void)	{
 }
-void DecelerationSensorDiagnosis 	(void)	{
+void InjectionTimeActuation 	(void)	{
 }
-void APedSensor 	(void)	{
+void ThrottleSensor 	(void)	{
 }
-void APedVoter 	(void)	{
+void EcuBrakePedalSensor 	(void)	{
 }
-void ThrottleController 	(void)	{
+void BrakePedalSensorTranslation 	(void)	{
 }
-void ThrottleActuator 	(void)	{
+void BrakePedalSensorVoter 	(void)	{
 }
-void VehicleStateMonitor 	(void)	{
+void CheckPlausability 	(void)	{
 }
-void EcuDecelerationSensor 	(void)	{
+void BrakeSafetyMonitor 	(void)	{
 }
-void DecelerationSensorTranslation 	(void)	{
+void BrakeForceCalculation 	(void)	{
 }
-void DecelerationSensorVoter 	(void)	{
+void BrakeForceArbiter 	(void)	{
 }
-void ABSCalculation 	(void)	{
+void StopLightActuator 	(void)	{
 }
-void BrakeForceActuation 	(void)	{
+void EcuStopLightActuator 	(void)	{
 }
-void CaliperPositionCalculation 	(void)	{
+void DiagnosisArbiter 	(void)	{
 }
-void BrakeActuator 	(void)	{
+void IgnitionTiming 	(void)	{
 }
-void EcuBrakeActuator 	(void)	{
+void IgnitionTimeActuation 	(void)	{
+}
+void EcuWheelSpeedSensor 	(void)	{
+}
+void WheelSpeedSensorTranslation 	(void)	{
+}
+void WheelSpeedSensorVoter 	(void)	{
 }

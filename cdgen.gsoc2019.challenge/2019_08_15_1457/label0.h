@@ -23,13 +23,13 @@
 
 /* Scheduler includes. */
 
-	void cIN_Task_ESSP7();
-	void cOUT_Task_ESSP7();
-	void cIN_Task_ESSP0();
-	void cOUT_Task_ESSP0();
-	void cIN_Task_ESSP1();
-	void cOUT_Task_ESSP1();
-	void cIN_Task_ESSP4();
-	void cOUT_Task_ESSP4();
-	void cIN_Task_ESSP6();
-	void cOUT_Task_ESSP6();
+	void cIN_Task_ESSP2();
+	void cOUT_Task_ESSP2();
+	void cIN_Task_ESSP3();
+	void cOUT_Task_ESSP3();
+	void cIN_Task_ESSP5();
+	void cOUT_Task_ESSP5();
+	void cIN_Task_ESSP8();
+	void cOUT_Task_ESSP8();
+	void cIN_Task_ESSP9();
+	void cOUT_Task_ESSP9();

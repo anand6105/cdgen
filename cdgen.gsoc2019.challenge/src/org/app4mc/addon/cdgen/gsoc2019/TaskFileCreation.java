@@ -220,8 +220,6 @@ public class TaskFileCreation {
 		}
 	}
 
-
-
 	private static void headerIncludesPthreadTask(File f3) {
 		try {
 			File fn = f3;
@@ -253,7 +251,6 @@ public class TaskFileCreation {
 		}
 
 	}
-
 
 	private static void taskCounterRMS(File f3, EList<Task> tasks) {
 		try {
@@ -340,7 +337,6 @@ public class TaskFileCreation {
 					}
 					fw.write("\t\tsched_setaffinity(0, sizeof(cpuset), &cpuset);\n\n");
 				}
-
 				fw.write("\t\tfor( ;; )\n\t\t{\n");
 				fw.write("\t\t\tsuspendMe ();\n");
 				fw.write("\t\tprint_affinity();\n");
@@ -365,17 +361,14 @@ public class TaskFileCreation {
 				Time tasktime = fileUtil.getRecurrence(task);
 				if (tasktime != null) {
 					TimeUtil.getAsTimeUnit(fileUtil.getRecurrence(task), null);
-
 				}
 				fw.write("\t\t}\n");
 				fw.write("\t}\n\n");
-
 			}
 			fw.close();
 		} catch (IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
-
 	}
 
 	private static void taskFileHeader(File f1) {
@@ -386,12 +379,10 @@ public class TaskFileCreation {
 			fw.write("*Description	:	Task Definition with Task Structure\n");
 			fw.write("******************************************************************\n");
 			fw.write("******************************************************************/\n\n\n");
-
 			fw.close();
 		} catch (IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
-
 	}
 
 	private static void headerIncludesTaskPthreadHead(File f1) {
@@ -410,12 +401,10 @@ public class TaskFileCreation {
 			fw.write("#include \"runnable.h\"\n");
 			fw.write("#include \"taskDef.h\"\n\n");
 			fw.write("#define DELAY_MULT 100\n\n\n");
-
 			fw.close();
 		} catch (IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
-
 	}
 
 	private static void headerIncludesTaskRMSHead(File f1, int k) {
@@ -439,7 +428,6 @@ public class TaskFileCreation {
 		} catch (IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
-
 	}
 
 	private static void headerIncludesTask(File f1) {
@@ -461,7 +449,6 @@ public class TaskFileCreation {
 		} catch (IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
-
 	}
 
 	private static void headerIncludesTaskHead(File f1) {
@@ -484,7 +471,6 @@ public class TaskFileCreation {
 		} catch (IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
-
 	}
 
 	private static void headerIncludesTaskHeadRMS(File f1, int k) {
@@ -496,10 +482,7 @@ public class TaskFileCreation {
 		} catch (IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
-
 	}
-
-
 
 	private static void TaskDefinition(Amalthea model, File f1, List<Task> tasks, boolean preemptionFlag) {
 		try {
@@ -570,7 +553,6 @@ public class TaskFileCreation {
 				for (Runnable run : runnablesOfTask) {
 					Set<Label> labellist = SoftwareUtil.getAccessedLabelSet(run, null);
 				}
-				
 				fw.write("\n");
 				List<Label> taskLabelList = TaskSpecificLabel(model, task);
 				for(Label lab:taskLabelList) {
@@ -581,11 +563,10 @@ public class TaskFileCreation {
 				fw.write("\n\n");
 				Set<Label> labellist = SoftwareUtil.getAccessedLabelSet(task, null);
 				fw.write("\n\tvoid v" + task.getName() + "()" + "\n\t{\n");
-				
+
 				//fw.write("\n\n");
 				fw.write("\t\tupdateDebugFlag(700);\n");;
 				fw.write("\t\ttraceTaskPasses(1,1);\n");
-
 				fw.write("\n\t\t\t/*Runnable calls */\n");
 				for (Runnable run : runnablesOfTask) {
 					fw.write("\t\t\t" + run.getName() + "();\n");
@@ -601,7 +582,6 @@ public class TaskFileCreation {
 					int comparevalue = sleepTime.compareTo(b2); 
 					if(comparevalue < 0) {
 						fw.write("\n\t\t\tsleepTimerMs(1 , 1"+(taskCount+1)+");\n");
-
 					}else {
 						fw.write("\n\t\t\tsleepTimerMs(" + sleepTime + ", "+taskCount+1+");\n");
 					}
@@ -621,9 +601,9 @@ public class TaskFileCreation {
 					if (s instanceof PeriodicStimulus) {
 						if(task.getStimuli().get(0)==s) {
 							//		fw.write("\t\t\tvTaskDelayUntil(&xLastWakeTime, " + ((PeriodicStimulus) s).getRecurrence().getValue()  +");\n");
-
 						}
-					}}
+					}
+				}
 				fw.write("\t}\n\n");
 			}
 			fw.close();
@@ -631,8 +611,6 @@ public class TaskFileCreation {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
 	}
-
-
 
 	private static void TaskDefinitionFreeRTOS(File f1, Amalthea model, List<Task> tasks, boolean preemptionFlag) {
 		try {
@@ -646,7 +624,6 @@ public class TaskFileCreation {
 				for (Runnable run : runnablesOfTask) {
 					Set<Label> labellist = SoftwareUtil.getAccessedLabelSet(run, null);
 				}
-				
 				List<Label> taskLabelList = TaskSpecificLabel(model, task);
 				fw.write("\n");
 				for(Label lab:taskLabelList) {
@@ -657,8 +634,6 @@ public class TaskFileCreation {
 				Set<Label> labellist = SoftwareUtil.getAccessedLabelSet(task, null);
 				fw.write("\n\tvoid v" + task.getName() + "()" + "\n\t{\n");
 				fw.write("\tportTickType xLastWakeTime=xTaskGetTickCount();\n");
-				
-				//fw.write("\n\n");
 				fw.write("\n\t\tfor( ;; )\n\t\t{\n");
 				fw.write("\t\tupdateDebugFlag(700);\n");;
 				fw.write("\t\ttraceTaskPasses(1,1);\n");
@@ -685,7 +660,6 @@ public class TaskFileCreation {
 					int comparevalue = sleepTime.compareTo(b2); 
 					if(comparevalue < 0) {
 						fw.write("\n\t\t\tsleepTimerMs(1 , 1"+(taskCount+1)+");\n");
-
 					}else {
 						fw.write("\n\t\t\tsleepTimerMs(" + sleepTime + ", "+taskCount+1+");\n");
 					}
@@ -700,14 +674,13 @@ public class TaskFileCreation {
 					sleepTime = TimeUtil.getAsTimeUnit(fileUtil.getRecurrence(task), null);
 				}
 				EList<Stimulus> Stimuli = model.getStimuliModel().getStimuli();
-
 				for (Stimulus s : Stimuli)  {
 					if (s instanceof PeriodicStimulus) {
 						if(task.getStimuli().get(0)==s) {
 							fw.write("\t\t\tvTaskDelayUntil(&xLastWakeTime, " + ((PeriodicStimulus) s).getRecurrence().getValue()  +");\n");
-
 						}
-					}}
+					}
+				}
 				fw.write("\t\t}\n");
 				fw.write("\t}\n\n");
 			}
@@ -725,11 +698,10 @@ public class TaskFileCreation {
 	 */
 	public static List<Label> TaskSpecificLabel(Amalthea model, Task tasks) {
 		List<Label> SharedLabelList = new ArrayList<Label>(SoftwareUtil.getAccessedLabelSet(tasks, null));
-
 		SharedLabelList =SharedLabelList.stream().distinct().collect(Collectors.toList());
 		List<Label> SharedLabelListSortCore = new ArrayList<Label>();
 		if(SharedLabelList.size()==0) {
-			System.out.println("Shared Label size 0");
+		//	System.out.println("Shared Label size 0");
 		}else {
 			HashMap<Label, HashMap<Task, ProcessingUnit>> sharedLabelTaskMap = LabelFileCreation.LabelTaskMap(model, SharedLabelList);
 			for(Label share:SharedLabelList) {

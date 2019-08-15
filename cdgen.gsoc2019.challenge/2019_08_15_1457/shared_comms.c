@@ -18,26 +18,6 @@
 
 /* Standard includes. */
 #include "shared_comms.h"
-unsigned int *outbuf_shared16bit[1];
-
-void shared_label_16bit_init(){
-	outbuf_shared16bit[0] = (unsigned int *) shared_mem_section16bit;
-	for (int i=0;i<1;i++){
-		*outbuf_shared16bit[i] =0;
-	}
-}
-
-uint16_t shared_label_16bit_write(int label_indx,int payload){
-	uint16_t retval=NULL;
-	*outbuf_shared16bit[label_indx] = payload;
-	return retval;
-
-}
-
-unsigned int shared_label_16bit_read(int label_indx){
-	return *outbuf_shared16bit[label_indx];
-}
-
 unsigned int *outbuf_shared8bit[5];
 
 void shared_label_8bit_init(){
@@ -60,6 +40,26 @@ uint8_t shared_label_8bit_write(int label_indx,int payload){
 
 unsigned int shared_label_8bit_read(int label_indx){
 	return *outbuf_shared8bit[label_indx];
+}
+
+unsigned int *outbuf_shared16bit[1];
+
+void shared_label_16bit_init(){
+	outbuf_shared16bit[0] = (unsigned int *) shared_mem_section16bit;
+	for (int i=0;i<1;i++){
+		*outbuf_shared16bit[i] =0;
+	}
+}
+
+uint16_t shared_label_16bit_write(int label_indx,int payload){
+	uint16_t retval=NULL;
+	*outbuf_shared16bit[label_indx] = payload;
+	return retval;
+
+}
+
+unsigned int shared_label_16bit_read(int label_indx){
+	return *outbuf_shared16bit[label_indx];
 }
 
 

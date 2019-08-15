@@ -10,8 +10,8 @@
 *Author		:	Ram Prasath Govindarajan
 *Tool 		:	CDGen_GSoC
 *Version 	:	V1.0.0
-*Title 		:   Task Definition
-*Description	:	Task Definition with Task Structure
+*Title 		:   Runnable Header
+*Description	:	Runnable Definition with Runnable delay
 ******************************************************************
 ******************************************************************/
 
@@ -20,20 +20,46 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdint.h>
 
 /* Scheduler includes. */
-#include "FreeRTOS.h"
-#include "queue.h"
-#include "croutine.h"
-#include "debugFlags.h"
-#include "task.h"
-#include "label0.h"
-#include "runnable0.h"
-
-/* Static definition of the tasks. */
-void vTask_ESSP8( );
-void vTask_ESSP3( );
-void vTask_ESSP2( );
-void vTask_ESSP5( );
-void vTask_ESSP9( );
+#include "runnable1.h"
+void VehicleSpeedSensorDiagnosis 	(void)	{
+}
+void BrakeActuatorMonitor 	(void)	{
+}
+void CylNumObserver 	(void)	{
+}
+void DecelerationSensorDiagnosis 	(void)	{
+}
+void APedSensor 	(void)	{
+}
+void APedVoter 	(void)	{
+}
+void ThrottleController 	(void)	{
+}
+void ThrottleActuator 	(void)	{
+}
+void VehicleStateMonitor 	(void)	{
+}
+void EcuDecelerationSensor 	(void)	{
+}
+void DecelerationSensorTranslation 	(void)	{
+}
+void DecelerationSensorVoter 	(void)	{
+}
+void ABSCalculation 	(void)	{
+}
+void BrakeForceActuation 	(void)	{
+}
+void CaliperPositionCalculation 	(void)	{
+}
+void BrakeActuator 	(void)	{
+}
+void EcuBrakeActuator 	(void)	{
+}
+void EcuVehicleSpeedSensor 	(void)	{
+}
+void VehicleSpeedSensorTranslation 	(void)	{
+}
+void VehicleSpeedSensorVoter 	(void)	{
+}

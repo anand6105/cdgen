@@ -82,7 +82,6 @@ public class ArmCodeFileCreation {
 				nsleep(f1);
 				zynqmain(model, f1);
 			}
-
 		} finally {
 			try {
 				fw.close();
