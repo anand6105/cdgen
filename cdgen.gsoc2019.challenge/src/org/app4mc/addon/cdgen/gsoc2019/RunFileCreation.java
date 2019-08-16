@@ -47,9 +47,8 @@ public class RunFileCreation {
 	 */
 	public RunFileCreation(final Amalthea Model, String srcPath, String path2, int  configFlag) throws IOException {
 		this.model = Model;
-		EList<Runnable> runnables = model.getSwModel().getRunnables();
 		System.out.println("Runnable File Creation Begins");
-		fileCreate(model, srcPath, path2, configFlag, runnables);
+		fileCreate(model, srcPath, path2, configFlag);
 		System.out.println("Runnable File Creation Ends");
 
 	}
@@ -66,8 +65,7 @@ public class RunFileCreation {
 	 * @param runnables
 	 * @throws IOException
 	 */
-	private static void fileCreate(Amalthea model, String srcPath, String path2, int configFlag,
-		EList<Runnable> runnables) throws IOException {
+	private static void fileCreate(Amalthea model, String srcPath, String path2, int configFlag) throws IOException {
 		EList<SchedulerAllocation> CoreNo = model.getMappingModel().getSchedulerAllocation();
 		int k=0;
 		for(SchedulerAllocation c:CoreNo) {
@@ -123,12 +121,12 @@ public class RunFileCreation {
 				fileUtil.fileMainHeader(f3);
 				runFileHeader(f3);
 				headerIncludesRunPthreadHead(f3);
-				runnableDeclaration(f3, runnables);
+				runnableDeclaration(f3, tasks);
 			} else {
 				fileUtil.fileMainHeader(f3);
 				runFileHeader(f3);
 				headerIncludesRunHead(f3);
-				runnableDeclaration(f3, runnables);
+				runnableDeclaration(f3, tasks);
 			}
 
 		} finally {
@@ -322,10 +320,14 @@ public class RunFileCreation {
 	 * @param file
 	 * @param runnables
 	 */
-	private static void runnableDeclaration(File file, List<Runnable> runnables) {
+	private static void runnableDeclaration(File file, List<Task> tasks) {
 		try {
 			File fn = file;
 			FileWriter fw = new FileWriter(fn, true);
+			List<Runnable> runnables = new ArrayList<Runnable>();
+			for(Task ta:tasks) {
+				runnables.addAll(SoftwareUtil.getRunnableList(ta, null));	
+			}
 			for (Runnable Run : runnables) {
 				fw.write("void " + Run.getName() + " (void);\n");
 			}

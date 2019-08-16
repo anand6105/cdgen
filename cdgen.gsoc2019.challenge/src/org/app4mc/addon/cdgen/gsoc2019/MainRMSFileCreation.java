@@ -360,6 +360,7 @@ public class MainRMSFileCreation {
 			fw.write("#include \"ParallellaUtils.h\"\n");
 			fw.write("#include \"taskDef"+k+".h\"\n");
 			fw.write("#include \"shared_comms.h\"\n\n");
+			fw.write("#include \"label"+k+".h\"\n");
 			//	fw.write("#include \"c2c.h\"\n\n");
 			//fw.write("#define READ_PRECISION_US 1000\n\n\n");
 			fw.close();
@@ -419,7 +420,12 @@ public class MainRMSFileCreation {
 			fw.write("#include \"FreeRTOS.h\"\n");
 			fw.write("#include \"task.h\"\n");
 			fw.write("#include \"queue.h\"\n");
-			fw.write("#include \"taskDef"+k+".h\"\n\n");
+			fw.write("#include \"AmaltheaConverter.h\"\n");
+			fw.write("#include \"debugFlags.h\"\n");
+			fw.write("#include \"ParallellaUtils.h\"\n");
+			fw.write("#include \"taskDef"+k+".h\"\n");
+			fw.write("#include \"shared_comms.h\"\n\n");
+			fw.write("#include \"label"+k+".h\"\n");
 			fw.close();
 		} catch (IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());

@@ -159,6 +159,7 @@ public class LabelFileCreation {
 			fw.write("#include <stdint.h>\n");
 			fw.write("#include <string.h>\n\n");
 			fw.write("/* Scheduler includes. */\n");
+			fw.write("#include \"shared_comms.h\"\n");
 			fw.close();
 		} catch (IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
@@ -180,6 +181,7 @@ public class LabelFileCreation {
 			fw.write("#include <stdint.h>\n");
 			fw.write("#include <string.h>\n\n");
 			fw.write("/* Scheduler includes. */\n");
+			fw.write("#include \"shared_comms.h\"\n");
 			fw.write("#include \"label"+k+".h\"\n\n");
 			fw.close();
 		} catch (IOException ioe) {
@@ -262,7 +264,6 @@ public class LabelFileCreation {
 				for(Label share:sharedLabelList) {
 					String type = share.getSize().toString();
 					readLabelType.add(type);
-					
 				}
 				readLabelType = readLabelType.stream().distinct().collect(Collectors.toList());
 				//System.out.println(" Share size ==>"+readLabelType.size());
@@ -330,10 +331,11 @@ public class LabelFileCreation {
 						String type = share.getSize().toString();
 						if((type.equals(rLT))&(readLabels.contains(share))) {
 							//fw.write("\t\t" + share.getName()+"_"+task.getName() + "\t=\tshared_label_" + type + "_read("+LabelIndexedType.get(share)+");\n");
-							fw.write("\t\tshared_label_" + type.replace(" ", "") + "_write("+LabelIndexedType.get(share)+"," + share.getName()+"_"+task.getName() + " );\n");
+							fw.write("\t\tshared_label_" + type.replace(" ", "") + "_write("+LabelWriteIndexedType.get(share)+"," + share.getName()+"_"+task.getName() + " );\n");
 						}
 					}
 				}
+				
 				fw.write("\t}\n");
 				fw.write("\n\n");
 			}

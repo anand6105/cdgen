@@ -802,6 +802,9 @@
         <structures name="i.MX 6 Series Processor" structureType="Microcontroller">
           <modules xsi:type="am:ProcessingUnit" name="Cortex-A9 #1" frequencyDomain="792MHZ%2BQuartz__100.0?type=FrequencyDomain" definition="Cortex-A9?type=ProcessingUnitDefinition"/>
           <modules xsi:type="am:ProcessingUnit" name="Cortex-A9 #2" frequencyDomain="792MHZ%2BQuartz__100.0?type=FrequencyDomain" definition="Cortex-A9?type=ProcessingUnitDefinition"/>
+          <modules xsi:type="am:ProcessingUnit" name="Cortex-A9 #3" frequencyDomain="792MHZ%2BQuartz__100.0?type=FrequencyDomain" definition="Cortex-A9?type=ProcessingUnitDefinition"/>
+          <modules xsi:type="am:ProcessingUnit" name="Cortex-A9 #4" frequencyDomain="792MHZ%2BQuartz__100.0?type=FrequencyDomain" definition="Cortex-A9?type=ProcessingUnitDefinition"/>
+          <modules xsi:type="am:ProcessingUnit" name="Cortex-A9 #5" frequencyDomain="792MHZ%2BQuartz__100.0?type=FrequencyDomain" definition="Cortex-A9?type=ProcessingUnitDefinition"/>
         </structures>
       </structures>
     </structures>
@@ -809,13 +812,16 @@
       <defaultValue value="792.0" unit="MHz"/>
     </domains>
     <domains xsi:type="am:FrequencyDomain" name="792MHZ+Quartz__100.0" clockGating="false">
-      <defaultValue value="79200.0" unit="MHz"/>
+      <defaultValue value="792.0" unit="MHz"/>
     </domains>
   </hwModel>
   <osModel>
     <operatingSystems name="OS">
       <taskSchedulers name="SCHED_Cortex-A9 #1"/>
       <taskSchedulers name="SCHED_Cortex-A9 #2"/>
+      <taskSchedulers name="SCHED_Cortex-A9 #3"/>
+      <taskSchedulers name="SCHED_Cortex-A9 #4"/>
+      <taskSchedulers name="SCHED_Cortex-A9 #5"/>
     </operatingSystems>
   </osModel>
   <stimuliModel>
@@ -1009,15 +1015,18 @@
   <mappingModel>
     <schedulerAllocation scheduler="SCHED_Cortex-A9+%231?type=TaskScheduler" responsibility="Cortex-A9+%231?type=ProcessingUnit"/>
     <schedulerAllocation scheduler="SCHED_Cortex-A9+%232?type=TaskScheduler" responsibility="Cortex-A9+%232?type=ProcessingUnit"/>
+    <schedulerAllocation scheduler="SCHED_Cortex-A9+%233?type=TaskScheduler" responsibility="Cortex-A9+%233?type=ProcessingUnit"/>
+    <schedulerAllocation scheduler="SCHED_Cortex-A9+%234?type=TaskScheduler" responsibility="Cortex-A9+%234?type=ProcessingUnit"/>
+    <schedulerAllocation scheduler="SCHED_Cortex-A9+%235?type=TaskScheduler" responsibility="Cortex-A9+%235?type=ProcessingUnit"/>
     <taskAllocation task="Task_ESSP0?type=Task" scheduler="SCHED_Cortex-A9+%231?type=TaskScheduler" affinity="Cortex-A9+%231?type=ProcessingUnit"/>
-    <taskAllocation task="Task_ESSP1?type=Task" scheduler="SCHED_Cortex-A9+%232?type=TaskScheduler" affinity="Cortex-A9+%232?type=ProcessingUnit"/>
-    <taskAllocation task="Task_ESSP2?type=Task" scheduler="SCHED_Cortex-A9+%231?type=TaskScheduler" affinity="Cortex-A9+%231?type=ProcessingUnit"/>
-    <taskAllocation task="Task_ESSP3?type=Task" scheduler="SCHED_Cortex-A9+%231?type=TaskScheduler" affinity="Cortex-A9+%231?type=ProcessingUnit"/>
-    <taskAllocation task="Task_ESSP4?type=Task" scheduler="SCHED_Cortex-A9+%232?type=TaskScheduler" affinity="Cortex-A9+%232?type=ProcessingUnit"/>
-    <taskAllocation task="Task_ESSP5?type=Task" scheduler="SCHED_Cortex-A9+%231?type=TaskScheduler" affinity="Cortex-A9+%231?type=ProcessingUnit"/>
-    <taskAllocation task="Task_ESSP6?type=Task" scheduler="SCHED_Cortex-A9+%232?type=TaskScheduler" affinity="Cortex-A9+%232?type=ProcessingUnit"/>
-    <taskAllocation task="Task_ESSP7?type=Task" scheduler="SCHED_Cortex-A9+%232?type=TaskScheduler" affinity="Cortex-A9+%232?type=ProcessingUnit"/>
-    <taskAllocation task="Task_ESSP8?type=Task" scheduler="SCHED_Cortex-A9+%231?type=TaskScheduler" affinity="Cortex-A9+%231?type=ProcessingUnit"/>
-    <taskAllocation task="Task_ESSP9?type=Task" scheduler="SCHED_Cortex-A9+%231?type=TaskScheduler" affinity="Cortex-A9+%231?type=ProcessingUnit"/>
+    <taskAllocation task="Task_ESSP1?type=Task" scheduler="SCHED_Cortex-A9+%231?type=TaskScheduler" affinity="Cortex-A9+%231?type=ProcessingUnit"/>
+    <taskAllocation task="Task_ESSP2?type=Task" scheduler="SCHED_Cortex-A9+%232?type=TaskScheduler" affinity="Cortex-A9+%232?type=ProcessingUnit"/>
+    <taskAllocation task="Task_ESSP3?type=Task" scheduler="SCHED_Cortex-A9+%232?type=TaskScheduler" affinity="Cortex-A9+%232?type=ProcessingUnit"/>
+    <taskAllocation task="Task_ESSP4?type=Task" scheduler="SCHED_Cortex-A9+%233?type=TaskScheduler" affinity="Cortex-A9+%233?type=ProcessingUnit"/>
+    <taskAllocation task="Task_ESSP5?type=Task" scheduler="SCHED_Cortex-A9+%234?type=TaskScheduler" affinity="Cortex-A9+%234?type=ProcessingUnit"/>
+    <taskAllocation task="Task_ESSP6?type=Task" scheduler="SCHED_Cortex-A9+%233?type=TaskScheduler" affinity="Cortex-A9+%233?type=ProcessingUnit"/>
+    <taskAllocation task="Task_ESSP7?type=Task" scheduler="SCHED_Cortex-A9+%234?type=TaskScheduler" affinity="Cortex-A9+%234?type=ProcessingUnit"/>
+    <taskAllocation task="Task_ESSP8?type=Task" scheduler="SCHED_Cortex-A9+%235?type=TaskScheduler" affinity="Cortex-A9+%235?type=ProcessingUnit"/>
+    <taskAllocation task="Task_ESSP9?type=Task" scheduler="SCHED_Cortex-A9+%235?type=TaskScheduler" affinity="Cortex-A9+%235?type=ProcessingUnit"/>
   </mappingModel>
 </am:Amalthea>

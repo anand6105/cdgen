@@ -102,7 +102,7 @@ public class TaskFileCreation {
 					TaskCounter(f1, tasks);
 					TaskDefinitionRMS(f1, model, tasks, preemptionFlag);
 				}else if((0x1000 == (0xF000 & configFlag))&(0x0300 == (0x0F00 & configFlag))){
-					headerIncludesTaskHead(f1, k);
+					headerIncludesTaskHeadRMS(f1, k);
 					TaskCounter(f1, tasks);
 					TaskDefinitionFreeRTOS(f1, model, tasks, preemptionFlag);
 				}
@@ -422,6 +422,7 @@ public class TaskFileCreation {
 			fw.write("#include \"croutine.h\"\n");
 			fw.write("#include \"debugFlags.h\"\n");
 			fw.write("#include \"task.h\"\n");
+			fw.write("#include \"ParallellaUtils.h\"\n");
 			fw.write("#include \"label"+k+".h\"\n");
 			fw.write("#include \"runnable"+k+".h\"\n\n");
 			fw.close();
@@ -465,7 +466,7 @@ public class TaskFileCreation {
 			fw.write("#include \"queue.h\"\n");
 			fw.write("#include \"croutine.h\"\n");
 			fw.write("#include \"ParallellaUtils.h\"\n");
-			fw.write("#include \"label"+k+".h\"\n");
+			//fw.write("#include \"label"+k+".h\"\n");
 			fw.write("#include \"task.h\"\n");
 			fw.close();
 		} catch (IOException ioe) {
@@ -540,13 +541,30 @@ public class TaskFileCreation {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
 	}
+	
+	public static HashMap<Task, Integer> TaskIndexMapping(Amalthea model){ 
+		EList<Task> tasks = model.getSwModel().getTasks();
+		HashMap<Task, Integer> TaskMapping = new HashMap<Task, Integer>();
+		int i=0;
+		for(Task Ta:tasks) {
+			TaskMapping.put(Ta, i);
+		i++;
+		}
+		return TaskMapping;
+	}
+	
+	
+	
+	
+	
 
 	private static void TaskDefinitionRMS(File f1, Amalthea model, List<Task> tasks, boolean preemptionFlag) {
 		try {
 			File fn = f1;
 			FileWriter fw = new FileWriter(fn, true);
-			int taskCount = 0;
+			HashMap<Task, Integer> taskIndex = TaskIndexMapping(model);
 			for (Task task : tasks) {
+				Integer taskCount = taskIndex.get(task);
 				List<Runnable> runnablesOfTask = SoftwareUtil.getRunnableList(task, null);
 				runnablesOfTask = runnablesOfTask.stream().distinct().collect(Collectors.toList());
 				EList<Label> labellist1;
@@ -585,7 +603,7 @@ public class TaskFileCreation {
 					}else {
 						fw.write("\n\t\t\tsleepTimerMs(" + sleepTime + ", "+taskCount+1+");\n");
 					}
-					taskCount++;
+					
 				}
 				fw.write("\n\t\t\ttaskCount"+task.getName()+"++;");
 				fw.write("\n\t\t\ttraceTaskPasses("+taskCount+", taskCount"+task.getName()+");");
@@ -616,8 +634,9 @@ public class TaskFileCreation {
 		try {
 			File fn = f1;
 			FileWriter fw = new FileWriter(fn, true);
-			int taskCount = 0;
+			HashMap<Task, Integer> taskIndex = TaskIndexMapping(model);
 			for (Task task : tasks) {
+				Integer taskCount = taskIndex.get(task);
 				List<Runnable> runnablesOfTask = SoftwareUtil.getRunnableList(task, null);
 				runnablesOfTask = runnablesOfTask.stream().distinct().collect(Collectors.toList());
 				EList<Label> labellist1;
