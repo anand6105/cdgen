@@ -169,16 +169,20 @@ public class ArmCodeFileCreation {
 				fw.write("\te_init(NULL);\n");
 				fw.write("\te_reset_system();\n");
 				fw.write("\te_get_platform_info(&epiphany);\n");
-
 				if(processingUnits.size() == 1) {
-					fw.write("\te_open(&dev,0,0,1,1);\n");
+					fw.write("\te_open(&dev,0,0,0,0);\n");
 				}else if(processingUnits.size() > 1 && processingUnits.size() < 5) {
-					fw.write("\te_open(&dev,0,0,2,2);\n");
+					fw.write("\te_open(&dev,0,0,1,1);\n");
 				}else if(processingUnits.size() > 4 && processingUnits.size() < 10) {
-					fw.write("\te_open(&dev,0,0,3,3);\n");
+					fw.write("\te_open(&dev,0,0,2,2);\n");
 				}else if(processingUnits.size() > 9 && processingUnits.size() < 17) {
-					fw.write("\te_open(&dev,0,0,4,4);\n");
+					fw.write("\te_open(&dev,0,0,3,3);\n");
 				}
+				//Core Numbering
+				// 03	13	23	33
+				// 02	12	22	32
+				// 01	11	21	31
+				// 00	10	20	30
 
 				fw.write("\te_reset_group(&dev);\n");
 				int k=0;
@@ -201,8 +205,8 @@ public class ArmCodeFileCreation {
 					}
 				}
 				int k1=0;
-				for(int i=0; i<localPU.size();i++) {
-					for(int j=0; j<localPU.size();j++) {
+				for(int i=0; i<localPU.size()&i<4;i++) {
+					for(int j=0; j<localPU.size()&j<4;j++) {
 						if(k1<localPU.size()) {
 							fw.write("\tresult"+k1+"=  e_load(\"main"+k1+".elf\",&dev,"+i+","+j+",E_FALSE);\n");
 							result.add("result"+k1+"!=E_OK");
@@ -221,8 +225,8 @@ public class ArmCodeFileCreation {
 					}
 				}
 				int k4=0;
-				for(int i=0; i<localPU.size();i++) {
-					for(int j=0; j<localPU.size();j++) {
+				for(int i=0; i<localPU.size()&i<4;i++) {
+					for(int j=0; j<localPU.size()&j<4;j++) {
 						if(k4<localPU.size()) {
 							if(k4==0)
 								fw.write("\tif (result"+k4+"!=E_OK){\n");
@@ -243,8 +247,8 @@ public class ArmCodeFileCreation {
 				fw.write("\tint prevpollLoopCounter = 0;\n");
 				fw.write("\tfor (pollLoopCounter=0;pollLoopCounter<=40;pollLoopCounter++){\n");
 				int k2=0;
-				for(int i=0; i<localPU.size();i++) {
-					for(int j=0; j<localPU.size();j++) {
+				for(int i=0; i<localPU.size()&i<4;i++) {
+					for(int j=0; j<localPU.size()&j<4;j++) {
 						if(k2<localPU.size()) {
 							fw.write("\t\te_read(&dev,"+i+","+j+",addr, &message"+k2+", sizeof(message"+k2+"));\n");
 							fw.write("\t\tfprintf(stderr, \"tick1 %3d||\",message"+k2+"[8]+1);\n");

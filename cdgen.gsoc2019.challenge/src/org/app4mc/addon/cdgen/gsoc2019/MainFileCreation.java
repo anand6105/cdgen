@@ -239,7 +239,7 @@ public class MainFileCreation {
 		for(SchedulerAllocation c:CoreNo) {
 			ProcessingUnit pu = c.getResponsibility().get(0);
 			Set<Task> tasks = DeploymentUtil.getTasksMappedToCore(pu, model);
-		String fname = path1 + File.separator + "main.c";
+		String fname = path1 + File.separator + "main"+k+".c";
 		File f2 = new File(path1);
 		File f1 = new File(fname);
 		f2.mkdirs();

@@ -102,7 +102,7 @@ public class TaskFileCreation {
 					TaskCounter(f1, tasks);
 					TaskDefinitionRMS(f1, model, tasks, preemptionFlag);
 				}else if((0x1000 == (0xF000 & configFlag))&(0x0300 == (0x0F00 & configFlag))){
-					headerIncludesTaskHead(f1);
+					headerIncludesTaskHead(f1, k);
 					TaskCounter(f1, tasks);
 					TaskDefinitionFreeRTOS(f1, model, tasks, preemptionFlag);
 				}
@@ -131,7 +131,7 @@ public class TaskFileCreation {
 				headerIncludesTaskRMSHead(f3, k);
 				if((0x3000 == (0xF000 & configFlag))&(0x0100 == (0x0F00 & configFlag))) {
 				}else {
-					headerIncludesTask(f3);
+				//	headerIncludesTask(f3);
 				}
 				mainStaticTaskDef(f3, tasks);
 
@@ -451,7 +451,7 @@ public class TaskFileCreation {
 		}
 	}
 
-	private static void headerIncludesTaskHead(File f1) {
+	private static void headerIncludesTaskHead(File f1, int k) {
 		try {
 			File fn = f1;
 			FileWriter fw = new FileWriter(fn, true);
@@ -465,7 +465,7 @@ public class TaskFileCreation {
 			fw.write("#include \"queue.h\"\n");
 			fw.write("#include \"croutine.h\"\n");
 			fw.write("#include \"ParallellaUtils.h\"\n");
-			fw.write("#include \"label.c\"\n");
+			fw.write("#include \"label"+k+".h\"\n");
 			fw.write("#include \"task.h\"\n");
 			fw.close();
 		} catch (IOException ioe) {

@@ -257,24 +257,51 @@ public class LabelFileCreation {
 				Set<Label> readLabels = SoftwareUtil.getReadLabelSet(task, null);
 				Set<Label> writeLabels = SoftwareUtil.getWriteLabelSet(task, null);
 				fw.write("\n\tvoid cIN_" + task.getName() + "()\n\t{\n");
-				HashMap<Label, Integer> SharedLabelTypeMap = new HashMap<Label, Integer>();
-				int k = 0;
+				List<String> readLabelType = new ArrayList<String>();;
+				HashMap<String, HashMap<Label, Integer>> SharedLabelTypeMapIndexed = new HashMap<String, HashMap<Label, Integer>> ();
 				for(Label share:sharedLabelList) {
-					SharedLabelTypeMap.put(share, new Integer(k));
-					k++;
+					String type = share.getSize().toString();
+					readLabelType.add(type);
+					
 				}
+				readLabelType = readLabelType.stream().distinct().collect(Collectors.toList());
+				//System.out.println(" Share size ==>"+readLabelType.size());
+				for(String rLT:readLabelType) {
+					
+					HashMap<Label, Integer> SharedLabelTypeMap = new HashMap<Label, Integer>();
+					int k = 0;
+					for(Label share:sharedLabelList) {
+						String type = share.getSize().toString();
+						if(type.equals(rLT)) {
+							SharedLabelTypeMap.put(share, new Integer(k));
+							k++;	
+						}
+					}
+					SharedLabelTypeMapIndexed.put(rLT, SharedLabelTypeMap);
+				}
+				HashMap<Label, Integer> LabelIndexedType = new HashMap<Label, Integer>();
+				for(String rLT:readLabelType) {
+					LabelIndexedType = SharedLabelTypeMapIndexed.get(rLT);		
+					for(Label share:sharedLabelList) {
+						String type = share.getSize().toString();
+						if((type.equals(rLT))&(readLabels.contains(share))) {
+							fw.write("\t\t" + share.getName()+"_"+task.getName() + "\t=\tshared_label_" + type.replace(" ", "") + "_read("+LabelIndexedType.get(share)+");\n");
+						}
+					}
+				}
+				
 				//fw.write("\t\tvDisplayMessage( \" Cin Execution\t" + task.getName() + "\\n\" );\n");
 				for (Label lab : listWithoutDuplicates2) {
 					if(labelCoreCommonList.contains(lab)) {
 						fw.write("\t\t" + lab.getName() + "_" + task.getName() + "\t=\t" + lab.getName() + ";\n");
 					}
 				}
-				for (Label lab : listWithoutDuplicates2) {
+				/*for (Label lab : listWithoutDuplicates2) {
 					String la = lab.getSize().toString().replace(" ", "");
 					if((sharedLabelList.contains(lab)) & (readLabels.contains(lab))) {
 						fw.write("\t\t" + lab.getName()+"_"+task.getName() + "\t=\tshared_label_" + la + "_read("+SharedLabelTypeMap.get(lab)+");\n");
 					}
-				}
+				}*/
 				fw.write("\t}\n");
 				fw.write("\n\tvoid cOUT_" + task.getName() + "()\n\t{\n");
 				//fw.write("\t\tvDisplayMessage(\" Cout Execution\t" + task.getName() + "\\n\\n\" );\n");
@@ -290,10 +317,21 @@ public class LabelFileCreation {
 						fw.write("\t\t" + lab.getName() + "\t=\t" + lab.getName() + "_" + task.getName() + ";\n");
 					}
 				}
-				for (Label lab : listWithoutDuplicates2) {
+			/*	for (Label lab : listWithoutDuplicates2) {
 					String la = lab.getSize().toString().replace(" ", "");
 					if(sharedLabelList.contains(lab)) {
 						fw.write("\t\tshared_label_" + la + "_write("+SharedLabelTypeMap.get(lab)+"," + lab.getName()+"_"+task.getName() + " );\n");
+					}
+				}*/
+				HashMap<Label, Integer> LabelWriteIndexedType = new HashMap<Label, Integer>();
+				for(String rLT:readLabelType) {
+					LabelWriteIndexedType = SharedLabelTypeMapIndexed.get(rLT);		
+					for(Label share:sharedLabelList) {
+						String type = share.getSize().toString();
+						if((type.equals(rLT))&(readLabels.contains(share))) {
+							//fw.write("\t\t" + share.getName()+"_"+task.getName() + "\t=\tshared_label_" + type + "_read("+LabelIndexedType.get(share)+");\n");
+							fw.write("\t\tshared_label_" + type.replace(" ", "") + "_write("+LabelIndexedType.get(share)+"," + share.getName()+"_"+task.getName() + " );\n");
+						}
 					}
 				}
 				fw.write("\t}\n");

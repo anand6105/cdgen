@@ -231,9 +231,9 @@ public class SharedLabelsFileCreation {
 				if(SharedLabelCounter!=0) {
 					
 					
-					fw.write("unsigned int *outbuf_shared"+sh.toString().replace(" ", "")+"["+SharedLabelCounter+"];\n\n");
+					fw.write(fileUtil.datatype(sh.toString())+" 	*outbuf_shared"+sh.toString().replace(" ", "")+"["+SharedLabelCounter+"];\n\n");
 					fw.write("void shared_label_"+sh.toString().replace(" ", "")+"_init(){\n");
-					fw.write("\toutbuf_shared"+sh.toString().replace(" ", "")+"[0] = (unsigned int *) shared_mem_section"+sh.toString().replace(" ", "")+";\n");
+					fw.write("\toutbuf_shared"+sh.toString().replace(" ", "")+"[0] = ("+fileUtil.datatype(sh.toString())+" *) shared_mem_section"+sh.toString().replace(" ", "")+";\n");
 					for(int i=1;i<SharedLabelCounter;i++) {
 						fw.write("\toutbuf_shared"+sh.toString().replace(" ", "")+"["+i+"]=outbuf_shared"+sh.toString().replace(" ", "")+"["+i+"] + 1;\n");
 					}
@@ -242,11 +242,11 @@ public class SharedLabelsFileCreation {
 					fw.write("\t}\n");
 					fw.write("}\n\n");
 					fw.write(""+fileUtil.datatype(sh.toString())+" shared_label_"+sh.toString().replace(" ", "")+"_write(int label_indx,int payload){\n");
-					fw.write("\t"+fileUtil.datatype(sh.toString())+" retval=NULL;\n");
+					//fw.write("\t"+fileUtil.datatype(sh.toString())+" retval=NULL;\n");
 					fw.write("\t*outbuf_shared"+sh.toString().replace(" ", "")+"[label_indx] = payload;\n");
-					fw.write("\treturn retval;\n\n");
+					//fw.write("\treturn retval;\n\n");
 					fw.write("}\n\n");
-					fw.write("unsigned int shared_label_"+sh.toString().replace(" ", "")+"_read(int label_indx){\n");
+					fw.write(""+fileUtil.datatype(sh.toString())+" shared_label_"+sh.toString().replace(" ", "")+"_read(int label_indx){\n");
 					fw.write("\treturn *outbuf_shared"+sh.toString().replace(" ", "")+"[label_indx];\n");
 					fw.write("}\n\n");
 					}

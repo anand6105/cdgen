@@ -130,7 +130,7 @@ public class checkFileCreateGUI {
 
 
 				// Load File
-				final File inputFile = new File(Constants.DEMOCARMULTIRASPBERRYPI);
+				final File inputFile = new File(Constants.DEMOCARMULTI);
 				final Amalthea model = AmaltheaLoader.loadFromFile(inputFile);
 				if (model == null) {
 					System.out.println("Error: No model loaded!");
