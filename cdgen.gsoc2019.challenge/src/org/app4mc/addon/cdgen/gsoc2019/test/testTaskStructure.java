@@ -1,8 +1,16 @@
 package org.app4mc.addon.cdgen.gsoc2019.test;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
+import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.DeploymentUtil;
 import org.eclipse.app4mc.amalthea.model.Amalthea;
+import org.eclipse.app4mc.amalthea.model.ProcessingUnit;
+import org.eclipse.app4mc.amalthea.model.SchedulerAllocation;
+import org.eclipse.app4mc.amalthea.model.Task;
+import org.eclipse.emf.common.util.EList;
 
 /**
  * Implementation of testing Task, Runnable structure and Label types.
@@ -22,10 +30,18 @@ public class testTaskStructure
 			System.out.println("############################################################");
 			System.out.println("\t\t\tTest Begins");
 			System.out.println("############################################################");
-			new testRunnable(model, path1,configFlag);
-			new	testTaskDef(model, path1, configFlag);
-			new	testMain(model, path1,configFlag);
-			new testLabel(model, path1);
+			EList<SchedulerAllocation> CoreNo = model.getMappingModel().getSchedulerAllocation();
+			int k=0;
+			for(SchedulerAllocation c:CoreNo) {
+				ProcessingUnit pu = c.getResponsibility().get(0);
+				Set<Task> task = DeploymentUtil.getTasksMappedToCore(pu, model);
+				List<Task> tasks = new ArrayList<Task>(task);
+			new testRunnable(model, path1,configFlag, k, tasks);
+			new	testTaskDef(model, path1, configFlag, k, tasks);
+			new	testMain(model, path1,configFlag, k, tasks);
+		//	new testLabel(model, path1, k, tasks);
+			k++;
+			}
 			System.out.println("############################################################");
 			System.out.println("\t\t\tTest Ends");
 			System.out.println("############################################################");

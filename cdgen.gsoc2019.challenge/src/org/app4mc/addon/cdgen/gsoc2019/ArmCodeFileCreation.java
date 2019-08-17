@@ -172,11 +172,11 @@ public class ArmCodeFileCreation {
 				if(processingUnits.size() == 1) {
 					fw.write("\te_open(&dev,0,0,0,0);\n");
 				}else if(processingUnits.size() > 1 && processingUnits.size() < 5) {
-					fw.write("\te_open(&dev,0,0,1,1);\n");
-				}else if(processingUnits.size() > 4 && processingUnits.size() < 10) {
 					fw.write("\te_open(&dev,0,0,2,2);\n");
-				}else if(processingUnits.size() > 9 && processingUnits.size() < 17) {
+				}else if(processingUnits.size() > 4 && processingUnits.size() < 10) {
 					fw.write("\te_open(&dev,0,0,3,3);\n");
+				}else if(processingUnits.size() > 9 && processingUnits.size() < 17) {
+					fw.write("\te_open(&dev,0,0,4,4);\n");
 				}
 				//Core Numbering
 				// 03	13	23	33
@@ -216,7 +216,7 @@ public class ArmCodeFileCreation {
 				}
 				String resultFinal = "";
 				for(int k2=0; k2<result.size();k2++) {
-					System.out.println("Size ==> "+result.size());
+				//	System.out.println("Size ==> "+result.size());
 					resultFinal = resultFinal + (result.get(k2) + "||");
 					if(k2==(result.size()-2)) {
 						k2++;

@@ -24,14 +24,17 @@ public class testLabel
 
 {
 
-		public testLabel(final Amalthea Model, String path1) throws IOException {
-			fileTestLabel(Model, path1);
+		public testLabel(final Amalthea Model, String path1, int k, List<Task> taskmod) throws IOException {
+			fileTestLabel(Model, path1, k, taskmod);
 		}
 	
-		private void fileTestLabel(Amalthea model2, String path1) throws IOException {
-			String fname = path1 + File.separator + "label.c";
-			EList<Label> label = model2.getSwModel().getLabels();
-			EList<Task> tasks = model2.getSwModel().getTasks();
+		private void fileTestLabel(Amalthea model2, String path1, int k, List<Task> tasks) throws IOException {
+			String fname = path1 + File.separator + "label"+k+".c";
+			//EList<Label> label = model2.getSwModel().getLabels();
+			List<Label> label = new ArrayList<Label>();
+			for(Task ta:tasks) {
+				label.addAll(SoftwareUtil.getAccessedLabelSet(ta, null));
+			}
 			File f1 = new File(fname);
 			String[] words = null;
 			FileReader fr = new FileReader(f1);

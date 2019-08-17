@@ -282,7 +282,7 @@ public class MainRMSFileCreation {
 
 			int count =0;
 			for (Task task : tasks) {
-				fw.write("\txTaskCreate(v"+task.getName()+" , \""+task.getName()+"\", configMINIMAL_STACK_SIZE, &v"
+				fw.write("\txTaskCreate( v"+task.getName()+" , \""+task.getName()+"\", configMINIMAL_STACK_SIZE, &v"
 						+task.getName()
 						+", main"+task.getName()+", NULL);\n");
 				count++;

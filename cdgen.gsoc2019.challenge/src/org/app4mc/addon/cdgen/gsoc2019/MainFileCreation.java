@@ -65,42 +65,49 @@ public class MainFileCreation {
 	 * @throws IOException
 	 */
 	private static void fileCreate(Amalthea model, String srcPath, int configFlag) throws IOException {
-		EList<Task> tasks = model.getSwModel().getTasks(); 
-		String fname = srcPath + File.separator + "main.c";
-		File f2 = new File(srcPath);
-		File f1 = new File(fname);
-		f2.mkdirs();
-		try {
-			f1.createNewFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		File fn = f1;
-		FileWriter fw = new FileWriter(fn, true);
-		try {
-			fileUtil.fileMainHeader(f1);
-			mainFileHeader(f1);
-			if((0x0100 == (0x0F00 & configFlag)) & (0x3000 == (0xF000 & configFlag)) ) {
-				headerIncludesMainRMS(f1);
-				mainTaskStimuli(model, f1, tasks);
-				mainTaskPriority(f1, tasks);
-				//mainFucntionRMS(model, f1, tasks);
-			}else {
-				headerIncludesMain(f1);
-				sleepTimerMs(f1);
-				mainTaskPriority(f1, tasks);
-				mainFucntionMulticore(model, f1, tasks);
-			}
-		} finally {
+		EList<SchedulerAllocation> CoreNo = model.getMappingModel().getSchedulerAllocation();
+		int k=0;
+		for(SchedulerAllocation c:CoreNo) {
+			ProcessingUnit pu = c.getResponsibility().get(0);
+			Set<Task> tasklist = DeploymentUtil.getTasksMappedToCore(pu, model); 
+			List<Task> tasks = new ArrayList<Task>();
+			String fname = srcPath + File.separator + "main"+k+".c";
+			File f2 = new File(srcPath);
+			File f1 = new File(fname);
+			f2.mkdirs();
 			try {
-				fw.close();
+				f1.createNewFile();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+
+			File fn = f1;
+			FileWriter fw = new FileWriter(fn, true);
+			try {
+				fileUtil.fileMainHeader(f1);
+				mainFileHeader(f1);
+				if((0x0100 == (0x0F00 & configFlag)) & (0x3000 == (0xF000 & configFlag)) ) {
+					headerIncludesMainRMS(f1);
+					mainTaskStimuli(model, f1, tasks);
+					mainTaskPriority(f1, tasks);
+					//mainFucntionRMS(model, f1, tasks);
+				}else {
+					headerIncludesMain(f1);
+					sleepTimerMs(f1);
+					mainTaskPriority(f1, tasks);
+					mainFucntionMulticore(model, f1, tasks);
+				}
+			} finally {
+				try {
+					fw.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			k++;
 		}
 	}
-	
+
 	/**
 	 * Shared Label definition and initialization structure.
 	 * 
@@ -108,33 +115,33 @@ public class MainFileCreation {
 	 * @param labellist
 	 */
 	public static List<Label> SharedLabelCoreDefinition(Amalthea model, String srcPath) {
-			EList<Label> labellist = model.getSwModel().getLabels();
-			//List<Label> SharedLabelCoreList = LabelFileCreation.SharedLabelFinder(model);
-			List<Label> SharedLabelListSortCore = new ArrayList<Label>();
-			if(labellist.size()==0) {
-				System.out.println("Shared Label size 0");
-			}else {
+		EList<Label> labellist = model.getSwModel().getLabels();
+		//List<Label> SharedLabelCoreList = LabelFileCreation.SharedLabelFinder(model);
+		List<Label> SharedLabelListSortCore = new ArrayList<Label>();
+		if(labellist.size()==0) {
+			System.out.println("Shared Label size 0");
+		}else {
 			//	System.out.println("Shared Label size "+SharedLabelList.size());
-				HashMap<Label, HashMap<Task, ProcessingUnit>> sharedLabelTaskMap = LabelFileCreation.LabelTaskMap(model, labellist);
-				int i=0, k=0, j=0;
-				for(Label share:labellist) {
-					HashMap<Task, ProcessingUnit> TaskMap = sharedLabelTaskMap.get(share);
-					Collection<ProcessingUnit> puList = TaskMap.values();
-					List<ProcessingUnit> puListUnique = puList.stream().distinct().collect(Collectors.toList());
-					Set<Task> TaskList = TaskMap.keySet();
-					if(puListUnique.size()==1 && TaskList.size()>1) {
-						SharedLabelListSortCore.add(share);
-						i++;
-					}
-					else if(puListUnique.size()>1){
-						j++;
-					}else if(TaskList.size()==1){
-						k++;
-					}
+			HashMap<Label, HashMap<Task, ProcessingUnit>> sharedLabelTaskMap = LabelFileCreation.LabelTaskMap(model, labellist);
+			int i=0, k=0, j=0;
+			for(Label share:labellist) {
+				HashMap<Task, ProcessingUnit> TaskMap = sharedLabelTaskMap.get(share);
+				Collection<ProcessingUnit> puList = TaskMap.values();
+				List<ProcessingUnit> puListUnique = puList.stream().distinct().collect(Collectors.toList());
+				Set<Task> TaskList = TaskMap.keySet();
+				if(puListUnique.size()==1 && TaskList.size()>1) {
+					SharedLabelListSortCore.add(share);
+					i++;
 				}
-				System.out.println("Total Labels :"+sharedLabelTaskMap.keySet().size()+"="+i+"+"+j+"+"+k+"="+(i+j+k)); 
+				else if(puListUnique.size()>1){
+					j++;
+				}else if(TaskList.size()==1){
+					k++;
+				}
 			}
-			return SharedLabelListSortCore;
+			System.out.println("Total Labels :"+sharedLabelTaskMap.keySet().size()+"="+i+"+"+j+"+"+k+"="+(i+j+k)); 
+		}
+		return SharedLabelListSortCore;
 	}
 
 	/**
@@ -239,32 +246,32 @@ public class MainFileCreation {
 		for(SchedulerAllocation c:CoreNo) {
 			ProcessingUnit pu = c.getResponsibility().get(0);
 			Set<Task> tasks = DeploymentUtil.getTasksMappedToCore(pu, model);
-		String fname = path1 + File.separator + "main"+k+".c";
-		File f2 = new File(path1);
-		File f1 = new File(fname);
-		f2.mkdirs();
-		try {
-			f1.createNewFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		File fn = f1;
-		FileWriter fw = new FileWriter(fn, true);
-		try {
-			fileUtil.fileMainHeader(f1);
-			mainFileHeader(f1);
-			headerIncludesMainPthread(f1, model);
-			sleepTimerMsPthread(f1);
-			mainFucntionPthread(f1, tasks);
-		} finally {
+			String fname = path1 + File.separator + "main"+k+".c";
+			File f2 = new File(path1);
+			File f1 = new File(fname);
+			f2.mkdirs();
 			try {
-				fw.close();
+				f1.createNewFile();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
-		k++;
+
+			File fn = f1;
+			FileWriter fw = new FileWriter(fn, true);
+			try {
+				fileUtil.fileMainHeader(f1);
+				mainFileHeader(f1);
+				headerIncludesMainPthread(f1, model);
+				sleepTimerMsPthread(f1);
+				mainFucntionPthread(f1, tasks);
+			} finally {
+				try {
+					fw.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			k++;
 		}
 	}
 
@@ -341,7 +348,7 @@ public class MainFileCreation {
 
 	}
 
-	private static void mainFucntionMulticore(Amalthea model, File f1, EList<Task> tasks) {
+	private static void mainFucntionMulticore(Amalthea model, File f1, List<Task> tasks) {
 		try {
 			File fn = f1;
 			FileWriter fw = new FileWriter(fn, true);
@@ -456,7 +463,7 @@ public class MainFileCreation {
 		}
 	}
 	//TODO Read paper send by lukas
-	private static void mainTaskPriority(File f1, EList<Task> tasks) {
+	private static void mainTaskPriority(File f1, List<Task> tasks) {
 		try {
 			File fn = f1;
 			List<Task> localTaskPriority = new ArrayList<Task>();
@@ -490,7 +497,7 @@ public class MainFileCreation {
 	}
 
 
-	private static void mainTaskStimuli(Amalthea model, File f1, EList<Task> tasks) {
+	private static void mainTaskStimuli(Amalthea model, File f1, List<Task> tasks) {
 		try {
 			File fn = f1;
 

@@ -72,6 +72,11 @@ public class checkRMSConfiguration{
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+		try {
+			new testTaskStructure(model, srcPath, configFlag);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		System.out.println("Generation completed, Check path 	" + srcPath);
 		//TODO: Set hyperlink for path
 		try {

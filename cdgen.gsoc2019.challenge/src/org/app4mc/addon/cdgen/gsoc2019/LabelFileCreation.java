@@ -252,7 +252,7 @@ public class LabelFileCreation {
 					if(TaskLabel.contains(lab)) {
 						String type = fileUtil.datatype(lab.getSize().toString());
 						long init = fileUtil.intialisation(lab.getSize().toString());
-						fw.write("\t\t" + type + "\t" + lab.getName() + "_" + task.getName() + ";\n");	
+						fw.write("\t\t" + type + "\t" + lab.getName() + "_" + task.getName() + " \t=\t " + init + ";\n");	
 
 					}
 				}

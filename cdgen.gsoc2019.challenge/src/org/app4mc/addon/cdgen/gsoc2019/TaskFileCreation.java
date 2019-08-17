@@ -131,7 +131,7 @@ public class TaskFileCreation {
 				headerIncludesTaskRMSHead(f3, k);
 				if((0x3000 == (0xF000 & configFlag))&(0x0100 == (0x0F00 & configFlag))) {
 				}else {
-				//	headerIncludesTask(f3);
+					//	headerIncludesTask(f3);
 				}
 				mainStaticTaskDef(f3, tasks);
 
@@ -171,52 +171,59 @@ public class TaskFileCreation {
 		}else{
 			preemptionFlag=false; 
 		}
-		EList<Task> tasks = model.getSwModel().getTasks();
-		String fname = path1 + File.separator + "taskDef.c";
-		File f2 = new File(path1);
-		File f1 = new File(fname);
-		f2.mkdirs();
-		try {
-			f1.createNewFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		File fn = f1;
-		FileWriter fw = new FileWriter(fn, true);
-		try {
-			fileUtil.fileMainHeader(f1);
-			taskFileHeader(f1);
-			headerIncludesTaskPthreadHead(f1);
-			TaskDefinitionPthread(f1, tasks, model, preemptionFlag);
-		} finally {
+		EList<SchedulerAllocation> CoreNo = model.getMappingModel().getSchedulerAllocation();
+		int k=0;
+		for(SchedulerAllocation c:CoreNo) {
+			ProcessingUnit pu = c.getResponsibility().get(0);
+			Set<Task> task = DeploymentUtil.getTasksMappedToCore(pu, model);
+			List<Task> tasks = new ArrayList<Task>(task);
+			String fname = path1 + File.separator + "taskDef"+k+".c";
+			File f2 = new File(path1);
+			File f1 = new File(fname);
+			f2.mkdirs();
 			try {
-				fw.close();
+				f1.createNewFile();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
-		String fname2 = path1 + File.separator + "taskDef.h";
-		File f4 = new File(path1);
-		File f3 = new File(fname2);
-		f4.mkdirs();
-		try {
-			f1.createNewFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		File fn1 = f3;
-		FileWriter fw1 = new FileWriter(fn1, true);
-		try {
-			fileUtil.fileMainHeader(f3);
-			taskFileHeader(f3);
-			headerIncludesPthreadTask(f3);
-			mainStaticTaskPthreadDef(f3, tasks);
-		} finally {
+			File fn = f1;
+			FileWriter fw = new FileWriter(fn, true);
 			try {
-				fw1.close();
+				fileUtil.fileMainHeader(f1);
+				taskFileHeader(f1);
+				headerIncludesTaskPthreadHead(f1);
+				TaskDefinitionPthread(f1, tasks, model, preemptionFlag);
+			} finally {
+				try {
+					fw.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			String fname2 = path1 + File.separator + "taskDef"+k+".h";
+			File f4 = new File(path1);
+			File f3 = new File(fname2);
+			f4.mkdirs();
+			try {
+				f1.createNewFile();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			File fn1 = f3;
+			FileWriter fw1 = new FileWriter(fn1, true);
+			try {
+				fileUtil.fileMainHeader(f3);
+				taskFileHeader(f3);
+				headerIncludesPthreadTask(f3);
+				mainStaticTaskPthreadDef(f3, tasks);
+			} finally {
+				try {
+					fw1.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			k++;
 		}
 	}
 
@@ -236,7 +243,7 @@ public class TaskFileCreation {
 
 	}
 
-	private static void mainStaticTaskPthreadDef(File f3, EList<Task> tasks) {
+	private static void mainStaticTaskPthreadDef(File f3, List<Task> tasks) {
 		try {
 			File fn = f3;
 			FileWriter fw = new FileWriter(fn, true);
@@ -268,7 +275,7 @@ public class TaskFileCreation {
 
 	}
 
-	private static void TaskDefinitionPthread(File f1, EList<Task> tasks, Amalthea model, boolean preemptionFlag) {
+	private static void TaskDefinitionPthread(File f1, List<Task> tasks, Amalthea model, boolean preemptionFlag) {
 		try {
 			File fn = f1;
 			FileWriter fw = new FileWriter(fn, true);
@@ -341,7 +348,7 @@ public class TaskFileCreation {
 				fw.write("\t\t\tsuspendMe ();\n");
 				fw.write("\t\tprint_affinity();\n");
 				fw.write("\t\t\tvDisplayMessagePthread( \"" + task.getName() + " is running\\r\\n\" );\n");
-				fw.write("\t\t\t/*Cin - Create local variables and copy the actual variable to them */\n");
+				fw.write("\t\t\t/* Cin - Create local variables and copy the actual variable to them */\n");
 				fw.write("\t\t\tcIN_" + task.getName() + "();\n");
 				if (preemptionFlag == true) {
 					fw.write("\t\t\tresumeMe ();\n");
@@ -350,7 +357,7 @@ public class TaskFileCreation {
 				for (Runnable run : runnablesOfTask) {
 					fw.write("\t\t\t" + run.getName() + "();\n");
 				}
-				fw.write("\n\t\t\t/*Cout - Write back the local variables back to the actual variables */\n");
+				fw.write("\n\t\t\t/* Cout - Write back the local variables back to the actual variables */\n");
 				if (preemptionFlag == true) {
 					fw.write("\t\t\tsuspendMe ();\n");
 				}
@@ -541,22 +548,22 @@ public class TaskFileCreation {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
 	}
-	
+
 	public static HashMap<Task, Integer> TaskIndexMapping(Amalthea model){ 
 		EList<Task> tasks = model.getSwModel().getTasks();
 		HashMap<Task, Integer> TaskMapping = new HashMap<Task, Integer>();
 		int i=0;
 		for(Task Ta:tasks) {
 			TaskMapping.put(Ta, i);
-		i++;
+			i++;
 		}
 		return TaskMapping;
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 
 	private static void TaskDefinitionRMS(File f1, Amalthea model, List<Task> tasks, boolean preemptionFlag) {
 		try {
@@ -603,7 +610,7 @@ public class TaskFileCreation {
 					}else {
 						fw.write("\n\t\t\tsleepTimerMs(" + sleepTime + ", "+taskCount+1+");\n");
 					}
-					
+
 				}
 				fw.write("\n\t\t\ttaskCount"+task.getName()+"++;");
 				fw.write("\n\t\t\ttraceTaskPasses("+taskCount+", taskCount"+task.getName()+");");
@@ -656,7 +663,7 @@ public class TaskFileCreation {
 				fw.write("\n\t\tfor( ;; )\n\t\t{\n");
 				fw.write("\t\tupdateDebugFlag(700);\n");;
 				fw.write("\t\ttraceTaskPasses(1,1);\n");
-				fw.write("\t\t\t/*Cin - Create local variables and copy the actual variable to them */\n");
+				fw.write("\t\t\t/* Cin - Create local variables and copy the actual variable to them */\n");
 				fw.write("\t\t\ttaskENTER_CRITICAL ();\n");
 				fw.write("\t\t\tcIN_" + task.getName() + "();\n");
 				fw.write("\t\t\ttaskEXIT_CRITICAL ();\n");
@@ -664,7 +671,7 @@ public class TaskFileCreation {
 				for (Runnable run : runnablesOfTask) {
 					fw.write("\t\t\t" + run.getName() + "();\n");
 				}
-				fw.write("\n\t\t\t/*Cout - Write back the local variables back to the actual variables */\n");
+				fw.write("\n\t\t\t/* Cout - Write back the local variables back to the actual variables */\n");
 				fw.write("\t\t\ttaskENTER_CRITICAL ();\n");
 				fw.write("\t\t\tcOUT_" + task.getName() + "();\n");
 				fw.write("\t\t\ttaskEXIT_CRITICAL ();\n");
@@ -720,7 +727,7 @@ public class TaskFileCreation {
 		SharedLabelList =SharedLabelList.stream().distinct().collect(Collectors.toList());
 		List<Label> SharedLabelListSortCore = new ArrayList<Label>();
 		if(SharedLabelList.size()==0) {
-		//	System.out.println("Shared Label size 0");
+			//	System.out.println("Shared Label size 0");
 		}else {
 			HashMap<Label, HashMap<Task, ProcessingUnit>> sharedLabelTaskMap = LabelFileCreation.LabelTaskMap(model, SharedLabelList);
 			for(Label share:SharedLabelList) {
