@@ -10,7 +10,7 @@
  *   Contributors:
  *       Dortmund University of Applied Sciences and Arts - initial API and implementation
  *******************************************************************************/
-package org.app4mc.addon.cdgen.gsoc2019.checks;
+package org.eclipse.app4mc.cdgen.checks;
 
 import java.awt.EventQueue;
 
@@ -21,14 +21,14 @@ import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 
 import org.apache.xml.resolver.helpers.FileURL;
-import org.app4mc.addon.cdgen.gsoc2019.*;
-import org.app4mc.addon.cdgen.gsoc2019.checks.*;
-import org.app4mc.addon.cdgen.gsoc2019.identifiers.Constants;
-import org.app4mc.addon.cdgen.gsoc2019.test.testTaskStructure;
-import org.app4mc.addon.cdgen.gsoc2019.utils.fileUtil;
 import org.eclipse.app4mc.amalthea.model.Amalthea;
 import org.eclipse.app4mc.amalthea.model.HWModel;
 import org.eclipse.app4mc.amalthea.model.io.AmaltheaLoader;
+import org.eclipse.app4mc.cdgen.*;
+import org.eclipse.app4mc.cdgen.checks.*;
+import org.eclipse.app4mc.cdgen.identifiers.Constants;
+import org.eclipse.app4mc.cdgen.test.testTaskStructure;
+import org.eclipse.app4mc.cdgen.utils.fileUtil;
 import org.eclipse.core.internal.utils.FileUtil;
 
 import javax.swing.JLabel;

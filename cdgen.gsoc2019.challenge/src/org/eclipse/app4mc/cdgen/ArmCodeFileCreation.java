@@ -10,7 +10,7 @@
  *   Contributors:
  *       Dortmund University of Applied Sciences and Arts - initial API and implementation
  *******************************************************************************/
-package org.app4mc.addon.cdgen.gsoc2019;
+package org.eclipse.app4mc.cdgen;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -18,12 +18,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.app4mc.addon.cdgen.gsoc2019.utils.fileUtil;
 import org.eclipse.app4mc.amalthea.model.Amalthea;
 import org.eclipse.app4mc.amalthea.model.MappingModel;
 import org.eclipse.app4mc.amalthea.model.Runnable;
 import org.eclipse.app4mc.amalthea.model.SchedulerAllocation;
 import org.eclipse.app4mc.amalthea.model.Task;
+import org.eclipse.app4mc.cdgen.utils.fileUtil;
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -186,29 +186,20 @@ public class ArmCodeFileCreation {
 				fw.write("\te_init(NULL);\n");
 				fw.write("\te_reset_system();\n");
 				fw.write("\te_get_platform_info(&epiphany);\n");
-				int core1 = 0;
-				int core2 = 0;
+				int coreGroup = 0;
 				if (processingUnits.size() == 1) {
-					core1 = 0;
-					core2 = 0;
-					// fw.write("\te_open(&dev,0,0,0,0);\n");
+					coreGroup = 0;
 				}
 				else if (processingUnits.size() > 1 && processingUnits.size() < 5) {
-					core1 = 2;
-					core2 = 2;
-					// fw.write("\te_open(&dev,0,0,2,2);\n");
+					coreGroup = 2;
 				}
 				else if (processingUnits.size() > 4 && processingUnits.size() < 10) {
-					core1 = 3;
-					core2 = 3;
-					// fw.write("\te_open(&dev,0,0,3,3);\n");
+					coreGroup = 3;
 				}
 				else if (processingUnits.size() > 9 && processingUnits.size() < 17) {
-					core1 = 4;
-					core2 = 4;
-					// fw.write("\te_open(&dev,0,0,4,4);\n");
+					coreGroup = 4;
 				}
-				fw.write("\te_open(&dev,0,0," + core1 + "," + core2 + ");\n");
+				fw.write("\te_open(&dev,0,0," + coreGroup + "," + coreGroup + ");\n");
 				/* Core 1 */
 				// 00
 				/* Core 2 */
@@ -237,22 +228,22 @@ public class ArmCodeFileCreation {
 					}
 				}
 				int k3 = 0;
-				for (int i = 0; i < localPU.size(); i++) {
-					for (int j = 0; j < localPU.size(); j++) {
+				for (int rowCoreGroup = 0; rowCoreGroup < localPU.size(); rowCoreGroup++) {
+					for (int columnCoreGroup = 0; columnCoreGroup < localPU.size(); columnCoreGroup++) {
 						if (k3 < localPU.size()) {
 							fw.write("\tunsigned int message" + k3 + "[9];\n");
 							k3++;
 						}
 					}
 				}
-				int k1 = 0;
-				for (int i = 0; i < core1; i++) {
-					for (int j = 0; j < core2; j++) {
-						if (k1 < localPU.size()) {
-							fw.write("\tresult" + k1 + "=  e_load(\"main" + k1 + ".elf\",&dev," + i + "," + j
-									+ ",E_FALSE);\n");
-							result.add("result" + k1 + "!=E_OK");
-							k1++;
+				int coreIndex = 0;
+				for (int rowCoreGroup = 0; rowCoreGroup < coreGroup; rowCoreGroup++) {
+					for (int columnCoreGroup = 0; columnCoreGroup < coreGroup; columnCoreGroup++) {
+						if (coreIndex < localPU.size()) {
+							fw.write("\tresult" + coreIndex + "=  e_load(\"main" + coreIndex + ".elf\",&dev,"
+									+ rowCoreGroup + "," + columnCoreGroup + ",E_FALSE);\n");
+							result.add("result" + coreIndex + "!=E_OK");
+							coreIndex++;
 						}
 					}
 				}
@@ -266,20 +257,20 @@ public class ArmCodeFileCreation {
 						break;
 					}
 				}
-				int k4 = 0;
-				for (int i = 0; i < localPU.size() & i < 4; i++) {
-					for (int j = 0; j < localPU.size() & j < 4; j++) {
-						if (k4 < localPU.size()) {
-							if (k4 == 0) {
-								fw.write("\tif (result" + k4 + "!=E_OK){\n");
+				coreIndex = 0;
+				for (int rowCoreGroup = 0; rowCoreGroup < localPU.size() & rowCoreGroup < 4; rowCoreGroup++) {
+					for (int columnCore = 0; columnCore < localPU.size() & columnCore < 4; columnCore++) {
+						if (coreIndex < localPU.size()) {
+							if (coreIndex == 0) {
+								fw.write("\tif (result" + coreIndex + "!=E_OK){\n");
 							}
 							else {
-								fw.write("\telse if (result" + k4 + "!=E_OK){\n");
+								fw.write("\telse if (result" + coreIndex + "!=E_OK){\n");
 							}
-							fw.write("\t\tfprintf(stderr,\"Error Loading the Epiphany Application " + k4
-									+ " %i\\n\", result" + k4 + ");");
+							fw.write("\t\tfprintf(stderr,\"Error Loading the Epiphany Application " + coreIndex
+									+ " %i\\n\", result" + coreIndex + ");");
 							fw.write("\n\t}\n");
-							k4++;
+							coreIndex++;
 						}
 					}
 				}
@@ -291,16 +282,16 @@ public class ArmCodeFileCreation {
 				fw.write("\tint prevtaskMessage;\n");
 				fw.write("\tint prevpollLoopCounter = 0;\n");
 				fw.write("\tfor (pollLoopCounter=0;pollLoopCounter<=40;pollLoopCounter++){\n");
-				int k2 = 0;
-				for (int i = 0; i < core1; i++) {
-					for (int j = 0; j < core2; j++) {
-						if (k2 < localPU.size()) {
-							fw.write("\t\te_read(&dev," + i + "," + j + ",addr, &message" + k2 + ", sizeof(message" + k2
-									+ "));\n");
-							fw.write("\t\tfprintf(stderr, \"tick1 %3d||\",message" + k2 + "[8]+1);\n");
-							fw.write("\t\tfprintf(stderr,\"task holding core" + k2 + " %2u||\", message" + k2
-									+ "[6]);\n");
-							k2++;
+				coreIndex = 0;
+				for (int rowCoreGroup = 0; rowCoreGroup < coreGroup; rowCoreGroup++) {
+					for (int columnCoreGroup = 0; columnCoreGroup < coreGroup; columnCoreGroup++) {
+						if (coreIndex < localPU.size()) {
+							fw.write("\t\te_read(&dev," + rowCoreGroup + "," + columnCoreGroup + ",addr, &message"
+									+ coreIndex + ", sizeof(message" + coreIndex + "));\n");
+							fw.write("\t\tfprintf(stderr, \"tick1 %3d||\",message" + coreIndex + "[8]+1);\n");
+							fw.write("\t\tfprintf(stderr,\"task holding core" + coreIndex + " %2u||\", message"
+									+ coreIndex + "[6]);\n");
+							coreIndex++;
 						}
 					}
 				}

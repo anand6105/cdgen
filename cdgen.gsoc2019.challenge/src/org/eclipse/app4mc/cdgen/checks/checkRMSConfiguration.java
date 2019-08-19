@@ -10,13 +10,15 @@
  *   Contributors:
  *       Dortmund University of Applied Sciences and Arts - initial API and implementation
  *******************************************************************************/
-package org.app4mc.addon.cdgen.gsoc2019.checks;
+package org.eclipse.app4mc.cdgen.checks;
 
-import org.app4mc.addon.cdgen.gsoc2019.*;
-import org.app4mc.addon.cdgen.gsoc2019.test.testTaskStructure;
 import org.eclipse.app4mc.amalthea.model.Amalthea;
+import org.eclipse.app4mc.cdgen.*;
+import org.eclipse.app4mc.cdgen.test.testTaskStructure;
+
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.awt.Desktop;
 
 
@@ -27,14 +29,33 @@ import java.awt.Desktop;
  *
  */
 
-public class checkPOSIXConfiguration{
-	public checkPOSIXConfiguration (Amalthea model, String srcPath, String headerPath, int configFlag) throws IOException {
-		POSIXConfiguration(model, srcPath, headerPath, configFlag);
+public class checkRMSConfiguration{
+
+
+	public checkRMSConfiguration (Amalthea model, String srcPath, String headerPath, int configFlag) throws IOException {
+		RMSConfiguration(model, srcPath, headerPath, configFlag);
 	}
 
-	public void POSIXConfiguration(Amalthea model, String srcPath, String headerPath, int configFlag) {
+	public void RMSConfiguration(Amalthea model, String srcPath, String headerPath, int configFlag) {
 		try {
-			new MainFileCreation(model, srcPath, configFlag);
+			String path = System.getProperty("user.dir");
+			File l_SourceDirectory = null;
+			if(0x3110 == (configFlag & 0xFFF0)) {
+				l_SourceDirectory = new File(path + "/ref/rms_coop/");
+			}else if(0x3120 == (configFlag & 0xFFF0)){
+				l_SourceDirectory = new File(path + "/ref/freertos_preem/");
+			}
+			String[] filesName = l_SourceDirectory.list();
+			for(String pathi:filesName) {
+				File SourceFile = new File(l_SourceDirectory.toString() +"/" + pathi);
+				File DestinationFile = new File(Paths.get(srcPath).toString() + "/" + pathi );
+				com.google.common.io.Files.copy(SourceFile , DestinationFile );
+			}
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		try {
+			new MainRMSFileCreation(model, srcPath, configFlag);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
@@ -44,18 +65,22 @@ public class checkPOSIXConfiguration{
 			e1.printStackTrace();
 		}
 		try {
+			new TaskFileCreation(model, srcPath, headerPath, configFlag);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		try {
+			new SharedLabelsFileCreation(model, srcPath);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		try {
 			new LabelFileCreation(model, srcPath);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-
 		try {
-			new TaskFileCreation(model, srcPath, headerPath, configFlag);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		try {
-			new TaskFileCreation(model, srcPath, headerPath, configFlag);
+			new ArmCodeFileCreation(model, srcPath, headerPath, configFlag);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
@@ -64,8 +89,6 @@ public class checkPOSIXConfiguration{
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-
-
 		System.out.println("Generation completed, Check path 	" + srcPath);
 		//TODO: Set hyperlink for path
 		try {
@@ -73,9 +96,7 @@ public class checkPOSIXConfiguration{
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-
 		System.exit(0);
-
-	} 
+	}
 
 }

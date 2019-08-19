@@ -1,16 +1,16 @@
 /*******************************************************************************
  *   Copyright (c) 2019 Dortmund University of Applied Sciences and Arts and others.
- *   
+ *
  *   This program and the accompanying materials are made
  *   available under the terms of the Eclipse Public License 2.0
  *   which is available at https://www.eclipse.org/legal/epl-2.0/
- *   
+ *
  *   SPDX-License-Identifier: EPL-2.0
- *   
+ *
  *   Contributors:
  *       Dortmund University of Applied Sciences and Arts - initial API and implementation
  *******************************************************************************/
-package org.app4mc.addon.cdgen.gsoc2019;
+package org.eclipse.app4mc.cdgen;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -23,11 +23,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.app4mc.addon.cdgen.gsoc2019.utils.fileUtil;
-import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.HardwareUtil;
-import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.RuntimeUtil;
-import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.RuntimeUtil.TimeType;
-import org.app4mc.addon.cdgen.gsoc2019.utils_amalthea.TimeUtil;
 import org.eclipse.app4mc.amalthea.model.Amalthea;
 import org.eclipse.app4mc.amalthea.model.Label;
 import org.eclipse.app4mc.amalthea.model.MappingModel;
@@ -39,128 +34,148 @@ import org.eclipse.app4mc.amalthea.model.Task;
 import org.eclipse.app4mc.amalthea.model.Time;
 import org.eclipse.app4mc.amalthea.model.TimeUnit;
 import org.eclipse.app4mc.amalthea.model.util.DeploymentUtil;
+import org.eclipse.app4mc.amalthea.model.util.HardwareUtil;
+import org.eclipse.app4mc.amalthea.model.util.RuntimeUtil;
+import org.eclipse.app4mc.amalthea.model.util.RuntimeUtil.TimeType;
+import org.eclipse.app4mc.cdgen.utils.fileUtil;
+import org.eclipse.app4mc.amalthea.model.util.TimeUtil;
 import org.eclipse.emf.common.util.EList;
 
 /**
  * Implementation of Main function in which scheduling is done.
- * 
+ *
  * @author Ram Prasath Govindarajan
  *
  */
 
 public class MainFileCreation {
 	final private Amalthea model;
+
 	/**
 	 * MainFileCreation Constructor
-	 * 
+	 *
 	 * @param Model
 	 * @param srcPath
 	 * @param configFlag
 	 * @throws IOException
 	 */
-	public MainFileCreation(final Amalthea Model, String srcPath, int configFlag) throws IOException { this.model = Model;
-	System.out.println("Main File Creation Begins");
-	if (0x2000 == (configFlag & 0xF000)) {
-		fileCreatePthread(model, srcPath);
-	}
-	System.out.println("Main File Creation Ends");
+	public MainFileCreation(final Amalthea Model, final String srcPath, final int configFlag) throws IOException {
+		this.model = Model;
+		System.out.println("Main File Creation Begins");
+		if (0x2000 == (configFlag & 0xF000)) {
+			fileCreatePthread(this.model, srcPath);
+		}
+		System.out.println("Main File Creation Ends");
 	}
 
-	
 
 	/**
 	 * Shared Label definition and initialization structure.
-	 * 
+	 *
 	 * @param file
 	 * @param labellist
 	 */
-	public static List<Label> SharedLabelCoreDefinition(Amalthea model, String srcPath) {
-		EList<Label> labellist = model.getSwModel().getLabels();
-		//List<Label> SharedLabelCoreList = LabelFileCreation.SharedLabelFinder(model);
-		List<Label> SharedLabelListSortCore = new ArrayList<Label>();
-		if(labellist.size()==0) {
+	public static List<Label> SharedLabelCoreDefinition(final Amalthea model, final String srcPath) {
+		final EList<Label> labellist = model.getSwModel().getLabels();
+		// List<Label> SharedLabelCoreList =
+		// LabelFileCreation.SharedLabelFinder(model);
+		final List<Label> SharedLabelListSortCore = new ArrayList<Label>();
+		if (labellist.size() == 0) {
 			System.out.println("Shared Label size 0");
-		}else {
-			//	System.out.println("Shared Label size "+SharedLabelList.size());
-			HashMap<Label, HashMap<Task, ProcessingUnit>> sharedLabelTaskMap = LabelFileCreation.LabelTaskMap(model, labellist);
-			int i=0, k=0, j=0;
-			for(Label share:labellist) {
-				HashMap<Task, ProcessingUnit> TaskMap = sharedLabelTaskMap.get(share);
-				Collection<ProcessingUnit> puList = TaskMap.values();
-				List<ProcessingUnit> puListUnique = puList.stream().distinct().collect(Collectors.toList());
-				Set<Task> TaskList = TaskMap.keySet();
-				if(puListUnique.size()==1 && TaskList.size()>1) {
+		}
+		else {
+			// System.out.println("Shared Label size "+SharedLabelList.size());
+			final HashMap<Label, HashMap<Task, ProcessingUnit>> sharedLabelTaskMap = LabelFileCreation
+					.LabelTaskMap(model, labellist);
+			int i = 0, k = 0, j = 0;
+			for (final Label share : labellist) {
+				final HashMap<Task, ProcessingUnit> TaskMap = sharedLabelTaskMap.get(share);
+				final Collection<ProcessingUnit> puList = TaskMap.values();
+				final List<ProcessingUnit> puListUnique = puList.stream().distinct().collect(Collectors.toList());
+				final Set<Task> TaskList = TaskMap.keySet();
+				if (puListUnique.size() == 1 && TaskList.size() > 1) {
 					SharedLabelListSortCore.add(share);
 					i++;
 				}
-				else if(puListUnique.size()>1){
+				else if (puListUnique.size() > 1) {
 					j++;
-				}else if(TaskList.size()==1){
+				}
+				else if (TaskList.size() == 1) {
 					k++;
 				}
 			}
-			System.out.println("Total Labels :"+sharedLabelTaskMap.keySet().size()+"="+i+"+"+j+"+"+k+"="+(i+j+k)); 
+			System.out.println("Total Labels :" + sharedLabelTaskMap.keySet().size() + "=" + i + "+" + j + "+" + k + "="
+					+ (i + j + k));
 		}
 		return SharedLabelListSortCore;
 	}
 
 	/**
 	 * Main function for RMS Scheduler
-	 * 
+	 *
 	 * @param model
 	 * @param file
 	 * @param tasks
 	 */
-	private static void mainFucntionRMS(Amalthea model, File file, Set<Task> tasks) {
+	private static void mainFucntionRMS(final Amalthea model, final File file, final Set<Task> tasks) {
 		try {
-			File fn = file;
-			FileWriter fw = new FileWriter(fn, true);
+			final File fn = file;
+			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("int main(void) \n{\n");
 			fw.write("\toutbuf_init();\n");
-			for (Task task: tasks) {
-				MappingModel mappingModel = model.getMappingModel();
+			for (final Task task : tasks) {
+				final MappingModel mappingModel = model.getMappingModel();
 				ProcessingUnit pu = null;
 
 				if (mappingModel != null) {
 					pu = DeploymentUtil.getAssignedCoreForProcess(task, model).iterator().next();
 
 					Time taskTime = RuntimeUtil.getExecutionTimeForProcess(task, pu, null, TimeType.WCET);
-					//System.out.println("time obj = " +taskTime);
+					// System.out.println("time obj = " +taskTime);
 					taskTime = TimeUtil.convertToTimeUnit(taskTime, TimeUnit.US);
-					//System.out.println("raw2 = " +taskTime.getValue());
-					double sleepTime = TimeUtil.getAsTimeUnit(taskTime, null);
-					fw.write("\tAmaltheaTask AmalTk_"+task.getName()+" = createAmaltheaTask("+task.getName()+", cIN_" + task.getName() +", cOUT_" + task.getName()+", "+task.getStimuli().get(0).getName()+", "+task.getStimuli().get(0).getName()+", "+sleepTime+");\n");
+					// System.out.println("raw2 = " +taskTime.getValue());
+					final double sleepTime = taskTime.getValue().doubleValue();
+					fw.write("\tAmaltheaTask AmalTk_" + task.getName() + " = createAmaltheaTask(" + task.getName()
+							+ ", cIN_" + task.getName() + ", cOUT_" + task.getName() + ", "
+							+ task.getStimuli().get(0).getName() + ", " + task.getStimuli().get(0).getName() + ", "
+							+ sleepTime + ");\n");
 				}
 			}
-			//	int c=0;
-			/*for (Task task : tasks) {
-				fw.write("\n\ttaskList["+c+"]\t=\tAmalTk_"+task.getName()+";");
-				c++;
-			}*/
+			// int c=0;
+			/*
+			 * for (Task task : tasks) {
+			 * fw.write("\n\ttaskList["+c+"]\t=\tAmalTk_"+task.getName()+";");
+			 * c++; }
+			 */
 			fw.write("\n\tvDisplayMessage(\"created RMS sched task\\n\");\n");
-			int count =0;
-			for (Task task : tasks) {
-				/*fw.write("\txTaskCreate(generalizedRTOSTak , \"AmalTk_"+task.getName()+"\", configMINIMAL_STACK_SIZE, &AmalTk_"+task.getName()
-				+", main"+task.getName()+", taskList["+count+"].taskHandle, main" + task.getName() +", null);\n");
-				 */fw.write("\txTaskCreate(generalizedRTOSTask , \"AmalTk_"+task.getName()+"\", configMINIMAL_STACK_SIZE, &AmalTk_"+task.getName()
-				 +", main"+task.getName()+", NULL);\n");
-				 count++;
+			int count = 0;
+			for (final Task task : tasks) {
+				/*
+				 * fw.write("\txTaskCreate(generalizedRTOSTak , \"AmalTk_"+task.
+				 * getName()+"\", configMINIMAL_STACK_SIZE, &AmalTk_"+task.
+				 * getName() +", main"+task.getName()+", taskList["
+				 * +count+"].taskHandle, main" + task.getName() +", null);\n");
+				 */fw.write("\txTaskCreate(generalizedRTOSTask , \"AmalTk_" + task.getName()
+						+ "\", configMINIMAL_STACK_SIZE, &AmalTk_" + task.getName() + ", main" + task.getName()
+						+ ", NULL);\n");
+				count++;
 			}
 			fw.write("\tvDisplayMessage(\"created other tasks\\n\");\n");
 			fw.write("\tvTaskStartScheduler();\n");
 			fw.write("\t" + "return EXIT_SUCCESS;\n");
 			fw.write("}\n\n");
 			fw.close();
-		}catch (IOException ioe) {
+		}
+		catch (final IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
 
 	}
 
-	private static void sleepTimerMsPthread(File f1) {
+	private static void sleepTimerMsPthread(final File f1) {
 		try {
-			File fn = f1;
-			FileWriter fw = new FileWriter(fn, true);
+			final File fn = f1;
+			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("void sleepTimerMs(int ticks)\n");
 			fw.write("{\n");
 			fw.write("\tint var;\n");
@@ -174,14 +189,16 @@ public class MainFileCreation {
 			fw.write("\t}\n");
 			fw.write("}\n");
 			fw.close();
-		} catch (IOException ioe) {
+		}
+		catch (final IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
 	}
-	private static void sleepTimerMs(File f1) {
+
+	private static void sleepTimerMs(final File f1) {
 		try {
-			File fn = f1;
-			FileWriter fw = new FileWriter(fn, true);
+			final File fn = f1;
+			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("void sleepTimerMs(int ticks)\n");
 			fw.write("{\n");
 			fw.write("\tint var;\n");
@@ -195,39 +212,43 @@ public class MainFileCreation {
 			fw.write("\t}\n");
 			fw.write("}\n");
 			fw.close();
-		} catch (IOException ioe) {
+		}
+		catch (final IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
 	}
 
-	private static void fileCreatePthread(Amalthea model, String path1) throws IOException {
-		EList<SchedulerAllocation> CoreNo = model.getMappingModel().getSchedulerAllocation();
-		int k=0;
-		for(SchedulerAllocation c:CoreNo) {
-			ProcessingUnit pu = c.getResponsibility().get(0);
-			Set<Task> tasks = DeploymentUtil.getTasksMappedToCore(pu, model);
-			String fname = path1 + File.separator + "main"+k+".c";
-			File f2 = new File(path1);
-			File f1 = new File(fname);
+	private static void fileCreatePthread(final Amalthea model, final String path1) throws IOException {
+		final EList<SchedulerAllocation> CoreNo = model.getMappingModel().getSchedulerAllocation();
+		int k = 0;
+		for (final SchedulerAllocation c : CoreNo) {
+			final ProcessingUnit pu = c.getResponsibility().get(0);
+			final Set<Task> tasks = DeploymentUtil.getTasksMappedToCore(pu, model);
+			final String fname = path1 + File.separator + "main" + k + ".c";
+			final File f2 = new File(path1);
+			final File f1 = new File(fname);
 			f2.mkdirs();
 			try {
 				f1.createNewFile();
-			} catch (IOException e) {
+			}
+			catch (final IOException e) {
 				e.printStackTrace();
 			}
 
-			File fn = f1;
-			FileWriter fw = new FileWriter(fn, true);
+			final File fn = f1;
+			final FileWriter fw = new FileWriter(fn, true);
 			try {
 				fileUtil.fileMainHeader(f1);
 				mainFileHeader(f1);
 				headerIncludesMainPthread(f1, model, k, tasks);
 				sleepTimerMsPthread(f1);
 				mainFucntionPthread(f1, tasks);
-			} finally {
+			}
+			finally {
 				try {
 					fw.close();
-				} catch (IOException e) {
+				}
+				catch (final IOException e) {
 					e.printStackTrace();
 				}
 			}
@@ -235,14 +256,14 @@ public class MainFileCreation {
 		}
 	}
 
-	private static void mainFucntionPthread(File f1, Set<Task> tasks) {
+	private static void mainFucntionPthread(final File f1, final Set<Task> tasks) {
 		try {
-			File fn = f1;
-			FileWriter fw = new FileWriter(fn, true);
+			final File fn = f1;
+			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("int main(void) \n{\n");
 			fw.write("\tpthread_t thread[NUM_THREADS];\n");
 			fw.write("\tpthread_attr_t attr;\n\n");
-			int tasksize = tasks.size();
+			final int tasksize = tasks.size();
 			int init = 0;
 			while (init < tasksize) {
 				fw.write("\tlong rtr" + init + "=" + init + ";\n");
@@ -284,51 +305,55 @@ public class MainFileCreation {
 			fw.write("\tpthread_exit(NULL);\n");
 			fw.write("}\n");
 			fw.close();
-		} catch (IOException ioe) {
+		}
+		catch (final IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
 	}
 
-	private static void headerIncludesMainPthread(File f1, Amalthea model2, int k, Set<Task> tasks) {
+	private static void headerIncludesMainPthread(final File f1, final Amalthea model2, final int k,
+			final Set<Task> tasks) {
 		try {
-			File fn = f1;
-			FileWriter fw = new FileWriter(fn, true);
+			final File fn = f1;
+			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("/* Standard includes. */\n");
 			fw.write("#include <stdio.h>\n");
 			fw.write("#include <stdlib.h>\n");
 			fw.write("#include <pthread.h>\n");
 			fw.write("#include <string.h>\n\n");
 			fw.write("/* Scheduler includes. */\n");
-			fw.write("#include \"taskDef"+k+".h\"\n");
+			fw.write("#include \"taskDef" + k + ".h\"\n");
 			fw.write("#define NUM_THREADS\t" + tasks.size() + "\n\n");
 			fw.close();
-		} catch (IOException ioe) {
+		}
+		catch (final IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
 
 	}
 
-	private static void mainFucntionMulticore(Amalthea model, File f1, List<Task> tasks) {
+	private static void mainFucntionMulticore(final Amalthea model, final File f1, final List<Task> tasks) {
 		try {
-			File fn = f1;
-			FileWriter fw = new FileWriter(fn, true);
+			final File fn = f1;
+			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("int main(void) \n{\n");
-			for (Task task : tasks) {
-				MappingModel mappingModel = model.getMappingModel();
+			for (final Task task : tasks) {
+				final MappingModel mappingModel = model.getMappingModel();
 				if (mappingModel != null) {
-					List<ProcessingUnit> processingUnits = HardwareUtil.getModulesFromHwModel(ProcessingUnit.class, model);
-					ArrayList<ProcessingUnit> localPU = new ArrayList<ProcessingUnit>();
+					final List<ProcessingUnit> processingUnits = HardwareUtil
+							.getModulesFromHwModel(ProcessingUnit.class, model);
+					final ArrayList<ProcessingUnit> localPU = new ArrayList<ProcessingUnit>();
 					localPU.addAll(processingUnits);
-					HashMap<ProcessingUnit,Long> CoreMap = new HashMap<ProcessingUnit,Long>();
+					final HashMap<ProcessingUnit, Long> CoreMap = new HashMap<ProcessingUnit, Long>();
 					long count = 0;
-					for (ProcessingUnit p: localPU) {
-						CoreMap.put(p, count);	
+					for (final ProcessingUnit p : localPU) {
+						CoreMap.put(p, count);
 						count++;
 					}
-					ProcessingUnit pu = DeploymentUtil.getAssignedCoreForProcess(task, model).iterator().next();
+					final ProcessingUnit pu = DeploymentUtil.getAssignedCoreForProcess(task, model).iterator().next();
 
-					Long coreID = CoreMap.get(pu);
-					fw.write("\txTaskCreate( "+coreID+", v" + task.getName() + ", \"" + task.getName().toUpperCase()
+					final Long coreID = CoreMap.get(pu);
+					fw.write("\txTaskCreate( " + coreID + ", v" + task.getName() + ", \"" + task.getName().toUpperCase()
 							+ "\", configMINIMAL_STACK_SIZE, NULL, main" + task.getName() + ", NULL );\n");
 				}
 				else {
@@ -340,16 +365,17 @@ public class MainFileCreation {
 			fw.write("\t" + "return 0;\n");
 			fw.write("}\n");
 			fw.close();
-		}catch (IOException ioe) {
+		}
+		catch (final IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
 	}
 
 
-	private static void mainFileHeader(File f1) {
+	private static void mainFileHeader(final File f1) {
 		try {
-			File fn = f1;
-			FileWriter fw = new FileWriter(fn, true);
+			final File fn = f1;
+			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("*Title 		:   C File for Tasks Call\n");
 			fw.write("*Description	:	Main file in which scheduling is done \n");
 			fw.write("******************************************************************\n");
@@ -357,16 +383,17 @@ public class MainFileCreation {
 			fw.write("******************************************************************/\n\n\n");
 
 			fw.close();
-		} catch (IOException ioe) {
+		}
+		catch (final IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
 
 	}
 
-	private static void headerIncludesMain(File f1) {
+	private static void headerIncludesMain(final File f1) {
 		try {
-			File fn = f1;
-			FileWriter fw = new FileWriter(fn, true);
+			final File fn = f1;
+			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("/* Standard includes. */\n");
 			fw.write("#include <stdio.h>\n");
 			fw.write("#include <stdlib.h>\n");
@@ -375,16 +402,17 @@ public class MainFileCreation {
 			fw.write("#include \"taskDef.h\"\n");
 			fw.write("#include \"FreeRTOS.h\"\n\n");
 			fw.close();
-		} catch (IOException ioe) {
+		}
+		catch (final IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
 
 	}
 
-	private static void headerIncludesMainRMS(File f1) {
+	private static void headerIncludesMainRMS(final File f1) {
 		try {
-			File fn = f1;
-			FileWriter fw = new FileWriter(fn, true);
+			final File fn = f1;
+			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("/* Standard includes. */\n");
 			fw.write("#include <stdio.h>\n");
 			fw.write("#include <stdlib.h>\n");
@@ -399,18 +427,19 @@ public class MainFileCreation {
 			fw.write("#include \"taskDef.h\"\n\n");
 			fw.write("#define READ_PRECISION_US 1000\n\n\n");
 			fw.close();
-		} catch (IOException ioe) {
+		}
+		catch (final IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
 
 	}
 
-	private static void mainFucntion(File f1, EList<Task> tasks) {
+	private static void mainFucntion(final File f1, final EList<Task> tasks) {
 		try {
-			File fn = f1;
-			FileWriter fw = new FileWriter(fn, true);
+			final File fn = f1;
+			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("int main(void) \n{\n");
-			for (Task task : tasks) {
+			for (final Task task : tasks) {
 				fw.write("\txTaskCreate( v" + task.getName() + ", \"" + task.getName().toUpperCase()
 						+ "\", configMINIMAL_STACK_SIZE, NULL, main" + task.getName() + ", NULL );\n");
 			}
@@ -418,73 +447,94 @@ public class MainFileCreation {
 			fw.write("\t" + "return 0;\n");
 			fw.write("}\n");
 			fw.close();
-		} catch (IOException ioe) {
+		}
+		catch (final IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
 	}
-	//TODO Read paper send by lukas
-	private static void mainTaskPriority(File f1, List<Task> tasks) {
+
+	// TODO Read paper send by lukas
+	private static void mainTaskPriority(final File f1, final List<Task> tasks) {
 		try {
-			File fn = f1;
-			List<Task> localTaskPriority = new ArrayList<Task>();
+			final File fn = f1;
+			final List<Task> localTaskPriority = new ArrayList<Task>();
 			localTaskPriority.addAll(tasks);
 
-			FileWriter fw = new FileWriter(fn, true);
+			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("/* TaskPriorities. */\n");
 
-			HashMap<Task,Long> periodMap = new HashMap<Task,Long>();
-			for (Task task: tasks) {
-				long period = fileUtil.getRecurrence(task).getValue().longValue();
+			final HashMap<Task, Long> periodMap = new HashMap<Task, Long>();
+			for (final Task task : tasks) {
+				final long period = fileUtil.getRecurrence(task).getValue().longValue();
 				periodMap.put(task, period);
 			}
 
-			Map<Task, Long> periodMapSorted = fileUtil.sortByValue(periodMap);
-			for (int i=0;i<periodMapSorted.size();i++) {
-				Task task = (Task) periodMapSorted.keySet().toArray()[i];
-				fw.write("\t#define main" + task.getName() + "\t( tskIDLE_PRIORITY +"
-						+ (i+1) + " )\n");//TODO merge this constval with the value used in time period in FreeRTOS config File - Issue001
+			final Map<Task, Long> periodMapSorted = fileUtil.sortByValue(periodMap);
+			for (int i = 0; i < periodMapSorted.size(); i++) {
+				final Task task = (Task) periodMapSorted.keySet().toArray()[i];
+				fw.write("\t#define main" + task.getName() + "\t( tskIDLE_PRIORITY +" + (i + 1) + " )\n");// TODO
+																											// merge
+																											// this
+																											// constval
+																											// with
+																											// the
+																											// value
+																											// used
+																											// in
+																											// time
+																											// period
+																											// in
+																											// FreeRTOS
+																											// config
+																											// File
+																											// -
+																											// Issue001
 			}
 			/*
-			for (Task task : tasks) {
-				fw.write("\t#define main" + task.getName() + "\t( tskIDLE_PRIORITY + "
-						+ task.getMultipleTaskActivationLimit() + " )\n");
-			}*/
+			 * for (Task task : tasks) { fw.write("\t#define main" +
+			 * task.getName() + "\t( tskIDLE_PRIORITY + " +
+			 * task.getMultipleTaskActivationLimit() + " )\n"); }
+			 */
 			fw.write("\n");
 			fw.close();
-		} catch (IOException ioe) {
+		}
+		catch (final IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
 	}
 
 
-	private static void mainTaskStimuli(Amalthea model, File f1, List<Task> tasks) {
+	private static void mainTaskStimuli(final Amalthea model, final File f1, final List<Task> tasks) {
 		try {
-			File fn = f1;
+			final File fn = f1;
 
-			FileWriter fw = new FileWriter(fn, true);
+			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("/* TaskStimuli. */\n");
-			EList<Stimulus> Stimuli = model.getStimuliModel().getStimuli();
+			final EList<Stimulus> Stimuli = model.getStimuliModel().getStimuli();
 
-			for (Stimulus s : Stimuli)  {
+			for (final Stimulus s : Stimuli) {
 				if (s instanceof PeriodicStimulus) {
-					fw.write("\t#define " + s.getName() + "\t"+((PeriodicStimulus) s).getRecurrence().getValue() +" \n");
+					fw.write("\t#define " + s.getName() + "\t" + ((PeriodicStimulus) s).getRecurrence().getValue()
+							+ " \n");
 				}
 			}
-			/*for (Stimulus s : Stimuli) {
-				if (s instanceof PeriodicStimulus) {
-					System.out.println("Task rec "+((PeriodicStimulus) s).getRecurrence());
-				}
-			//	fw.write("\t#define " + task.getName() + "\t"+fileUtil.getRecurrence(task).getValue() +" \n");
-			}*/
+			/*
+			 * for (Stimulus s : Stimuli) { if (s instanceof PeriodicStimulus) {
+			 * System.out.println("Task rec "+((PeriodicStimulus)
+			 * s).getRecurrence()); } // fw.write("\t#define " + task.getName()
+			 * + "\t"+fileUtil.getRecurrence(task).getValue() +" \n"); }
+			 */
 			fw.write("\n");
 			fw.close();
-		} catch (IOException ioe) {
+		}
+		catch (final IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
 	}
+
 	/**
 	 * helper function to get the Amalthea Model
-	 * 
+	 *
 	 */
 	public Amalthea getModel() {
 		return this.model;

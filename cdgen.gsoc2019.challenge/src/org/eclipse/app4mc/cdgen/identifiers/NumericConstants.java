@@ -10,7 +10,7 @@
  *   Contributors:
  *       Dortmund University of Applied Sciences and Arts - initial API and implementation
  *******************************************************************************/
-package org.app4mc.addon.cdgen.gsoc2019.identifiers;
+package org.eclipse.app4mc.cdgen.identifiers;
 
 public class NumericConstants {
 	public final static int  WCAL_A57_NS = 220;

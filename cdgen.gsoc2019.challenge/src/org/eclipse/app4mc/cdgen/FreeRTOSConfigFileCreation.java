@@ -10,14 +10,14 @@
  *   Contributors:
  *       Dortmund University of Applied Sciences and Arts - initial API and implementation
  *******************************************************************************/
-package org.app4mc.addon.cdgen.gsoc2019;
+package org.eclipse.app4mc.cdgen;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import org.app4mc.addon.cdgen.gsoc2019.utils.fileUtil;
 import org.eclipse.app4mc.amalthea.model.Amalthea;
+import org.eclipse.app4mc.cdgen.utils.fileUtil;
 
 /**
  * Implementation of FreeRTOS specific configuration and macros.

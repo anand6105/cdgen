@@ -10,7 +10,7 @@
  *   Contributors:
  *       Dortmund University of Applied Sciences and Arts - initial API and implementation
  *******************************************************************************/
-package org.app4mc.addon.cdgen.gsoc2019.test;
+package org.eclipse.app4mc.cdgen.test;
 
 import java.io.*;
 import java.util.List;
