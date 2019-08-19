@@ -724,9 +724,7 @@ public class RuntimeUtil {
 					 * time.setValue(0); time.setUnit(TimeUnit.MS);
 					 */
 				}
-				else {
-					result.add(time);
-				}
+
 			}
 			else if (stimulus instanceof SingleStimulus) {
 				switch (tt) {

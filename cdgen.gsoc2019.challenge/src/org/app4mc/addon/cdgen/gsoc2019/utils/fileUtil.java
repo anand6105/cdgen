@@ -1,3 +1,15 @@
+/*******************************************************************************
+ *   Copyright (c) 2019 Dortmund University of Applied Sciences and Arts and others.
+ *   
+ *   This program and the accompanying materials are made
+ *   available under the terms of the Eclipse Public License 2.0
+ *   which is available at https://www.eclipse.org/legal/epl-2.0/
+ *   
+ *   SPDX-License-Identifier: EPL-2.0
+ *   
+ *   Contributors:
+ *       Dortmund University of Applied Sciences and Arts - initial API and implementation
+ *******************************************************************************/
 package org.app4mc.addon.cdgen.gsoc2019.utils;
 
 import java.io.File;
@@ -95,6 +107,28 @@ public class fileUtil {
 		return type;
 	}
 	
+	
+	public static String datatypeSize(String string) {
+		String type = null;
+		switch (string) {
+		case "8 bit":
+			type = "8";
+			break;
+		case "16 bit":
+			type = "16";
+			break;
+		case "32 bit":
+			type = "32";
+			break;
+		case "64 bit":
+			type = "64";
+			break;
+		default:
+			type = "00";
+			break;
+		}
+		return type;
+	}
 
 	/**
 	 * Shared Label definition and initialization structure.

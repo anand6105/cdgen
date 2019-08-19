@@ -1,3 +1,15 @@
+/*******************************************************************************
+ *   Copyright (c) 2019 Dortmund University of Applied Sciences and Arts and others.
+ *   
+ *   This program and the accompanying materials are made
+ *   available under the terms of the Eclipse Public License 2.0
+ *   which is available at https://www.eclipse.org/legal/epl-2.0/
+ *   
+ *   SPDX-License-Identifier: EPL-2.0
+ *   
+ *   Contributors:
+ *       Dortmund University of Applied Sciences and Arts - initial API and implementation
+ *******************************************************************************/
 package org.app4mc.addon.cdgen.gsoc2019;
 
 import java.io.File;
@@ -157,7 +169,7 @@ public class MainRMSFileCreation {
 				}
 				int SharedLabelCounter = SharedLabel.size();
 				if(SharedLabelCounter!=0) {
-					fw.write("\tvoid shared_label_"+sh.toString().replace(" ", "")+"_init();\n");
+					fw.write("\tshared_label_"+sh.toString().replace(" ", "")+"_init();\n");
 					//		fw.write("void shared_label_"+sh.toString().replace(" ", "")+"_init_core();\n");
 
 				}
@@ -198,7 +210,7 @@ public class MainRMSFileCreation {
 				List<Label> dataTypeList=new ArrayList<Label>();
 				int k=0;
 				for(String tl:TypeList) {
-					fw.write(fileUtil.datatype(tl)+", ");
+					fw.write(fileUtil.datatypeSize(tl)+", ");
 					for (Label La:LabelList) {
 						if(LabelTypeMap.get(La).contains(tl)) {
 							dataTypeList.add(La);
@@ -273,7 +285,7 @@ public class MainRMSFileCreation {
 				}
 				int SharedLabelCounter = SharedLabel.size();
 				if(SharedLabelCounter!=0) {
-					fw.write("\tvoid shared_label_"+sh.toString().replace(" ", "")+"_init();\n");
+					fw.write("\tshared_label_"+sh.toString().replace(" ", "")+"_init();\n");
 					//		fw.write("void shared_label_"+sh.toString().replace(" ", "")+"_init_core();\n");
 
 				}

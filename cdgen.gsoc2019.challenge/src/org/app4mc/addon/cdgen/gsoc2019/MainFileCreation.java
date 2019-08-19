@@ -1,3 +1,15 @@
+/*******************************************************************************
+ *   Copyright (c) 2019 Dortmund University of Applied Sciences and Arts and others.
+ *   
+ *   This program and the accompanying materials are made
+ *   available under the terms of the Eclipse Public License 2.0
+ *   which is available at https://www.eclipse.org/legal/epl-2.0/
+ *   
+ *   SPDX-License-Identifier: EPL-2.0
+ *   
+ *   Contributors:
+ *       Dortmund University of Applied Sciences and Arts - initial API and implementation
+ *******************************************************************************/
 package org.app4mc.addon.cdgen.gsoc2019;
 
 import java.io.File;
@@ -50,63 +62,11 @@ public class MainFileCreation {
 	System.out.println("Main File Creation Begins");
 	if (0x2000 == (configFlag & 0xF000)) {
 		fileCreatePthread(model, srcPath);
-	}else {
-		fileCreate(model, srcPath, configFlag);
 	}
 	System.out.println("Main File Creation Ends");
 	}
 
-	/**
-	 * MainFileCreation File Creation
-	 * 
-	 * @param model
-	 * @param srcPath
-	 * @param configFlag
-	 * @throws IOException
-	 */
-	private static void fileCreate(Amalthea model, String srcPath, int configFlag) throws IOException {
-		EList<SchedulerAllocation> CoreNo = model.getMappingModel().getSchedulerAllocation();
-		int k=0;
-		for(SchedulerAllocation c:CoreNo) {
-			ProcessingUnit pu = c.getResponsibility().get(0);
-			Set<Task> tasklist = DeploymentUtil.getTasksMappedToCore(pu, model); 
-			List<Task> tasks = new ArrayList<Task>();
-			String fname = srcPath + File.separator + "main"+k+".c";
-			File f2 = new File(srcPath);
-			File f1 = new File(fname);
-			f2.mkdirs();
-			try {
-				f1.createNewFile();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-			File fn = f1;
-			FileWriter fw = new FileWriter(fn, true);
-			try {
-				fileUtil.fileMainHeader(f1);
-				mainFileHeader(f1);
-				if((0x0100 == (0x0F00 & configFlag)) & (0x3000 == (0xF000 & configFlag)) ) {
-					headerIncludesMainRMS(f1);
-					mainTaskStimuli(model, f1, tasks);
-					mainTaskPriority(f1, tasks);
-					//mainFucntionRMS(model, f1, tasks);
-				}else {
-					headerIncludesMain(f1);
-					sleepTimerMs(f1);
-					mainTaskPriority(f1, tasks);
-					mainFucntionMulticore(model, f1, tasks);
-				}
-			} finally {
-				try {
-					fw.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			k++;
-		}
-	}
+	
 
 	/**
 	 * Shared Label definition and initialization structure.
@@ -261,7 +221,7 @@ public class MainFileCreation {
 			try {
 				fileUtil.fileMainHeader(f1);
 				mainFileHeader(f1);
-				headerIncludesMainPthread(f1, model);
+				headerIncludesMainPthread(f1, model, k, tasks);
 				sleepTimerMsPthread(f1);
 				mainFucntionPthread(f1, tasks);
 			} finally {
@@ -329,7 +289,7 @@ public class MainFileCreation {
 		}
 	}
 
-	private static void headerIncludesMainPthread(File f1, Amalthea model2) {
+	private static void headerIncludesMainPthread(File f1, Amalthea model2, int k, Set<Task> tasks) {
 		try {
 			File fn = f1;
 			FileWriter fw = new FileWriter(fn, true);
@@ -339,8 +299,8 @@ public class MainFileCreation {
 			fw.write("#include <pthread.h>\n");
 			fw.write("#include <string.h>\n\n");
 			fw.write("/* Scheduler includes. */\n");
-			fw.write("#include \"taskDef.h\"\n");
-			fw.write("#define NUM_THREADS\t" + model2.getSwModel().getTasks().size() + "\n\n");
+			fw.write("#include \"taskDef"+k+".h\"\n");
+			fw.write("#define NUM_THREADS\t" + tasks.size() + "\n\n");
 			fw.close();
 		} catch (IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());

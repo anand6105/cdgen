@@ -1,3 +1,15 @@
+/*******************************************************************************
+ *   Copyright (c) 2019 Dortmund University of Applied Sciences and Arts and others.
+ *
+ *   This program and the accompanying materials are made
+ *   available under the terms of the Eclipse Public License 2.0
+ *   which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ *   SPDX-License-Identifier: EPL-2.0
+ *
+ *   Contributors:
+ *       Dortmund University of Applied Sciences and Arts - initial API and implementation
+ *******************************************************************************/
 package org.app4mc.addon.cdgen.gsoc2019;
 
 import java.io.File;
@@ -16,8 +28,6 @@ import org.eclipse.emf.common.util.EList;
 
 /**
  * Implementation of Runnable Definition with Runnable specific delay.
- * 
- * @author Ram Prasath Govindarajan
  *
  */
 
@@ -26,26 +36,27 @@ public class ArmCodeFileCreation {
 
 	/**
 	 * Constructor ArmCodeFileCreation.
-	 * 
+	 *
 	 * @param Model
 	 * @param srcPath
 	 * @param hdrPath
 	 * @param configFlag
 	 * @throws IOException
 	 */
-	public ArmCodeFileCreation(final Amalthea Model, String srcPath, String hdrPath, int  configFlag) throws IOException {
+	public ArmCodeFileCreation(final Amalthea Model, final String srcPath, final String hdrPath, final int configFlag)
+			throws IOException {
 		this.model = Model;
-		EList<Task> tasks = model.getSwModel().getTasks();
-		EList<Runnable> runnables = model.getSwModel().getRunnables();
+		final EList<Task> tasks = this.model.getSwModel().getTasks();
+		final EList<Runnable> runnables = this.model.getSwModel().getRunnables();
 		System.out.println("Runnable File Creation Begins");
-		fileCreate(model, srcPath, hdrPath, configFlag, tasks, runnables);
+		fileCreate(this.model, srcPath, hdrPath, configFlag, tasks, runnables);
 		System.out.println("Runnable File Creation Ends");
 
 	}
 
 	/**
-	 * file creation and specification for armcode file 
-	 * 
+	 * file creation and specification for armcode file
+	 *
 	 * @param model
 	 * @param srcPath
 	 * @param hdrPath
@@ -54,20 +65,21 @@ public class ArmCodeFileCreation {
 	 * @param runnables
 	 * @throws IOException
 	 */
-	private static void fileCreate(Amalthea model, String srcPath, String hdrPath, int configFlag, EList<Task> tasks,
-			EList<Runnable> runnables) throws IOException {
-		String fname = srcPath + File.separator + "armcode.c";
-		File f2 = new File(srcPath);
-		File f1 = new File(fname);
+	private static void fileCreate(final Amalthea model, final String srcPath, final String hdrPath,
+			final int configFlag, final EList<Task> tasks, final EList<Runnable> runnables) throws IOException {
+		final String fname = srcPath + File.separator + "armcode.c";
+		final File f2 = new File(srcPath);
+		final File f1 = new File(fname);
 		f2.mkdirs();
 		try {
 			f1.createNewFile();
-		} catch (IOException e) {
+		}
+		catch (final IOException e) {
 			e.printStackTrace();
 		}
 
-		File fn = f1;
-		FileWriter fw = new FileWriter(fn, true);
+		final File fn = f1;
+		final FileWriter fw = new FileWriter(fn, true);
 		try {
 			if (0x3110 == (configFlag & 0xFFF0)) {
 				fileUtil.fileMainHeader(f1);
@@ -75,17 +87,20 @@ public class ArmCodeFileCreation {
 				headerIncludesArmCode(f1);
 				nsleep(f1);
 				zynqmain(model, f1);
-			} else {
+			}
+			else {
 				fileUtil.fileMainHeader(f1);
 				runFileHeader(f1);
 				headerIncludesArmCode(f1);
 				nsleep(f1);
 				zynqmain(model, f1);
 			}
-		} finally {
+		}
+		finally {
 			try {
 				fw.close();
-			} catch (IOException e) {
+			}
+			catch (final IOException e) {
 				e.printStackTrace();
 			}
 		}
@@ -93,33 +108,34 @@ public class ArmCodeFileCreation {
 
 	/**
 	 * ArmCode Header Title note.
-	 * 
+	 *
 	 * @param file
 	 */
-	private static void runFileHeader(File file) {
+	private static void runFileHeader(final File file) {
 		try {
-			File fn = file;
-			FileWriter fw = new FileWriter(fn, true);
+			final File fn = file;
+			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("*Title 		:   ArmCode Header\n");
 			fw.write("*Description	:	Header file for Deploy/Offloading of the task to EPI\n");
 			fw.write("******************************************************************\n");
 			fw.write("******************************************************************/\n\n\n");
 
 			fw.close();
-		} catch (IOException ioe) {
+		}
+		catch (final IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
 	}
 
 	/**
-	 * nsleep - function call structure. 
-	 * 
+	 * nsleep - function call structure.
+	 *
 	 * @param file
 	 */
-	private static void nsleep(File file) {
+	private static void nsleep(final File file) {
 		try {
-			File fn = file;
-			FileWriter fw = new FileWriter(fn, true);
+			final File fn = file;
+			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("int nsleep(long miliseconds){\n");
 			fw.write("\tstruct timespec req, rem;\n");
 			fw.write("\tif(miliseconds > 999){\n");
@@ -132,30 +148,31 @@ public class ArmCodeFileCreation {
 			fw.write("\treturn nanosleep(&req , &rem);\n");
 			fw.write("}\n");
 			fw.close();
-		} catch (IOException ioe) {
+		}
+		catch (final IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
 	}
 
 	/**
-	 * main function for the zynq in which we deploy the 
-	 * 
+	 * main function for the zynq in which we deploy the
+	 *
 	 * @param model
 	 * @param file
 	 */
-	private static void zynqmain(Amalthea model, File file) {
+	private static void zynqmain(final Amalthea model, final File file) {
 		try {
-			File fn = file;
-			FileWriter fw = new FileWriter(fn, true);
-			MappingModel mappingModel = model.getMappingModel();
+			final File fn = file;
+			final FileWriter fw = new FileWriter(fn, true);
+			final MappingModel mappingModel = model.getMappingModel();
 			if (mappingModel != null) {
-				EList<SchedulerAllocation> processingUnits = model.getMappingModel().getSchedulerAllocation();
-				ArrayList<SchedulerAllocation> localPU = new ArrayList<SchedulerAllocation>();
+				final EList<SchedulerAllocation> processingUnits = model.getMappingModel().getSchedulerAllocation();
+				final ArrayList<SchedulerAllocation> localPU = new ArrayList<SchedulerAllocation>();
 				localPU.addAll(processingUnits);
-				HashMap<SchedulerAllocation,Long> CoreMap = new HashMap<SchedulerAllocation,Long>();
+				final HashMap<SchedulerAllocation, Long> CoreMap = new HashMap<SchedulerAllocation, Long>();
 				long count = 0;
-				for (SchedulerAllocation pu: localPU) {
-					CoreMap.put(pu, count);	
+				for (final SchedulerAllocation pu : localPU) {
+					CoreMap.put(pu, count);
 					count++;
 				}
 				fw.write("int main(){\n");
@@ -169,70 +186,98 @@ public class ArmCodeFileCreation {
 				fw.write("\te_init(NULL);\n");
 				fw.write("\te_reset_system();\n");
 				fw.write("\te_get_platform_info(&epiphany);\n");
-				if(processingUnits.size() == 1) {
-					fw.write("\te_open(&dev,0,0,0,0);\n");
-				}else if(processingUnits.size() > 1 && processingUnits.size() < 5) {
-					fw.write("\te_open(&dev,0,0,2,2);\n");
-				}else if(processingUnits.size() > 4 && processingUnits.size() < 10) {
-					fw.write("\te_open(&dev,0,0,3,3);\n");
-				}else if(processingUnits.size() > 9 && processingUnits.size() < 17) {
-					fw.write("\te_open(&dev,0,0,4,4);\n");
+				int core1 = 0;
+				int core2 = 0;
+				if (processingUnits.size() == 1) {
+					core1 = 0;
+					core2 = 0;
+					// fw.write("\te_open(&dev,0,0,0,0);\n");
 				}
-				//Core Numbering
-				// 03	13	23	33
-				// 02	12	22	32
-				// 01	11	21	31
-				// 00	10	20	30
+				else if (processingUnits.size() > 1 && processingUnits.size() < 5) {
+					core1 = 2;
+					core2 = 2;
+					// fw.write("\te_open(&dev,0,0,2,2);\n");
+				}
+				else if (processingUnits.size() > 4 && processingUnits.size() < 10) {
+					core1 = 3;
+					core2 = 3;
+					// fw.write("\te_open(&dev,0,0,3,3);\n");
+				}
+				else if (processingUnits.size() > 9 && processingUnits.size() < 17) {
+					core1 = 4;
+					core2 = 4;
+					// fw.write("\te_open(&dev,0,0,4,4);\n");
+				}
+				fw.write("\te_open(&dev,0,0," + core1 + "," + core2 + ");\n");
+				/* Core 1 */
+				// 00
+				/* Core 2 */
+				// 00 10
+				// 01 11
+				/* Core 3 */
+				// 00 10 20
+				// 01 11 21
+				// 02 12 22
+				/* Core 4 */
+				// 00 10 20 30
+				// 01 11 21 31
+				// 02 12 22 32
+				// 03 13 23 33
 
 				fw.write("\te_reset_group(&dev);\n");
-				int k=0;
-				ArrayList<String> result = new ArrayList<String>();
-				for(int i=0; i<localPU.size();i++) {
-					for(int j=0; j<localPU.size();j++) {
-						if(k<localPU.size()) {
-							fw.write("\te_return_stat_t\tresult"+k+";\n");
+				int k = 0;
+				final ArrayList<String> result = new ArrayList<String>();
+				for (int i = 0; i < localPU.size(); i++) {
+					for (int j = 0; j < localPU.size(); j++) {
+						if (k < localPU.size()) {
+							fw.write("\te_return_stat_t\tresult" + k + ";\n");
 							k++;
 						}
+
 					}
 				}
-				int k3=0;
-				for(int i=0; i<localPU.size();i++) {
-					for(int j=0; j<localPU.size();j++) {
-						if(k3<localPU.size()) {
-							fw.write("\tunsigned int message"+k3+"[9];\n");
+				int k3 = 0;
+				for (int i = 0; i < localPU.size(); i++) {
+					for (int j = 0; j < localPU.size(); j++) {
+						if (k3 < localPU.size()) {
+							fw.write("\tunsigned int message" + k3 + "[9];\n");
 							k3++;
 						}
 					}
 				}
-				int k1=0;
-				for(int i=0; i<localPU.size()&i<4;i++) {
-					for(int j=0; j<localPU.size()&j<4;j++) {
-						if(k1<localPU.size()) {
-							fw.write("\tresult"+k1+"=  e_load(\"main"+k1+".elf\",&dev,"+i+","+j+",E_FALSE);\n");
-							result.add("result"+k1+"!=E_OK");
+				int k1 = 0;
+				for (int i = 0; i < core1; i++) {
+					for (int j = 0; j < core2; j++) {
+						if (k1 < localPU.size()) {
+							fw.write("\tresult" + k1 + "=  e_load(\"main" + k1 + ".elf\",&dev," + i + "," + j
+									+ ",E_FALSE);\n");
+							result.add("result" + k1 + "!=E_OK");
 							k1++;
 						}
 					}
 				}
 				String resultFinal = "";
-				for(int k2=0; k2<result.size();k2++) {
-				//	System.out.println("Size ==> "+result.size());
+				for (int k2 = 0; k2 < result.size(); k2++) {
+					// System.out.println("Size ==> "+result.size());
 					resultFinal = resultFinal + (result.get(k2) + "||");
-					if(k2==(result.size()-2)) {
+					if (k2 == (result.size() - 2)) {
 						k2++;
-						resultFinal = resultFinal+result.get(k2);
+						resultFinal = resultFinal + result.get(k2);
 						break;
 					}
 				}
-				int k4=0;
-				for(int i=0; i<localPU.size()&i<4;i++) {
-					for(int j=0; j<localPU.size()&j<4;j++) {
-						if(k4<localPU.size()) {
-							if(k4==0)
-								fw.write("\tif (result"+k4+"!=E_OK){\n");
-							else
-								fw.write("\telse if (result"+k4+"!=E_OK){\n");
-							fw.write("\t\tfprintf(stderr,\"Error Loading the Epiphany Application "+k4+" %i\\n\", result"+k4+");");
+				int k4 = 0;
+				for (int i = 0; i < localPU.size() & i < 4; i++) {
+					for (int j = 0; j < localPU.size() & j < 4; j++) {
+						if (k4 < localPU.size()) {
+							if (k4 == 0) {
+								fw.write("\tif (result" + k4 + "!=E_OK){\n");
+							}
+							else {
+								fw.write("\telse if (result" + k4 + "!=E_OK){\n");
+							}
+							fw.write("\t\tfprintf(stderr,\"Error Loading the Epiphany Application " + k4
+									+ " %i\\n\", result" + k4 + ");");
 							fw.write("\n\t}\n");
 							k4++;
 						}
@@ -246,18 +291,20 @@ public class ArmCodeFileCreation {
 				fw.write("\tint prevtaskMessage;\n");
 				fw.write("\tint prevpollLoopCounter = 0;\n");
 				fw.write("\tfor (pollLoopCounter=0;pollLoopCounter<=40;pollLoopCounter++){\n");
-				int k2=0;
-				for(int i=0; i<localPU.size()&i<4;i++) {
-					for(int j=0; j<localPU.size()&j<4;j++) {
-						if(k2<localPU.size()) {
-							fw.write("\t\te_read(&dev,"+i+","+j+",addr, &message"+k2+", sizeof(message"+k2+"));\n");
-							fw.write("\t\tfprintf(stderr, \"tick1 %3d||\",message"+k2+"[8]+1);\n");
-							fw.write("\t\tfprintf(stderr,\"task holding core"+k2+" %2u||\", message"+k2+"[6]);\n");
+				int k2 = 0;
+				for (int i = 0; i < core1; i++) {
+					for (int j = 0; j < core2; j++) {
+						if (k2 < localPU.size()) {
+							fw.write("\t\te_read(&dev," + i + "," + j + ",addr, &message" + k2 + ", sizeof(message" + k2
+									+ "));\n");
+							fw.write("\t\tfprintf(stderr, \"tick1 %3d||\",message" + k2 + "[8]+1);\n");
+							fw.write("\t\tfprintf(stderr,\"task holding core" + k2 + " %2u||\", message" + k2
+									+ "[6]);\n");
 							k2++;
 						}
 					}
 				}
-				fw.write("\t\tfprintf(stderr,\"\\n\");\n");				
+				fw.write("\t\tfprintf(stderr,\"\\n\");\n");
 				fw.write("\t\tusleep(READ_PRECISION_US);\n");
 				fw.write("\t}\n");
 				fw.write("\tfprintf(stderr,\"----------------------------------------------\\n\");\n");
@@ -267,21 +314,23 @@ public class ArmCodeFileCreation {
 				fw.write("\treturn 0;\n");
 				fw.write("}\n");
 				fw.close();
-			}} catch (IOException ioe) {
-				System.err.println("IOException: " + ioe.getMessage());
 			}
+		}
+		catch (final IOException ioe) {
+			System.err.println("IOException: " + ioe.getMessage());
+		}
 	}
 
 
 	/**
 	 * header inclusion for armCode file
-	 * 
+	 *
 	 * @param file
 	 */
-	private static void headerIncludesArmCode(File file) {
+	private static void headerIncludesArmCode(final File file) {
 		try {
-			File fn = file;
-			FileWriter fw = new FileWriter(fn, true);
+			final File fn = file;
+			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("/* Standard includes. */\n");
 			fw.write("#include <stdio.h>\n");
 			fw.write("#include <stdlib.h>\n");
@@ -293,7 +342,8 @@ public class ArmCodeFileCreation {
 			fw.write("#include \"debugFlags.h\"\n");
 			fw.write("#define READ_PRECISION_US 1000\n\n\n");
 			fw.close();
-		} catch (IOException ioe) {
+		}
+		catch (final IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
 
@@ -302,7 +352,7 @@ public class ArmCodeFileCreation {
 
 	/**
 	 * helper function to get the Amalthea Model
-	 * 
+	 *
 	 */
 	public Amalthea getModel() {
 		return this.model;

@@ -1,3 +1,15 @@
+/*******************************************************************************
+ *   Copyright (c) 2019 Dortmund University of Applied Sciences and Arts and others.
+ *   
+ *   This program and the accompanying materials are made
+ *   available under the terms of the Eclipse Public License 2.0
+ *   which is available at https://www.eclipse.org/legal/epl-2.0/
+ *   
+ *   SPDX-License-Identifier: EPL-2.0
+ *   
+ *   Contributors:
+ *       Dortmund University of Applied Sciences and Arts - initial API and implementation
+ *******************************************************************************/
 package org.app4mc.addon.cdgen.gsoc2019;
 
 import java.io.File;
@@ -214,7 +226,7 @@ public class TaskFileCreation {
 			try {
 				fileUtil.fileMainHeader(f3);
 				taskFileHeader(f3);
-				headerIncludesPthreadTask(f3);
+				headerIncludesPthreadTask(f3, k);
 				mainStaticTaskPthreadDef(f3, tasks);
 			} finally {
 				try {
@@ -227,7 +239,7 @@ public class TaskFileCreation {
 		}
 	}
 
-	private static void headerIncludesPthreadTask(File f3) {
+	private static void headerIncludesPthreadTask(File f3, int k) {
 		try {
 			File fn = f3;
 			FileWriter fw = new FileWriter(fn, true); // the true will append the new data
@@ -236,6 +248,10 @@ public class TaskFileCreation {
 			fw.write("#include <stdlib.h>\n");
 			fw.write("#include <string.h>\n\n");
 			fw.write("#include <stdint.h>\n\n");
+			fw.write("/* Scheduler includes. */\n");
+			fw.write("#include \"runnable"+k+".h\"\n");
+			fw.write("#include \"label"+k+".h\"\n");
+			
 			fw.close();
 		} catch (IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
@@ -404,10 +420,8 @@ public class TaskFileCreation {
 			fw.write("#include <pthread.h>\n");
 			fw.write("#include <sched.h>\n");
 			fw.write("#include <stdint.h>\n\n");
-			fw.write("/* Scheduler includes. */\n");
-			fw.write("#include \"runnable.h\"\n");
-			fw.write("#include \"taskDef.h\"\n\n");
-			fw.write("#define DELAY_MULT 100\n\n\n");
+			
+			//fw.write("#define DELAY_MULT 100\n\n\n");
 			fw.close();
 		} catch (IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());

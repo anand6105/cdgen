@@ -1,3 +1,15 @@
+/*******************************************************************************
+ *   Copyright (c) 2019 Dortmund University of Applied Sciences and Arts and others.
+ *   
+ *   This program and the accompanying materials are made
+ *   available under the terms of the Eclipse Public License 2.0
+ *   which is available at https://www.eclipse.org/legal/epl-2.0/
+ *   
+ *   SPDX-License-Identifier: EPL-2.0
+ *   
+ *   Contributors:
+ *       Dortmund University of Applied Sciences and Arts - initial API and implementation
+ *******************************************************************************/
 package org.app4mc.addon.cdgen.gsoc2019;
 
 import java.io.File;
@@ -331,6 +343,7 @@ public class LabelFileCreation {
 						String type = share.getSize().toString();
 						if((type.equals(rLT))&(readLabels.contains(share))) {
 							//fw.write("\t\t" + share.getName()+"_"+task.getName() + "\t=\tshared_label_" + type + "_read("+LabelIndexedType.get(share)+");\n");
+							fw.write("\t\t" + share.getName()+"_"+task.getName() + "++;\n");
 							fw.write("\t\tshared_label_" + type.replace(" ", "") + "_write("+LabelWriteIndexedType.get(share)+"," + share.getName()+"_"+task.getName() + " );\n");
 						}
 					}
