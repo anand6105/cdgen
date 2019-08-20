@@ -12,14 +12,20 @@
  *******************************************************************************/
 package org.eclipse.app4mc.cdgen.checks;
 
-import org.eclipse.app4mc.amalthea.model.Amalthea;
-import org.eclipse.app4mc.cdgen.*;
-import org.eclipse.app4mc.cdgen.test.testTaskStructure;
-
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
-import java.awt.Desktop;
+
+import org.eclipse.app4mc.amalthea.model.Amalthea;
+import org.eclipse.app4mc.cdgen.ArmCodeFileCreation;
+import org.eclipse.app4mc.cdgen.FreeRTOSConfigFileCreation;
+import org.eclipse.app4mc.cdgen.LabelFileCreation;
+import org.eclipse.app4mc.cdgen.MainRMSFileCreation;
+import org.eclipse.app4mc.cdgen.MakeFileCreation;
+import org.eclipse.app4mc.cdgen.RunFileCreation;
+import org.eclipse.app4mc.cdgen.SharedLabelsFileCreation;
+import org.eclipse.app4mc.cdgen.TaskFileCreation;
+import org.eclipse.app4mc.cdgen.test.testTaskStructure;
 
 
 /**

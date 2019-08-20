@@ -34,13 +34,10 @@ public class testRunnable {
 	public testRunnable(final Amalthea Model, final String path1, final int configFlag, final int k,
 			final List<Task> tasks) throws IOException {
 		this.model = Model;
-		boolean pthreadFlag = false;
 		if (0x2000 != (configFlag & 0xF000)) {
-			pthreadFlag = false;
 			fileTestRunnable(this.model, path1, k, tasks);
 		}
 		else {
-			pthreadFlag = true;
 			fileTestRunnablePthread(this.model, path1, k, tasks);
 		}
 	}
@@ -59,8 +56,7 @@ public class testRunnable {
 		final FileReader fr = new FileReader(f1);
 		final BufferedReader br = new BufferedReader(fr);
 		String s;
-		final String input = "\tRunnable", input1 = "void";
-		final int count = 0;
+		final String input1 = "void";
 		int count1 = 0;
 		while ((s = br.readLine()) != null) {
 			words = s.split(" ");

@@ -12,13 +12,14 @@
  *******************************************************************************/
 package org.eclipse.app4mc.cdgen.test;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 
 import org.eclipse.app4mc.amalthea.model.Amalthea;
-import org.eclipse.app4mc.amalthea.model.Runnable;
 import org.eclipse.app4mc.amalthea.model.Task;
-import org.eclipse.emf.common.util.EList;
 
 /**
  * Implementation of testing Task, Runnable structure and Label types.

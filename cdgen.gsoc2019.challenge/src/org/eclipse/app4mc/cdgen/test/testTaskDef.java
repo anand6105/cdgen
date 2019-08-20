@@ -12,13 +12,14 @@
  *******************************************************************************/
 package org.eclipse.app4mc.cdgen.test;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 
 import org.eclipse.app4mc.amalthea.model.Amalthea;
-import org.eclipse.app4mc.amalthea.model.Runnable;
 import org.eclipse.app4mc.amalthea.model.Task;
-import org.eclipse.emf.common.util.EList;
 
 /**
  * Implementation of testing Task, Runnable structure and Label types.
@@ -32,12 +33,9 @@ public class testTaskDef
 
 		public testTaskDef(final Amalthea model, String path1, int configFlag, int k, List<Task> tasks) throws IOException {
 
-			boolean pthreadFlag = false;
 			if (0x2000 != (configFlag & 0xF000)) {
-				pthreadFlag = false;
 				fileTestTask(model, path1, configFlag, k, tasks);
 			} else{
-				pthreadFlag = true;
 				fileTestTaskPthread(model, path1, configFlag, k, tasks);
 			}
 		}
