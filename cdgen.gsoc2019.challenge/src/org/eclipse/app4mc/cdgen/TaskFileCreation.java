@@ -46,7 +46,6 @@ import org.eclipse.emf.common.util.EList;
 /**
  * Implementation of Task Definition with Cin and Cout Calls.
  *
- * @author Ram Prasath Govindarajan
  *
  */
 
@@ -111,7 +110,6 @@ public class TaskFileCreation {
 			try {
 				fileUtil.fileMainHeader(f1);
 				taskFileHeader(f1);
-				// TODO Message read and write is pending
 				if ((0x3000 == (0xF000 & configFlag)) & (0x0100 == (0x0F00 & configFlag))) {
 					headerIncludesTaskHeadRMS(f1, k);
 					TaskCounter(f1, tasks);
@@ -299,23 +297,6 @@ public class TaskFileCreation {
 
 	}
 
-	private static void taskCounterRMS(final File f3, final EList<Task> tasks) {
-		try {
-			final File fn = f3;
-			final FileWriter fw = new FileWriter(fn, true);
-			fw.write("/* Static definition of the tasks. */\n");
-			for (final Task task : tasks) {
-				fw.write("void v" + task.getName() + "( void *t );\n");
-			}
-			fw.write("\n");
-			fw.close();
-		}
-		catch (final IOException ioe) {
-			System.err.println("IOException: " + ioe.getMessage());
-		}
-
-	}
-
 	private static void TaskDefinitionPthread(final File f1, final List<Task> tasks, final Amalthea model,
 			final boolean preemptionFlag) {
 		try {
@@ -485,102 +466,11 @@ public class TaskFileCreation {
 		}
 	}
 
-	private static void headerIncludesTask(final File f1) {
-		try {
-			final File fn = f1;
-			final FileWriter fw = new FileWriter(fn, true);
-			fw.write("/* Standard includes. */\n");
-			fw.write("#include <stdio.h>\n");
-			fw.write("#include <stdlib.h>\n");
-			fw.write("#include <string.h>\n\n");
-			fw.write("#include <stdint.h>\n\n");
-			fw.write("/* Scheduler includes. */\n");
-			fw.write("#include \"FreeRTOS.h\"\n\n");
-			fw.write("#include \"queue.h\"\n");
-			fw.write("#include \"croutine.h\"\n");
-			fw.write("#include \"runnable.h\"\n");
-			fw.write("#include \"task.h\"\n");
-			fw.close();
-		}
-		catch (final IOException ioe) {
-			System.err.println("IOException: " + ioe.getMessage());
-		}
-	}
-
-	private static void headerIncludesTaskHead(final File f1, final int k) {
-		try {
-			final File fn = f1;
-			final FileWriter fw = new FileWriter(fn, true);
-			fw.write("/* Standard includes. */\n");
-			fw.write("#include <stdio.h>\n");
-			fw.write("#include <stdlib.h>\n");
-			fw.write("#include <string.h>\n\n");
-			fw.write("#include <stdint.h>\n\n");
-			fw.write("/* Scheduler includes. */\n");
-			fw.write("#include \"FreeRTOS.h\"\n");
-			fw.write("#include \"queue.h\"\n");
-			fw.write("#include \"croutine.h\"\n");
-			fw.write("#include \"ParallellaUtils.h\"\n");
-			// fw.write("#include \"label"+k+".h\"\n");
-			fw.write("#include \"task.h\"\n");
-			fw.close();
-		}
-		catch (final IOException ioe) {
-			System.err.println("IOException: " + ioe.getMessage());
-		}
-	}
-
 	private static void headerIncludesTaskHeadRMS(final File f1, final int k) {
 		try {
 			final File fn = f1;
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("#include \"taskDef" + k + ".h\"\n\n");
-			fw.close();
-		}
-		catch (final IOException ioe) {
-			System.err.println("IOException: " + ioe.getMessage());
-		}
-	}
-
-	private static void TaskDefinition(final Amalthea model, final File f1, final List<Task> tasks,
-			final boolean preemptionFlag) {
-		try {
-			final File fn = f1;
-			final FileWriter fw = new FileWriter(fn, true);
-			int taskCount = 0;
-			for (final Task task : tasks) {
-				List<Runnable> runnablesOfTask = SoftwareUtil.getRunnableList(task, null);
-				runnablesOfTask = runnablesOfTask.stream().distinct().collect(Collectors.toList());
-				fw.write("\n\tvoid v" + task.getName() + "( )" + "\n\t{\n");
-				fw.write("\tportTickType xLastWakeTime=xTaskGetTickCount();\n");
-				fw.write("\n\tupdateDebugFlag(700);");
-				final MappingModel mappingModel = model.getMappingModel();
-				ProcessingUnit pu = null;
-				if (mappingModel != null) {
-					pu = DeploymentUtil.getAssignedCoreForProcess(task, model).iterator().next();
-					Time taskTime = RuntimeUtil.getExecutionTimeForProcess(task, pu, null, TimeType.WCET);
-					taskTime = TimeUtil.convertToTimeUnit(taskTime, TimeUnit.MS);
-					final BigInteger sleepTime = taskTime.getValue();
-					final BigInteger b2 = new BigInteger("1000");
-					final int comparevalue = sleepTime.compareTo(b2);
-					if (comparevalue < 0) {
-						fw.write("\n\tsleepTimerMs(1 , 1" + (taskCount + 1) + ");\n");
-					}
-					else {
-						fw.write("\n\tsleepTimerMs(" + sleepTime + ", " + taskCount + 1 + ");\n");
-					}
-				}
-				fw.write("\n\ttaskCount" + task.getName() + "++;");
-				fw.write("\n\ttraceTaskPasses(" + taskCount + ", taskCount" + task.getName() + ");");
-				fw.write("\n\ttraceRunningTask(0);\n");
-				final Time tasktime = fileUtil.getRecurrence(task);
-				double sleepTime = 0;
-				if (tasktime != null) {
-					sleepTime = tasktime.getValue().doubleValue();
-				}
-				fw.write("\t}\n\n");
-				taskCount++;
-			}
 			fw.close();
 		}
 		catch (final IOException ioe) {
@@ -625,20 +515,14 @@ public class TaskFileCreation {
 				final Integer taskCount = taskIndex.get(task);
 				List<Runnable> runnablesOfTask = SoftwareUtil.getRunnableList(task, null);
 				runnablesOfTask = runnablesOfTask.stream().distinct().collect(Collectors.toList());
-				final EList<Label> labellist1;
-				for (final Runnable run : runnablesOfTask) {
-					final Set<Label> labellist = SoftwareUtil.getAccessedLabelSet(run, null);
-				}
 				fw.write("\n");
 				final List<Label> taskLabelList = TaskSpecificLabel(model, task);
 				for (final Label lab : taskLabelList) {
 					final String type = fileUtil.datatype(lab.getSize().toString());
-					final long init = fileUtil.intialisation(lab.getSize().toString());
 					fw.write("\t" + type + "\t" + lab.getName() + ";\n");
 				}
 				fw.write("\n");
 				fw.write("\n\n");
-				final Set<Label> labellist = SoftwareUtil.getAccessedLabelSet(task, null);
 				fw.write("\n\tvoid v" + task.getName() + "()" + "\n\t{\n");
 
 				// fw.write("\n\n");
@@ -669,24 +553,6 @@ public class TaskFileCreation {
 				fw.write("\n\t\t\ttaskCount" + task.getName() + "++;");
 				fw.write("\n\t\t\ttraceTaskPasses(" + taskCount + ", taskCount" + task.getName() + ");");
 				fw.write("\n\t\t\ttraceRunningTask(0);\n");
-				final Time tasktime = fileUtil.getRecurrence(task);
-				final double sleepTime = 0;
-				if (tasktime != null) {
-					// sleepTime =
-					// TimeUtil.getAsTimeUnit(fileUtil.getRecurrence(task),
-					// null);
-				}
-				final EList<Stimulus> Stimuli = model.getStimuliModel().getStimuli();
-
-				for (final Stimulus s : Stimuli) {
-					if (s instanceof PeriodicStimulus) {
-						if (task.getStimuli().get(0) == s) {
-							// fw.write("\t\t\tvTaskDelayUntil(&xLastWakeTime, "
-							// + ((PeriodicStimulus)
-							// s).getRecurrence().getValue() +");\n");
-						}
-					}
-				}
 				fw.write("\t}\n\n");
 			}
 			fw.close();
@@ -706,19 +572,13 @@ public class TaskFileCreation {
 				Integer taskCount = taskIndex.get(task);
 				List<Runnable> runnablesOfTask = SoftwareUtil.getRunnableList(task, null);
 				runnablesOfTask = runnablesOfTask.stream().distinct().collect(Collectors.toList());
-				final EList<Label> labellist1;
-				for (final Runnable run : runnablesOfTask) {
-					final Set<Label> labellist = SoftwareUtil.getAccessedLabelSet(run, null);
-				}
 				final List<Label> taskLabelList = TaskSpecificLabel(model, task);
 				fw.write("\n");
 				for (final Label lab : taskLabelList) {
 					final String type = fileUtil.datatype(lab.getSize().toString());
-					final long init = fileUtil.intialisation(lab.getSize().toString());
 					fw.write("\t\t" + type + "\t" + lab.getName() + ";\n");
 				}
 				fw.write("\n");
-				final Set<Label> labellist = SoftwareUtil.getAccessedLabelSet(task, null);
 				fw.write("\n\tvoid v" + task.getName() + "()" + "\n\t{\n");
 				fw.write("\tportTickType xLastWakeTime=xTaskGetTickCount();\n");
 				fw.write("\n\t\tfor( ;; )\n\t\t{\n");
@@ -757,11 +617,6 @@ public class TaskFileCreation {
 				fw.write("\n\t\t\ttaskCount" + task.getName() + "++;");
 				fw.write("\n\t\t\ttraceTaskPasses(" + taskCount + ", taskCount" + task.getName() + ");");
 				fw.write("\n\t\t\ttraceRunningTask(0);\n");
-				final Time tasktime = fileUtil.getRecurrence(task);
-				double sleepTime = 0;
-				if (tasktime != null) {
-					sleepTime = tasktime.getValue().doubleValue();
-				}
 				final EList<Stimulus> Stimuli = model.getStimuliModel().getStimuli();
 				for (final Stimulus s : Stimuli) {
 					if (s instanceof PeriodicStimulus) {

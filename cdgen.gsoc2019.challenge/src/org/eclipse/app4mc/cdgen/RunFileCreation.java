@@ -39,11 +39,8 @@ import org.eclipse.emf.common.util.EList;
 /**
  * Implementation of Runnable Definition with Runnable specific delay.
  *
- * @author Ram Prasath Govindarajan
  *
  */
-
-// TODO Merger of Runnable Definition
 
 public class RunFileCreation {
 	final private Amalthea model;
@@ -310,38 +307,20 @@ public class RunFileCreation {
 		try {
 			final File fn = file;
 			final FileWriter fw = new FileWriter(fn, true);
-			int taskCounter = 1;
 			for (final Task t : tasks) {
 				List<Runnable> runnablesOfTask = SoftwareUtil.getRunnableList(t, null);
 				runnablesOfTask = runnablesOfTask.stream().distinct().collect(Collectors.toList());
-				int runnableCounter = 1;
 				for (final Runnable Run : runnablesOfTask) {
 					fw.write("void " + Run.getName() + " \t(void)\t{\n");
-					/*
-					 * fw.write("\tvDisplayMessage(\" " + t.getName() +
-					 * " \tRunnable Execution	" + "\t" + Run.getName() +
-					 * "\\n\");\n");
-					 */
 					final Process RunTaskName = SoftwareUtil.getCallingProcesses(Run, null).get(0);
 					final Set<ProcessingUnit> pu = DeploymentUtil.getAssignedCoreForProcess(RunTaskName, model);
 					for (final ProcessingUnit p : pu) {
 						Time RunTime1 = RuntimeUtil.getExecutionTimeForRunnable(Run, p, null, TimeType.WCET);
 						RunTime1 = TimeUtil.convertToTimeUnit(RunTime1, TimeUnit.US);
-						// double sleepTime = TimeUtil.getAsTimeUnit(RunTime1,
-						// null);
-						final long sleepTime = RunTime1.getValue().longValue();
-						// System.out.println("Time w/ unit: "+RunTime1 + ",time
-						// after: "+sleepTime);
-						// fw.write("\tusleep(" + sleepTime + ");\n");
-						// fw.write("\tsleepTimerUs(" + sleepTime + ",
-						// "+taskCounter+runnableCounter+");\n");
-
 						break;
 					}
 					fw.write("}\n");
-					runnableCounter++;
 				}
-				taskCounter++;
 			}
 			fw.close();
 		}

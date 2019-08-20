@@ -44,7 +44,6 @@ import org.eclipse.emf.common.util.EList;
 /**
  * Implementation of Main function in which scheduling is done.
  *
- * @author Ram Prasath Govindarajan
  *
  */
 

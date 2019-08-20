@@ -30,8 +30,6 @@ import org.eclipse.app4mc.amalthea.model.util.SoftwareUtil;
 /**
  * Implementation of testing Task, Runnable structure and Label types.
  *
- * @author Ram Prasath Govindarajan
- *
  */
 
 public class testLabel

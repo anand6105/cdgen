@@ -39,8 +39,6 @@ import org.eclipse.app4mc.cdgen.LabelFileCreation;
 /**
  * Implementation of Common API for CDGen.
  *
- * @author Ram Prasath Govindarajan
- *
  */
 
 public class fileUtil {

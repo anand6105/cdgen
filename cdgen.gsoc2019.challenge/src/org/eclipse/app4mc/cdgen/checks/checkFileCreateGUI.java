@@ -12,49 +12,31 @@
  *******************************************************************************/
 package org.eclipse.app4mc.cdgen.checks;
 
+import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JRadioButton;
-
-import org.apache.xml.resolver.helpers.FileURL;
-import org.eclipse.app4mc.amalthea.model.Amalthea;
-import org.eclipse.app4mc.amalthea.model.HWModel;
-import org.eclipse.app4mc.amalthea.model.io.AmaltheaLoader;
-import org.eclipse.app4mc.cdgen.*;
-import org.eclipse.app4mc.cdgen.checks.*;
-import org.eclipse.app4mc.cdgen.identifiers.Constants;
-import org.eclipse.app4mc.cdgen.test.testTaskStructure;
-import org.eclipse.app4mc.cdgen.utils.fileUtil;
-import org.eclipse.core.internal.utils.FileUtil;
-
-import javax.swing.JLabel;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.sql.Timestamp;
-import java.awt.event.ActionEvent;
-import java.awt.Desktop;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 
-import java.awt.Font;
-import java.lang.Object;
-
-import java.awt.Color;
+import org.eclipse.app4mc.amalthea.model.Amalthea;
+import org.eclipse.app4mc.amalthea.model.io.AmaltheaLoader;
+import org.eclipse.app4mc.cdgen.identifiers.Constants;
 
 /**
  * Implementation of GUI Design and Action on Button Click.
  * 
- * @author Ram Prasath Govindarajan
  *
  */
 
@@ -309,7 +291,7 @@ public class checkFileCreateGUI {
 		frame.getContentPane().add(btnBrowse);
 		//cdgenCooperative.setBounds(210, 90, 145, 25);
 		txtField.setBounds(450, 90, 149, 25);
-		frame.getContentPane().add(btnBrowse);
+		frame.getContentPane().add(txtField);
 		
 		JLabel lblResponsetime = new JLabel("Task Preemption");
 		lblResponsetime.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -326,10 +308,5 @@ public class checkFileCreateGUI {
 		separator.setBounds(12, 42, 822, 272);
 		frame.getContentPane().add(separator);
 
-	}
-
-	private void showMessageDialog(Object object, String string) {
-		// TODO Auto-generated method stub
-		
 	}
 }

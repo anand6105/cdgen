@@ -27,8 +27,6 @@ import org.eclipse.emf.common.util.EList;
 /**
  * Implementation of testing Task, Runnable structure and Label types.
  *
- * @author Ram Prasath Govindarajan
- *
  */
 
 public class testTaskStructure

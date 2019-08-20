@@ -22,7 +22,6 @@ import org.eclipse.app4mc.cdgen.utils.fileUtil;
 /**
  * Implementation of FreeRTOS specific configuration and macros.
  * 
- * @author Ram Prasath Govindarajan
  *
  */
 public class FreeRTOSConfigFileCreation {
@@ -90,7 +89,7 @@ public class FreeRTOSConfigFileCreation {
 		try {
 			File fn = file;
 			FileWriter fw = new FileWriter(fn, true);
-			int constval = 1;//TODO merge this constval with the value used in time period in MAIN File - Issue001
+			int constval = 1;
 			int taskSize = model.getSwModel().getTasks().size();
 			fw.write("\t#ifndef FREERTOS_CONFIG_H\n");
 			fw.write("\t#define FREERTOS_CONFIG_H\n");

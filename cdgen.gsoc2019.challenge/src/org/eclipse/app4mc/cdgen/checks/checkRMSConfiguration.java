@@ -25,7 +25,6 @@ import java.awt.Desktop;
 /**
  * Implementation of GUI Design and Action on Button Click.
  * 
- * @author Ram Prasath Govindarajan
  *
  */
 

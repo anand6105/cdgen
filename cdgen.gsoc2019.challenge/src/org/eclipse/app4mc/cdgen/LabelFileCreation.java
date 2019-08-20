@@ -36,7 +36,6 @@ import org.eclipse.emf.common.util.EList;
 /**
  * Declaration of Labels with initial values .
  *
- * @author Ram Prasath Govindarajan
  *
  */
 

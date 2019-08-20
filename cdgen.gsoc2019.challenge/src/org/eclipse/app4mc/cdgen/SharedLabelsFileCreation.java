@@ -18,25 +18,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.eclipse.app4mc.amalthea.model.Amalthea;
 import org.eclipse.app4mc.amalthea.model.Label;
 import org.eclipse.app4mc.amalthea.model.ProcessingUnit;
-import org.eclipse.app4mc.amalthea.model.Runnable;
 import org.eclipse.app4mc.amalthea.model.Task;
-import org.eclipse.app4mc.amalthea.model.util.SoftwareUtil;
 import org.eclipse.app4mc.cdgen.utils.fileUtil;
 import org.eclipse.emf.common.util.EList;
 
 /**
  * Declaration of Labels with initial values .
  *
- * @author Ram Prasath Govindarajan
  *
  */
 
@@ -70,7 +64,6 @@ public class SharedLabelsFileCreation {
 	 * @throws IOException
 	 */
 	private static void fileCreate(final Amalthea model, final String srcPath) throws IOException {
-		final EList<Task> tasks = model.getSwModel().getTasks();
 		final EList<Label> labellist = model.getSwModel().getLabels();
 		final String fname1 = srcPath + File.separator + "shared_comms.c";
 		final String fname2 = srcPath + File.separator + "shared_comms.h";
@@ -86,8 +79,6 @@ public class SharedLabelsFileCreation {
 		}
 
 		final File fn1 = f1;
-		final File fn2 = f3;
-
 		final FileWriter fw = new FileWriter(fn1, true);
 		try {
 			fileUtil.fileMainHeader(f1);
@@ -356,145 +347,6 @@ public class SharedLabelsFileCreation {
 		catch (final IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
-	}
-
-
-	/**
-	 * Local label definition and initialization structure. Task specific local
-	 * labels are defined to perform Cin and Cout operation.
-	 *
-	 * @param file
-	 * @param tasks
-	 */
-	private static void LabelDeclarationLocal(final File file, final EList<Task> tasks) {
-		try {
-			final File fn = file;
-			final FileWriter fw = new FileWriter(fn, true);
-			for (final Task task : tasks) {
-				List<Runnable> runnablesOfTask = SoftwareUtil.getRunnableList(task, null);
-				final ArrayList<Label> labellist1 = new ArrayList<Label>();
-				runnablesOfTask = runnablesOfTask.stream().distinct().collect(Collectors.toList());
-				for (final Runnable run : runnablesOfTask) {
-					final Set<Label> labellist = SoftwareUtil.getAccessedLabelSet(run, null);
-					labellist1.addAll(labellist);
-				}
-				final List<Label> listWithoutDuplicates2 = labellist1.stream().distinct().collect(Collectors.toList());
-				fw.write("\n //local variable for " + task.getName() + "\n");
-				for (final Label lab : listWithoutDuplicates2) {
-					final String type = fileUtil.datatype(lab.getSize().toString());
-					final long init = fileUtil.intialisation(lab.getSize().toString());
-					fw.write("\t\t" + type + "\t" + lab.getName() + "\t=\t" + init + ";\n");
-				}
-				fw.write("\n\n");
-			}
-			fw.close();
-		}
-		catch (final IOException ioe) {
-			System.err.println("IOException: " + ioe.getMessage());
-		}
-	}
-
-	private static void SharedLabelFinder(final File file, final EList<Task> tasks) {
-		final ArrayList<Label> labelCombined = new ArrayList<Label>();
-		final ArrayList<Label> labelOhneDuplicate = new ArrayList<Label>();
-		List<Label> labelNoDup = new ArrayList<Label>();
-		for (final Task task : tasks) {
-			final Set<Label> labellist = SoftwareUtil.getAccessedLabelSet(task, null);
-			labelCombined.addAll(labellist);
-		}
-
-		// Set of label types
-		final List<String> labeltype = new ArrayList<String>();
-		labelNoDup = labelCombined.stream().distinct().collect(Collectors.toList());
-		final HashMap<Label, String> LabelTypeMap = new HashMap<Label, String>();
-		for (final Label La : labelNoDup) {
-			final String LaType = La.getSize().toString();
-			labeltype.add(La.getSize().toString());
-			LabelTypeMap.put(La, LaType);
-		}
-		final List<String> labeltype1 = labeltype.stream().distinct().collect(Collectors.toList());
-		for (final String l : labeltype1) {
-			// System.out.println("\n==>"+l+labeltype1.size());
-		}
-		System.out.println("Key Set " + LabelTypeMap.size());
-		// Categories based on type
-		// List<String> labelDatatypeList = new ArrayList<String>();
-		final HashMap<String, List<Label>> LabelType = new HashMap<String, List<Label>>();
-		// Map<String, <List>String> doubleBraceMap = new HashMap<String,
-		// <List>String>() {
-		final Set<String> labelDatatypeList = LabelType.keySet();
-		final int n = labelDatatypeList.size();
-		final ArrayList<Label>[] al = new ArrayList[n];
-		for (final Label La : labelNoDup) {
-			final String LaType = La.getSize().toString();
-			// LabelType.add(La.getSize().toString());
-			// LabelType.put(LaType,La);
-		}
-		final Iterator<String> iterator = labelDatatypeList.iterator();
-		// initializing
-		int i = 0;
-		while (iterator.hasNext()) {
-			final String element = iterator.next();
-			al[i] = new ArrayList<Label>();
-			for (final Label La : labelNoDup) {
-				if (La.getDataType().toString() == element) {
-					al[i].add(La);
-				}
-			}
-			i++;
-		}
-		for (int j = 0; j < LabelType.size(); j++) {
-			System.out.println("\nDataType " + j + " " + al[j].size());
-		}
-		// Shared labels list
-		final Set<Label> uniques = new HashSet<>();
-		for (final Label t : labelCombined) {
-			if (!uniques.add(t)) {
-				labelOhneDuplicate.add(t);
-				// System.out.println("\n==>"+t.getName());
-			}
-		}
-		final List<Label> sharedLabelList = labelOhneDuplicate.stream().distinct().collect(Collectors.toList());
-		for (final Label l : sharedLabelList) {
-			// System.out.println("\n==>"+l.getName());
-		}
-	}
-
-	private static void SharedLabelFinder1(final File file, final EList<Task> tasks) {
-		final ArrayList<Label> labelCombined = new ArrayList<Label>();
-		// ArrayList<Label> labelTypeList = new ArrayList<Label>();
-		List<Label> labelNoDup = new ArrayList<Label>();
-		for (final Task task : tasks) {
-			final Set<Label> labellist = SoftwareUtil.getAccessedLabelSet(task, null);
-			labelCombined.addAll(labellist);
-		}
-		labelNoDup = labelCombined.stream().distinct().collect(Collectors.toList());
-		final HashMap<String, Label> LabelType1 = new HashMap<String, Label>();
-		for (final Label la : labelNoDup) {
-			final String latype = la.getSize().toString();
-			LabelType1.put(latype, la);
-		}
-		final HashMap<String, List<Label>> LabelTypeMap = new HashMap<String, List<Label>>();
-		final Set<String> regex = LabelType1.keySet();
-		final Iterator<String> itr = regex.iterator();
-		while (itr.hasNext()) {
-			final ArrayList<Label> labelTypeList = new ArrayList<Label>();
-			final String maptypeset = itr.next();
-			for (final Label la : labelNoDup) {
-				final String latype = la.getSize().toString();
-				if (latype.equals(maptypeset)) {
-					labelTypeList.add(la);
-				}
-
-			}
-			LabelTypeMap.put(itr.next(), labelTypeList);
-		}
-		/*
-		 * for(int k=0; k<LabelType.size();k++) {
-		 * 
-		 * }
-		 */
-
 	}
 
 

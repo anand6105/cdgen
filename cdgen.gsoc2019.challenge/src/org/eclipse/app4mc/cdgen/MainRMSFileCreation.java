@@ -46,7 +46,6 @@ import org.eclipse.emf.common.util.EList;
  * Implementation of Main function in which scheduling is done. Specific to RMS
  * Scheduler
  *
- * @author Ram Prasath Govindarajan
  *
  */
 
@@ -317,24 +316,6 @@ public class MainRMSFileCreation {
 		}
 	}
 
-
-	private static void taskHandleRMS(final File f1, final EList<Task> tasks) {
-		try {
-			final File fn = f1;
-			final FileWriter fw = new FileWriter(fn, true);
-			final List<Task> localTaskPriority = new ArrayList<Task>();
-			localTaskPriority.addAll(tasks);
-			fw.write("/* TaskHandler. */\n");
-			for (final Task task : tasks) {
-				fw.write("\txTaskHandle\t\ttaskHandle" + task.getName() + ";\n");
-			}
-			fw.write("\tAmaltheaTask taskList[];\n\n");
-			fw.close();
-		}
-		catch (final IOException ioe) {
-			System.err.println("IOException: " + ioe.getMessage());
-		}
-	}
 
 	/**
 	 * Title Card of MainRMSFileCreation

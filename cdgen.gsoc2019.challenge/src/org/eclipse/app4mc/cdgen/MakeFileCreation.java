@@ -15,33 +15,14 @@ package org.eclipse.app4mc.cdgen;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.app4mc.amalthea.model.Amalthea;
-import org.eclipse.app4mc.amalthea.model.MappingModel;
-import org.eclipse.app4mc.amalthea.model.PeriodicStimulus;
-import org.eclipse.app4mc.amalthea.model.ProcessingUnit;
 import org.eclipse.app4mc.amalthea.model.SchedulerAllocation;
-import org.eclipse.app4mc.amalthea.model.Stimulus;
-import org.eclipse.app4mc.amalthea.model.Task;
-import org.eclipse.app4mc.amalthea.model.Time;
-import org.eclipse.app4mc.amalthea.model.TimeUnit;
-import org.eclipse.app4mc.amalthea.model.util.DeploymentUtil;
-import org.eclipse.app4mc.amalthea.model.util.RuntimeUtil;
-import org.eclipse.app4mc.amalthea.model.util.RuntimeUtil.TimeType;
-import org.eclipse.app4mc.cdgen.utils.fileUtil;
-import org.eclipse.app4mc.amalthea.model.util.TimeUtil;
 import org.eclipse.emf.common.util.EList;
 
 /**
  * Implementation of Main function in which scheduling is done.
  *
- * @author Ram Prasath Govindarajan
  *
  */
 
@@ -122,20 +103,15 @@ public class MakeFileCreation {
 			fw.write("FreeRTOSConfig.h ");
 			fw.write("debugFlags.h ");
 			fw.write("AmaltheaConverter.h ");
-			int coreIndex = 0;
-			for(SchedulerAllocation core:coreNo) {
+			int coreIndex;
+			for(coreIndex = 0;coreIndex <coreNo.size();coreIndex++) {
 				fw.write("taskDef"+coreIndex+".h ");
-				coreIndex++;
 			}
-			coreIndex = 0;
-			for(SchedulerAllocation core:coreNo) {
+			for(coreIndex = 0;coreIndex <coreNo.size();coreIndex++) {
 				fw.write("label"+coreIndex+".h ");
-				coreIndex++;
 			}
-			coreIndex = 0;
-			for(SchedulerAllocation core:coreNo) {
+			for(coreIndex = 0;coreIndex <coreNo.size();coreIndex++) {
 				fw.write("runnable"+coreIndex+".h ");
-				coreIndex++;
 			}
 			fw.write("ParallellaUtils.h \n");
 			fw.write("#Epiphany SDK dependencies\n");
@@ -150,28 +126,20 @@ public class MakeFileCreation {
 			fw.write("vpath %.s $(FREERTOSSRC)/portable/GCC/Epiphany \n");
 			fw.write("#main target  \n");
 			fw.write("run: armcode ");
-			coreIndex = 0;
-			for(SchedulerAllocation core:coreNo) {
+			for(coreIndex = 0;coreIndex <coreNo.size();coreIndex++) {
 				fw.write("main"+coreIndex+".elf ");
-				coreIndex++;
 			}
 			fw.write("\n	@echo build status : successful\n\n");
 			fw.write("#rule for every device target\n");
 			fw.write("%.elf: $(ELDF) tasks.o queue.o list.o port.o portasm.o heap_1.o c2c.o debugFlags.o AmaltheaConverter.o ");
-			coreIndex = 0;
-			for(SchedulerAllocation core:coreNo) {
+			for(coreIndex = 0;coreIndex <coreNo.size();coreIndex++) {
 				fw.write("taskDef"+coreIndex+".o ");
-				coreIndex++;
 			}
-			coreIndex = 0;
-			for(SchedulerAllocation core:coreNo) {
+			for(coreIndex = 0;coreIndex <coreNo.size();coreIndex++) {
 				fw.write("label"+coreIndex+".o ");
-				coreIndex++;
 			}
-			coreIndex = 0;
-			for(SchedulerAllocation core:coreNo) {
+			for(coreIndex = 0;coreIndex <coreNo.size();coreIndex++) {
 				fw.write("runnable"+coreIndex+".o ");
-				coreIndex++;
 			}
 
 			fw.write("ParallellaUtils.o shared_comms.o %.o  \n");
