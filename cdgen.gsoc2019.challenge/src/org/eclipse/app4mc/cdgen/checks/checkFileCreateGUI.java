@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JRadioButton;
 
 import org.apache.xml.resolver.helpers.FileURL;
@@ -43,6 +44,8 @@ import java.sql.Timestamp;
 import java.awt.event.ActionEvent;
 import java.awt.Desktop;
 import javax.swing.JSeparator;
+import javax.swing.JTextField;
+
 import java.awt.Font;
 import java.lang.Object;
 
@@ -103,7 +106,7 @@ public class checkFileCreateGUI {
 		group.add(cdgenPosix);
 		group.add(cdgenCustom);
 
-/*		JRadioButton cdgenrms = new JRadioButton("RMS(Rate Monotonic)");
+		/*		JRadioButton cdgenrms = new JRadioButton("RMS(Rate Monotonic)");
 		cdgenrms.setBounds(210, 90, 210, 25);
 		frame.getContentPane().add(cdgenrms);
 
@@ -119,10 +122,10 @@ public class checkFileCreateGUI {
 		group2.add(cdgenrms);
 		group2.add(cdgenedf);
 		group2.add(cdgennonCustom);*/
-		
-//		JComboBox platformSelection = new JComboBox("Platform Selection");
-//		platformSelection.setSelectedIndex(4);
-//		platformSelection.addActionListener(this);
+
+		//		JComboBox platformSelection = new JComboBox("Platform Selection");
+		//		platformSelection.setSelectedIndex(4);
+		//		platformSelection.addActionListener(this);
 
 		JRadioButton cdgenCooperative = new JRadioButton("Cooperative");
 		cdgenCooperative.setBounds(210, 90, 145, 25);
@@ -148,6 +151,7 @@ public class checkFileCreateGUI {
 					System.out.println("Error: No model loaded!");
 					return;
 				}
+			
 				/*HWModel HWModel1;
 				model.setHwModel(HWModel1);*/
 				String path = System.getProperty("user.dir");
@@ -262,13 +266,13 @@ public class checkFileCreateGUI {
 		btnClose.setBounds(673, 164, 149, 25);
 		frame.getContentPane().add(btnClose);
 
-		JButton btnReset = new JButton("Reset");
+		/*JButton btnReset = new JButton("Reset");
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		btnReset.setBounds(673, 129, 149, 25);
-		frame.getContentPane().add(btnReset);
+		frame.getContentPane().add(btnReset);*/
 
 		JLabel lblAllTasks = new JLabel("OS Options");
 		lblAllTasks.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -280,6 +284,33 @@ public class checkFileCreateGUI {
 		lblSortedTasks.setBounds(210, 69, 180, 16);
 		frame.getContentPane().add(lblSortedTasks);*/
 
+		String path = System.getProperty("user.dir");
+		
+		JTextField txtField = new JTextField("FreeRTOS Browse path"); //Assume this is the text box you placed beside browse button
+		JButton btnBrowse = new JButton("FreeRTOS Browse");
+		btnBrowse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (e.getSource() == btnBrowse)
+				{
+					File fileID;
+					JFileChooser chooser = new JFileChooser(new File(System.getProperty(path))); //Downloads Directory as default
+					chooser.setDialogTitle("Select FreeRTOS Kernel Location");
+					chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+					chooser.setAcceptAllFileFilterUsed(false);
+					//int userSelection = chooser.showSaveDialog(frame);
+					if ((chooser.showOpenDialog(frame)) == JFileChooser.APPROVE_OPTION){ 
+						fileID = chooser.getSelectedFile();
+					    txtField.setText(fileID.getPath());
+					}
+				}
+			}
+		});
+		btnBrowse.setBounds(450, 129, 149, 25);
+		frame.getContentPane().add(btnBrowse);
+		//cdgenCooperative.setBounds(210, 90, 145, 25);
+		txtField.setBounds(450, 90, 149, 25);
+		frame.getContentPane().add(btnBrowse);
+		
 		JLabel lblResponsetime = new JLabel("Task Preemption");
 		lblResponsetime.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblResponsetime.setBounds(210, 69, 150, 16);
@@ -295,5 +326,10 @@ public class checkFileCreateGUI {
 		separator.setBounds(12, 42, 822, 272);
 		frame.getContentPane().add(separator);
 
+	}
+
+	private void showMessageDialog(Object object, String string) {
+		// TODO Auto-generated method stub
+		
 	}
 }

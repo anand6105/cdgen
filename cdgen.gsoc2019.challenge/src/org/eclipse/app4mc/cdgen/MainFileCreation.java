@@ -77,14 +77,11 @@ public class MainFileCreation {
 	 */
 	public static List<Label> SharedLabelCoreDefinition(final Amalthea model, final String srcPath) {
 		final EList<Label> labellist = model.getSwModel().getLabels();
-		// List<Label> SharedLabelCoreList =
-		// LabelFileCreation.SharedLabelFinder(model);
 		final List<Label> SharedLabelListSortCore = new ArrayList<Label>();
 		if (labellist.size() == 0) {
 			System.out.println("Shared Label size 0");
 		}
 		else {
-			// System.out.println("Shared Label size "+SharedLabelList.size());
 			final HashMap<Label, HashMap<Task, ProcessingUnit>> sharedLabelTaskMap = LabelFileCreation
 					.LabelTaskMap(model, labellist);
 			int i = 0, k = 0, j = 0;
@@ -129,11 +126,8 @@ public class MainFileCreation {
 
 				if (mappingModel != null) {
 					pu = DeploymentUtil.getAssignedCoreForProcess(task, model).iterator().next();
-
 					Time taskTime = RuntimeUtil.getExecutionTimeForProcess(task, pu, null, TimeType.WCET);
-					// System.out.println("time obj = " +taskTime);
 					taskTime = TimeUtil.convertToTimeUnit(taskTime, TimeUnit.US);
-					// System.out.println("raw2 = " +taskTime.getValue());
 					final double sleepTime = taskTime.getValue().doubleValue();
 					fw.write("\tAmaltheaTask AmalTk_" + task.getName() + " = createAmaltheaTask(" + task.getName()
 							+ ", cIN_" + task.getName() + ", cOUT_" + task.getName() + ", "
@@ -141,21 +135,11 @@ public class MainFileCreation {
 							+ sleepTime + ");\n");
 				}
 			}
-			// int c=0;
-			/*
-			 * for (Task task : tasks) {
-			 * fw.write("\n\ttaskList["+c+"]\t=\tAmalTk_"+task.getName()+";");
-			 * c++; }
-			 */
+			
 			fw.write("\n\tvDisplayMessage(\"created RMS sched task\\n\");\n");
 			int count = 0;
 			for (final Task task : tasks) {
-				/*
-				 * fw.write("\txTaskCreate(generalizedRTOSTak , \"AmalTk_"+task.
-				 * getName()+"\", configMINIMAL_STACK_SIZE, &AmalTk_"+task.
-				 * getName() +", main"+task.getName()+", taskList["
-				 * +count+"].taskHandle, main" + task.getName() +", null);\n");
-				 */fw.write("\txTaskCreate(generalizedRTOSTask , \"AmalTk_" + task.getName()
+				fw.write("\txTaskCreate(generalizedRTOSTask , \"AmalTk_" + task.getName()
 						+ "\", configMINIMAL_STACK_SIZE, &AmalTk_" + task.getName() + ", main" + task.getName()
 						+ ", NULL);\n");
 				count++;
@@ -490,11 +474,6 @@ public class MainFileCreation {
 																											// -
 																											// Issue001
 			}
-			/*
-			 * for (Task task : tasks) { fw.write("\t#define main" +
-			 * task.getName() + "\t( tskIDLE_PRIORITY + " +
-			 * task.getMultipleTaskActivationLimit() + " )\n"); }
-			 */
 			fw.write("\n");
 			fw.close();
 		}
@@ -518,12 +497,6 @@ public class MainFileCreation {
 							+ " \n");
 				}
 			}
-			/*
-			 * for (Stimulus s : Stimuli) { if (s instanceof PeriodicStimulus) {
-			 * System.out.println("Task rec "+((PeriodicStimulus)
-			 * s).getRecurrence()); } // fw.write("\t#define " + task.getName()
-			 * + "\t"+fileUtil.getRecurrence(task).getValue() +" \n"); }
-			 */
 			fw.write("\n");
 			fw.close();
 		}

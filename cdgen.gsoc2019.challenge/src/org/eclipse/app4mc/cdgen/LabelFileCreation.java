@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -100,9 +99,6 @@ public class LabelFileCreation {
 				headerIncludesLabelHead(f1, k);
 				LabelDeclaration(f1, tasks, labelCoreCommonList);
 				LabelDeclarationLocal(f1, tasks, labelCoreCommonList, sharedLabelList);
-				// SharedLabelCoreDefinition(f1, model, labelList);
-				// SharedLabelFinder(f1, tasks);
-				// SharedLabelFinder1(f1, tasks);
 			}
 			finally {
 				try {
@@ -117,11 +113,7 @@ public class LabelFileCreation {
 				fileUtil.fileMainHeader(f3);
 				labelFileHeader(f3);
 				headerIncludesLabel(f3);
-				// LabelDeclaration(f3, labelList);
 				LabelDeclarationLocalHeader(f3, tasks, labelCoreCommonList);
-				// SharedLabelCoreDefinition(f1, model, labelList);
-				// SharedLabelFinder(f1, tasks);
-				// SharedLabelFinder1(f1, tasks);
 			}
 			finally {
 				try {
@@ -319,18 +311,8 @@ public class LabelFileCreation {
 						fw.write("\t\t" + lab.getName() + "_" + task.getName() + "\t=\t" + lab.getName() + ";\n");
 					}
 				}
-				/*
-				 * for (Label lab : listWithoutDuplicates2) { String la =
-				 * lab.getSize().toString().replace(" ", "");
-				 * if((sharedLabelList.contains(lab)) &
-				 * (readLabels.contains(lab))) { fw.write("\t\t" +
-				 * lab.getName()+"_"+task.getName() + "\t=\tshared_label_" + la
-				 * + "_read("+SharedLabelTypeMap.get(lab)+");\n"); } }
-				 */
 				fw.write("\t}\n");
 				fw.write("\n\tvoid cOUT_" + task.getName() + "()\n\t{\n");
-				// fw.write("\t\tvDisplayMessage(\" Cout Execution\t" +
-				// task.getName() + "\\n\\n\" );\n");
 				final ArrayList<Label> labellist2 = new ArrayList<Label>();
 				runnablesOfTask = runnablesOfTask.stream().distinct().collect(Collectors.toList());
 				for (final Runnable run : runnablesOfTask) {
@@ -343,24 +325,12 @@ public class LabelFileCreation {
 						fw.write("\t\t" + lab.getName() + "\t=\t" + lab.getName() + "_" + task.getName() + ";\n");
 					}
 				}
-				/*
-				 * for (Label lab : listWithoutDuplicates2) { String la =
-				 * lab.getSize().toString().replace(" ", "");
-				 * if(sharedLabelList.contains(lab)) {
-				 * fw.write("\t\tshared_label_" + la +
-				 * "_write("+SharedLabelTypeMap.get(lab)+"," +
-				 * lab.getName()+"_"+task.getName() + " );\n"); } }
-				 */
 				HashMap<Label, Integer> LabelWriteIndexedType = new HashMap<Label, Integer>();
 				for (final String rLT : readLabelType) {
 					LabelWriteIndexedType = SharedLabelTypeMapIndexed.get(rLT);
 					for (final Label share : sharedLabelList) {
 						final String type = share.getSize().toString();
 						if ((type.equals(rLT)) & (readLabels.contains(share))) {
-							// fw.write("\t\t" +
-							// share.getName()+"_"+task.getName() +
-							// "\t=\tshared_label_" + type +
-							// "_read("+LabelIndexedType.get(share)+");\n");
 							fw.write("\t\t" + share.getName() + "_" + task.getName() + "++;\n");
 							fw.write("\t\tshared_label_" + type.replace(" ", "") + "_write("
 									+ LabelWriteIndexedType.get(share) + "," + share.getName() + "_" + task.getName()
@@ -392,7 +362,7 @@ public class LabelFileCreation {
 					final Set<Label> labellist = SoftwareUtil.getAccessedLabelSet(run, null);
 					labellist1.addAll(labellist);
 				}
-				final List<Label> listWithoutDuplicates2 = labellist1.stream().distinct().collect(Collectors.toList());
+			//	final List<Label> listWithoutDuplicates2 = labellist1.stream().distinct().collect(Collectors.toList());
 				fw.write("\n\tvoid cIN_" + task.getName() + "();");
 				fw.write("\n\tvoid cOUT_" + task.getName() + "();");
 			}
@@ -403,7 +373,7 @@ public class LabelFileCreation {
 		}
 	}
 
-	private static void SharedLabelFinder1(final File file, final EList<Task> tasks) {
+	/*private static void SharedLabelFinder1(final File file, final EList<Task> tasks) {
 		final ArrayList<Label> labelCombined = new ArrayList<Label>();
 		final ArrayList<Label> labelOhneDuplicate = new ArrayList<Label>();
 		List<Label> labelNoDup = new ArrayList<Label>();
@@ -456,7 +426,7 @@ public class LabelFileCreation {
 			}
 			LabelTypeMap1.put(itr.next(), labelTypeList);
 		}
-	}
+	}*/
 
 
 	public static List<Label> SharedLabelFinder(final Amalthea model) {

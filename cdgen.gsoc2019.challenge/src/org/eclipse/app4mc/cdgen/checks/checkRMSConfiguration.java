@@ -37,7 +37,7 @@ public class checkRMSConfiguration{
 	}
 
 	public void RMSConfiguration(Amalthea model, String srcPath, String headerPath, int configFlag) {
-		try {
+		/*try {
 			String path = System.getProperty("user.dir");
 			File l_SourceDirectory = null;
 			if(0x3110 == (configFlag & 0xFFF0)) {
@@ -53,7 +53,7 @@ public class checkRMSConfiguration{
 			}
 		} catch (IOException e1) {
 			e1.printStackTrace();
-		}
+		}*/
 		try {
 			new MainRMSFileCreation(model, srcPath, configFlag);
 		} catch (IOException e1) {

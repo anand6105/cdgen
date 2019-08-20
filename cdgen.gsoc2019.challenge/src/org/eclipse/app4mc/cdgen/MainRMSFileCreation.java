@@ -137,8 +137,6 @@ public class MainRMSFileCreation {
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("int main(void) \n{\n");
 			fw.write("\toutbuf_init();\n");
-
-			final EList<Label> labellist = model.getSwModel().getLabels();
 			final List<Label> SharedLabelList = LabelFileCreation.SharedLabelFinder(model);
 			final List<Label> SharedLabelListSortCore = new ArrayList<Label>();
 			if (SharedLabelList.size() == 0) {
@@ -210,15 +208,8 @@ public class MainRMSFileCreation {
 								+ task.getStimuli().get(0).getName() + ", " + task.getStimuli().get(0).getName() + ", "
 								+ sleepTime + ");\n");
 					}
-					// fw.write("\tAmaltheaTask AmalTk_"+task.getName()+" =
-					// createAmaltheaTask( v"+task.getName()+", cIN_" +
-					// task.getName() +", cOUT_" + task.getName()+",
-					// "+task.getStimuli().get(0).getName()+",
-					// "+task.getStimuli().get(0).getName()+",
-					// "+sleepTime+");\n");
 				}
 			}
-			int count = 0;
 			for (final Task task : tasks) {
 				final Set<Label> taskLabel = SoftwareUtil.getAccessedLabelSet(task, null);
 				final List<Label> taskLabelList = new ArrayList<>(taskLabel);
@@ -249,7 +240,6 @@ public class MainRMSFileCreation {
 					}
 				}
 				fw.write(");\n");
-				count++;
 			}
 			fw.write("\tvTaskStartScheduler();\n");
 			fw.write("\t" + "return EXIT_SUCCESS;\n");
@@ -275,8 +265,6 @@ public class MainRMSFileCreation {
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("int main(void) \n{\n");
 			fw.write("\toutbuf_init();\n");
-
-			final EList<Label> labellist = model.getSwModel().getLabels();
 			final List<Label> SharedLabelList = LabelFileCreation.SharedLabelFinder(model);
 			final List<Label> SharedLabelListSortCore = new ArrayList<Label>();
 			if (SharedLabelList.size() == 0) {
@@ -323,12 +311,10 @@ public class MainRMSFileCreation {
 				SharedLabelCounter = 0;
 			}
 
-			int count = 0;
 			for (final Task task : tasks) {
 				fw.write("\txTaskCreate( v" + task.getName() + " , \"" + task.getName()
 						+ "\", configMINIMAL_STACK_SIZE, &v" + task.getName() + ", main" + task.getName()
 						+ ", NULL);\n");
-				count++;
 			}
 			fw.write("\tvTaskStartScheduler();\n");
 			fw.write("\t" + "return EXIT_SUCCESS;\n");
@@ -350,8 +336,6 @@ public class MainRMSFileCreation {
 			fw.write("/* TaskHandler. */\n");
 			for (final Task task : tasks) {
 				fw.write("\txTaskHandle\t\ttaskHandle" + task.getName() + ";\n");
-				// TODO merge this constval with the value used in time period
-				// in FreeRTOS config File - Issue001
 			}
 			fw.write("\tAmaltheaTask taskList[];\n\n");
 			fw.close();
@@ -440,23 +424,7 @@ public class MainRMSFileCreation {
 			// for (int i=0;i<(periodMapSorted.size());i++) {
 			for (int i = (periodMapSorted.size()), k = 0; i > 0; i--, k++) {
 				final Task task = (Task) periodMapSorted.keySet().toArray()[k];
-				fw.write("\t#define main" + task.getName() + "\t( tskIDLE_PRIORITY +" + (i) + " )\n");// TODO
-																										// merge
-																										// this
-																										// constval
-																										// with
-																										// the
-																										// value
-																										// used
-																										// in
-																										// time
-																										// period
-																										// in
-																										// FreeRTOS
-																										// config
-																										// File
-																										// -
-																										// Issue001
+				fw.write("\t#define main" + task.getName() + "\t( tskIDLE_PRIORITY +" + (i) + " )\n");
 			}
 			fw.write("\n");
 			fw.close();
