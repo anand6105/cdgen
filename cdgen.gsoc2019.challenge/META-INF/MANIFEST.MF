@@ -9,5 +9,5 @@ Export-Package: org.eclipse.app4mc.cdgen.utils,
 Require-Bundle: org.eclipse.app4mc.amalthea.model,
  org.junit,
  org.eclipse.jdt.annotation
-Bundle-RequiredExecutionEnvironment: JavaSE-10
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: Ram Prasath Govindarajan

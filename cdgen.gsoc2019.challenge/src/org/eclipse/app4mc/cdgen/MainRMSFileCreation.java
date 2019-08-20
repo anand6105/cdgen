@@ -189,15 +189,15 @@ public class MainRMSFileCreation {
 					final int comparevalue = sleepTime.compareTo(b2);
 					if (comparevalue < 0) {
 						fw.write("\tAmaltheaTask AmalTk_" + task.getName() + " = createAmaltheaTask( v" + task.getName()
-								+ ", cIN_" + task.getName() + ", cOUT_" + task.getName() + ", "
-								+ task.getStimuli().get(0).getName() + ", " + task.getStimuli().get(0).getName()
-								+ ", 1);\n");
+						+ ", cIN_" + task.getName() + ", cOUT_" + task.getName() + ", "
+						+ task.getStimuli().get(0).getName() + ", " + task.getStimuli().get(0).getName()
+						+ ", 1);\n");
 					}
 					else {
 						fw.write("\tAmaltheaTask AmalTk_" + task.getName() + " = createAmaltheaTask( v" + task.getName()
-								+ ", cIN_" + task.getName() + ", cOUT_" + task.getName() + ", "
-								+ task.getStimuli().get(0).getName() + ", " + task.getStimuli().get(0).getName() + ", "
-								+ sleepTime + ");\n");
+						+ ", cIN_" + task.getName() + ", cOUT_" + task.getName() + ", "
+						+ task.getStimuli().get(0).getName() + ", " + task.getStimuli().get(0).getName() + ", "
+						+ sleepTime + ");\n");
 					}
 				}
 			}
@@ -303,8 +303,8 @@ public class MainRMSFileCreation {
 
 			for (final Task task : tasks) {
 				fw.write("\txTaskCreate( v" + task.getName() + " , \"" + task.getName()
-						+ "\", configMINIMAL_STACK_SIZE, &v" + task.getName() + ", main" + task.getName()
-						+ ", NULL);\n");
+				+ "\", configMINIMAL_STACK_SIZE, &v" + task.getName() + ", main" + task.getName()
+				+ ", NULL);\n");
 			}
 			fw.write("\tvTaskStartScheduler();\n");
 			fw.write("\t" + "return EXIT_SUCCESS;\n");
@@ -464,13 +464,4 @@ public class MainRMSFileCreation {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
 	}
-
-	/**
-	 * helper function to get the Amalthea Model
-	 *
-	 */
-	public Amalthea getModel() {
-		return this.model;
-	}
-
 }

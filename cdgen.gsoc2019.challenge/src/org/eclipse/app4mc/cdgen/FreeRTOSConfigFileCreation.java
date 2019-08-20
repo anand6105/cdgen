@@ -26,9 +26,6 @@ import org.eclipse.app4mc.cdgen.utils.fileUtil;
  */
 public class FreeRTOSConfigFileCreation {
 	final private Amalthea model;
-
-
-
 	/**
 	 * Constructor FreeRTOSConfigFileCreation
 	 * 
@@ -133,13 +130,4 @@ public class FreeRTOSConfigFileCreation {
 			System.err.println("IOException: " + ioe.getMessage());
 		}
 	}
-
-	/**
-	 * helper function to get the Amalthea Model
-	 * 
-	 */
-	public Amalthea getModel() {
-		return this.model;
-	}
-
 }

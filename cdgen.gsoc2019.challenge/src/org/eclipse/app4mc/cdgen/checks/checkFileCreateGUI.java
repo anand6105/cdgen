@@ -88,27 +88,6 @@ public class checkFileCreateGUI {
 		group.add(cdgenPosix);
 		group.add(cdgenCustom);
 
-		/*		JRadioButton cdgenrms = new JRadioButton("RMS(Rate Monotonic)");
-		cdgenrms.setBounds(210, 90, 210, 25);
-		frame.getContentPane().add(cdgenrms);
-
-		JRadioButton cdgenedf = new JRadioButton("EDF(Earliest Deadline)");
-		cdgenedf.setBounds(210, 120, 210, 25);
-		frame.getContentPane().add(cdgenedf);
-
-		JRadioButton cdgennonCustom = new JRadioButton("Non Custom");
-		cdgennonCustom.setBounds(210, 150, 145, 25);
-		frame.getContentPane().add(cdgennonCustom);
-
-		ButtonGroup group2 = new ButtonGroup();
-		group2.add(cdgenrms);
-		group2.add(cdgenedf);
-		group2.add(cdgennonCustom);*/
-
-		//		JComboBox platformSelection = new JComboBox("Platform Selection");
-		//		platformSelection.setSelectedIndex(4);
-		//		platformSelection.addActionListener(this);
-
 		JRadioButton cdgenCooperative = new JRadioButton("Cooperative");
 		cdgenCooperative.setBounds(210, 90, 145, 25);
 		frame.getContentPane().add(cdgenCooperative);
@@ -124,8 +103,6 @@ public class checkFileCreateGUI {
 		JButton btnSelectTasks = new JButton("Generate Code");
 		btnSelectTasks.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-
 				// Load File
 				final File inputFile = new File(Constants.DEMOCARMULTI);
 				final Amalthea model = AmaltheaLoader.loadFromFile(inputFile);
@@ -133,9 +110,7 @@ public class checkFileCreateGUI {
 					System.out.println("Error: No model loaded!");
 					return;
 				}
-			
-				/*HWModel HWModel1;
-				model.setHwModel(HWModel1);*/
+
 				String path = System.getProperty("user.dir");
 				String timestamp = new Timestamp(System.currentTimeMillis()).toString();
 				timestamp = timestamp.substring(0, timestamp.length() - 6).replaceAll(":", "");
@@ -162,11 +137,7 @@ public class checkFileCreateGUI {
 				 * 
 				 * 0X1000 ==> FreeRTOS
 				 * 0X2000 ==> POSIX
-				 * 0x3000 ==> Custom
-				 * 
-				 * 0X0100 ==> RMS
-				 * 0X0200 ==> EDF
-				 * 0X0300 ==> Non Custom
+				 * 0x3000 ==> RMS
 				 * 
 				 * 0X0010 ==> Cooperative
 				 * 0X0020 ==> Preemptive
@@ -174,12 +145,12 @@ public class checkFileCreateGUI {
 				 * 0X0001 ==> MultiCore
 				 * 0X0002 ==> SingleCore
 				 * 
-				 * FreeRTOS == 	NonCustom 	== Cooperative 	==	0x1310
-				 * FreeRTOS == 	NonCustom 	== Preemptive 	==	0x1320
-				 * POSIX  	== 	NonCustom 	== Cooperative 	==	0x2310
-				 * POSIX 	== 	NonCustom 	== Preemptive 	==	0x2320
-				 * Custom  	== 	RMS 		== Cooperative 	==	0x3110
-				 * Custom  	== 	RMS 		== Preemptive 	==	0x3120
+				 * FreeRTOS == 	Cooperative ==	0x1X10
+				 * FreeRTOS == 	Preemptive 	==	0x1X20
+				 * POSIX  	== 	Cooperative ==	0x2X10
+				 * POSIX 	== 	Preemptive 	==	0x2X20
+				 * RMS  	== 	Cooperative ==	0x3X10
+				 * RMS  	== 	Preemptive 	==	0x3X20
 				 * 
 				 */
 
@@ -236,7 +207,7 @@ public class checkFileCreateGUI {
 			}
 
 		});
-		btnSelectTasks.setBounds(673, 95, 149, 25);
+		btnSelectTasks.setBounds(673, 105, 149, 25);
 		frame.getContentPane().add(btnSelectTasks);
 
 		JButton btnClose = new JButton("Close");
@@ -245,54 +216,44 @@ public class checkFileCreateGUI {
 				System.exit(0);
 			}
 		});
-		btnClose.setBounds(673, 164, 149, 25);
+		btnClose.setBounds(673, 140, 149, 25);
 		frame.getContentPane().add(btnClose);
-
-		/*JButton btnReset = new JButton("Reset");
-		btnReset.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnReset.setBounds(673, 129, 149, 25);
-		frame.getContentPane().add(btnReset);*/
 
 		JLabel lblAllTasks = new JLabel("OS Options");
 		lblAllTasks.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblAllTasks.setBounds(50, 69, 110, 16);
 		frame.getContentPane().add(lblAllTasks);
 
-		/*JLabel lblSortedTasks = new JLabel("Scheduling Options");
-		lblSortedTasks.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblSortedTasks.setBounds(210, 69, 180, 16);
-		frame.getContentPane().add(lblSortedTasks);*/
-
 		String path = System.getProperty("user.dir");
-		
-		JTextField txtField = new JTextField("FreeRTOS Browse path"); //Assume this is the text box you placed beside browse button
+
+		JTextField txtField = new JTextField("FreeRTOS Browse path");
 		JButton btnBrowse = new JButton("FreeRTOS Browse");
 		btnBrowse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == btnBrowse)
 				{
 					File fileID;
-					JFileChooser chooser = new JFileChooser(new File(System.getProperty(path))); //Downloads Directory as default
+					JFileChooser chooser = new JFileChooser(new File(System.getProperty(path)));
 					chooser.setDialogTitle("Select FreeRTOS Kernel Location");
 					chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 					chooser.setAcceptAllFileFilterUsed(false);
-					//int userSelection = chooser.showSaveDialog(frame);
 					if ((chooser.showOpenDialog(frame)) == JFileChooser.APPROVE_OPTION){ 
 						fileID = chooser.getSelectedFile();
-					    txtField.setText(fileID.getPath());
+						txtField.setText(fileID.getPath());
 					}
 				}
 			}
 		});
-		btnBrowse.setBounds(450, 129, 149, 25);
+		btnBrowse.setBounds(673, 70, 149, 25);
 		frame.getContentPane().add(btnBrowse);
-		//cdgenCooperative.setBounds(210, 90, 145, 25);
-		txtField.setBounds(450, 90, 149, 25);
+		txtField.setBounds(370, 70, 300, 25);
 		frame.getContentPane().add(txtField);
-		
+
+		JLabel lblModelSelection = new JLabel("Model selection");
+		lblModelSelection.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblModelSelection.setBounds(370, 100, 145, 25);
+		frame.getContentPane().add(lblModelSelection);
+
 		JLabel lblResponsetime = new JLabel("Task Preemption");
 		lblResponsetime.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblResponsetime.setBounds(210, 69, 150, 16);
@@ -307,6 +268,5 @@ public class checkFileCreateGUI {
 		JSeparator separator = new JSeparator();
 		separator.setBounds(12, 42, 822, 272);
 		frame.getContentPane().add(separator);
-
 	}
 }

@@ -403,12 +403,4 @@ public class LabelFileCreation {
 		}
 		return localLabelAllocation;
 	}
-
-	/**
-	 * helper function to get the Amalthea Model
-	 *
-	 */
-	public Amalthea getModel() {
-		return this.model;
-	}
 }

@@ -339,14 +339,4 @@ public class ArmCodeFileCreation {
 		}
 
 	}
-
-
-	/**
-	 * helper function to get the Amalthea Model
-	 *
-	 */
-	public Amalthea getModel() {
-		return this.model;
-	}
-
 }

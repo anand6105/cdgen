@@ -27,7 +27,6 @@ import org.eclipse.app4mc.cdgen.SharedLabelsFileCreation;
 import org.eclipse.app4mc.cdgen.TaskFileCreation;
 import org.eclipse.app4mc.cdgen.test.testTaskStructure;
 
-
 /**
  * Implementation of GUI Design and Action on Button Click.
  * 

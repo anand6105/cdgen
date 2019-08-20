@@ -96,7 +96,7 @@ public class MainFileCreation {
 		return SharedLabelListSortCore;
 	}
 
-	
+
 	private static void sleepTimerMsPthread(final File f1) {
 		try {
 			final File fn = f1;
@@ -251,14 +251,4 @@ public class MainFileCreation {
 		}
 
 	}
-
-	
-	/**
-	 * helper function to get the Amalthea Model
-	 *
-	 */
-	public Amalthea getModel() {
-		return this.model;
-	}
-
 }
