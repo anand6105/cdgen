@@ -65,6 +65,11 @@ public class checkPOSIXConfiguration{
 			e1.printStackTrace();
 		}
 		try {
+			new MakeFileCreation(model, srcPath, configFlag);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		try {
 			new testTaskStructure(model, srcPath, configFlag);
 		} catch (IOException e1) {
 			e1.printStackTrace();
