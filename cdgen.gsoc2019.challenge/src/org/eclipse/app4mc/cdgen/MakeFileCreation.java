@@ -58,37 +58,30 @@ public class MakeFileCreation {
 	private static void fileCreate(final Amalthea model, final String path1, final int configFlag) throws IOException {
 		model.getMappingModel().getTaskAllocation();
 		final EList<SchedulerAllocation> CoreNo = model.getMappingModel().getSchedulerAllocation();
-		int k = 0;
-		for (final SchedulerAllocation c : CoreNo) {
-			final ProcessingUnit pu = c.getResponsibility().get(0);
-			System.out.println("Core ==> " + pu);
-			final Set<Task> tasks = DeploymentUtil.getTasksMappedToCore(pu, model);
-			final String fname = path1 + File.separator + "Makefile";
-			final File f2 = new File(path1);
-			final File f1 = new File(fname);
-			f2.mkdirs();
+		final String fname = path1 + File.separator + "Makefile";
+		final File f2 = new File(path1);
+		final File f1 = new File(fname);
+		f2.mkdirs();
+		try {
+			f1.createNewFile();
+		}
+		catch (final IOException e) {
+			e.printStackTrace();
+		}
+		final File fn = f1;
+		final FileWriter fw = new FileWriter(fn, true);
+		try {
+			//fileUtil.fileMainHeader(f1);
+			makeFileHeader(f1);
+			headerIncludesMainRMS(f1,CoreNo);
+		}
+		finally {
 			try {
-				f1.createNewFile();
+				fw.close();
 			}
 			catch (final IOException e) {
 				e.printStackTrace();
 			}
-			final File fn = f1;
-			final FileWriter fw = new FileWriter(fn, true);
-			try {
-				//fileUtil.fileMainHeader(f1);
-				makeFileHeader(f1);
-				headerIncludesMainRMS(f1,CoreNo);
-			}
-			finally {
-				try {
-					fw.close();
-				}
-				catch (final IOException e) {
-					e.printStackTrace();
-				}
-			}
-			k++;
 		}
 	}
 
@@ -132,14 +125,17 @@ public class MakeFileCreation {
 			int coreIndex = 0;
 			for(SchedulerAllocation core:coreNo) {
 				fw.write("taskDef"+coreIndex+".h ");
+				coreIndex++;
 			}
 			coreIndex = 0;
 			for(SchedulerAllocation core:coreNo) {
 				fw.write("label"+coreIndex+".h ");
+				coreIndex++;
 			}
 			coreIndex = 0;
 			for(SchedulerAllocation core:coreNo) {
 				fw.write("runnable"+coreIndex+".h ");
+				coreIndex++;
 			}
 			fw.write("ParallellaUtils.h \n");
 			fw.write("#Epiphany SDK dependencies\n");
@@ -153,25 +149,29 @@ public class MakeFileCreation {
 			fw.write("#search path for assembly listings \n");
 			fw.write("vpath %.s $(FREERTOSSRC)/portable/GCC/Epiphany \n");
 			fw.write("#main target  \n");
-			fw.write("#run: armcode \n");
+			fw.write("run: armcode ");
 			coreIndex = 0;
 			for(SchedulerAllocation core:coreNo) {
 				fw.write("main"+coreIndex+".elf ");
+				coreIndex++;
 			}
 			fw.write("\n	@echo build status : successful\n\n");
 			fw.write("#rule for every device target\n");
-			fw.write("%.elf: $(ELDF) tasks.o queue.o list.o port.o portasm.o heap_1.o c2c.o debugFlags.o AmaltheaConverter.o  \n");
+			fw.write("%.elf: $(ELDF) tasks.o queue.o list.o port.o portasm.o heap_1.o c2c.o debugFlags.o AmaltheaConverter.o ");
 			coreIndex = 0;
 			for(SchedulerAllocation core:coreNo) {
 				fw.write("taskDef"+coreIndex+".o ");
+				coreIndex++;
 			}
 			coreIndex = 0;
 			for(SchedulerAllocation core:coreNo) {
 				fw.write("label"+coreIndex+".o ");
+				coreIndex++;
 			}
 			coreIndex = 0;
 			for(SchedulerAllocation core:coreNo) {
 				fw.write("runnable"+coreIndex+".o ");
+				coreIndex++;
 			}
 
 			fw.write("ParallellaUtils.o shared_comms.o %.o  \n");
@@ -180,7 +180,7 @@ public class MakeFileCreation {
 			fw.write("armcode: armcode.c $(DEPS)\n");	
 			fw.write("	$(LCC) $< -o $@  -I ${EINCS} -L ${ELIBS} -lpal -le-hal -le-loader -lpthread\n");	
 			fw.write("#clean target\n");	
-			fw.write("clean\n");	
+			fw.write("clean:\n");	
 			fw.write("	rm -f *.o *.srec *.elf armcode\n\n");	
 			fw.write(".SECONDARY:\n");
 			fw.write("%.o: %.c $(DEPS)\n");

@@ -35,7 +35,7 @@ public class checkFreeRTOSConfiguration{
 	}
 
 	public void FreeRTOSConfiguration(Amalthea model, String srcPath, String headerPath, int configFlag) {
-		try {
+		/*try {
 			String path = System.getProperty("user.dir");
 			// create new file
 			File l_SourceDirectory = null;
@@ -55,7 +55,7 @@ public class checkFreeRTOSConfiguration{
 			}
 		} catch (IOException e1) {
 			e1.printStackTrace();
-		}
+		}*/
 		try {
 			new MainRMSFileCreation(model, srcPath, configFlag);
 		} catch (IOException e1) {
