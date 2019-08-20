@@ -50,9 +50,9 @@ public class MakeFileCreation {
 
 	public MakeFileCreation(final Amalthea Model, final String path1, final int configFlag) throws IOException {
 		this.model = Model;
-		System.out.println("Main File Creation Begins");
+		System.out.println("MAKEFILE Creation Begins");
 		fileCreate(this.model, path1, configFlag);
-		System.out.println("Main File Creation Ends");
+		System.out.println("MAKEFILE Creation Ends");
 	}
 
 	private static void fileCreate(final Amalthea model, final String path1, final int configFlag) throws IOException {
@@ -63,7 +63,7 @@ public class MakeFileCreation {
 			final ProcessingUnit pu = c.getResponsibility().get(0);
 			System.out.println("Core ==> " + pu);
 			final Set<Task> tasks = DeploymentUtil.getTasksMappedToCore(pu, model);
-			final String fname = path1 + File.separator + "main" + k + ".c";
+			final String fname = path1 + File.separator + "Makefile";
 			final File f2 = new File(path1);
 			final File f1 = new File(fname);
 			f2.mkdirs();
@@ -76,14 +76,9 @@ public class MakeFileCreation {
 			final File fn = f1;
 			final FileWriter fw = new FileWriter(fn, true);
 			try {
-				fileUtil.fileMainHeader(f1);
-				mainFileHeader(f1);
-				if ((0x0100 == (0x0F00 & configFlag)) & (0x3000 == (0xF000 & configFlag))) {
-					headerIncludesMainRMS(f1);
-					mainTaskStimuli(model, f1, tasks);
-					mainTaskPriority(f1, tasks);
-					mainFucntionRMS(model, f1, tasks);
-				}
+				//fileUtil.fileMainHeader(f1);
+				makeFileHeader(f1);
+				headerIncludesMainRMS(f1,CoreNo);
 			}
 			finally {
 				try {
@@ -97,37 +92,101 @@ public class MakeFileCreation {
 		}
 	}
 
-	private static void mainFucntionRMS(final Amalthea model, final File f1, final Set<Task> tasks) {
+
+	private static void makeFileHeader(final File f1) {
 		try {
 			final File fn = f1;
 			final FileWriter fw = new FileWriter(fn, true);
-			fw.write("int main(void) \n{\n");
-			fw.write("\toutbuf_init();\n");
-			for (final Task task : tasks) {
-				final MappingModel mappingModel = model.getMappingModel();
-				ProcessingUnit pu = null;
-				if (mappingModel != null) {
-					pu = DeploymentUtil.getAssignedCoreForProcess(task, model).iterator().next();
-					Time taskTime = RuntimeUtil.getExecutionTimeForProcess(task, pu, null, TimeType.WCET);
-					taskTime = TimeUtil.convertToTimeUnit(taskTime, TimeUnit.US);
-					final BigInteger sleepTime = taskTime.getValue();
-					fw.write("\tAmaltheaTask AmalTk_" + task.getName() + " = createAmaltheaTask( v" + task.getName()
-							+ ", cIN_" + task.getName() + ", cOUT_" + task.getName() + ", "
-							+ task.getStimuli().get(0).getName() + ", " + task.getStimuli().get(0).getName() + ", "
-							+ sleepTime + ");\n");
-				}
+			fw.write("#******************************************************************\n");
+			fw.write("#*Title 		:   Makefile Setup\n");
+			fw.write("#*Description	:	Makefile Setup for the Scheduler \n");
+			fw.write("#******************************************************************\n");
+			fw.write("#******************************************************************\n");
+			fw.write("#******************************************************************\n\n");
+			fw.close();
+		}
+		catch (final IOException ioe) {
+			System.err.println("IOException: " + ioe.getMessage());
+		}
+	}
+
+	private static void headerIncludesMainRMS(final File f1, EList<SchedulerAllocation> coreNo) {
+		try {
+			final File fn = f1;
+			final FileWriter fw = new FileWriter(fn, true);
+			fw.write("EPIPHANY_HOME=/opt/adapteva/esdk\n");
+			fw.write("#host compiler path\n");
+			fw.write("LCC=/opt/gcc-linaro-7.2.1-2017.11-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc\n");
+			fw.write("#device compiler path\n");
+			fw.write("CC=e-gcc\n");
+			fw.write("#FreeRTOS dependencies\n");
+			fw.write("CFLAGS=-I.\n");
+			fw.write("FREERTOSSRC=../../Source\n");
+			fw.write("INCLUDES= -g -I$(FREERTOSSRC)/include -I$(FREERTOSSRC)/portable/GCC/Epiphany -I.\n");
+			fw.write("DEPS = $(FREERTOSSRC)/portable/GCC/Epiphany/");
+			fw.write("portmacro.h ");
+			fw.write("Makefile ");
+			fw.write("FreeRTOSConfig.h ");
+			fw.write("debugFlags.h ");
+			fw.write("AmaltheaConverter.h ");
+			int coreIndex = 0;
+			for(SchedulerAllocation core:coreNo) {
+				fw.write("taskDef"+coreIndex+".h ");
+			}
+			coreIndex = 0;
+			for(SchedulerAllocation core:coreNo) {
+				fw.write("label"+coreIndex+".h ");
+			}
+			coreIndex = 0;
+			for(SchedulerAllocation core:coreNo) {
+				fw.write("runnable"+coreIndex+".h ");
+			}
+			fw.write("ParallellaUtils.h \n");
+			fw.write("#Epiphany SDK dependencies\n");
+			fw.write("ESDK=${EPIPHANY_HOME} \n");
+			fw.write("ELIBS=${ESDK}/tools/host.armv7l/lib \n");
+			fw.write("EINCS=${ESDK}/tools/host.armv7l/include \n");
+			fw.write("ELDF=${ESDK}/bsps/current/fast.ldf \n");
+			fw.write("EHDF=${EPIPHANY_HDF} \n");
+			fw.write("#search paths for C source code files \n");
+			fw.write("vpath %.c .:$(FREERTOSSRC)/:$(FREERTOSSRC)/portable/MemMang:$(FREERTOSSRC)/portable/GCC/Epiphany:/ \n");
+			fw.write("#search path for assembly listings \n");
+			fw.write("vpath %.s $(FREERTOSSRC)/portable/GCC/Epiphany \n");
+			fw.write("#main target  \n");
+			fw.write("#run: armcode \n");
+			coreIndex = 0;
+			for(SchedulerAllocation core:coreNo) {
+				fw.write("main"+coreIndex+".elf ");
+			}
+			fw.write("\n	@echo build status : successful\n\n");
+			fw.write("#rule for every device target\n");
+			fw.write("%.elf: $(ELDF) tasks.o queue.o list.o port.o portasm.o heap_1.o c2c.o debugFlags.o AmaltheaConverter.o  \n");
+			coreIndex = 0;
+			for(SchedulerAllocation core:coreNo) {
+				fw.write("taskDef"+coreIndex+".o ");
+			}
+			coreIndex = 0;
+			for(SchedulerAllocation core:coreNo) {
+				fw.write("label"+coreIndex+".o ");
+			}
+			coreIndex = 0;
+			for(SchedulerAllocation core:coreNo) {
+				fw.write("runnable"+coreIndex+".o ");
 			}
 
-			int count = 0;
-			for (final Task task : tasks) {
-				fw.write("\txTaskCreate(generalizedRTOSTask , \"AmalTk_" + task.getName()
-						+ "\", configMINIMAL_STACK_SIZE, &AmalTk_" + task.getName() + ", main" + task.getName()
-						+ ", NULL);\n");
-				count++;
-			}
-			fw.write("\tvTaskStartScheduler();\n");
-			fw.write("\t" + "return EXIT_SUCCESS;\n");
-			fw.write("}\n\n");
+			fw.write("ParallellaUtils.o shared_comms.o %.o  \n");
+			fw.write("	$(CC) -g -T$< -Wl,--gc-sections -o $@ $(filter-out $<,$^) -le-lib\n\n");
+			fw.write("#host target\n");	
+			fw.write("armcode: armcode.c $(DEPS)\n");	
+			fw.write("	$(LCC) $< -o $@  -I ${EINCS} -L ${ELIBS} -lpal -le-hal -le-loader -lpthread\n");	
+			fw.write("#clean target\n");	
+			fw.write("clean\n");	
+			fw.write("	rm -f *.o *.srec *.elf armcode\n\n");	
+			fw.write(".SECONDARY:\n");
+			fw.write("%.o: %.c $(DEPS)\n");
+			fw.write("	$(CC) -fdata-sections -ffunction-sections  -c -o $@ $< $(INCLUDES)\n\n");
+			fw.write("%.o: %.s $(DEPS)\n");
+			fw.write("	$(CC) -c -o $@ $< $(INCLUDES)\n");
 			fw.close();
 		}
 		catch (final IOException ioe) {
@@ -135,146 +194,6 @@ public class MakeFileCreation {
 		}
 	}
 
-	private static void taskHandleRMS(final File f1, final EList<Task> tasks) {
-		try {
-			final File fn = f1;
-			final FileWriter fw = new FileWriter(fn, true);
-			final List<Task> localTaskPriority = new ArrayList<Task>();
-			localTaskPriority.addAll(tasks);
-			fw.write("/* TaskHandler. */\n");
-			for (final Task task : tasks) {
-				fw.write("\txTaskHandle\t\ttaskHandle" + task.getName() + ";\n");
-				// TODO merge this constval with the value used in time period
-				// in FreeRTOS config File - Issue001
-			}
-			fw.write("\tAmaltheaTask taskList[];\n\n");
-			fw.close();
-		}
-		catch (final IOException ioe) {
-			System.err.println("IOException: " + ioe.getMessage());
-		}
-	}
-
-	private static void mainFileHeader(final File f1) {
-		try {
-			final File fn = f1;
-			final FileWriter fw = new FileWriter(fn, true);
-			fw.write("*Title 		:   C File for Tasks Call\n");
-			fw.write("*Description	:	Main file in which scheduling is done \n");
-			fw.write("******************************************************************\n");
-			fw.write("******************************************************************\n");
-			fw.write("******************************************************************/\n\n\n");
-			fw.close();
-		}
-		catch (final IOException ioe) {
-			System.err.println("IOException: " + ioe.getMessage());
-		}
-	}
-
-	private static void headerIncludesMain(final File f1) {
-		try {
-			final File fn = f1;
-			final FileWriter fw = new FileWriter(fn, true);
-			fw.write("/* Standard includes. */\n");
-			fw.write("#include <stdio.h>\n");
-			fw.write("#include <stdlib.h>\n");
-			fw.write("#include <string.h>\n\n");
-			fw.write("/* Scheduler includes. */\n");
-			fw.write("#include \"taskDef.h\"\n");
-			fw.write("#include \"FreeRTOS.h\"\n\n");
-			fw.close();
-		}
-		catch (final IOException ioe) {
-			System.err.println("IOException: " + ioe.getMessage());
-		}
-	}
-
-	private static void headerIncludesMainRMS(final File f1) {
-		try {
-			final File fn = f1;
-			final FileWriter fw = new FileWriter(fn, true);
-			fw.write("/* Standard includes. */\n");
-			fw.write("#include <stdio.h>\n");
-			fw.write("#include <stdlib.h>\n");
-			fw.write("#include <string.h>\n");
-			fw.write("#include <e_lib.h>\n\n");
-			fw.write("/* Scheduler includes. */\n");
-			fw.write("#include \"FreeRTOS.h\"\n");
-			fw.write("#include \"task.h\"\n");
-			fw.write("#include \"queue.h\"\n");
-			fw.write("#include \"AmaltheaConverter.h\"\n");
-			fw.write("#include \"debugFlags.h\"\n");
-			fw.write("#include \"taskDef.h\"\n\n");
-			fw.write("#define READ_PRECISION_US 1000\n\n\n");
-			fw.close();
-		}
-		catch (final IOException ioe) {
-			System.err.println("IOException: " + ioe.getMessage());
-		}
-	}
-
-	// TODO Read paper send by lukas
-	private static void mainTaskPriority(final File f1, final Set<Task> tasks) {
-		try {
-			final File fn = f1;
-			final List<Task> localTaskPriority = new ArrayList<Task>();
-			localTaskPriority.addAll(tasks);
-			final FileWriter fw = new FileWriter(fn, true);
-			fw.write("/* TaskPriorities. */\n");
-			final HashMap<Task, Long> periodMap = new HashMap<Task, Long>();
-			for (final Task task : tasks) {
-				final long period = fileUtil.getRecurrence(task).getValue().longValue();
-				periodMap.put(task, period);
-			}
-			final Map<Task, Long> periodMapSorted = fileUtil.sortByValue(periodMap);
-			for (int i = 0; i < periodMapSorted.size(); i++) {
-				final Task task = (Task) periodMapSorted.keySet().toArray()[i];
-				fw.write("\t#define main" + task.getName() + "\t( tskIDLE_PRIORITY +" + (i + 1) + " )\n");// TODO
-																											// merge
-																											// this
-																											// constval
-																											// with
-																											// the
-																											// value
-																											// used
-																											// in
-																											// time
-																											// period
-																											// in
-																											// FreeRTOS
-																											// config
-																											// File
-																											// -
-																											// Issue001
-			}
-			fw.write("\n");
-			fw.close();
-		}
-		catch (final IOException ioe) {
-			System.err.println("IOException: " + ioe.getMessage());
-		}
-	}
-
-	private static void mainTaskStimuli(final Amalthea model, final File f1, final Set<Task> tasks) {
-		try {
-			final File fn = f1;
-
-			final FileWriter fw = new FileWriter(fn, true);
-			fw.write("/* TaskStimuli. */\n");
-			final EList<Stimulus> Stimuli = model.getStimuliModel().getStimuli();
-			for (final Stimulus s : Stimuli) {
-				if (s instanceof PeriodicStimulus) {
-					fw.write("\t#define " + s.getName() + "\t" + ((PeriodicStimulus) s).getRecurrence().getValue()
-							+ " \n");
-				}
-			}
-			fw.write("\n");
-			fw.close();
-		}
-		catch (final IOException ioe) {
-			System.err.println("IOException: " + ioe.getMessage());
-		}
-	}
 
 	/**
 	 * helper function to get the Amalthea Model

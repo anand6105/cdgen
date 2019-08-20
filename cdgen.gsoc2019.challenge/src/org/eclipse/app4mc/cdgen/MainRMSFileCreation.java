@@ -143,8 +143,6 @@ public class MainRMSFileCreation {
 				System.out.println("Shared Label size 0");
 			}
 			else {
-				// System.out.println("Shared Label size
-				// "+SharedLabelList.size());
 				final HashMap<Label, HashMap<Task, ProcessingUnit>> sharedLabelTaskMap = LabelFileCreation
 						.LabelTaskMap(model, SharedLabelList);
 				for (final Label share : SharedLabelList) {
@@ -176,9 +174,6 @@ public class MainRMSFileCreation {
 				int SharedLabelCounter = SharedLabel.size();
 				if (SharedLabelCounter != 0) {
 					fw.write("\tshared_label_" + sh.toString().replace(" ", "") + "_init();\n");
-					// fw.write("void shared_label_"+sh.toString().replace(" ",
-					// "")+"_init_core();\n");
-
 				}
 				SharedLabelCounter = 0;
 			}
@@ -190,12 +185,9 @@ public class MainRMSFileCreation {
 					pu = DeploymentUtil.getAssignedCoreForProcess(task, model).iterator().next();
 					Time taskTime = RuntimeUtil.getExecutionTimeForProcess(task, pu, null, TimeType.WCET);
 					taskTime = TimeUtil.convertToTimeUnit(taskTime, TimeUnit.MS);
-					// System.out.println("\ntaskTime == "+task.getName()+" ==>
-					// "+taskTime + "==>"+fileUtil.getRecurrence(task));
 					final BigInteger sleepTime = taskTime.getValue();
 					final BigInteger b2 = new BigInteger("1000");
 					final int comparevalue = sleepTime.compareTo(b2);
-					// System.out.println("Sleep time ==>"+comparevalue);
 					if (comparevalue < 0) {
 						fw.write("\tAmaltheaTask AmalTk_" + task.getName() + " = createAmaltheaTask( v" + task.getName()
 								+ ", cIN_" + task.getName() + ", cOUT_" + task.getName() + ", "
@@ -228,7 +220,7 @@ public class MainRMSFileCreation {
 				for (final String tl : TypeList) {
 					fw.write(fileUtil.datatypeSize(tl) + ", ");
 					for (final Label La : LabelList) {
-						if (LabelTypeMap.get(La).contains(tl)) {
+						if (LabelTypeMap.get(La).contains(tl) && (SharedLabelListSortCore.contains(La))) {
 							dataTypeList.add(La);
 						}
 					}
@@ -236,7 +228,6 @@ public class MainRMSFileCreation {
 					k++;
 					if (k < TypeList.size()) {
 						fw.write(", ");
-
 					}
 				}
 				fw.write(");\n");

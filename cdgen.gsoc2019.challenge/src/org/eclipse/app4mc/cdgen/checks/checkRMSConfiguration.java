@@ -70,6 +70,11 @@ public class checkRMSConfiguration{
 			e1.printStackTrace();
 		}
 		try {
+			new FreeRTOSConfigFileCreation(model, srcPath, configFlag);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		try {
 			new SharedLabelsFileCreation(model, srcPath);
 		} catch (IOException e1) {
 			e1.printStackTrace();

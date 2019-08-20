@@ -49,7 +49,11 @@ public class checkPOSIXConfiguration{
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-
+		try {
+			new FreeRTOSConfigFileCreation(model, srcPath, configFlag);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		try {
 			new TaskFileCreation(model, srcPath, headerPath, configFlag);
 		} catch (IOException e1) {
