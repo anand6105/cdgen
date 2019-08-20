@@ -15,6 +15,7 @@ package org.eclipse.app4mc.cdgen.checks;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 import org.eclipse.app4mc.amalthea.model.Amalthea;
 import org.eclipse.app4mc.cdgen.FreeRTOSConfigFileCreation;
@@ -25,6 +26,7 @@ import org.eclipse.app4mc.cdgen.RunFileCreation;
 import org.eclipse.app4mc.cdgen.SharedLabelsFileCreation;
 import org.eclipse.app4mc.cdgen.TaskFileCreation;
 import org.eclipse.app4mc.cdgen.test.testTaskStructure;
+import org.eclipse.app4mc.cdgen.utils.fileUtil;
 
 
 /**
@@ -39,27 +41,22 @@ public class checkFreeRTOSConfiguration{
 	}
 
 	public void FreeRTOSConfiguration(Amalthea model, String srcPath, String headerPath, int configFlag) {
-		/*try {
-			String path = System.getProperty("user.dir");
+		try {
+			//String path = System.getProperty("user.dir");
 			// create new file
-			File l_SourceDirectory = null;
-			if(0x1310 == (configFlag & 0xFFF0)) {
-				l_SourceDirectory = new File(path + "/ref/freertos_coop/");
-			}else if(0x1320 == (configFlag & 0xFFF0)){
-				l_SourceDirectory = new File(path + "/ref/freertos_preem/");
-			}
-			
+			File l_SourceDirectory = new File(headerPath);
 			// array of files and directory
 			String[] filesName = l_SourceDirectory.list();
 			// for each name in the path array
 			for(String pathi:filesName) {
 				File SourceFile = new File(l_SourceDirectory.toString() +"/" + pathi);
 				File DestinationFile = new File(Paths.get(srcPath).toString() + "/" + pathi );
+				if(fileUtil.getFileExtension(SourceFile)=="c"||fileUtil.getFileExtension(SourceFile)=="h"||fileUtil.getFileExtension(SourceFile)=="")
 				com.google.common.io.Files.copy(SourceFile , DestinationFile );
 			}
 		} catch (IOException e1) {
 			e1.printStackTrace();
-		}*/
+		}
 		try {
 			new MainRMSFileCreation(model, srcPath, configFlag);
 		} catch (IOException e1) {

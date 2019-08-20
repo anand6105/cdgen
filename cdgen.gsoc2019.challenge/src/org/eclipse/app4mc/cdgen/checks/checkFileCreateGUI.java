@@ -23,6 +23,7 @@ import java.sql.Timestamp;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -36,8 +37,6 @@ import org.eclipse.app4mc.cdgen.identifiers.Constants;
 
 /**
  * Implementation of GUI Design and Action on Button Click.
- * 
- *
  */
 
 public class checkFileCreateGUI {
@@ -63,7 +62,10 @@ public class checkFileCreateGUI {
 	public checkFileCreateGUI() throws IOException {
 		initialize();
 	}
-
+	int modelIndex;
+	String fileInput;
+	File inputFile;
+	JTextField txtField = new JTextField("FreeRTOS / RMS / POSIX Browse path");
 	private void initialize() throws IOException {
 
 		frame = new JFrame();
@@ -99,18 +101,60 @@ public class checkFileCreateGUI {
 		ButtonGroup group3 = new ButtonGroup();
 		group3.add(cdgenCooperative);
 		group3.add(cdgenPreemptive);
+		JComboBox<String> comboModel = new JComboBox<String>();
+		comboModel.addItem("DemoCarMulti Parallella");
+		comboModel.addItem("DemoCarMulti Raspberry Pi");
+		comboModel.setBounds(370, 160, 200, 25);
+		frame.getContentPane().add(comboModel);
 
+		comboModel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				@SuppressWarnings("unchecked")
+				JComboBox<String> combo = (JComboBox<String>) event.getSource();
+				String selectedBook = (String) combo.getSelectedItem();
+				if (selectedBook.equals("DemoCarMulti Parallella")) {
+					modelIndex = 0;
+				} else if (selectedBook.equals("DemoCarMulti Raspberry Pi")) {
+					modelIndex = 1;
+				}
+			}
+		});
+		
+		JButton btnBrowse = new JButton("Source Browse");
+		final JFileChooser fc = new JFileChooser();
+		btnBrowse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (e.getSource() == btnBrowse)
+				{
+					int returnVal = fc.showOpenDialog(frame);
+					if (returnVal == JFileChooser.APPROVE_OPTION) {
+						File file = fc.getCurrentDirectory();
+						fileInput = file.getPath();
+						txtField.setText(fileInput);
+					}
+				}
+			}
+		});
+
+		btnBrowse.setBounds(673, 70, 149, 25);
+		frame.getContentPane().add(btnBrowse);
+		
+		txtField.setBounds(370, 95, 300, 25);
+		frame.getContentPane().add(txtField);
+		
+		if(modelIndex == 0) {
+			inputFile = new File(Constants.DEMOCARMULTI);
+		}else if(modelIndex == 1) {
+			inputFile = new File(Constants.DEMOCARMULTIRASPBERRYPI);
+		}
+		final Amalthea model = AmaltheaLoader.loadFromFile(inputFile);
 		JButton btnSelectTasks = new JButton("Generate Code");
 		btnSelectTasks.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Load File
-				final File inputFile = new File(Constants.DEMOCARMULTI);
-				final Amalthea model = AmaltheaLoader.loadFromFile(inputFile);
 				if (model == null) {
 					System.out.println("Error: No model loaded!");
 					return;
 				}
-
 				String path = System.getProperty("user.dir");
 				String timestamp = new Timestamp(System.currentTimeMillis()).toString();
 				timestamp = timestamp.substring(0, timestamp.length() - 6).replaceAll(":", "");
@@ -130,7 +174,8 @@ public class checkFileCreateGUI {
 					}
 				}
 				String path1 = path + "/" + timestamp;
-				String path2 = path1 + "/includes";
+				System.out.println("\n"+fileInput);
+				String path2 = fileInput;
 
 				int configFlag = 0xFFFF;
 				/*
@@ -205,7 +250,6 @@ public class checkFileCreateGUI {
 					System.out.println("Configuration Not Defined!");
 				}
 			}
-
 		});
 		btnSelectTasks.setBounds(673, 105, 149, 25);
 		frame.getContentPane().add(btnSelectTasks);
@@ -218,41 +262,20 @@ public class checkFileCreateGUI {
 		});
 		btnClose.setBounds(673, 140, 149, 25);
 		frame.getContentPane().add(btnClose);
-
 		JLabel lblAllTasks = new JLabel("OS Options");
 		lblAllTasks.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblAllTasks.setBounds(50, 69, 110, 16);
 		frame.getContentPane().add(lblAllTasks);
 
-		String path = System.getProperty("user.dir");
-
-		JTextField txtField = new JTextField("FreeRTOS Browse path");
-		JButton btnBrowse = new JButton("FreeRTOS Browse");
-		btnBrowse.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (e.getSource() == btnBrowse)
-				{
-					File fileID;
-					JFileChooser chooser = new JFileChooser(new File(System.getProperty(path)));
-					chooser.setDialogTitle("Select FreeRTOS Kernel Location");
-					chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-					chooser.setAcceptAllFileFilterUsed(false);
-					if ((chooser.showOpenDialog(frame)) == JFileChooser.APPROVE_OPTION){ 
-						fileID = chooser.getSelectedFile();
-						txtField.setText(fileID.getPath());
-					}
-				}
-			}
-		});
-		btnBrowse.setBounds(673, 70, 149, 25);
-		frame.getContentPane().add(btnBrowse);
-		txtField.setBounds(370, 70, 300, 25);
-		frame.getContentPane().add(txtField);
-
 		JLabel lblModelSelection = new JLabel("Model selection");
 		lblModelSelection.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblModelSelection.setBounds(370, 100, 145, 25);
+		lblModelSelection.setBounds(370, 130, 145, 25);
 		frame.getContentPane().add(lblModelSelection);
+
+		JLabel lblSourcePath = new JLabel("Source Path");
+		lblSourcePath.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblSourcePath.setBounds(370, 65, 145, 25);
+		frame.getContentPane().add(lblSourcePath);
 
 		JLabel lblResponsetime = new JLabel("Task Preemption");
 		lblResponsetime.setFont(new Font("Tahoma", Font.BOLD, 13));
