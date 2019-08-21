@@ -13,15 +13,22 @@
 package org.eclipse.app4mc.cdgen.checks;
 
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URL;
 import java.sql.Timestamp;
 
+import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -74,15 +81,15 @@ public class checkFileCreateGUI {
 		frame.getContentPane().setLayout(null);
 
 		JRadioButton cdgenFreeRTOS = new JRadioButton("FreeRTOS");
-		cdgenFreeRTOS.setBounds(50, 90, 145, 25);
+		cdgenFreeRTOS.setBounds(40, 80, 145, 25);
 		frame.getContentPane().add(cdgenFreeRTOS);
 
 		JRadioButton cdgenPosix = new JRadioButton("POSIX");
-		cdgenPosix.setBounds(50, 120, 145, 25);
+		cdgenPosix.setBounds(40, 110, 145, 25);
 		frame.getContentPane().add(cdgenPosix);
 
 		JRadioButton cdgenCustom = new JRadioButton("RMS(Rate Monotonic)");
-		cdgenCustom.setBounds(50, 150, 210, 25);
+		cdgenCustom.setBounds(40, 140, 210, 25);
 		frame.getContentPane().add(cdgenCustom);
 
 		ButtonGroup group = new ButtonGroup();
@@ -91,11 +98,11 @@ public class checkFileCreateGUI {
 		group.add(cdgenCustom);
 
 		JRadioButton cdgenCooperative = new JRadioButton("Cooperative");
-		cdgenCooperative.setBounds(210, 90, 145, 25);
+		cdgenCooperative.setBounds(190, 80, 145, 25);
 		frame.getContentPane().add(cdgenCooperative);
 
 		JRadioButton cdgenPreemptive = new JRadioButton("Preemptive");
-		cdgenPreemptive.setBounds(210, 120, 145, 25);
+		cdgenPreemptive.setBounds(190, 110, 145, 25);
 		frame.getContentPane().add(cdgenPreemptive);
 
 		ButtonGroup group3 = new ButtonGroup();
@@ -104,7 +111,7 @@ public class checkFileCreateGUI {
 		JComboBox<String> comboModel = new JComboBox<String>();
 		comboModel.addItem("DemoCarMulti Parallella");
 		comboModel.addItem("DemoCarMulti Raspberry Pi");
-		comboModel.setBounds(370, 160, 200, 25);
+		comboModel.setBounds(370, 140, 200, 25);
 		frame.getContentPane().add(comboModel);
 
 		comboModel.addActionListener(new ActionListener() {
@@ -119,8 +126,10 @@ public class checkFileCreateGUI {
 				}
 			}
 		});
+
 		
-		JButton btnBrowse = new JButton("Source Browse");
+		BufferedImage browseButtonIcon = ImageIO.read(new File("/home/rprasathg/Downloads/browse.png"));
+		JButton btnBrowse = new JButton(new ImageIcon(browseButtonIcon));
 		final JFileChooser fc = new JFileChooser();
 		btnBrowse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -135,20 +144,38 @@ public class checkFileCreateGUI {
 				}
 			}
 		});
-
-		btnBrowse.setBounds(673, 70, 149, 25);
+		btnBrowse.setBounds(673, 75, 120, 35);
 		frame.getContentPane().add(btnBrowse);
-		
-		txtField.setBounds(370, 95, 300, 25);
+
+		//JButton btnHelp = new JButton("Help");
+		BufferedImage helpButtonIcon = ImageIO.read(new File("/home/rprasathg/Downloads/Untitled Diagram1.png"));
+		//	button = new JButton(new ImageIcon(buttonIcon));
+		JButton btnHelp = new JButton(new ImageIcon(helpButtonIcon));
+		/*btnHelp.setIcon(new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/home/rprasathg/Pictures/helpButton.png"))
+				.getImage().getScaledInstance(200, 50, Image.SCALE_SMOOTH)));*/
+		btnHelp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Desktop.getDesktop().browse(new URL("https://cdgendoc.readthedocs.io/en/latest/GUI_Layout.html").toURI());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnHelp.setBounds(800, 10, 30, 30);
+		frame.getContentPane().add(btnHelp);
+
+		txtField.setBounds(370, 80, 280, 25);
 		frame.getContentPane().add(txtField);
-		
+
 		if(modelIndex == 0) {
 			inputFile = new File(Constants.DEMOCARMULTI);
 		}else if(modelIndex == 1) {
 			inputFile = new File(Constants.DEMOCARMULTIRASPBERRYPI);
 		}
 		final Amalthea model = AmaltheaLoader.loadFromFile(inputFile);
-		JButton btnSelectTasks = new JButton("Generate Code");
+		BufferedImage startButtonIcon = ImageIO.read(new File("/home/rprasathg/Downloads/start.png"));
+		JButton btnSelectTasks = new JButton(new ImageIcon(startButtonIcon));
 		btnSelectTasks.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (model == null) {
@@ -174,9 +201,8 @@ public class checkFileCreateGUI {
 					}
 				}
 				String path1 = path + "/" + timestamp;
-				System.out.println("\n"+fileInput);
-				String path2 = fileInput;
-
+				//System.out.println("\n"+fileInput);
+				String path2 = txtField.getText();
 				int configFlag = 0xFFFF;
 				/*
 				 * 
@@ -251,35 +277,35 @@ public class checkFileCreateGUI {
 				}
 			}
 		});
-		btnSelectTasks.setBounds(673, 105, 149, 25);
+		btnSelectTasks.setBounds(673, 120, 120, 35);
 		frame.getContentPane().add(btnSelectTasks);
-
-		JButton btnClose = new JButton("Close");
+		BufferedImage closeButtonIcon = ImageIO.read(new File("/home/rprasathg/Downloads/close.png"));
+		JButton btnClose = new JButton(new ImageIcon(closeButtonIcon));
 		btnClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
 			}
 		});
-		btnClose.setBounds(673, 140, 149, 25);
+		btnClose.setBounds(673, 165, 120, 35);
 		frame.getContentPane().add(btnClose);
 		JLabel lblAllTasks = new JLabel("OS Options");
 		lblAllTasks.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblAllTasks.setBounds(50, 69, 110, 16);
+		lblAllTasks.setBounds(40, 55, 110, 16);
 		frame.getContentPane().add(lblAllTasks);
 
 		JLabel lblModelSelection = new JLabel("Model selection");
 		lblModelSelection.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblModelSelection.setBounds(370, 130, 145, 25);
+		lblModelSelection.setBounds(370, 110, 145, 25);
 		frame.getContentPane().add(lblModelSelection);
 
 		JLabel lblSourcePath = new JLabel("Source Path");
 		lblSourcePath.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblSourcePath.setBounds(370, 65, 145, 25);
+		lblSourcePath.setBounds(370, 50, 145, 25);
 		frame.getContentPane().add(lblSourcePath);
 
 		JLabel lblResponsetime = new JLabel("Task Preemption");
 		lblResponsetime.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblResponsetime.setBounds(210, 69, 150, 16);
+		lblResponsetime.setBounds(190, 55, 150, 16);
 		frame.getContentPane().add(lblResponsetime);
 
 		JLabel lblPerformanceMetric = new JLabel("CDGen - Code Generator for APP4MC");
