@@ -71,10 +71,10 @@ public class checkFileCreateGUI {
 	}
 	int modelIndex;
 	String fileInput;
-	File inputFile;
-	JTextField txtField = new JTextField("FreeRTOS / RMS / POSIX Browse path");
+	String fileInput1;
+	JTextField txtFieldScheduler = new JTextField("FreeRTOS / RMS / POSIX Browse path");
+	JTextField txtFieldModel = new JTextField("Amalthea Model Browse path");
 	private void initialize() throws IOException {
-
 		frame = new JFrame();
 		frame.setBounds(100, 100, 864, 272);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -108,51 +108,46 @@ public class checkFileCreateGUI {
 		ButtonGroup group3 = new ButtonGroup();
 		group3.add(cdgenCooperative);
 		group3.add(cdgenPreemptive);
-		JComboBox<String> comboModel = new JComboBox<String>();
-		comboModel.addItem("DemoCarMulti Parallella");
-		comboModel.addItem("DemoCarMulti Raspberry Pi");
-		comboModel.setBounds(370, 140, 200, 25);
-		frame.getContentPane().add(comboModel);
-
-		comboModel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				@SuppressWarnings("unchecked")
-				JComboBox<String> combo = (JComboBox<String>) event.getSource();
-				String selectedBook = (String) combo.getSelectedItem();
-				if (selectedBook.equals("DemoCarMulti Parallella")) {
-					modelIndex = 0;
-				} else if (selectedBook.equals("DemoCarMulti Raspberry Pi")) {
-					modelIndex = 1;
-				}
-			}
-		});
-
-		
-		BufferedImage browseButtonIcon = ImageIO.read(new File("/home/rprasathg/Downloads/browse.png"));
-		JButton btnBrowse = new JButton(new ImageIcon(browseButtonIcon));
+		BufferedImage browseButtonIconScheduler = ImageIO.read(new File("/home/rprasathg/Downloads/browse.png"));
+		JButton btnBrowseScheduler = new JButton(new ImageIcon(browseButtonIconScheduler));
 		final JFileChooser fc = new JFileChooser();
-		btnBrowse.addActionListener(new ActionListener() {
+		btnBrowseScheduler.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (e.getSource() == btnBrowse)
+				if (e.getSource() == btnBrowseScheduler)
 				{
 					int returnVal = fc.showOpenDialog(frame);
 					if (returnVal == JFileChooser.APPROVE_OPTION) {
 						File file = fc.getCurrentDirectory();
 						fileInput = file.getPath();
-						txtField.setText(fileInput);
+						txtFieldScheduler.setText(fileInput);
 					}
 				}
 			}
 		});
-		btnBrowse.setBounds(673, 75, 120, 35);
-		frame.getContentPane().add(btnBrowse);
+		btnBrowseScheduler.setBounds(673, 75, 120, 35);
+		frame.getContentPane().add(btnBrowseScheduler);
 
-		//JButton btnHelp = new JButton("Help");
+		BufferedImage browseButtonIconModel = ImageIO.read(new File("/home/rprasathg/Downloads/browse.png"));
+		JButton btnBrowseModel = new JButton(new ImageIcon(browseButtonIconModel));
+		final JFileChooser fc1 = new JFileChooser();
+		//final String fileInput1;
+		btnBrowseModel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (e.getSource() == btnBrowseModel)
+				{
+					int returnVal = fc1.showOpenDialog(frame);
+					if (returnVal == JFileChooser.APPROVE_OPTION) {
+						File file = fc1.getSelectedFile();
+						fileInput1 = file.getPath();
+						txtFieldModel.setText(fileInput1);
+					}
+				}
+			}
+		});
+		btnBrowseModel.setBounds(673, 130, 120, 35);
+		frame.getContentPane().add(btnBrowseModel);
 		BufferedImage helpButtonIcon = ImageIO.read(new File("/home/rprasathg/Downloads/Untitled Diagram1.png"));
-		//	button = new JButton(new ImageIcon(buttonIcon));
 		JButton btnHelp = new JButton(new ImageIcon(helpButtonIcon));
-		/*btnHelp.setIcon(new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/home/rprasathg/Pictures/helpButton.png"))
-				.getImage().getScaledInstance(200, 50, Image.SCALE_SMOOTH)));*/
 		btnHelp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -165,19 +160,23 @@ public class checkFileCreateGUI {
 		btnHelp.setBounds(800, 10, 30, 30);
 		frame.getContentPane().add(btnHelp);
 
-		txtField.setBounds(370, 80, 280, 25);
-		frame.getContentPane().add(txtField);
+		txtFieldScheduler.setBounds(370, 80, 280, 25);
+		frame.getContentPane().add(txtFieldScheduler);
 
-		if(modelIndex == 0) {
-			inputFile = new File(Constants.DEMOCARMULTI);
-		}else if(modelIndex == 1) {
-			inputFile = new File(Constants.DEMOCARMULTIRASPBERRYPI);
-		}
-		final Amalthea model = AmaltheaLoader.loadFromFile(inputFile);
+
+		txtFieldModel.setBounds(370, 140, 280, 25);
+		frame.getContentPane().add(txtFieldModel);
+
+		
+		
+		
 		BufferedImage startButtonIcon = ImageIO.read(new File("/home/rprasathg/Downloads/start.png"));
 		JButton btnSelectTasks = new JButton(new ImageIcon(startButtonIcon));
 		btnSelectTasks.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				File inputFile = new File(txtFieldModel.getText());
+				final Amalthea model = AmaltheaLoader.loadFromFile(inputFile);
+				System.out.println("\n Model file "+txtFieldModel.getText());
 				if (model == null) {
 					System.out.println("Error: No model loaded!");
 					return;
@@ -201,8 +200,7 @@ public class checkFileCreateGUI {
 					}
 				}
 				String path1 = path + "/" + timestamp;
-				//System.out.println("\n"+fileInput);
-				String path2 = txtField.getText();
+				String path2 = txtFieldScheduler.getText();
 				int configFlag = 0xFFFF;
 				/*
 				 * 
@@ -213,16 +211,13 @@ public class checkFileCreateGUI {
 				 * 0X0010 ==> Cooperative
 				 * 0X0020 ==> Preemptive
 				 * 
-				 * 0X0001 ==> MultiCore
-				 * 0X0002 ==> SingleCore
-				 * 
 				 * FreeRTOS == 	Cooperative ==	0x1X10
 				 * FreeRTOS == 	Preemptive 	==	0x1X20
 				 * POSIX  	== 	Cooperative ==	0x2X10
 				 * POSIX 	== 	Preemptive 	==	0x2X20
 				 * RMS  	== 	Cooperative ==	0x3X10
 				 * RMS  	== 	Preemptive 	==	0x3X20
-				 * 
+				 * X 		==  Don't care
 				 */
 
 				System.out.println("############################################################");
@@ -277,7 +272,7 @@ public class checkFileCreateGUI {
 				}
 			}
 		});
-		btnSelectTasks.setBounds(673, 120, 120, 35);
+		btnSelectTasks.setBounds(190, 190, 120, 35);
 		frame.getContentPane().add(btnSelectTasks);
 		BufferedImage closeButtonIcon = ImageIO.read(new File("/home/rprasathg/Downloads/close.png"));
 		JButton btnClose = new JButton(new ImageIcon(closeButtonIcon));
@@ -286,7 +281,7 @@ public class checkFileCreateGUI {
 				System.exit(0);
 			}
 		});
-		btnClose.setBounds(673, 165, 120, 35);
+		btnClose.setBounds(370, 190, 120, 35);
 		frame.getContentPane().add(btnClose);
 		JLabel lblAllTasks = new JLabel("OS Options");
 		lblAllTasks.setFont(new Font("Tahoma", Font.BOLD, 13));
