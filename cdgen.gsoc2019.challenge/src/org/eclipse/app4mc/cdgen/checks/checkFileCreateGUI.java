@@ -21,6 +21,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
@@ -34,13 +35,16 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.eclipse.app4mc.amalthea.model.Amalthea;
 import org.eclipse.app4mc.amalthea.model.io.AmaltheaLoader;
 import org.eclipse.app4mc.cdgen.identifiers.Constants;
+import org.eclipse.app4mc.cdgen.utils.fileUtil;
 
 /**
  * Implementation of GUI Design and Action on Button Click.
@@ -133,13 +137,23 @@ public class checkFileCreateGUI {
 		//final String fileInput1;
 		btnBrowseModel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 				if (e.getSource() == btnBrowseModel)
 				{
+					FileNameExtensionFilter filter =  new FileNameExtensionFilter("*.amxmi", "*.amxmi"); 
+					fc1.addChoosableFileFilter(filter); 
+					fc1.setMultiSelectionEnabled(false);
+					fc1.showOpenDialog(null);
 					int returnVal = fc1.showOpenDialog(frame);
-					if (returnVal == JFileChooser.APPROVE_OPTION) {
-						File file = fc1.getSelectedFile();
-						fileInput1 = file.getPath();
-						txtFieldModel.setText(fileInput1);
+					if(fileUtil.getFileExtension(fc1.getSelectedFile())=="amxmi")
+					{
+						if (returnVal == JFileChooser.APPROVE_OPTION) {
+							File file = fc1.getSelectedFile();
+							fileInput1 = file.getPath();
+							txtFieldModel.setText(fileInput1);
+						}
+					}else {
+						JOptionPane.showMessageDialog(null, " choose a file with \".arxmi\" file ","Wrong model file",2);
 					}
 				}
 			}
@@ -167,9 +181,9 @@ public class checkFileCreateGUI {
 		txtFieldModel.setBounds(370, 140, 280, 25);
 		frame.getContentPane().add(txtFieldModel);
 
-		
-		
-		
+
+
+
 		BufferedImage startButtonIcon = ImageIO.read(new File("../cdgen.gsoc2019.challenge/gui_button/start.png"));
 		JButton btnSelectTasks = new JButton(new ImageIcon(startButtonIcon));
 		btnSelectTasks.addActionListener(new ActionListener() {
