@@ -143,20 +143,20 @@ public class checkFileCreateGUI {
 					FileNameExtensionFilter filter =  new FileNameExtensionFilter("*.amxmi", "*.amxmi"); 
 					fc1.addChoosableFileFilter(filter); 
 					fc1.setMultiSelectionEnabled(false);
-					fc1.showOpenDialog(null);
+					//fc1.showOpenDialog(null);
 					int returnVal = fc1.showOpenDialog(frame);
-					if(fileUtil.getFileExtension(fc1.getSelectedFile())=="amxmi")
-					{
+					System.out.println("\nRam  "+fileUtil.getFileExtension(fc1.getSelectedFile()));
+					//if(fileUtil.getFileExtension(fc1.getSelectedFile())=="amxmi"){
 						if (returnVal == JFileChooser.APPROVE_OPTION) {
 							File file = fc1.getSelectedFile();
 							fileInput1 = file.getPath();
 							txtFieldModel.setText(fileInput1);
 						}
-					}else {
-						JOptionPane.showMessageDialog(null, " choose a file with \".arxmi\" file ","Wrong model file",2);
+				/*	}else {
+						JOptionPane.showMessageDialog(null, " choose a file with \".amxmi\" file ","Wrong model file",2);
 					}
-				}
-			}
+				*/
+					}}
 		});
 		btnBrowseModel.setBounds(673, 130, 120, 35);
 		frame.getContentPane().add(btnBrowseModel);
