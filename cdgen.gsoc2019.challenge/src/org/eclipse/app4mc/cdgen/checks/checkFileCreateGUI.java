@@ -108,7 +108,7 @@ public class checkFileCreateGUI {
 		ButtonGroup group3 = new ButtonGroup();
 		group3.add(cdgenCooperative);
 		group3.add(cdgenPreemptive);
-		BufferedImage browseButtonIconScheduler = ImageIO.read(new File("../gui_button/browse.png"));
+		BufferedImage browseButtonIconScheduler = ImageIO.read(new File("../cdgen.gsoc2019.challenge/gui_button/browse.png"));
 		JButton btnBrowseScheduler = new JButton(new ImageIcon(browseButtonIconScheduler));
 		final JFileChooser fc = new JFileChooser();
 		btnBrowseScheduler.addActionListener(new ActionListener() {
@@ -127,7 +127,7 @@ public class checkFileCreateGUI {
 		btnBrowseScheduler.setBounds(673, 75, 120, 35);
 		frame.getContentPane().add(btnBrowseScheduler);
 
-		BufferedImage browseButtonIconModel = ImageIO.read(new File("../gui_button/browse.png"));
+		BufferedImage browseButtonIconModel = ImageIO.read(new File("../cdgen.gsoc2019.challenge/gui_button/browse.png"));
 		JButton btnBrowseModel = new JButton(new ImageIcon(browseButtonIconModel));
 		final JFileChooser fc1 = new JFileChooser();
 		//final String fileInput1;
@@ -146,7 +146,7 @@ public class checkFileCreateGUI {
 		});
 		btnBrowseModel.setBounds(673, 130, 120, 35);
 		frame.getContentPane().add(btnBrowseModel);
-		BufferedImage helpButtonIcon = ImageIO.read(new File("../gui_button/Untitled Diagram1.png"));
+		BufferedImage helpButtonIcon = ImageIO.read(new File("../cdgen.gsoc2019.challenge/gui_button/Untitled Diagram1.png"));
 		JButton btnHelp = new JButton(new ImageIcon(helpButtonIcon));
 		btnHelp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -170,7 +170,7 @@ public class checkFileCreateGUI {
 		
 		
 		
-		BufferedImage startButtonIcon = ImageIO.read(new File("../gui_button/start.png"));
+		BufferedImage startButtonIcon = ImageIO.read(new File("../cdgen.gsoc2019.challenge/gui_button/start.png"));
 		JButton btnSelectTasks = new JButton(new ImageIcon(startButtonIcon));
 		btnSelectTasks.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -275,7 +275,7 @@ public class checkFileCreateGUI {
 		});
 		btnSelectTasks.setBounds(190, 190, 120, 35);
 		frame.getContentPane().add(btnSelectTasks);
-		BufferedImage closeButtonIcon = ImageIO.read(new File("../gui_button/close.png"));
+		BufferedImage closeButtonIcon = ImageIO.read(new File("../cdgen.gsoc2019.challenge/gui_button/close.png"));
 		JButton btnClose = new JButton(new ImageIcon(closeButtonIcon));
 		btnClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
