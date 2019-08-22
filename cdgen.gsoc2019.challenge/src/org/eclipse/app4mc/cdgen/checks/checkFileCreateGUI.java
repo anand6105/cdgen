@@ -174,8 +174,9 @@ public class checkFileCreateGUI {
 		JButton btnSelectTasks = new JButton(new ImageIcon(startButtonIcon));
 		btnSelectTasks.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				File inputFile = new File(txtFieldModel.getText());
-				final Amalthea model = AmaltheaLoader.loadFromFile(inputFile);
+				//File inputFile = new File();
+				//String inputFile = Constants.DEMOCARMULTI;
+				final Amalthea model = AmaltheaLoader.loadFromFileNamed(txtFieldModel.getText());
 				System.out.println("\n Model file "+txtFieldModel.getText());
 				if (model == null) {
 					System.out.println("Error: No model loaded!");
