@@ -16,14 +16,11 @@ import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URL;
 import java.sql.Timestamp;
 
@@ -31,11 +28,9 @@ import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
@@ -43,7 +38,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.eclipse.app4mc.amalthea.model.Amalthea;
 import org.eclipse.app4mc.amalthea.model.io.AmaltheaLoader;
-import org.eclipse.app4mc.cdgen.identifiers.Constants;
 import org.eclipse.app4mc.cdgen.utils.fileUtil;
 
 /**
