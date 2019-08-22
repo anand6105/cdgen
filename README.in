@@ -27,28 +27,27 @@ Source code for the scheduler  - https://git.eclipse.org/c/app4mc/org.eclipse.ap
 ============
 $root
 |--org.eclipse.app4mc.cdgen(template for files)
-	|--ArmCodeFileCreation
-	|--FreeRTOSConfigFileCreation
-	|--LabelFileCreation
-	|--MainFileCreation
-	|--MainRMSFileCreation
-	|--MakeFileCreation
-	|--RunFileCreation
-	|--SharedLabelsFileCreation
-	|--TaskFileCreation
+|	|--FreeRTOSConfigFileCreation
+|	|--LabelFileCreation
+|	|--MainFileCreation
+|	|--MainRMSFileCreation
+|	|--MakeFileCreation
+|	|--RunFileCreation
+|	|--SharedLabelsFileCreation
+|	 --TaskFileCreation
 |--org.eclipse.app4mc.cdgen.checks(App GUI and File selection based on Scheduler selection)
-	|--checkFileCreateGUI
-	|--checkFreeRTOSConfiguration
-	|--checkPOSIXConfiguration
-	|--checkRMSConfiguration
+|	|--checkFileCreateGUI
+|	|--checkFreeRTOSConfiguration
+|	|--checkPOSIXConfiguration
+|	 --checkRMSConfiguration
 |--org.eclipse.app4mc.cdgen.test(Unit Test and Integration)
-	|--testLabel
-	|--testMain
-	|--testRunnable
-	|--testTaskDef
-	|--testTaskStructure
-|--org.eclipse.app4mc.cdgen.utils
-	|--fileUtil
+|	|--testLabel
+|	|--testMain
+|	|--testRunnable
+|	|--testTaskDef
+|	 --testTaskStructure
+--org.eclipse.app4mc.cdgen.utils
+	 --fileUtil
 
 =======
  USAGE
