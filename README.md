@@ -18,7 +18,7 @@ For more details please refer to [documentation][documentation].
 5. Build, deploy and Run the code on Parallella.
 
 <!-- Markdown link & img dfn's -->
-[documentation]:https://github.com/rprasathg/cdgendoc
+[documentation]:file:///home/rprasathg/cd_gen_doc/_build/html/index.html
 [setup]:https://git.eclipse.org/c/app4mc/org.eclipse.app4mc.examples.git/commit/?id=69a0a24f120bb0d79cbd688081ca697368e252f7
 [APP4MC]:https://www.eclipse.org/app4mc/downloads/
 [JAVA]:https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase10-4425482.html
