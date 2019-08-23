@@ -38,7 +38,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.eclipse.app4mc.amalthea.model.Amalthea;
 import org.eclipse.app4mc.amalthea.model.io.AmaltheaLoader;
-import org.eclipse.app4mc.cdgen.utils.fileUtil;
 
 /**
  * Implementation of GUI Design and Action on Button Click.
@@ -111,8 +110,7 @@ public class checkFileCreateGUI {
 		final ButtonGroup group3 = new ButtonGroup();
 		group3.add(cdgenCooperative);
 		group3.add(cdgenPreemptive);
-		final BufferedImage browseButtonIconScheduler = ImageIO
-				.read(new File("../cdgen.gsoc2019.challenge/cdgen.graphics/browse.png"));
+		final BufferedImage browseButtonIconScheduler = ImageIO.read(new File("./cdgen.graphics/browse.png"));
 		final JButton btnBrowseScheduler = new JButton(new ImageIcon(browseButtonIconScheduler));
 		final JFileChooser fc = new JFileChooser();
 		btnBrowseScheduler.addActionListener(new ActionListener() {
@@ -131,8 +129,7 @@ public class checkFileCreateGUI {
 		btnBrowseScheduler.setBounds(673, 75, 120, 35);
 		this.frame.getContentPane().add(btnBrowseScheduler);
 
-		final BufferedImage browseButtonIconModel = ImageIO
-				.read(new File("../cdgen.gsoc2019.challenge/cdgen.graphics/browse.png"));
+		final BufferedImage browseButtonIconModel = ImageIO.read(new File("./cdgen.graphics/browse.png"));
 		final JButton btnBrowseModel = new JButton(new ImageIcon(browseButtonIconModel));
 		final JFileChooser fc1 = new JFileChooser();
 		// final String fileInput1;
@@ -146,7 +143,8 @@ public class checkFileCreateGUI {
 					fc1.setMultiSelectionEnabled(false);
 					// fc1.showOpenDialog(null);
 					final int returnVal = fc1.showOpenDialog(checkFileCreateGUI.this.frame);
-					System.out.println("\nRam  " + fileUtil.getFileExtension(fc1.getSelectedFile()));
+					// System.out.println("\nRam " +
+					// fileUtil.getFileExtension(fc1.getSelectedFile()));
 					// if(fileUtil.getFileExtension(fc1.getSelectedFile())=="amxmi"){
 					if (returnVal == JFileChooser.APPROVE_OPTION) {
 						final File file = fc1.getSelectedFile();
@@ -163,8 +161,7 @@ public class checkFileCreateGUI {
 		});
 		btnBrowseModel.setBounds(673, 130, 120, 35);
 		this.frame.getContentPane().add(btnBrowseModel);
-		final BufferedImage helpButtonIcon = ImageIO
-				.read(new File("../cdgen.gsoc2019.challenge/cdgen.graphics/help.png"));
+		final BufferedImage helpButtonIcon = ImageIO.read(new File("./cdgen.graphics/help.png"));
 		final JButton btnHelp = new JButton(new ImageIcon(helpButtonIcon));
 		btnHelp.addActionListener(new ActionListener() {
 			@Override
@@ -189,8 +186,7 @@ public class checkFileCreateGUI {
 		this.frame.getContentPane().add(this.txtFieldModel);
 
 
-		final BufferedImage startButtonIcon = ImageIO
-				.read(new File("../cdgen.gsoc2019.challenge/cdgen.graphics/start.png"));
+		final BufferedImage startButtonIcon = ImageIO.read(new File("./cdgen.graphics/start.png"));
 		final JButton btnSelectTasks = new JButton(new ImageIcon(startButtonIcon));
 		btnSelectTasks.addActionListener(new ActionListener() {
 			@Override
@@ -283,8 +279,7 @@ public class checkFileCreateGUI {
 		});
 		btnSelectTasks.setBounds(190, 190, 120, 35);
 		this.frame.getContentPane().add(btnSelectTasks);
-		final BufferedImage closeButtonIcon = ImageIO
-				.read(new File("../cdgen.gsoc2019.challenge/cdgen.graphics/close.png"));
+		final BufferedImage closeButtonIcon = ImageIO.read(new File("./cdgen.graphics/close.png"));
 		final JButton btnClose = new JButton(new ImageIcon(closeButtonIcon));
 		btnClose.addActionListener(new ActionListener() {
 			@Override
