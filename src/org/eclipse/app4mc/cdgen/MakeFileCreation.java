@@ -50,11 +50,12 @@ public class MakeFileCreation {
 			e.printStackTrace();
 		}
 		final File fn = f1;
+		@SuppressWarnings("resource")
 		final FileWriter fw = new FileWriter(fn, true);
 		try {
-			//fileUtil.fileMainHeader(f1);
+			// fileUtil.fileMainHeader(f1);
 			makeFileHeader(f1);
-			headerIncludesMainRMS(f1,CoreNo);
+			headerIncludesMainRMS(f1, CoreNo);
 		}
 		finally {
 			try {
@@ -70,6 +71,7 @@ public class MakeFileCreation {
 	private static void makeFileHeader(final File f1) {
 		try {
 			final File fn = f1;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("#******************************************************************\n");
 			fw.write("#*Title 		:   Makefile Setup\n");
@@ -84,9 +86,10 @@ public class MakeFileCreation {
 		}
 	}
 
-	private static void headerIncludesMainRMS(final File f1, EList<SchedulerAllocation> coreNo) {
+	private static void headerIncludesMainRMS(final File f1, final EList<SchedulerAllocation> coreNo) {
 		try {
 			final File fn = f1;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("EPIPHANY_HOME=/opt/adapteva/esdk\n");
 			fw.write("#host compiler path\n");
@@ -104,14 +107,14 @@ public class MakeFileCreation {
 			fw.write("debugFlags.h ");
 			fw.write("AmaltheaConverter.h ");
 			int coreIndex;
-			for(coreIndex = 0;coreIndex <coreNo.size();coreIndex++) {
-				fw.write("taskDef"+coreIndex+".h ");
+			for (coreIndex = 0; coreIndex < coreNo.size(); coreIndex++) {
+				fw.write("taskDef" + coreIndex + ".h ");
 			}
-			for(coreIndex = 0;coreIndex <coreNo.size();coreIndex++) {
-				fw.write("label"+coreIndex+".h ");
+			for (coreIndex = 0; coreIndex < coreNo.size(); coreIndex++) {
+				fw.write("label" + coreIndex + ".h ");
 			}
-			for(coreIndex = 0;coreIndex <coreNo.size();coreIndex++) {
-				fw.write("runnable"+coreIndex+".h ");
+			for (coreIndex = 0; coreIndex < coreNo.size(); coreIndex++) {
+				fw.write("runnable" + coreIndex + ".h ");
 			}
 			fw.write("ParallellaUtils.h \n");
 			fw.write("#Epiphany SDK dependencies\n");
@@ -121,35 +124,37 @@ public class MakeFileCreation {
 			fw.write("ELDF=${ESDK}/bsps/current/fast.ldf \n");
 			fw.write("EHDF=${EPIPHANY_HDF} \n");
 			fw.write("#search paths for C source code files \n");
-			fw.write("vpath %.c .:$(FREERTOSSRC)/:$(FREERTOSSRC)/portable/MemMang:$(FREERTOSSRC)/portable/GCC/Epiphany:/ \n");
+			fw.write(
+					"vpath %.c .:$(FREERTOSSRC)/:$(FREERTOSSRC)/portable/MemMang:$(FREERTOSSRC)/portable/GCC/Epiphany:/ \n");
 			fw.write("#search path for assembly listings \n");
 			fw.write("vpath %.s $(FREERTOSSRC)/portable/GCC/Epiphany \n");
 			fw.write("#main target  \n");
 			fw.write("run: armcode ");
-			for(coreIndex = 0;coreIndex <coreNo.size();coreIndex++) {
-				fw.write("main"+coreIndex+".elf ");
+			for (coreIndex = 0; coreIndex < coreNo.size(); coreIndex++) {
+				fw.write("main" + coreIndex + ".elf ");
 			}
 			fw.write("\n	@echo build status : successful\n\n");
 			fw.write("#rule for every device target\n");
-			fw.write("%.elf: $(ELDF) tasks.o queue.o list.o port.o portasm.o heap_1.o c2c.o debugFlags.o AmaltheaConverter.o ");
-			for(coreIndex = 0;coreIndex <coreNo.size();coreIndex++) {
-				fw.write("taskDef"+coreIndex+".o ");
+			fw.write(
+					"%.elf: $(ELDF) tasks.o queue.o list.o port.o portasm.o heap_1.o c2c.o debugFlags.o AmaltheaConverter.o ");
+			for (coreIndex = 0; coreIndex < coreNo.size(); coreIndex++) {
+				fw.write("taskDef" + coreIndex + ".o ");
 			}
-			for(coreIndex = 0;coreIndex <coreNo.size();coreIndex++) {
-				fw.write("label"+coreIndex+".o ");
+			for (coreIndex = 0; coreIndex < coreNo.size(); coreIndex++) {
+				fw.write("label" + coreIndex + ".o ");
 			}
-			for(coreIndex = 0;coreIndex <coreNo.size();coreIndex++) {
-				fw.write("runnable"+coreIndex+".o ");
+			for (coreIndex = 0; coreIndex < coreNo.size(); coreIndex++) {
+				fw.write("runnable" + coreIndex + ".o ");
 			}
 
 			fw.write("ParallellaUtils.o shared_comms.o %.o  \n");
 			fw.write("	$(CC) -g -T$< -Wl,--gc-sections -o $@ $(filter-out $<,$^) -le-lib\n\n");
-			fw.write("#host target\n");	
-			fw.write("armcode: armcode.c $(DEPS)\n");	
-			fw.write("	$(LCC) $< -o $@  -I ${EINCS} -L ${ELIBS} -lpal -le-hal -le-loader -lpthread\n");	
-			fw.write("#clean target\n");	
-			fw.write("clean:\n");	
-			fw.write("	rm -f *.o *.srec *.elf armcode\n\n");	
+			fw.write("#host target\n");
+			fw.write("armcode: armcode.c $(DEPS)\n");
+			fw.write("	$(LCC) $< -o $@  -I ${EINCS} -L ${ELIBS} -lpal -le-hal -le-loader -lpthread\n");
+			fw.write("#clean target\n");
+			fw.write("clean:\n");
+			fw.write("	rm -f *.o *.srec *.elf armcode\n\n");
 			fw.write(".SECONDARY:\n");
 			fw.write("%.o: %.c $(DEPS)\n");
 			fw.write("	$(CC) -fdata-sections -ffunction-sections  -c -o $@ $< $(INCLUDES)\n\n");

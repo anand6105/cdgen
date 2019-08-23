@@ -79,6 +79,7 @@ public class SharedLabelsFileCreation {
 		}
 
 		final File fn1 = f1;
+		@SuppressWarnings("resource")
 		final FileWriter fw = new FileWriter(fn1, true);
 		try {
 			fileUtil.fileMainHeader(f1);
@@ -118,6 +119,7 @@ public class SharedLabelsFileCreation {
 	private static void sharedLabelFileHeader(final File file) {
 		try {
 			final File fn = file;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("*Title 		:   Shared Label Declaration\n");
 			fw.write("*Description	:	Declaration and Initialisation of Shared Label\n");
@@ -139,6 +141,7 @@ public class SharedLabelsFileCreation {
 	private static void sharedLabelFileHeaderHead(final File file) {
 		try {
 			final File fn = file;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("*Title 		:   Shared Label Declaration\n");
 			fw.write("*Description	:	Header file for Declaration and Initialisation of Shared Label\n");
@@ -161,6 +164,7 @@ public class SharedLabelsFileCreation {
 	private static void headerIncludesSharedLabelHead(final File file) {
 		try {
 			final File fn = file;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("#ifndef DEMO_PARALLELLA_SHARED_COMMS_H_\n");
 			fw.write("#define DEMO_PARALLELLA_SHARED_COMMS_H_\n\n");
@@ -184,6 +188,7 @@ public class SharedLabelsFileCreation {
 	private static void headerIncludesSharedLabel(final File file) {
 		try {
 			final File fn = file;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("/* Standard includes. */\n");
 			fw.write("#include \"shared_comms.h\"\n");
@@ -204,6 +209,7 @@ public class SharedLabelsFileCreation {
 	private static void SharedLabelDeclaration(final File file, final Amalthea model, final EList<Label> labellist) {
 		try {
 			final File fn = file;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			final List<Label> SharedLabelList = LabelFileCreation.SharedLabelFinder(model);
 			final List<Label> SharedLabelListSortCore = new ArrayList<Label>();
@@ -291,6 +297,7 @@ public class SharedLabelsFileCreation {
 			final EList<Label> labellist) {
 		try {
 			final File fn = file;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			final List<Label> SharedLabelList = LabelFileCreation.SharedLabelFinder(model);
 			final List<Label> SharedLabelListSortCore = new ArrayList<Label>();

@@ -38,9 +38,9 @@ import org.eclipse.app4mc.amalthea.model.util.DeploymentUtil;
 import org.eclipse.app4mc.amalthea.model.util.HardwareUtil;
 import org.eclipse.app4mc.amalthea.model.util.RuntimeUtil;
 import org.eclipse.app4mc.amalthea.model.util.RuntimeUtil.TimeType;
-import org.eclipse.app4mc.cdgen.utils.fileUtil;
 import org.eclipse.app4mc.amalthea.model.util.SoftwareUtil;
 import org.eclipse.app4mc.amalthea.model.util.TimeUtil;
+import org.eclipse.app4mc.cdgen.utils.fileUtil;
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -106,6 +106,7 @@ public class TaskFileCreation {
 				e.printStackTrace();
 			}
 			final File fn = f1;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			try {
 				fileUtil.fileMainHeader(f1);
@@ -141,16 +142,12 @@ public class TaskFileCreation {
 			}
 
 			final File fn1 = f3;
+			@SuppressWarnings("resource")
 			final FileWriter fw1 = new FileWriter(fn1, true);
 			try {
 				fileUtil.fileMainHeader(f3);
 				taskFileHeader(f3);
 				headerIncludesTaskRMSHead(f3, k);
-				if ((0x3000 == (0xF000 & configFlag)) & (0x0100 == (0x0F00 & configFlag))) {
-				}
-				else {
-					// headerIncludesTask(f3);
-				}
 				mainStaticTaskDef(f3, tasks);
 
 			}
@@ -170,6 +167,7 @@ public class TaskFileCreation {
 	private static void TaskCounter(final File f3, final List<Task> tasks) {
 		try {
 			final File fn = f3;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true); // the true will
 															// append the new
 															// data
@@ -212,6 +210,7 @@ public class TaskFileCreation {
 				e.printStackTrace();
 			}
 			final File fn = f1;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			try {
 				fileUtil.fileMainHeader(f1);
@@ -238,6 +237,7 @@ public class TaskFileCreation {
 				e.printStackTrace();
 			}
 			final File fn1 = f3;
+			@SuppressWarnings("resource")
 			final FileWriter fw1 = new FileWriter(fn1, true);
 			try {
 				fileUtil.fileMainHeader(f3);
@@ -260,6 +260,7 @@ public class TaskFileCreation {
 	private static void headerIncludesPthreadTask(final File f3, final int k) {
 		try {
 			final File fn = f3;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true); // the true will
 															// append the new
 															// data
@@ -283,6 +284,7 @@ public class TaskFileCreation {
 	private static void mainStaticTaskPthreadDef(final File f3, final List<Task> tasks) {
 		try {
 			final File fn = f3;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("/* Static definition of the tasks. */\n");
 			for (final Task task : tasks) {
@@ -301,6 +303,7 @@ public class TaskFileCreation {
 			final boolean preemptionFlag) {
 		try {
 			final File fn = f1;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			for (final Task task : tasks) {
 				final List<Runnable> runnablesOfTask = SoftwareUtil.getRunnableList(task, null);
@@ -408,6 +411,7 @@ public class TaskFileCreation {
 	private static void taskFileHeader(final File f1) {
 		try {
 			final File fn = f1;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("*Title 		:   Task Definition\n");
 			fw.write("*Description	:	Task Definition with Task Structure\n");
@@ -423,6 +427,7 @@ public class TaskFileCreation {
 	private static void headerIncludesTaskPthreadHead(final File f1) {
 		try {
 			final File fn = f1;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("#define _GNU_SOURCE\n\n");
 			fw.write("/* Standard includes. */\n");
@@ -444,6 +449,7 @@ public class TaskFileCreation {
 	private static void headerIncludesTaskRMSHead(final File f1, final int k) {
 		try {
 			final File fn = f1;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("/* Standard includes. */\n");
 			fw.write("#include <stdio.h>\n");
@@ -469,6 +475,7 @@ public class TaskFileCreation {
 	private static void headerIncludesTaskHeadRMS(final File f1, final int k) {
 		try {
 			final File fn = f1;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("#include \"taskDef" + k + ".h\"\n\n");
 			fw.close();
@@ -481,6 +488,7 @@ public class TaskFileCreation {
 	public static void mainStaticTaskDef(final File f1, final List<Task> tasks) {
 		try {
 			final File fn = f1;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("/* Static definition of the tasks. */\n");
 			for (final Task task : tasks) {
@@ -509,6 +517,7 @@ public class TaskFileCreation {
 			final boolean preemptionFlag) {
 		try {
 			final File fn = f1;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			final HashMap<Task, Integer> taskIndex = TaskIndexMapping(model);
 			for (final Task task : tasks) {
@@ -527,7 +536,6 @@ public class TaskFileCreation {
 
 				// fw.write("\n\n");
 				fw.write("\t\tupdateDebugFlag(700);\n");
-				;
 				fw.write("\t\ttraceTaskPasses(1,1);\n");
 				fw.write("\n\t\t\t/*Runnable calls */\n");
 				for (final Runnable run : runnablesOfTask) {
@@ -566,6 +574,7 @@ public class TaskFileCreation {
 			final boolean preemptionFlag) {
 		try {
 			final File fn = f1;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			final HashMap<Task, Integer> taskIndex = TaskIndexMapping(model);
 			for (final Task task : tasks) {
@@ -583,7 +592,6 @@ public class TaskFileCreation {
 				fw.write("\tportTickType xLastWakeTime=xTaskGetTickCount();\n");
 				fw.write("\n\t\tfor( ;; )\n\t\t{\n");
 				fw.write("\t\tupdateDebugFlag(700);\n");
-				;
 				fw.write("\t\ttraceTaskPasses(1,1);\n");
 				fw.write("\t\t\t/* Cin - Create local variables and copy the actual variable to them */\n");
 				fw.write("\t\t\ttaskENTER_CRITICAL ();\n");

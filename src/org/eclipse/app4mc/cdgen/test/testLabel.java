@@ -51,7 +51,9 @@ public class testLabel
 		}
 		final File f1 = new File(fname);
 		String[] words = null;
+		@SuppressWarnings("resource")
 		final FileReader fr = new FileReader(f1);
+		@SuppressWarnings("resource")
 		final BufferedReader br = new BufferedReader(fr);
 		String s;
 		final String input = "\tuint", input1 = "\t=\t";

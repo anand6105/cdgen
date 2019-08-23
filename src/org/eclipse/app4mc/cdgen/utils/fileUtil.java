@@ -43,6 +43,7 @@ import org.eclipse.app4mc.cdgen.LabelFileCreation;
 
 public class fileUtil {
 
+	@SuppressWarnings({ "null", "resource" })
 	public static void fileMainHeader(final File f) throws IOException {
 		FileWriter fr = null;
 		try {
@@ -70,6 +71,7 @@ public class fileUtil {
 	public static void FreeRTOSConfigFileHeader(final File f1) {
 		try {
 			final File fn = f1;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("*Title 		:   FreeRTOSConfig\n");
 			fw.write("*Description	:	Holds configuration for the FreeRTOS Software\n");
@@ -83,15 +85,17 @@ public class fileUtil {
 		}
 
 	}
-	
-	
-	
-	public static String getFileExtension(File file) {
-        String fileName = file.getName();
-        if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
-        return fileName.substring(fileName.lastIndexOf(".")+1);
-        else return "";
-    }
+
+
+	public static String getFileExtension(final File file) {
+		final String fileName = file.getName();
+		String fileExtension = null;
+		if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0) {
+			fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1);
+			// return fileName.substring(fileName.lastIndexOf(".") + 1);
+		}
+		return fileExtension;
+	}
 
 	public static String datatype(final String string) {
 		String type = null;
@@ -140,7 +144,7 @@ public class fileUtil {
 
 	/**
 	 * Shared Label definition and initialization structure.
-	 * 
+	 *
 	 * @param tasks
 	 *
 	 * @param file
@@ -176,7 +180,7 @@ public class fileUtil {
 
 	/**
 	 * Shared Label definition and initialization structure.
-	 * 
+	 *
 	 * @param tasks
 	 *
 	 * @param file
@@ -247,9 +251,10 @@ public class fileUtil {
 	public static void defineMain(final File f1) {
 		try {
 			final File fn = f1;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true); // the true will
-															// append the new
-															// data
+			// append the new
+			// data
 			fw.write("#define DELAY_MULT 100");
 			fw.write("\n");
 			fw.close();
@@ -280,9 +285,6 @@ public class fileUtil {
 		for (final Entry<K, V> entry : list) {
 			result.put(entry.getKey(), entry.getValue());
 		}
-
 		return result;
 	}
-
-
 }

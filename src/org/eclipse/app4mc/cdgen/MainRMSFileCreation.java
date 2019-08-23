@@ -37,9 +37,9 @@ import org.eclipse.app4mc.amalthea.model.TimeUnit;
 import org.eclipse.app4mc.amalthea.model.util.DeploymentUtil;
 import org.eclipse.app4mc.amalthea.model.util.RuntimeUtil;
 import org.eclipse.app4mc.amalthea.model.util.RuntimeUtil.TimeType;
-import org.eclipse.app4mc.cdgen.utils.fileUtil;
 import org.eclipse.app4mc.amalthea.model.util.SoftwareUtil;
 import org.eclipse.app4mc.amalthea.model.util.TimeUtil;
+import org.eclipse.app4mc.cdgen.utils.fileUtil;
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -93,6 +93,7 @@ public class MainRMSFileCreation {
 				e.printStackTrace();
 			}
 			final File fn = f1;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			try {
 				fileUtil.fileMainHeader(f1);
@@ -133,6 +134,7 @@ public class MainRMSFileCreation {
 	private static void mainFucntionRMS(final Amalthea model, final File file, final Set<Task> tasks) {
 		try {
 			final File fn = file;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("int main(void) \n{\n");
 			fw.write("\toutbuf_init();\n");
@@ -189,15 +191,15 @@ public class MainRMSFileCreation {
 					final int comparevalue = sleepTime.compareTo(b2);
 					if (comparevalue < 0) {
 						fw.write("\tAmaltheaTask AmalTk_" + task.getName() + " = createAmaltheaTask( v" + task.getName()
-						+ ", cIN_" + task.getName() + ", cOUT_" + task.getName() + ", "
-						+ task.getStimuli().get(0).getName() + ", " + task.getStimuli().get(0).getName()
-						+ ", 1);\n");
+								+ ", cIN_" + task.getName() + ", cOUT_" + task.getName() + ", "
+								+ task.getStimuli().get(0).getName() + ", " + task.getStimuli().get(0).getName()
+								+ ", 1);\n");
 					}
 					else {
 						fw.write("\tAmaltheaTask AmalTk_" + task.getName() + " = createAmaltheaTask( v" + task.getName()
-						+ ", cIN_" + task.getName() + ", cOUT_" + task.getName() + ", "
-						+ task.getStimuli().get(0).getName() + ", " + task.getStimuli().get(0).getName() + ", "
-						+ sleepTime + ");\n");
+								+ ", cIN_" + task.getName() + ", cOUT_" + task.getName() + ", "
+								+ task.getStimuli().get(0).getName() + ", " + task.getStimuli().get(0).getName() + ", "
+								+ sleepTime + ");\n");
 					}
 				}
 			}
@@ -252,6 +254,7 @@ public class MainRMSFileCreation {
 	private static void mainFucntionFreeRTOS(final Amalthea model, final File file, final Set<Task> tasks) {
 		try {
 			final File fn = file;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("int main(void) \n{\n");
 			fw.write("\toutbuf_init();\n");
@@ -303,8 +306,8 @@ public class MainRMSFileCreation {
 
 			for (final Task task : tasks) {
 				fw.write("\txTaskCreate( v" + task.getName() + " , \"" + task.getName()
-				+ "\", configMINIMAL_STACK_SIZE, &v" + task.getName() + ", main" + task.getName()
-				+ ", NULL);\n");
+						+ "\", configMINIMAL_STACK_SIZE, &v" + task.getName() + ", main" + task.getName()
+						+ ", NULL);\n");
 			}
 			fw.write("\tvTaskStartScheduler();\n");
 			fw.write("\t" + "return EXIT_SUCCESS;\n");
@@ -325,6 +328,7 @@ public class MainRMSFileCreation {
 	private static void mainFileHeader(final File file) {
 		try {
 			final File fn = file;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("*Title 		:   C File for Tasks Call\n");
 			fw.write("*Description	:	Main file in which scheduling is done \n");
@@ -347,6 +351,7 @@ public class MainRMSFileCreation {
 	private static void headerIncludesMainRMS(final File file, final int k) {
 		try {
 			final File fn = file;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("/* Standard includes. */\n");
 			fw.write("#include <stdio.h>\n");
@@ -383,6 +388,7 @@ public class MainRMSFileCreation {
 			final File fn = file;
 			final List<Task> localTaskPriority = new ArrayList<Task>();
 			localTaskPriority.addAll(tasks);
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("/* TaskPriorities. */\n");
 			final HashMap<Task, Long> periodMap = new HashMap<Task, Long>();
@@ -414,6 +420,7 @@ public class MainRMSFileCreation {
 	private static void headerIncludesMainFreeRTOS(final File file, final int k) {
 		try {
 			final File fn = file;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("/* Standard includes. */\n");
 			fw.write("#include <stdio.h>\n");
@@ -448,6 +455,7 @@ public class MainRMSFileCreation {
 		try {
 			final File fn = f1;
 
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("/* TaskStimuli. */\n");
 			final EList<Stimulus> Stimuli = model.getStimuliModel().getStimuli();

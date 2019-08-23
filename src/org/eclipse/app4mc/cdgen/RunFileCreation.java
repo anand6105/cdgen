@@ -31,9 +31,9 @@ import org.eclipse.app4mc.amalthea.model.TimeUnit;
 import org.eclipse.app4mc.amalthea.model.util.DeploymentUtil;
 import org.eclipse.app4mc.amalthea.model.util.RuntimeUtil;
 import org.eclipse.app4mc.amalthea.model.util.RuntimeUtil.TimeType;
-import org.eclipse.app4mc.cdgen.utils.fileUtil;
 import org.eclipse.app4mc.amalthea.model.util.SoftwareUtil;
 import org.eclipse.app4mc.amalthea.model.util.TimeUtil;
+import org.eclipse.app4mc.cdgen.utils.fileUtil;
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -95,6 +95,7 @@ public class RunFileCreation {
 			}
 
 			final File fn = f1;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			try {
 				if (0x2000 == (configFlag & 0xF000)) {
@@ -131,6 +132,7 @@ public class RunFileCreation {
 			}
 
 			final File fn1 = f3;
+			@SuppressWarnings("resource")
 			final FileWriter fw1 = new FileWriter(fn1, true);
 			try {
 				if (0x2000 == (configFlag & 0xF000)) {
@@ -167,6 +169,7 @@ public class RunFileCreation {
 	private static void runFileHeader(final File file) {
 		try {
 			final File fn = file;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("*Title 		:   Runnable Header\n");
 			fw.write("*Description	:	Runnable Definition with Runnable delay\n");
@@ -189,6 +192,7 @@ public class RunFileCreation {
 	private static void headerIncludesRun(final File file, final int k) {
 		try {
 			final File fn = file;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("/* Standard includes. */\n");
 			fw.write("#include <stdio.h>\n");
@@ -213,6 +217,7 @@ public class RunFileCreation {
 	private static void headerIncludesRunHead(final File file) {
 		try {
 			final File fn = file;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("/* Standard includes. */\n");
 			fw.write("#include <stdio.h>\n");
@@ -236,6 +241,7 @@ public class RunFileCreation {
 	private static void headerIncludesRunPthreadHead(final File file) {
 		try {
 			final File fn = file;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("/* Standard includes. */\n");
 			fw.write("#include <stdio.h>\n");
@@ -258,6 +264,7 @@ public class RunFileCreation {
 	private static void runnablePthreadDefinition(final File file, final List<Task> tasks, final Amalthea model) {
 		try {
 			final File fn = file;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			// int taskCounter =1;
 			for (final Task t : tasks) {
@@ -306,6 +313,7 @@ public class RunFileCreation {
 	private static void runnableDefinition(final File file, final List<Task> tasks, final Amalthea model) {
 		try {
 			final File fn = file;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			for (final Task t : tasks) {
 				List<Runnable> runnablesOfTask = SoftwareUtil.getRunnableList(t, null);
@@ -339,6 +347,7 @@ public class RunFileCreation {
 	private static void runnableDeclaration(final File file, final List<Task> tasks) {
 		try {
 			final File fn = file;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			final List<Runnable> runnables = new ArrayList<Runnable>();
 			for (final Task ta : tasks) {

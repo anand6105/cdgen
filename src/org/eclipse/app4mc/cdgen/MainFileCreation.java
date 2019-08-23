@@ -100,6 +100,7 @@ public class MainFileCreation {
 	private static void sleepTimerMsPthread(final File f1) {
 		try {
 			final File fn = f1;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("void sleepTimerMs(int ticks)\n");
 			fw.write("{\n");
@@ -138,6 +139,7 @@ public class MainFileCreation {
 			}
 
 			final File fn = f1;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			try {
 				fileUtil.fileMainHeader(f1);
@@ -161,6 +163,7 @@ public class MainFileCreation {
 	private static void mainFucntionPthread(final File f1, final Set<Task> tasks) {
 		try {
 			final File fn = f1;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("int main(void) \n{\n");
 			fw.write("\tpthread_t thread[NUM_THREADS];\n");
@@ -217,6 +220,7 @@ public class MainFileCreation {
 			final Set<Task> tasks) {
 		try {
 			final File fn = f1;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("/* Standard includes. */\n");
 			fw.write("#include <stdio.h>\n");
@@ -237,6 +241,7 @@ public class MainFileCreation {
 	private static void mainFileHeader(final File f1) {
 		try {
 			final File fn = f1;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("*Title 		:   C File for Tasks Call\n");
 			fw.write("*Description	:	Main file in which scheduling is done \n");

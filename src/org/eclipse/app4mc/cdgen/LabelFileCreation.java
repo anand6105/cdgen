@@ -91,6 +91,7 @@ public class LabelFileCreation {
 			}
 
 			final File fn = f1;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			try {
 				fileUtil.fileMainHeader(f1);
@@ -135,6 +136,7 @@ public class LabelFileCreation {
 	private static void labelFileHeader(final File file) {
 		try {
 			final File fn = file;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("*Title 		:   Label Declaration\n");
 			fw.write("*Description	:	Declaration and Initialisation of Label\n");
@@ -157,6 +159,7 @@ public class LabelFileCreation {
 	private static void headerIncludesLabel(final File file) {
 		try {
 			final File fn = file;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("/* Standard includes. */\n");
 			fw.write("#include <stdio.h>\n");
@@ -180,6 +183,7 @@ public class LabelFileCreation {
 	private static void headerIncludesLabelHead(final File file, final int k) {
 		try {
 			final File fn = file;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("/* Standard includes. */\n");
 			fw.write("#include <stdio.h>\n");
@@ -207,6 +211,7 @@ public class LabelFileCreation {
 	private static void LabelDeclaration(final File file, final List<Task> tasks, final List<Label> labellist) {
 		try {
 			final File fn = file;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			labellist.stream().distinct().collect(Collectors.toList());
 			for (final Label label : labellist) {
@@ -236,6 +241,7 @@ public class LabelFileCreation {
 			final List<Label> labelCoreCommonList, final List<Label> sharedLabelList) {
 		try {
 			final File fn = file;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			for (final Task task : tasks) {
 				List<Runnable> runnablesOfTask = SoftwareUtil.getRunnableList(task, null);
@@ -345,6 +351,7 @@ public class LabelFileCreation {
 			final List<Label> labelList) {
 		try {
 			final File fn = file;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			for (final Task task : tasks) {
 				List<Runnable> runnablesOfTask = SoftwareUtil.getRunnableList(task, null);
@@ -382,6 +389,7 @@ public class LabelFileCreation {
 		return sharedLabelList;
 	}
 
+	@SuppressWarnings("null")
 	public static HashMap<Label, HashMap<Task, ProcessingUnit>> LabelTaskMap(final Amalthea model,
 			final List<Label> labelList) {
 		final EList<Task> tasks = model.getSwModel().getTasks();

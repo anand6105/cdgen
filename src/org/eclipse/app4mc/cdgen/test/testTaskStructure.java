@@ -32,7 +32,6 @@ import org.eclipse.emf.common.util.EList;
 public class testTaskStructure
 
 {
-
 	final private Amalthea model;
 
 	public testTaskStructure(final Amalthea Model, final String path1, final int configFlag) throws IOException {

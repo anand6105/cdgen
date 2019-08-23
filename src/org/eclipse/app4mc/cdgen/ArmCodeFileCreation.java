@@ -79,6 +79,7 @@ public class ArmCodeFileCreation {
 		}
 
 		final File fn = f1;
+		@SuppressWarnings("resource")
 		final FileWriter fw = new FileWriter(fn, true);
 		try {
 			if (0x3110 == (configFlag & 0xFFF0)) {
@@ -114,6 +115,7 @@ public class ArmCodeFileCreation {
 	private static void runFileHeader(final File file) {
 		try {
 			final File fn = file;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("*Title 		:   ArmCode Header\n");
 			fw.write("*Description	:	Header file for Deploy/Offloading of the task to EPI\n");
@@ -135,6 +137,7 @@ public class ArmCodeFileCreation {
 	private static void nsleep(final File file) {
 		try {
 			final File fn = file;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("int nsleep(long miliseconds){\n");
 			fw.write("\tstruct timespec req, rem;\n");
@@ -163,6 +166,7 @@ public class ArmCodeFileCreation {
 	private static void zynqmain(final Amalthea model, final File file) {
 		try {
 			final File fn = file;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			final MappingModel mappingModel = model.getMappingModel();
 			if (mappingModel != null) {
@@ -321,6 +325,7 @@ public class ArmCodeFileCreation {
 	private static void headerIncludesArmCode(final File file) {
 		try {
 			final File fn = file;
+			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("/* Standard includes. */\n");
 			fw.write("#include <stdio.h>\n");
