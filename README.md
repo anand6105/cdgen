@@ -11,11 +11,19 @@ For more details please refer to [documentation][documentation].
 
 ## User Guide
 
-1. Select checkFileCreateGUI.java and Run as Java application
-2. Select the scheduler, task preemption, file source of corresponding scheduler and Model of choice.
-3. Click start for code generation.
-4. Use the code in place of the src directory in below [setup][setup]. 
-5. Build, deploy and Run the code on Parallella.
+*	Code Generation
+1. Download and Unzip APP4MC
+2. Install Java SE 10 
+3. Start APP4MC and create a new workspace
+4. Import the project from git or any options available.
+5. Select checkFileCreateGUI.java from the checks directory andright click and run as Java application
+6. Select the scheduler, task preemption, file source of corresponding scheduler and Model of choice.
+7. Click start for code generation.
+8. Code is generated in the root location with a timestamp.
+
+*	Compilation and Execution
+9. Replace the generated code in place of the src directory in below [setup][setup]. 
+10. Build, deploy and Run the code on Parallella.
 
 <!-- Markdown link & img dfn's -->
 [documentation]:file:///home/rprasathg/cd_gen_doc/_build/html/index.html
