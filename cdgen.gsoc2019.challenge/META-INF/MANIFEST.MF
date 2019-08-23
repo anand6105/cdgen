@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Automatic-Module-Name: app4mc.sniplets
 Bundle-ManifestVersion: 2
 Bundle-Name: GSOC2019
-Bundle-SymbolicName: org.eclipse.app4mc.cdgen
+Bundle-SymbolicName: cdgen
 Bundle-Version: 1.0.0.qualifier
 Export-Package: org.eclipse.app4mc.cdgen.utils,
  org.eclipse.app4mc.cdgen
