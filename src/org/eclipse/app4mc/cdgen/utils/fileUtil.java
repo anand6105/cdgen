@@ -59,7 +59,7 @@ public class fileUtil {
 			fr.write("******************************************************************\n");
 			fr.write("*Author		:	Ram Prasath Govindarajan\n");
 			fr.write("*Tool 		:	CDGen_GSoC\n");
-			fr.write("*Version 	:	V1.0.0\n");
+			fr.write("*Version 		:	V1.0.1\n");
 		}
 		catch (final IOException e) {
 			e.printStackTrace();
@@ -86,6 +86,24 @@ public class fileUtil {
 
 	}
 
+	
+	public static void RTFConfigFileHeader(final File f1) {
+		try {
+			final File fn = f1;
+			@SuppressWarnings("resource")
+			final FileWriter fw = new FileWriter(fn, true);
+			fw.write("*Title 		:   RTFParallellaConfig\n");
+			fw.write("*Description	:	Holds configuration for the RTF Parallella BTF Tracing Software\n");
+			fw.write("******************************************************************\n");
+			fw.write("******************************************************************/\n\n\n");
+
+			fw.close();
+		}
+		catch (final IOException ioe) {
+			System.err.println("IOException: " + ioe.getMessage());
+		}
+
+	}
 
 	public static String getFileExtension(final File file) {
 		final String fileName = file.getName();

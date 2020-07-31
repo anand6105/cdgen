@@ -23,6 +23,7 @@ import org.eclipse.app4mc.cdgen.FreeRTOSConfigFileCreation;
 import org.eclipse.app4mc.cdgen.LabelFileCreation;
 import org.eclipse.app4mc.cdgen.MainRMSFileCreation;
 import org.eclipse.app4mc.cdgen.MakeFileCreation;
+import org.eclipse.app4mc.cdgen.RTFConfigFileCreation;
 import org.eclipse.app4mc.cdgen.RunFileCreation;
 import org.eclipse.app4mc.cdgen.SharedLabelsFileCreation;
 import org.eclipse.app4mc.cdgen.TaskFileCreation;
@@ -78,6 +79,15 @@ public class checkRMSConfiguration {
 		}
 		try {
 			new MainRMSFileCreation(model, srcPath, configFlag);
+		}
+		catch (final IOException e1) {
+			e1.printStackTrace();
+		}
+		try {
+			if (0x0001 == (0x0001 & configFlag)) {
+				new RTFConfigFileCreation(model, srcPath, configFlag);
+			}
+
 		}
 		catch (final IOException e1) {
 			e1.printStackTrace();
