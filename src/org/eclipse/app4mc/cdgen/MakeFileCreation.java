@@ -55,7 +55,13 @@ public class MakeFileCreation {
 		try {
 			// fileUtil.fileMainHeader(f1);
 			makeFileHeader(f1);
-			headerIncludesMainRMS(f1, CoreNo);
+			if (0x0001 == (0x0001 & configFlag)) {
+				headerIncludesMainRMS(f1, CoreNo, true);
+			}
+			else {
+				headerIncludesMainRMS(f1, CoreNo, false);
+			}
+
 		}
 		finally {
 			try {
@@ -86,7 +92,7 @@ public class MakeFileCreation {
 		}
 	}
 
-	private static void headerIncludesMainRMS(final File f1, final EList<SchedulerAllocation> coreNo) {
+	private static void headerIncludesMainRMS(final File f1, final EList<SchedulerAllocation> coreNo, final boolean btfEnable) {
 		try {
 			final File fn = f1;
 			@SuppressWarnings("resource")
@@ -103,6 +109,9 @@ public class MakeFileCreation {
 			fw.write("DEPS = $(FREERTOSSRC)/portable/GCC/Epiphany/");
 			fw.write("portmacro.h ");
 			fw.write("Makefile ");
+			if (btfEnable == true) {
+				fw.write("RTFParallellaConfig.h ");
+			}
 			fw.write("FreeRTOSConfig.h ");
 			fw.write("debugFlags.h ");
 			fw.write("AmaltheaConverter.h ");
@@ -116,7 +125,13 @@ public class MakeFileCreation {
 			for (coreIndex = 0; coreIndex < coreNo.size(); coreIndex++) {
 				fw.write("runnable" + coreIndex + ".h ");
 			}
-			fw.write("ParallellaUtils.h \n");
+			if (btfEnable == true) {
+				fw.write("ParallellaUtils.h trace_utils_BTF.h \n");
+				fw.write("DEPSHOST = RTFParallellaConfig.h model_enumerations.h host_utils.h trace_utils_BTF.h \n");
+			}
+			else {
+				fw.write("ParallellaUtils.h \n");
+			}
 			fw.write("#Epiphany SDK dependencies\n");
 			fw.write("ESDK=${EPIPHANY_HOME} \n");
 			fw.write("ELIBS=${ESDK}/tools/host.armv7l/lib \n");
@@ -150,8 +165,15 @@ public class MakeFileCreation {
 			fw.write("ParallellaUtils.o shared_comms.o %.o  \n");
 			fw.write("	$(CC) -g -T$< -Wl,--gc-sections -o $@ $(filter-out $<,$^) -le-lib\n\n");
 			fw.write("#host target\n");
-			fw.write("armcode: armcode.c $(DEPS)\n");
-			fw.write("	$(LCC) $< -o $@  -I ${EINCS} -L ${ELIBS} -lpal -le-hal -le-loader -lpthread\n");
+			if (btfEnable == true) {
+				fw.write("armcode: armcode.c $(DEPSHOST)\n");
+				fw.write("	$(LCC) $< -o $@  host_utils.c model_enumerations.c trace_utils_BTF.c -I ${EINCS} -L ${ELIBS} -lpal -le-hal -le-loader -lpthread\n");
+			}
+			else {
+				fw.write("armcode: armcode.c $(DEPS)\n");
+				fw.write("	$(LCC) $< -o $@  -I ${EINCS} -L ${ELIBS} -lpal -le-hal -le-loader -lpthread\n");
+			}
+
 			fw.write("#clean target\n");
 			fw.write("clean:\n");
 			fw.write("	rm -f *.o *.srec *.elf armcode\n\n");

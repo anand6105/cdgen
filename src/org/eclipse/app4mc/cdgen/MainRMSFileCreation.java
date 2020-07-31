@@ -99,11 +99,21 @@ public class MainRMSFileCreation {
 				fileUtil.fileMainHeader(f1);
 				mainFileHeader(f1);
 				if ((0x0100 == (0x0F00 & configFlag)) & (0x3000 == (0xF000 & configFlag))) {
-					headerIncludesMainRMS(f1, k);
-					mainTaskStimuli(model, f1, tasks);
-					mainTaskPriority(f1, tasks);
-					mainFucntionRMS(model, f1, tasks);
-					// SharedLabelDeclarationHead(f1, model);
+					if (0x0001 == (0x0001 & configFlag)) {
+						headerIncludesMainRMS(f1, k, true);
+						mainTaskStimuli(model, f1, tasks);
+						mainTaskPriority(f1, tasks);
+						mainFucntionRMS(model, f1, tasks, true);
+						// SharedLabelDeclarationHead(f1, model);
+					}
+					else {
+						headerIncludesMainRMS(f1, k, false);
+						mainTaskStimuli(model, f1, tasks);
+						mainTaskPriority(f1, tasks);
+						mainFucntionRMS(model, f1, tasks, false);
+						// SharedLabelDeclarationHead(f1, model);
+					}
+
 				}
 				else {
 					headerIncludesMainFreeRTOS(f1, k);
@@ -131,13 +141,22 @@ public class MainRMSFileCreation {
 	 * @param file
 	 * @param tasks
 	 */
-	private static void mainFucntionRMS(final Amalthea model, final File file, final Set<Task> tasks) {
+	private static void mainFucntionRMS(final Amalthea model, final File file, final Set<Task> tasks, final boolean btfEnable) {
 		try {
 			final File fn = file;
 			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("int main(void) \n{\n");
-			fw.write("\toutbuf_init();\n");
+			if (btfEnable == true) {
+				fw.write("\tinit_btf_mem_section();\n");
+				fw.write("\tinit_task_trace_buffer();\n");
+				fw.write("\tint ts = get_time_scale_factor();\n");
+				fw.write("\tinit_mem_sections();\n");
+			}
+			else {
+				fw.write("\toutbuf_init();\n");
+			}
+
 			final List<Label> SharedLabelList = LabelFileCreation.SharedLabelFinder(model);
 			final List<Label> SharedLabelListSortCore = new ArrayList<Label>();
 			if (SharedLabelList.size() == 0) {
@@ -348,7 +367,7 @@ public class MainRMSFileCreation {
 	 *
 	 * @param file
 	 */
-	private static void headerIncludesMainRMS(final File file, final int k) {
+	private static void headerIncludesMainRMS(final File file, final int k, final boolean btfEnable) {
 		try {
 			final File fn = file;
 			@SuppressWarnings("resource")
@@ -368,6 +387,9 @@ public class MainRMSFileCreation {
 			fw.write("#include \"taskDef" + k + ".h\"\n");
 			fw.write("#include \"shared_comms.h\"\n\n");
 			fw.write("#include \"label" + k + ".h\"\n");
+			if (btfEnable ==  true) {
+				fw.write("#include \"RTFParallellaConfig.h\"\n");
+			}
 			// fw.write("#include \"c2c.h\"\n\n");
 			// fw.write("#define READ_PRECISION_US 1000\n\n\n");
 			fw.close();

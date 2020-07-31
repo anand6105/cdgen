@@ -112,8 +112,14 @@ public class FreeRTOSConfigFileCreation {
 			fw.write("\t#define configTICK_RATE_HZ				( ( TickType_t ) 1000 )\n");
 			fw.write("\t#define configMAX_PRIORITIES			( ( unsigned portBASE_TYPE ) " + (taskSize + constval)
 					+ " )\n");
-			fw.write("\t#define configMINIMAL_STACK_SIZE		( ( unsigned short ) 0x200) //512 words\n");
-			fw.write("\t#define configTOTAL_HEAP_SIZE			( ( size_t ) ( 10450 ) )\n");
+			if (0x0001 == (0x0001 & configFlag)) {
+				fw.write("\t#define configMINIMAL_STACK_SIZE		( ( unsigned short ) 0x112) //274 words\n");
+				fw.write("\t#define configTOTAL_HEAP_SIZE			( ( size_t ) ( 10240 ) )\n");
+			}
+			else {
+				fw.write("\t#define configMINIMAL_STACK_SIZE		( ( unsigned short ) 0x200) //512 words\n");
+				fw.write("\t#define configTOTAL_HEAP_SIZE			( ( size_t ) ( 10450 ) )\n");
+			}
 			fw.write("\t#define configMAX_TASK_NAME_LEN			( 128 )\n");
 			fw.write("\t#define configUSE_TRACE_FACILITY    	0\n");
 			fw.write("\t#define configUSE_16_BIT_TICKS      	1\n");

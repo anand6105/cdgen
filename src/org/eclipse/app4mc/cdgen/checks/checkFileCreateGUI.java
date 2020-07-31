@@ -28,6 +28,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -184,6 +185,11 @@ public class checkFileCreateGUI {
 
 		this.txtFieldModel.setBounds(370, 140, 280, 25);
 		this.frame.getContentPane().add(this.txtFieldModel);
+		
+		final JCheckBox cbBTFTrace = new JCheckBox("Enable BTF");
+		cbBTFTrace.setFont(new Font("Tahoma", Font.BOLD, 13));
+		cbBTFTrace.setBounds(670, 190, 120, 35);
+		this.frame.getContentPane().add(cbBTFTrace);
 
 
 		final BufferedImage startButtonIcon = ImageIO.read(new File("./cdgen.graphics/start.png"));
@@ -228,10 +234,11 @@ public class checkFileCreateGUI {
 				 * 0X1000 ==> FreeRTOS 0X2000 ==> POSIX 0x3000 ==> RMS
 				 *
 				 * 0X0010 ==> Cooperative 0X0020 ==> Preemptive
+				 * 0xXXX1 ==> BTF Trace Enabled
 				 *
 				 * FreeRTOS == Cooperative == 0x1X10 FreeRTOS == Preemptive ==
 				 * 0x1X20 POSIX == Cooperative == 0x2X10 POSIX == Preemptive ==
-				 * 0x2X20 RMS == Cooperative == 0x3X10 RMS == Preemptive ==
+				 * 0x3X20 RMS == Cooperative == 0x3X10 RMS == Preemptive ==
 				 * 0x3X20 X == Don't care
 				 */
 
@@ -261,14 +268,26 @@ public class checkFileCreateGUI {
 					new checkPOSIXConfiguration(model, path1, path2, configFlag);
 				}
 				else if (cdgenCustom.isSelected() & cdgenPreemptive.isSelected()) {
-					configFlag = 0x3120;
-					System.out.println("\t\tRMS\tPreemptive");
+					if (cbBTFTrace.isSelected() == true) {
+						configFlag = 0x3121;
+						System.out.println("\t\tRMS\tPreemptive with BTF Trace");
+					}
+					else {
+						configFlag = 0x3120;
+						System.out.println("\t\tRMS\tPreemptive");
+					}
 					System.out.println("############################################################");
 					new checkRMSConfiguration(model, path1, path2, configFlag);
 				}
 				else if (cdgenCustom.isSelected() & cdgenCooperative.isSelected()) {
-					configFlag = 0x3110;
-					System.out.println("\t\tRMS\tCooperative");
+					if (cbBTFTrace.isSelected() == true) {
+						configFlag = 0x3111;
+						System.out.println("\t\tRMS\tCooperative with BTF Trace");
+					}
+					else {
+						configFlag = 0x3110;
+						System.out.println("\t\tRMS\tCooperative");
+					}
 					System.out.println("############################################################");
 					new checkRMSConfiguration(model, path1, path2, configFlag);
 				}
