@@ -208,17 +208,34 @@ public class MainRMSFileCreation {
 					final BigInteger sleepTime = taskTime.getValue();
 					final BigInteger b2 = new BigInteger("1000");
 					final int comparevalue = sleepTime.compareTo(b2);
-					if (comparevalue < 0) {
-						fw.write("\tAmaltheaTask AmalTk_" + task.getName() + " = createAmaltheaTask( v" + task.getName()
-								+ ", cIN_" + task.getName() + ", cOUT_" + task.getName() + ", "
-								+ task.getStimuli().get(0).getName() + ", " + task.getStimuli().get(0).getName()
-								+ ", 1);\n");
+					if (btfEnable == true)
+					{
+						if (comparevalue < 0) {
+							fw.write("\tAmaltheaTask AmalTk_" + task.getName() + " = createAmaltheaTask( v" + task.getName()
+									+ ", cIN_" + task.getName() + ", cOUT_" + task.getName() + ",\n\t\t\t "
+									+ task.getStimuli().get(0).getName() + "*ts, " + task.getStimuli().get(0).getName()
+									+ "*ts, 1*ts, 0, 0, "+ pu.getName()+", 0);\n");
+						}
+						else {
+							fw.write("\tAmaltheaTask AmalTk_" + task.getName() + " = createAmaltheaTask( v" + task.getName()
+									+ ", cIN_" + task.getName() + ", cOUT_" + task.getName() + ",\n\t\t\t "
+									+ task.getStimuli().get(0).getName() + "*ts, " + task.getStimuli().get(0).getName() + "*ts, "
+									+ sleepTime + "*ts, 0, 0, "+ pu.getName()+", 0);\n");
+						}
 					}
 					else {
-						fw.write("\tAmaltheaTask AmalTk_" + task.getName() + " = createAmaltheaTask( v" + task.getName()
-								+ ", cIN_" + task.getName() + ", cOUT_" + task.getName() + ", "
-								+ task.getStimuli().get(0).getName() + ", " + task.getStimuli().get(0).getName() + ", "
-								+ sleepTime + ");\n");
+						if (comparevalue < 0) {
+							fw.write("\tAmaltheaTask AmalTk_" + task.getName() + " = createAmaltheaTask( v" + task.getName()
+									+ ", cIN_" + task.getName() + ", cOUT_" + task.getName() + ", "
+									+ task.getStimuli().get(0).getName() + ", " + task.getStimuli().get(0).getName()
+									+ ", 1);\n");
+						}
+						else {
+							fw.write("\tAmaltheaTask AmalTk_" + task.getName() + " = createAmaltheaTask( v" + task.getName()
+									+ ", cIN_" + task.getName() + ", cOUT_" + task.getName() + ", "
+									+ task.getStimuli().get(0).getName() + ", " + task.getStimuli().get(0).getName() + ", "
+									+ sleepTime + ");\n");
+						}
 					}
 				}
 			}

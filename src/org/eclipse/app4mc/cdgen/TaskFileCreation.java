@@ -112,12 +112,19 @@ public class TaskFileCreation {
 				fileUtil.fileMainHeader(f1);
 				taskFileHeader(f1);
 				if ((0x3000 == (0xF000 & configFlag)) & (0x0100 == (0x0F00 & configFlag))) {
-					headerIncludesTaskHeadRMS(f1, k);
 					TaskCounter(f1, tasks);
-					TaskDefinitionRMS(f1, model, tasks, preemptionFlag);
+					if (0x0001 == (0x0001 & configFlag)) {
+						headerIncludesTaskHeadRMS(f1, k, true);
+						TaskDefinitionRMS(f1, model, tasks, preemptionFlag, true);
+					}
+					else {
+						headerIncludesTaskHeadRMS(f1, k, false);
+						TaskDefinitionRMS(f1, model, tasks, preemptionFlag, false);
+					}
+
 				}
 				else if ((0x1000 == (0xF000 & configFlag)) & (0x0300 == (0x0F00 & configFlag))) {
-					headerIncludesTaskHeadRMS(f1, k);
+					headerIncludesTaskHeadRMS(f1, k, false);
 					TaskCounter(f1, tasks);
 					TaskDefinitionFreeRTOS(f1, model, tasks, preemptionFlag);
 				}
@@ -472,12 +479,17 @@ public class TaskFileCreation {
 		}
 	}
 
-	private static void headerIncludesTaskHeadRMS(final File f1, final int k) {
+	private static void headerIncludesTaskHeadRMS(final File f1, final int k, final boolean btfEnable) {
 		try {
 			final File fn = f1;
 			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("#include \"taskDef" + k + ".h\"\n\n");
+			if (btfEnable == true) {
+				fw.write("#include \"debugFlags.h\"\n" + 
+						"#include \"RTFParallellaConfig.h\"\n" + 
+						"#include \"trace_utils_BTF.h\"\n\n\n");
+			}
 			fw.close();
 		}
 		catch (final IOException ioe) {
@@ -514,7 +526,7 @@ public class TaskFileCreation {
 
 
 	private static void TaskDefinitionRMS(final File f1, final Amalthea model, final List<Task> tasks,
-			final boolean preemptionFlag) {
+			final boolean preemptionFlag, final boolean btfEnable) {
 		try {
 			final File fn = f1;
 			@SuppressWarnings("resource")
@@ -532,7 +544,13 @@ public class TaskFileCreation {
 				}
 				fw.write("\n");
 				fw.write("\n\n");
-				fw.write("\n\tvoid v" + task.getName() + "()" + "\n\t{\n");
+				if (btfEnable == true) {
+					fw.write("\n\tvoid v" + task.getName() + "(int src_id, int src_instance)" + "\n\t{\n");
+				}
+				else {
+					fw.write("\n\tvoid v" + task.getName() + "()" + "\n\t{\n");
+				}
+
 
 				// fw.write("\n\n");
 				fw.write("\t\tupdateDebugFlag(700);\n");
@@ -550,11 +568,19 @@ public class TaskFileCreation {
 					final BigInteger sleepTime = taskTime.getValue();
 					final BigInteger b2 = new BigInteger("1000");
 					final int comparevalue = sleepTime.compareTo(b2);
+					if (btfEnable == true) {
+						fw.write("\t\t\ttraceTaskEvent(src_id, src_instance, TASK_EVENT," + task.getName() + "_ID,\n" + 
+								"\t\t\t\t\t taskCount"+ task.getName()+", PROCESS_START, 0);\n");
+					}
 					if (comparevalue < 0) {
 						fw.write("\n\t\t\tsleepTimerMs(1 , 1" + (taskCount + 1) + ");\n");
 					}
 					else {
 						fw.write("\n\t\t\tsleepTimerMs(" + sleepTime + ", " + taskCount + 1 + ");\n");
+					}
+					if (btfEnable == true) {
+						fw.write("\t\t\ttraceTaskEvent(src_id, src_instance, TASK_EVENT," + task.getName() + "_ID,\n" + 
+								"\t\t\t\t\t taskCount"+ task.getName()+", PROCESS_TERMINATE, 0);\n");
 					}
 
 				}
