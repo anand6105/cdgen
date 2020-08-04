@@ -92,7 +92,7 @@ public class checkFreeRTOSConfiguration {
 			e1.printStackTrace();
 		}
 		try {
-			new SharedLabelsFileCreation(model, srcPath);
+			new SharedLabelsFileCreation(model, srcPath, configFlag);
 		}
 		catch (final IOException e1) {
 			e1.printStackTrace();

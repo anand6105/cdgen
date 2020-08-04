@@ -458,7 +458,7 @@ public class ArmCodeFileCreation {
 					for (int columnCoreGroup = 0; columnCoreGroup < coreGroup; columnCoreGroup++) {
 						if (coreIndex < localPU.size()) {
 							fw.write("\tresult" + coreIndex + "=  e_load(\"main" + coreIndex + ".elf\",&dev,"
-									+ rowCoreGroup + "," + columnCoreGroup + ",E_FALSE);\n");
+									+ columnCoreGroup + "," + rowCoreGroup + ",E_FALSE);\n");
 							result.add("result" + coreIndex + "!=E_OK");
 							coreIndex++;
 						}
@@ -509,8 +509,7 @@ public class ArmCodeFileCreation {
 				fw.write("\tunsigned int btf_trace[BTF_TRACE_BUFFER_SIZE * 6] = {0};\n");
 				fw.write("\tunsigned int core_id = 0;\n");
 				fw.write("\tunsigned char btf_data_index = 0;\n");
-				fw.write("\tunsigned int btf_data_start_offset = (SHARED_BTF_DATA_OFFSET + sizeof(btf_trace_info) +\n" + 
-						"\t\t\t\t\t\t\t\t(SHM_LABEL_COUNT * sizeof(int)) + sizeof(int));\n");
+				fw.write("\tunsigned int btf_data_start_offset = (SHARED_BTF_DATA_OFFSET + sizeof(btf_trace_info));\n");
 				fw.write("\tfor (pollLoopCounter=0;pollLoopCounter<=100000;pollLoopCounter++){\n");
 				fw.write("\t\te_read(&emem, 0, 0, SHARED_BTF_DATA_OFFSET , &trace_info, sizeof(btf_trace_info));\n");
 				fw.write("\t\tif (trace_info.core_write == 1)\r\n\t\t{\n");
@@ -531,19 +530,6 @@ public class ArmCodeFileCreation {
 						"\t\t\t\tfwrite( file_buffer, buffer_count, 1, fp_temp ) ;\n" + 
 						"\t\t\t\tbuffer_count = 0 ;\n" + 
 						"\t\t\t}\n\n");
-				coreIndex = 0;
-				for (int rowCoreGroup = 0; rowCoreGroup < coreGroup; rowCoreGroup++) {
-					for (int columnCoreGroup = 0; columnCoreGroup < coreGroup; columnCoreGroup++) {
-						if (coreIndex < localPU.size()) {
-							fw.write("\t\t\te_read(&dev," + rowCoreGroup + "," + columnCoreGroup + ",addr, &message"
-									+ coreIndex + ", sizeof(message" + coreIndex + "));\n");
-							fw.write("\t\t\tfprintf(stderr, \"tick1 %3d||\",message" + coreIndex + "[8]+1);\n");
-							fw.write("\t\t\tfprintf(stderr,\"task holding core" + coreIndex + " %2u||\", message"
-									+ coreIndex + "[6]);\n");
-							coreIndex++;
-						}
-					}
-				}
 				fw.write("\t\t\ttrace_info.core_write = 0;\n");
 				fw.write("\t\t\te_write(&emem, 0, 0, SHARED_BTF_DATA_OFFSET + offsetof(btf_trace_info, core_write),\n" + 
 						"\t\t\t\t\t&trace_info.core_write, sizeof(int));\n");
@@ -554,8 +540,6 @@ public class ArmCodeFileCreation {
 						"\t{\n" + 
 						"\t\tfwrite( file_buffer, buffer_count, 1, fp_temp );\n" + 
 						"\t}\n");
-				fw.write("\t\tfprintf(stderr,\"\\n\");\n");
-				fw.write("\t}\n");
 				fw.write("\tfprintf(stderr,\"----------------------------------------------\\n\");\n");
 				fw.write("\tif (fp_temp != NULL)\n" + 
 						"\t{\n" + 
@@ -688,11 +672,7 @@ public class ArmCodeFileCreation {
 			fw.write("#define CHUNK_SIZE             4096\n");
 			fw.write("char file_buffer[CHUNK_SIZE + 256];\n");
 			fw.write("static int buffer_count = 0;\n\n\n");
-/*			fw.write("unsigned int shared_label_to_read[SHM_LABEL_COUNT];\n");
-			fw.write("unsigned int shared_label_core_00[DSHM_SEC_LABEL_COUNT];\n");
-			fw.write("unsigned int shared_label_core_10[DSHM_SEC_LABEL_COUNT];\n");
-			fw.write("unsigned int shared_label_core[EXEC_CORE_COUNT][DSHM_SEC_LABEL_COUNT];\n");
-			fw.write("unsigned int shared_dram_start_address = SHARED_DRAM_START_OFFSET;\n");*/
+			fw.write("unsigned int shared_dram_start_address = SHARED_DRAM_START_OFFSET;\n\n\n");
 			fw.close();
 		}
 		catch (final IOException ioe) {

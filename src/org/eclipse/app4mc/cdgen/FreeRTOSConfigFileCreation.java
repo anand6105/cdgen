@@ -98,6 +98,9 @@ public class FreeRTOSConfigFileCreation {
 			fw.write("\t#ifndef FREERTOS_CONFIG_H\n");
 			fw.write("\t#define FREERTOS_CONFIG_H\n");
 			fw.write("//-----------------------------------------------------------\n");
+			if (0x0001 == (0x0001 & configFlag)) {
+				fw.write("\t#include \"RTFParallellaConfig.h\"\n");
+			}
 			fw.write("\t#define configCALL_STACK_SIZE			0x50\n");
 			if (0x0020 == (configFlag & 0x00F0)) {
 				fw.write("\t#define configUSE_PREEMPTION		1\n");
@@ -109,18 +112,22 @@ public class FreeRTOSConfigFileCreation {
 			fw.write("\t#define configUSE_IDLE_HOOK				0\n");
 			fw.write("\t#define configUSE_TICK_HOOK				0\n");
 			fw.write("\t#define configCPU_CLOCK_HZ				( ( unsigned long ) 700000000 )\n");
-			fw.write("\t#define configTICK_RATE_HZ				( ( TickType_t ) 1000 )\n");
-			fw.write("\t#define configMAX_PRIORITIES			( ( unsigned portBASE_TYPE ) " + (taskSize + constval)
-					+ " )\n");
 			if (0x0001 == (0x0001 & configFlag)) {
-				fw.write("\t#define configMINIMAL_STACK_SIZE		( ( unsigned short ) 0x112) //274 words\n");
+				fw.write("\t#define configTICK_RATE_HZ				( ( TickType_t ) execution_time_scale )\n");
+				fw.write("\t#define configMAX_PRIORITIES			( " + (taskSize + constval)
+						+ " )\n");
+				fw.write("\t#define configMINIMAL_STACK_SIZE		( ( unsigned short ) 112) //274 words\n");
 				fw.write("\t#define configTOTAL_HEAP_SIZE			( ( size_t ) ( 10240 ) )\n");
+				fw.write("\t#define configMAX_TASK_NAME_LEN			( 48 )\n");
 			}
 			else {
+				fw.write("\t#define configTICK_RATE_HZ				( ( TickType_t ) 1000 )\n");
+				fw.write("\t#define configMAX_PRIORITIES			( ( unsigned portBASE_TYPE ) " + (taskSize + constval)
+						+ " )\n");
 				fw.write("\t#define configMINIMAL_STACK_SIZE		( ( unsigned short ) 0x200) //512 words\n");
 				fw.write("\t#define configTOTAL_HEAP_SIZE			( ( size_t ) ( 10450 ) )\n");
+				fw.write("\t#define configMAX_TASK_NAME_LEN			( 128 )\n");
 			}
-			fw.write("\t#define configMAX_TASK_NAME_LEN			( 128 )\n");
 			fw.write("\t#define configUSE_TRACE_FACILITY    	0\n");
 			fw.write("\t#define configUSE_16_BIT_TICKS      	1\n");
 			fw.write("\t#define configIDLE_SHOULD_YIELD			0\n");

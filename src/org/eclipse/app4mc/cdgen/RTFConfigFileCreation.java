@@ -103,7 +103,7 @@ public class RTFConfigFileCreation {
 		try {
 			final File fn = file;
 			@SuppressWarnings("resource")
-			final FileWriter fw = new FileWriter(fn, true);
+			FileWriter fw = new FileWriter(fn, true);
 			fw.write("#ifndef SRC_PARALLELLA_RTFPARALLELLACONFIG_H_\n");
 			fw.write("#define SRC_PARALLELLA_RTFPARALLELLACONFIG_H_\n");
 			fw.write("//-----------------------------------------------------------\n");
@@ -111,23 +111,25 @@ public class RTFConfigFileCreation {
 					"#define SHARED_DRAM_START_ADDRESS			0x8E000000\n");
 			fw.write("/* Shared dram start address offset corresponds to 0x8F000000 global address */\n" + 
 					"#define SHARED_DRAM_START_OFFSET			0x01000000\n");
-			fw.write("/* Allocate 4KB of shared DRAM for data exchange between host and epiphany cores */\n" + 
-					"#define SHARED_DRAM_SIZE					0x00001000\n");
 			fw.write("/* The Shared DRAM section as seen by the Epiphany core */\n" + 
-					"#define SHARED_DRAM_SECTION				0x8F000018\n");
-			fw.write("/* Start buffer address on epiphany core to store the RTF trace info. */\n" + 
-					"#define ECORE_RTF_BUFFER_ADDR				0x6000\n");
+					"#define SHARED_DRAM_SECTION				(SHARED_DRAM_START_ADDRESS + SHARED_DRAM_START_OFFSET)\n");
+			fw.write("/* Allocate 4KB of shared DRAM for data exchange between host and epiphany cores */\n" + 
+					"#define SHARED_DRAM_SIZE					0x00002000\n");
 			fw.write("#define RTF_DEBUG_TRACE_COUNT				10\n");
 			fw.write("/* First five address is used by FreeRTOS porting on Epiphany on shared dram see port.c file. */\n" + 
 					"#define INPUT_TIMESCALE_OFFSET				20\n");
 			fw.write("#define SHARED_BTF_DATA_OFFSET			(INPUT_TIMESCALE_OFFSET + 4)\n");
+			fw.write("#define SHARED_LABEL_OFFSET				0x1000\n");
 			fw.write("#define BTF_TRACE_BUFFER_SIZE				8\n");
 			fw.write("#define GLOBAL_SHARED_LABEL_OFFSET		sizeof(btf_trace_info)\n");
-			fw.write("#define EPI_CORE_MUTEX_OFFSET				16\n");
 			fw.write("/* Shared label count */\n" + 
 					"#define SHM_LABEL_COUNT					10\n");
-			
-			fw.write("#define DSHM_LABEL_EPI_CORE_OFFSET		0x4000\n");
+			fw.write("/* Start buffer address on epiphany core to store the RTF trace info. */\n" + 
+					"#define ECORE_RTF_BUFFER_ADDR				0x7000\n");			
+			fw.write("#define DSHM_LABEL_EPI_CORE_OFFSET		0x7040\n");
+			fw.write("\n\n#define MUTEX_ROW        1\n");
+			fw.write("#define MUTEX_COL        0\n");
+			fw.write("#define RING_BUFFER_SIZE 6\n");
 			fw.write("\n\nextern unsigned int execution_time_scale;\n");
 			fw.write("\n\n/**\n" + 
 					" * Structure to ensure proper synchronization between host and epiphany cores\n" + 
@@ -152,6 +154,14 @@ public class RTFConfigFileCreation {
 				writeTaskEnum(model, file, tasks);
 			}
 			writeHwCoreEnum(model, file);
+			fw = new FileWriter(fn, true);
+			fw.write("\n\ntypedef enum {\n" + 
+					"	UINT_8,\n" + 
+					"	UINT_16,\n" + 
+					"	UINT_32\n" + 
+					"} TYPE;\n\n\n");
+			fw.write("\n#endif\n\n\n");
+			fw.close();
 		}
 		catch (final IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
@@ -204,7 +214,6 @@ public class RTFConfigFileCreation {
 				core_id++;
 			}
 			fw.write("} entity_id;\n");
-			fw.write("\n#endif\n");
 			fw.close();
 		}
 		catch (final IOException ioe) {

@@ -151,7 +151,6 @@ public class MainRMSFileCreation {
 				fw.write("\tinit_btf_mem_section();\n");
 				fw.write("\tinit_task_trace_buffer();\n");
 				fw.write("\tint ts = get_time_scale_factor();\n");
-				fw.write("\tinit_mem_sections();\n");
 			}
 			else {
 				fw.write("\toutbuf_init();\n");
@@ -214,13 +213,13 @@ public class MainRMSFileCreation {
 							fw.write("\tAmaltheaTask AmalTk_" + task.getName() + " = createAmaltheaTask( v" + task.getName()
 									+ ", cIN_" + task.getName() + ", cOUT_" + task.getName() + ",\n\t\t\t "
 									+ task.getStimuli().get(0).getName() + "*ts, " + task.getStimuli().get(0).getName()
-									+ "*ts, 1*ts, 0, 0, "+ pu.getName()+", 0);\n");
+									+ "*ts, 1*ts, 0, 0, "+ pu.getName()+"_ID, 0);\n");
 						}
 						else {
 							fw.write("\tAmaltheaTask AmalTk_" + task.getName() + " = createAmaltheaTask( v" + task.getName()
 									+ ", cIN_" + task.getName() + ", cOUT_" + task.getName() + ",\n\t\t\t "
 									+ task.getStimuli().get(0).getName() + "*ts, " + task.getStimuli().get(0).getName() + "*ts, "
-									+ sleepTime + "*ts, 0, 0, "+ pu.getName()+", 0);\n");
+									+ sleepTime + "*ts, 0, 0, "+ pu.getName()+"_ID, 0);\n");
 						}
 					}
 					else {
@@ -239,35 +238,80 @@ public class MainRMSFileCreation {
 					}
 				}
 			}
-			for (final Task task : tasks) {
-				final Set<Label> taskLabel = SoftwareUtil.getAccessedLabelSet(task, null);
-				final List<Label> taskLabelList = new ArrayList<>(taskLabel);
-				final HashMap<Label, String> LabelTypeMap = new HashMap<Label, String>();
-				for (final Label tl : taskLabelList) {
-					LabelTypeMap.put(tl, tl.getSize().toString());
+			
+			if (btfEnable == true) {
+				final List<Task> localTaskPriority = new ArrayList<Task>();
+				localTaskPriority.addAll(tasks);
+				@SuppressWarnings("resource")
+				final HashMap<Task, Long> periodMap = new HashMap<Task, Long>();
+				for (final Task task : tasks) {
+					final long period = fileUtil.getRecurrence(task).getValue().longValue();
+					periodMap.put(task, period);
 				}
-				final List<String> TypeList = new ArrayList<>(
-						LabelTypeMap.values().stream().distinct().collect(Collectors.toList()));
-				final List<Label> LabelList = new ArrayList<>(
-						LabelTypeMap.keySet().stream().distinct().collect(Collectors.toList()));
-				fw.write("\tcreateRTOSTask( &AmalTk_" + task.getName() + ", main" + task.getName() + ", "
-						+ TypeList.size() + ",");
-				final List<Label> dataTypeList = new ArrayList<Label>();
-				int k = 0;
-				for (final String tl : TypeList) {
-					fw.write(fileUtil.datatypeSize(tl) + ", ");
-					for (final Label La : LabelList) {
-						if (LabelTypeMap.get(La).contains(tl) && (SharedLabelListSortCore.contains(La))) {
-							dataTypeList.add(La);
+				final Map<Task, Long> periodMapSorted = fileUtil.sortByValue(periodMap);
+				for (int i = (periodMapSorted.size()), k = 0; i > 0; i--, k++) {
+					final Task task = (Task) periodMapSorted.keySet().toArray()[k];
+					final Set<Label> taskLabel = SoftwareUtil.getAccessedLabelSet(task, null);
+					final List<Label> taskLabelList = new ArrayList<>(taskLabel);
+					final HashMap<Label, String> LabelTypeMap = new HashMap<Label, String>();
+					for (final Label tl : taskLabelList) {
+						LabelTypeMap.put(tl, tl.getSize().toString());
+					}
+					final List<String> TypeList = new ArrayList<>(
+							LabelTypeMap.values().stream().distinct().collect(Collectors.toList()));
+					final List<Label> LabelList = new ArrayList<>(
+							LabelTypeMap.keySet().stream().distinct().collect(Collectors.toList()));
+					fw.write("\tcreateRTOSTask( &AmalTk_" + task.getName() + ", main" + task.getName() + ", "
+							+ TypeList.size() + ",");
+					final List<Label> dataTypeList = new ArrayList<Label>();
+					int j = 0;
+					for (final String tl : TypeList) {
+						fw.write(fileUtil.datatypeSize(tl) + ", ");
+						for (final Label La : LabelList) {
+							if (LabelTypeMap.get(La).contains(tl) && (SharedLabelListSortCore.contains(La))) {
+								dataTypeList.add(La);
+							}
+						}
+						fw.write("" + dataTypeList.size() + "");
+						j++;
+						if (j < TypeList.size()) {
+							fw.write(", ");
 						}
 					}
-					fw.write("" + dataTypeList.size() + "");
-					k++;
-					if (k < TypeList.size()) {
-						fw.write(", ");
-					}
+					fw.write(");\n");
 				}
-				fw.write(");\n");
+			}
+			else {
+				for (final Task task : tasks) {
+					final Set<Label> taskLabel = SoftwareUtil.getAccessedLabelSet(task, null);
+					final List<Label> taskLabelList = new ArrayList<>(taskLabel);
+					final HashMap<Label, String> LabelTypeMap = new HashMap<Label, String>();
+					for (final Label tl : taskLabelList) {
+						LabelTypeMap.put(tl, tl.getSize().toString());
+					}
+					final List<String> TypeList = new ArrayList<>(
+							LabelTypeMap.values().stream().distinct().collect(Collectors.toList()));
+					final List<Label> LabelList = new ArrayList<>(
+							LabelTypeMap.keySet().stream().distinct().collect(Collectors.toList()));
+					fw.write("\tcreateRTOSTask( &AmalTk_" + task.getName() + ", main" + task.getName() + ", "
+							+ TypeList.size() + ",");
+					final List<Label> dataTypeList = new ArrayList<Label>();
+					int k = 0;
+					for (final String tl : TypeList) {
+						fw.write(fileUtil.datatypeSize(tl) + ", ");
+						for (final Label La : LabelList) {
+							if (LabelTypeMap.get(La).contains(tl) && (SharedLabelListSortCore.contains(La))) {
+								dataTypeList.add(La);
+							}
+						}
+						fw.write("" + dataTypeList.size() + "");
+						k++;
+						if (k < TypeList.size()) {
+							fw.write(", ");
+						}
+					}
+					fw.write(");\n");
+				}
 			}
 			fw.write("\tvTaskStartScheduler();\n");
 			fw.write("\t" + "return EXIT_SUCCESS;\n");

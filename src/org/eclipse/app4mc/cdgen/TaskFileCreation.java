@@ -554,7 +554,9 @@ public class TaskFileCreation {
 
 				// fw.write("\n\n");
 				fw.write("\t\tupdateDebugFlag(700);\n");
-				fw.write("\t\ttraceTaskPasses(1,1);\n");
+				if (btfEnable == false) {
+					fw.write("\t\ttraceTaskPasses(1,1);\n");
+				}
 				fw.write("\n\t\t\t/*Runnable calls */\n");
 				for (final Runnable run : runnablesOfTask) {
 					fw.write("\t\t\t" + run.getName() + "();\n");
@@ -571,12 +573,21 @@ public class TaskFileCreation {
 					if (btfEnable == true) {
 						fw.write("\t\t\ttraceTaskEvent(src_id, src_instance, TASK_EVENT," + task.getName() + "_ID,\n" + 
 								"\t\t\t\t\t taskCount"+ task.getName()+", PROCESS_START, 0);\n");
-					}
-					if (comparevalue < 0) {
-						fw.write("\n\t\t\tsleepTimerMs(1 , 1" + (taskCount + 1) + ");\n");
+						if (comparevalue < 0) {
+							fw.write("\n\t\t\tsleepTimerMs(1 , " + task.getName() + "_ID);\n");
+						}
+						else {
+							fw.write("\n\t\t\tsleepTimerMs(" + sleepTime + ", " + task.getName() + "_ID);\n");
+						}
 					}
 					else {
-						fw.write("\n\t\t\tsleepTimerMs(" + sleepTime + ", " + taskCount + 1 + ");\n");
+						if (comparevalue < 0) {
+							fw.write("\n\t\t\tsleepTimerMs(1 , 1" + (taskCount + 1) + ");\n");
+						}
+						else {
+							fw.write("\n\t\t\tsleepTimerMs(" + sleepTime + ", " + taskCount + 1 + ");\n");
+						}
+						
 					}
 					if (btfEnable == true) {
 						fw.write("\t\t\ttraceTaskEvent(src_id, src_instance, TASK_EVENT," + task.getName() + "_ID,\n" + 
@@ -585,8 +596,10 @@ public class TaskFileCreation {
 
 				}
 				fw.write("\n\t\t\ttaskCount" + task.getName() + "++;");
-				fw.write("\n\t\t\ttraceTaskPasses(" + taskCount + ", taskCount" + task.getName() + ");");
-				fw.write("\n\t\t\ttraceRunningTask(0);\n");
+				if (btfEnable == false) {
+					fw.write("\n\t\t\ttraceTaskPasses(" + taskCount + ", taskCount" + task.getName() + ");");
+					fw.write("\n\t\t\ttraceRunningTask(0);\n");
+				}
 				fw.write("\t}\n\n");
 			}
 			fw.close();

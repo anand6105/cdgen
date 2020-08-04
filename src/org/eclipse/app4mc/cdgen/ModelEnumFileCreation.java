@@ -49,9 +49,9 @@ public class ModelEnumFileCreation {
 	 */
 	public ModelEnumFileCreation(final Amalthea Model, final String srcPath) throws IOException {
 		this.model = Model;
-		System.out.println("Shared Label File Creation Begins");
+		System.out.println("Model Enumeration File Creation Begins");
 		fileCreate(this.model, srcPath);
-		System.out.println("Shared Label File Creation Ends");
+		System.out.println("Model Enumeration File Creation Ends");
 	}
 
 	/**
@@ -180,6 +180,11 @@ public class ModelEnumFileCreation {
 			fw.write("void generate_runnable_entity_table(void);\n\n");
 			fw.write("void generate_signal_entity_table(void);\n\n");
 			fw.write("void generate_hw_entity_table(void);\n\n");
+			fw.write("void get_SHM_label_name (int index,char str[]);\n\n");
+			fw.write("void get_DSHM_label_name(int index,char str[]);\n\n");
+			fw.write("void get_task_name(int index,char *str);\n\n");
+			fw.write("void get_visible_label_index(unsigned array[],unsigned mem_type);\n\n");
+			
 			fw.write("#endif\n\n");
 			fw.close();
 		}
@@ -241,6 +246,14 @@ public class ModelEnumFileCreation {
 			writeHwCoreEnum(model, file);
 			fw = new FileWriter(fn, true);
 			fw.write("};\n\n");
+			fw.write("void get_SHM_label_name (int index,char str[])\n" + 
+					"{\n\n}\n\n\n");
+			fw.write("void get_DSHM_label_name (int index,char str[])\n" + 
+					"{\n\n}\n\n\n");
+			fw.write("void get_task_name (int index,char str[])\n" + 
+					"{\n\n}\n\n\n");
+			fw.write("void get_visible_label_index(unsigned array[],unsigned mem_type)\n" + 
+					"{\n\n}\n\n\n");
 			fw.write("void generate_runnable_entity_table(void)\n");
 			fw.write("{\n");
 			fw.write("}\n\n");
@@ -249,10 +262,9 @@ public class ModelEnumFileCreation {
 			fw.write("}\n\n");
 			fw.write("void generate_task_entity_table(void)\n");
 			fw.write("{\n");
-			fw.write("\tstore_entity_entry(IDLE_TASK_ID, TASK_EVENT, task_enum[0]);\n");
-			fw.write("\tint index = 1;\n");
+			fw.write("\tint index = 0;\n");
 			fw.write("\tint task_count = sizeof(task_enum)/sizeof(task_enum[0]);\n" + 
-					"\tfor(index = 1; index <= task_count; index++) {\n");
+					"\tfor(index = 0; index < task_count; index++) {\n");
 			fw.write("\t\tstore_entity_entry(index , TASK_EVENT, task_enum[index]);\n");
 			fw.write("\t}\n}\n\n\n");
 			fw.write("void generate_hw_entity_table(void)\n");
@@ -265,8 +277,8 @@ public class ModelEnumFileCreation {
 			}
 			fw.write("\tint hw_count = sizeof(hw_enum)/sizeof(hw_enum[0]);\n" + 
 					"\tfor(index = 0; index < hw_count; index++) {\n");
-			fw.write("\tstore_entity_entry(core_id , TASK_EVENT, hw_enum[index]);\n");
-			fw.write("\tcore_id++;\n");
+			fw.write("\t\tstore_entity_entry(core_id , CORE_EVENT, hw_enum[index]);\n");
+			fw.write("\t\tcore_id++;\n");
 			fw.write("\t}\n}\n\n\n");
 			fw.write("\n\n\n\n");
 			fw.close();
@@ -316,9 +328,10 @@ public class ModelEnumFileCreation {
 			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			final EList<SchedulerAllocation> CoreNo = model.getMappingModel().getSchedulerAllocation();
+			int index = 0;
 			for (final SchedulerAllocation c : CoreNo) {
-				final ProcessingUnit pu = c.getResponsibility().get(0);
-				fw.write("\t\"" + pu.getName() + "\",\n");
+				fw.write("\t\"Core_" + index + "\",\n");
+				index++;
 			}
 			fw.close();
 		}

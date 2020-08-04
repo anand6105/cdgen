@@ -49,10 +49,10 @@ public class SharedLabelsFileCreation {
 	 * @param srcPath
 	 * @throws IOException
 	 */
-	public SharedLabelsFileCreation(final Amalthea Model, final String srcPath) throws IOException {
+	public SharedLabelsFileCreation(final Amalthea Model, final String srcPath, final int configFlag) throws IOException {
 		this.model = Model;
 		System.out.println("Shared Label File Creation Begins");
-		fileCreate(this.model, srcPath);
+		fileCreate(this.model, srcPath, configFlag);
 		System.out.println("Shared Label File Creation Ends");
 	}
 
@@ -63,7 +63,7 @@ public class SharedLabelsFileCreation {
 	 * @param srcPath
 	 * @throws IOException
 	 */
-	private static void fileCreate(final Amalthea model, final String srcPath) throws IOException {
+	private static void fileCreate(final Amalthea model, final String srcPath, final int configFlag) throws IOException {
 		final EList<Label> labellist = model.getSwModel().getLabels();
 		final String fname1 = srcPath + File.separator + "shared_comms.c";
 		final String fname2 = srcPath + File.separator + "shared_comms.h";
@@ -85,7 +85,7 @@ public class SharedLabelsFileCreation {
 			fileUtil.fileMainHeader(f1);
 			sharedLabelFileHeader(f1);
 			headerIncludesSharedLabel(f1);
-			SharedLabelDeclaration(f1, model, labellist);
+			SharedLabelDeclaration(f1, model, labellist, configFlag);
 		}
 		finally {
 			try {
@@ -98,8 +98,8 @@ public class SharedLabelsFileCreation {
 		try {
 			fileUtil.fileMainHeader(f3);
 			sharedLabelFileHeaderHead(f3);
-			headerIncludesSharedLabelHead(f3);
-			SharedLabelDeclarationHead(f3, model, labellist);
+			headerIncludesSharedLabelHead(f3, configFlag);
+			SharedLabelDeclarationHead(f3, model, labellist, configFlag);
 		}
 		finally {
 			try {
@@ -161,7 +161,7 @@ public class SharedLabelsFileCreation {
 	 *
 	 * @param file
 	 */
-	private static void headerIncludesSharedLabelHead(final File file) {
+	private static void headerIncludesSharedLabelHead(final File file, final int configFlag) {
 		try {
 			final File fn = file;
 			@SuppressWarnings("resource")
@@ -172,6 +172,10 @@ public class SharedLabelsFileCreation {
 			fw.write("/* Standard includes. */\n");
 			fw.write("#include <stdlib.h>\n");
 			fw.write("#include <stdint.h>\n\n");
+			if (0x0001 == (0x0001 & configFlag)) {
+				
+			}
+			fw.write("#include \"RTFParallellaConfig.h\"\n");
 			fw.close();
 		}
 		catch (final IOException ioe) {
@@ -191,7 +195,7 @@ public class SharedLabelsFileCreation {
 			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
 			fw.write("/* Standard includes. */\n");
-			fw.write("#include \"shared_comms.h\"\n");
+			fw.write("#include \"shared_comms.h\"\n\n\n");
 			fw.close();
 		}
 		catch (final IOException ioe) {
@@ -206,11 +210,22 @@ public class SharedLabelsFileCreation {
 	 * @param file
 	 * @param labellist
 	 */
-	private static void SharedLabelDeclaration(final File file, final Amalthea model, final EList<Label> labellist) {
+	private static void SharedLabelDeclaration(final File file, final Amalthea model,
+							final EList<Label> labellist, final int configFlag) {
 		try {
 			final File fn = file;
 			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
+			if (0x0001 == (0x0001 & configFlag)) {
+				fw.write("unsigned int *allocate_shared_memory(unsigned int offset)\n" + 
+						"{\n" + 
+						"\tunsigned int *dram_addr = 0;\n" + 
+						"\tunsigned int *shdram_start_addr = (unsigned int *)SHARED_DRAM_SECTION;\n" + 
+						"\t/* Add offset to get the address */\n" + 
+						"\tdram_addr = (shdram_start_addr + offset);\n" + 
+						"\treturn (unsigned int *)dram_addr;\n" + 
+						"}\n\n\n");
+			}
 			final List<Label> SharedLabelList = LabelFileCreation.SharedLabelFinder(model);
 			final List<Label> SharedLabelListSortCore = new ArrayList<Label>();
 			if (SharedLabelList.size() == 0) {
@@ -294,11 +309,12 @@ public class SharedLabelsFileCreation {
 	 * @param labellist
 	 */
 	private static void SharedLabelDeclarationHead(final File file, final Amalthea model,
-			final EList<Label> labellist) {
+			final EList<Label> labellist, final int configFlag) {
 		try {
 			final File fn = file;
 			@SuppressWarnings("resource")
 			final FileWriter fw = new FileWriter(fn, true);
+			fw.write("unsigned int *allocate_shared_memory(unsigned int offset);\n\n");
 			final List<Label> SharedLabelList = LabelFileCreation.SharedLabelFinder(model);
 			final List<Label> SharedLabelListSortCore = new ArrayList<Label>();
 			if (SharedLabelList.size() == 0) {
@@ -337,8 +353,14 @@ public class SharedLabelsFileCreation {
 				}
 				int SharedLabelCounter = SharedLabel.size();
 				if (SharedLabelCounter != 0) {
-					fw.write("\n#define shared_mem_section" + sh.toString().replace(" ", "") + "	0x0" + (k + 1)
-							+ "000000\n\n");
+					if (0x0001 == (0x0001 & configFlag)) {
+						fw.write("\n#define shared_mem_section" + sh.toString().replace(" ", "") + "	0x8F001" + k + "00\n\n");
+					}
+					else {
+						fw.write("\n#define shared_mem_section" + sh.toString().replace(" ", "") + "	0x0" + (k + 1)
+								+ "000000\n\n");
+					}
+
 					fw.write("void shared_label_" + sh.toString().replace(" ", "") + "_init();\n");
 					fw.write("void shared_label_" + sh.toString().replace(" ", "")
 							+ "_write(int label_indx,int payload);\n");
