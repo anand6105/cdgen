@@ -107,6 +107,7 @@ public class RTFConfigFileCreation {
 			fw.write("#ifndef SRC_PARALLELLA_RTFPARALLELLACONFIG_H_\n");
 			fw.write("#define SRC_PARALLELLA_RTFPARALLELLACONFIG_H_\n");
 			fw.write("//-----------------------------------------------------------\n");
+			fw.write("#define CDGEN_BTF_TRACE\n\n");
 			fw.write("/* Shared DRAM start address*/\n" + 
 					"#define SHARED_DRAM_START_ADDRESS			0x8E000000\n");
 			fw.write("/* Shared dram start address offset corresponds to 0x8F000000 global address */\n" + 
@@ -137,7 +138,7 @@ public class RTFConfigFileCreation {
 					" */\n" + 
 					"typedef struct btf_trace_info_t\n" + 
 					"{\n" + 
-					"    int is_init;                            /**< To ensure that the mutex is initialized */\n" + 
+					"    int length;                             /**< To ensure that the mutex is initialized */\n" + 
 					"    unsigned int offset;                    /**< Mutex declaration. Unused on host  */\n" + 
 					"    unsigned int core_id;                   /**< BTF trace data buffer size which is to be read */\n" + 
 					"    unsigned int core_write;                /**< Read write operation between epiphany core and host */\n" + 

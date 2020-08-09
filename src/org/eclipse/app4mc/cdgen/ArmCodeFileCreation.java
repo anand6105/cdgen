@@ -361,7 +361,7 @@ public class ArmCodeFileCreation {
 				fw.write("\te_mem_t emem;\n");
 				fw.write("\tint index = 0;\n");
 				fw.write("\tbtf_trace_info trace_info;\n");
-				fw.write("\ttrace_info.is_init = 0;\n");
+				fw.write("\ttrace_info.length = 0;\n");
 				fw.write("\ttrace_info.core_write = 0;\n");
 				fw.write("\ttrace_info.offset = 0;\n");
 				fw.write("\ttrace_info.core_id = 0;\n");
@@ -515,8 +515,8 @@ public class ArmCodeFileCreation {
 				fw.write("\t\tif (trace_info.core_write == 1)\r\n\t\t{\n");
 				fw.write("\t\t\te_read(&emem, 0, 0, SHARED_BTF_DATA_OFFSET , &trace_info, sizeof(btf_trace_info));\n");
 				fw.write("\t\t\te_read(&emem, 0, 0, (btf_data_start_offset + (trace_info.offset * sizeof(int))),\n" + 
-						"\t\t\t\t\t\t\t\t&btf_trace, BTF_TRACE_BUFFER_SIZE * sizeof(int) * trace_info.is_init);\n");
-				fw.write("\t\t\tfor(btf_data_index = 0; btf_data_index < trace_info.is_init; btf_data_index++)\n" + 
+						"\t\t\t\t\t\t\t\t&btf_trace, BTF_TRACE_BUFFER_SIZE * sizeof(int) * trace_info.length);\n");
+				fw.write("\t\t\tfor(btf_data_index = 0; btf_data_index < trace_info.length; btf_data_index++)\n" + 
 						"\t\t\t{\n" + 
 						"\t\t\t\tuint16_t offset = btf_data_index * BTF_TRACE_BUFFER_SIZE;\n" + 
 						"\t\t\t\tbuffer_count += sprintf( &file_buffer[buffer_count], \"%d %d %d %d %d %d %d %d %d\\n\",\n" + 

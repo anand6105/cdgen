@@ -196,33 +196,54 @@ public class MainRMSFileCreation {
 				}
 				SharedLabelCounter = 0;
 			}
-
-			for (final Task task : tasks) {
-				final MappingModel mappingModel = model.getMappingModel();
-				ProcessingUnit pu = null;
-				if (mappingModel != null) {
-					pu = DeploymentUtil.getAssignedCoreForProcess(task, model).iterator().next();
-					Time taskTime = RuntimeUtil.getExecutionTimeForProcess(task, pu, null, TimeType.WCET);
-					taskTime = TimeUtil.convertToTimeUnit(taskTime, TimeUnit.MS);
-					final BigInteger sleepTime = taskTime.getValue();
-					final BigInteger b2 = new BigInteger("1000");
-					final int comparevalue = sleepTime.compareTo(b2);
-					if (btfEnable == true)
-					{
+			
+			if (btfEnable == true) {
+				final List<Task> localTaskPriority = new ArrayList<Task>();
+				localTaskPriority.addAll(tasks);
+				@SuppressWarnings("resource")
+				final HashMap<Task, Long> periodMap = new HashMap<Task, Long>();
+				for (final Task task : tasks) {
+					final long period = fileUtil.getRecurrence(task).getValue().longValue();
+					periodMap.put(task, period);
+				}
+				final Map<Task, Long> periodMapSorted = fileUtil.sortByValue(periodMap);
+				for (int i = (periodMapSorted.size()), k = 0; i > 0; i--, k++) {
+					final Task task = (Task) periodMapSorted.keySet().toArray()[k];
+					final MappingModel mappingModel = model.getMappingModel();
+					ProcessingUnit pu = null;
+					if (mappingModel != null) {
+						pu = DeploymentUtil.getAssignedCoreForProcess(task, model).iterator().next();
+						Time taskTime = RuntimeUtil.getExecutionTimeForProcess(task, pu, null, TimeType.WCET);
+						taskTime = TimeUtil.convertToTimeUnit(taskTime, TimeUnit.MS);
+						final BigInteger sleepTime = taskTime.getValue();
+						final BigInteger b2 = new BigInteger("1000");
+						final int comparevalue = sleepTime.compareTo(b2);
 						if (comparevalue < 0) {
 							fw.write("\tAmaltheaTask AmalTk_" + task.getName() + " = createAmaltheaTask( v" + task.getName()
 									+ ", cIN_" + task.getName() + ", cOUT_" + task.getName() + ",\n\t\t\t "
 									+ task.getStimuli().get(0).getName() + "*ts, " + task.getStimuli().get(0).getName()
-									+ "*ts, 1*ts, 0, 0, "+ pu.getName()+"_ID, 0);\n");
+									+ "*ts, 1*ts, "+ pu.getName()+"_ID, 0, 0, 0);\n");
 						}
 						else {
 							fw.write("\tAmaltheaTask AmalTk_" + task.getName() + " = createAmaltheaTask( v" + task.getName()
 									+ ", cIN_" + task.getName() + ", cOUT_" + task.getName() + ",\n\t\t\t "
 									+ task.getStimuli().get(0).getName() + "*ts, " + task.getStimuli().get(0).getName() + "*ts, "
-									+ sleepTime + "*ts, 0, 0, "+ pu.getName()+"_ID, 0);\n");
+									+ sleepTime + "*ts, "+ pu.getName()+"_ID, 0, 0, 0);\n");
 						}
 					}
-					else {
+				}
+			}
+			else {
+				for (final Task task : tasks) {
+					final MappingModel mappingModel = model.getMappingModel();
+					ProcessingUnit pu = null;
+					if (mappingModel != null) {
+						pu = DeploymentUtil.getAssignedCoreForProcess(task, model).iterator().next();
+						Time taskTime = RuntimeUtil.getExecutionTimeForProcess(task, pu, null, TimeType.WCET);
+						taskTime = TimeUtil.convertToTimeUnit(taskTime, TimeUnit.MS);
+						final BigInteger sleepTime = taskTime.getValue();
+						final BigInteger b2 = new BigInteger("1000");
+						final int comparevalue = sleepTime.compareTo(b2);
 						if (comparevalue < 0) {
 							fw.write("\tAmaltheaTask AmalTk_" + task.getName() + " = createAmaltheaTask( v" + task.getName()
 									+ ", cIN_" + task.getName() + ", cOUT_" + task.getName() + ", "
@@ -237,6 +258,7 @@ public class MainRMSFileCreation {
 						}
 					}
 				}
+				
 			}
 			
 			if (btfEnable == true) {

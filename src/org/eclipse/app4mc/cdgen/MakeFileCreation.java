@@ -133,10 +133,10 @@ public class MakeFileCreation {
 				fw.write("ParallellaUtils.h \n");
 			}
 			fw.write("#Epiphany SDK dependencies\n");
-			fw.write("ESDK=${EPIPHANY_HOME} \n");
-			fw.write("ELIBS=${ESDK}/tools/host.armv7l/lib \n");
-			fw.write("EINCS=${ESDK}/tools/host.armv7l/include \n");
-			fw.write("ELDF=${ESDK}/bsps/current/fast.ldf \n");
+			fw.write("ESDK:=${EPIPHANY_HOME} \n");
+			fw.write("ELIBS:=${EPIPHANY_HOME}/tools/host.armv7l/lib \n");
+			fw.write("EINCS:=${EPIPHANY_HOME}/tools/host.armv7l/include \n");
+			fw.write("ELDF:=${EPIPHANY_HOME}/bsps/current/fast.ldf \n");
 			fw.write("EHDF=${EPIPHANY_HDF} \n");
 			fw.write("#search paths for C source code files \n");
 			fw.write(
