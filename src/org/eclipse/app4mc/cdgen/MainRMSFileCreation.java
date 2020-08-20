@@ -140,6 +140,7 @@ public class MainRMSFileCreation {
 	 * @param model
 	 * @param file
 	 * @param tasks
+	 * @param btfEnable
 	 */
 	private static void mainFucntionRMS(final Amalthea model, final File file, final Set<Task> tasks, final boolean btfEnable) {
 		try {
@@ -449,6 +450,8 @@ public class MainRMSFileCreation {
 	 * MainRMSFileCreation Header inclusion
 	 *
 	 * @param file
+	 * @param k		- Core-id
+	 * @param btfEnable
 	 */
 	private static void headerIncludesMainRMS(final File file, final int k, final boolean btfEnable) {
 		try {

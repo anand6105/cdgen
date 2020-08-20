@@ -27,8 +27,9 @@ import org.eclipse.app4mc.cdgen.utils.fileUtil;
 import org.eclipse.emf.common.util.EList;
 
 /**
- * Declaration of Labels with initial values .
- *
+ * Declaration of Amalthear model task components which will be used to
+ * extract the ASCII data from the raw BTF data received from the Epiphany 
+ * cores
  *
  */
 
@@ -55,7 +56,7 @@ public class ModelEnumFileCreation {
 	}
 
 	/**
-	 * FileCreation LabelFileCreation
+	 * FileCreation ModelEnumeration
 	 *
 	 * @param model
 	 * @param srcPath
@@ -109,7 +110,7 @@ public class ModelEnumFileCreation {
 	}
 
 	/**
-	 * Title card - LabelFileCreation
+	 * Title card - Model Enumeration File Creation
 	 *
 	 * @param file
 	 */
@@ -131,7 +132,7 @@ public class ModelEnumFileCreation {
 	}
 
 	/**
-	 * Title card - LabelFileCreation
+	 * Title card - Model Enumeration
 	 *
 	 * @param file
 	 */
@@ -154,7 +155,7 @@ public class ModelEnumFileCreation {
 
 
 	/**
-	 * Header inclusion - LabelFileCreation
+	 * Header inclusion - Model enumeration
 	 *
 	 * @param file
 	 */
@@ -195,7 +196,7 @@ public class ModelEnumFileCreation {
 
 
 	/**
-	 * Header inclusion - LabelFileCreation
+	 * Header inclusion - Model Enumeration
 	 *
 	 * @param file
 	 */
@@ -218,9 +219,10 @@ public class ModelEnumFileCreation {
 
 
 	/**
-	 * Shared Label definition and initialization structure.
+	 * Model enumeration declaration list
 	 *
 	 * @param file
+	 * @param model
 	 * @param labellist
 	 */
 	private static void modelEnumDeclaration(final File file, final Amalthea model, final EList<Label> labellist) {
@@ -320,7 +322,6 @@ public class ModelEnumFileCreation {
 	 *
 	 * @param model
 	 * @param file
-	 * @param tasks
 	 */
 	private static void writeHwCoreEnum(final Amalthea model, final File file) {
 		try {

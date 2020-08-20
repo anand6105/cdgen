@@ -334,7 +334,8 @@ public class ArmCodeFileCreation {
 
 	
 	/**
-	 * main function for the zynq in which we deploy the
+	 * main function for the zynq in which we deploy the epiphany binaries
+	 * and read the shared and distributed memory area in a loop
 	 *
 	 * @param model
 	 * @param file
@@ -568,7 +569,7 @@ public class ArmCodeFileCreation {
 
 	
 	/**
-	 * header inclusion for armCode file
+	 * Parsing the BTF trace header raw data
 	 *
 	 * @param file
 	 */
@@ -614,7 +615,7 @@ public class ArmCodeFileCreation {
 	
 	
 	/**
-	 * header inclusion for armCode file
+	 * Code to insert the construction of trace header in armCode file
 	 *
 	 * @param file
 	 */

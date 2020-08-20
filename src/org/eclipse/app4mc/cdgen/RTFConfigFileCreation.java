@@ -37,7 +37,7 @@ public class RTFConfigFileCreation {
 	final private Amalthea model;
 
 	/**
-	 * Constructor FreeRTOSConfigFileCreation
+	 * Constructor RTF Parallella ConfigFileCreation
 	 *
 	 * @param Model
 	 * @param srcPath
@@ -54,7 +54,7 @@ public class RTFConfigFileCreation {
 	
 	
 	/**
-	 * FileCreation FreeRTOSConfigFileCreation
+	 * FileCreation RTF Parallella ConfigFileCreation
 	 *
 	 * @param model
 	 * @param srcPath
@@ -199,7 +199,6 @@ public class RTFConfigFileCreation {
 	 *
 	 * @param model
 	 * @param file
-	 * @param tasks
 	 */
 	private static void writeHwCoreEnum(final Amalthea model, final File file) {
 		int core_id = 512;
